@@ -1,0 +1,11 @@
+<%= render Elements::AlertComponent.new(variant: :warning, dismissible: true) do %>
+  <div class="h3">Welcome, <%= first_name %></div>
+  <b>Bookmark this page.</b>
+  <ul>
+    <li>You can leave and return to this page as often as needed while you prepare your thesis or dissertation for submission.</li>
+    <li>Your uploads and selections are saved automatically.</li>
+    <li>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</li>
+    <li>You can return to this page to check the status of your submission.</li>
+  </ul>
+  <div>Dissertation ID: <%= dissertation_id %></div>
+<% end %>

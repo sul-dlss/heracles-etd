@@ -1,0 +1,19 @@
+<h2 class="accordion-header">
+  <%= tag.button class: "accordion-button align-items-start bg-light", type: "button", data: { bs_toggle: "collapse", bs_target: "##{collapse_id}"}, 'aria-expanded': "true", 'aria-controls': collapse_id, disabled: true do %>
+    <div><%= render Edit::StepNumberComponent.new(step_number:, classes: 'me-2') %></div>
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-start">
+        <div class="h4"><%= title %></div>
+        <%= render Edit::InProgressBadgeComponent.new(classes: 'ms-3 mt-1') %>
+        <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1 d-none') %>
+      </div>
+      <%= help_content %>
+    </div>
+    <div class="">
+      <div class="show-when-expanded"><%= editing_label %></div>
+      <%= render Elements::ButtonLinkComponent.new(link: '#', variant: :link, class: 'show-when-collapsed text-nowrap', data: { action: "accordion#expand", accordion_step_param: "step-1" }) do %>
+        <%= helpers.edit_icon %> <%= edit_label %>
+      <% end %>
+    </div>
+  <% end %>
+</h2>

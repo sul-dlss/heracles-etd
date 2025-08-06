@@ -1,0 +1,200 @@
+<div class="row gy-2">
+  <div class="col-lg-8 order-2 order-lg-1">
+    <%= render Edit::WelcomeComponent.new(submission: @submission) %>
+    <%= form_with model: @submission do |form| %>
+      <div class="accordion" data-controller="accordion" data-accordion-progress-outlet=".progress-card" data-accordion-submit-outlet=".accordion-item-submit">
+
+        <%# STEP 1 %>
+        <div class="accordion-item mb-3">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 1, title: 'Verify your citation details', editing_label: 'Reviewing', edit_label: 'Undo your confirmation') do |component| %>
+            <% component.with_help_content do %>
+              <p class="mb-0">This information establishes how your work will be cited, and how you will be credited.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 1) do |component| %>
+            <% component.with_body_content do %>
+              <div class="h4">Citation details</div>
+              <p>If the information that appears here is incorrect, please consult with your department in order to correct the data in Axess.</p>
+              <%= render Elements::Tables::TableComponent.new(id: 'citation-details-table', label: 'Citation details', show_label: false) do |component| %>
+                <% component.with_row(label: 'School', values: [@submission.schoolname]) %>
+                <% component.with_row(label: 'Department', values: [@submission.department]) %>
+                <% component.with_row(label: 'Degree', values: [@submission.degree]) %>
+                <% component.with_row(label: 'Major', values: [@submission.major]) %>
+                <% component.with_row(label: 'Degree Conferral Year', values: [@submission.degreeconfyr]) %>
+                <% component.with_row(label: 'Title', values: [@submission.title]) %>
+              <% end %>
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  By clicking Confirm, I verify the information in this section is correct and complete.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Confirm', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-1"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# STEP 2 %>
+        <div class="accordion-item mb-3" data-controller="abstract">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 2, title: 'Enter your abstract', editing_label: 'Editing', edit_label: 'Edit this section') do |component| %>
+            <% component.with_help_content do %>
+              <p>This abstract will be indexed for online searching.</p>
+              <p class="mb-0">It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 2) do |component| %>
+            <% component.with_body_content do %>
+              <p>Enter your abstract in plain text (no HTML or special formatting, such as bullets or indentation).</p>
+
+              <div>
+                <%= form.label :abstract, class: 'form-label' do %>
+                  <span class="fw-bold">Abstract</span> <span class="text-danger">* Required</span>
+                <% end %>
+                <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { action: "keyup->abstract#toggleButton"} %>
+              </div>
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  Click Done to complete this section.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Done', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-2", abstract_target: "doneButton"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# STEP 3 %>
+        <div class="accordion-item mb-3">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 3, title: 'Review your dissertation\'s formatting', editing_label: 'Reviewing', edit_label: 'Undo your confirmation') do |component| %>
+            <% component.with_help_content do %>
+              <p>Your dissertation must be a PDF file.</p>
+              <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
+              <p class="mb-0">All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 3) do |component| %>
+            <% component.with_body_content do %>
+              <p>As the student author, this is the last opportunity to review your formatting. Most formatting errors are seen on the following pages.</p>
+
+              <%= render Elements::Tables::TableComponent.new(id: 'formatting-table', label: 'Formatting guidance', show_label: false) do |component| %>
+                <% component.with_row(label: 'Title Page', values: ['Should not be physically numbered but counts as page "i" (first page of submission).']) %>
+                <% component.with_row(label: 'Copyright and Signature Page (page ii and page iii)', values: ['These pages are inserted automatically; do not include them in your PDF file.']) %>
+                <% component.with_row(label: 'Abstract or Blank Page (page iv)', values: ['The page directly after the Title Page in your PDF file. This should be an Abstract for students who wish to include one or a blank page for those who do not.']) %>
+                <% component.with_row(label: 'Acknowledgements', values: ['Optional. If included, should be placed directly after the Abstract and before the Table of Contents.']) %>
+              <% end %>
+
+              <div class="d-flex justify-content-center gap-3">
+                <%= render Edit::PageFigureComponent.new(title: 'Title Page') %>
+                <%= render Edit::PageFigureComponent.new(title: 'Copyright', with_x: true) %>
+                <%= render Edit::PageFigureComponent.new(title: 'Signature Page', with_x: true) %>
+                <%= render Edit::PageFigureComponent.new(title: 'Abstract or Blank Page', footer: 'iv') %>
+                <%= render Edit::PageFigureComponent.new(title: 'Acknowledge&shy;ments (optional)'.html_safe, footer: 'v') %>
+              </div>
+
+              <p>Lastly, ensure that you have at least 1 inch margin on all other sides of every page. Any text that runs off the page will be lost and is unrecoverable.</p>
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  By clicking Confirm, I verify that l've done a final review of my submission's format.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Confirm', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-3"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# STEP 4 %>
+        <div class="accordion-item mb-3">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 4, title: 'Upload your dissertation', editing_label: 'Editing', edit_label: 'Edit this section') do |component| %>
+            <% component.with_help_content do %>
+              <p class="mb-0">The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 4) do |component| %>
+            <% component.with_body_content do %>
+              
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  Click Done to complete this section.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Done', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-4"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# STEP 5 %>
+        <div class="accordion-item mb-3">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 5, title: 'Upload permissions', editing_label: 'Editing', edit_label: 'Edit this section') do |component| %>
+            <% component.with_help_content do %>
+              <p class="mb-0">Permission is required for reuse of any copyrighted material in your dissertation.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 5) do |component| %>
+            <% component.with_body_content do %>
+              
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  Click Done to complete this section.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Done', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-5"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# STEP 6 %>
+        <div class="accordion-item mb-3">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 6, title: 'Apply copyright and license terms', editing_label: 'Editing', edit_label: 'Edit this section') do |component| %>
+            <% component.with_help_content do %>
+              <p class="mb-0">The copyright and licenses below will be printed on a page added to your dissertation.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 6) do |component| %>
+            <% component.with_body_content do %>
+              
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div>
+                  Click Done to complete this section.
+                </div>
+                <%= render Elements::ButtonComponent.new(label: 'Done', variant: :primary, data: {action: "accordion#collapse", accordion_step_param: "step-6"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        
+        <%# STEP 7 %>
+        <div class="accordion-item accordion-item-submit mb-3" data-controller="submit">
+          <%= render Edit::AccordionHeaderComponent.new(step_number: 7, title: 'Review and submit to Registrar', editing_label: 'Editing', edit_label: 'Edit this section') do |component| %>
+            <% component.with_help_content do %>
+              <p class="mb-0">After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+            <% end %>
+          <% end %>
+          <%= render Edit::AccordionBodyComponent.new(step_number: 7) do |component| %>
+            <% component.with_body_content do %>
+              <%= render Elements::AlertComponent.new(value: 'You must complete sections 1-6 before you can review and submit to the Registrar.', variant: :danger, data: { submit_target: 'notReadyAlert'}) %>
+              <%= render Elements::AlertComponent.new(value: 'You have completed sections 1-6. You can now review and submit to the Registrar.', data: { submit_target: 'readyAlert'}) %>
+            <% end %>
+            <% component.with_footer_content do %>
+              <div class="d-flex justify-content-end align-items-baseline">
+                <%= render Elements::ButtonComponent.new(label: 'Review and submit', variant: :primary, type: :submit, data: {submit_target: "submitButton"}) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-lg-4 order-1 order-lg-2">
+    <%= render Edit::ProgressCardComponent.new %>
+  </div>
+</div>
