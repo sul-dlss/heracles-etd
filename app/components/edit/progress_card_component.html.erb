@@ -1,0 +1,24 @@
+<%= render Elements::CardComponent.new(classes: 'progress-card', data: {controller: 'progress'}) do |component| %>
+  <% component.with_header do %>
+      Progress
+    <% end %>
+    <% component.with_body do %>
+      <ul class="list-unstyled">
+        <li id="step-1"><%= step_number_for(1) %> Citation details verified</li>
+        <li id="step-2"><%= step_number_for(2) %> Abstract provided</li>
+        <li id="step-3"><%= step_number_for(3) %> Format reviewed</li>
+        <li id="step-4"><%= step_number_for(4) %> Dissertation uploaded</li>
+        <li id="step-5"><%= step_number_for(5) %> Copyrighted material checked</li>
+        <li id="step-6"><%= step_number_for(6) %> License terms applied</li>
+        <li id="step-7"><%= step_number_for(7) %> Submitted to Registrar</li>
+      </ul>
+      <hr>
+      <div class="d-flex align-items-center">
+        <%= render Edit::StepNumberComponent.new(step_number: '', variant: :blank, classes: 'me-2 my-2') %><div>Verified by Final Reader</div>
+      </div>
+      <hr>
+      <div class="d-flex align-items-center">
+        <%= render Edit::StepNumberComponent.new(step_number: '', variant: :blank, classes: 'me-2 my-2') %><div>Approved by Registrar</div>
+      </div>
+    <% end %>
+<% end %>
