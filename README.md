@@ -1,24 +1,14 @@
-# README
+# heracles-etd
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development
 
-Things you may want to cover:
+### Code Linters
 
-* Ruby version
+To run all configured linters, run `bin/rake lint`.
 
-* System dependencies
+To run linters individually, run which ones you need:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Ruby code: `bin/rubocop` (add `-a` flag to autocorrect violations)
+* ERB templates: `bin/erb_lint --lint-all --format compact` (add `-a` flag to autocorrect violations)
+* JavaScript code: `yarn run lint` (add `--fix` flag to autocorrect violations)
+* SCSS stylesheets: `yarn run stylelint` (add `--fix` flag to autocorrect violations)
