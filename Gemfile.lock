@@ -113,6 +113,14 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    herb (0.4.3-aarch64-linux-gnu)
+    herb (0.4.3-aarch64-linux-musl)
+    herb (0.4.3-arm-linux-gnu)
+    herb (0.4.3-arm-linux-musl)
+    herb (0.4.3-arm64-darwin)
+    herb (0.4.3-x86_64-darwin)
+    herb (0.4.3-x86_64-linux-gnu)
+    herb (0.4.3-x86_64-linux-musl)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.2.2)
@@ -326,6 +334,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   erb_lint
+  herb
   importmap-rails
   jbuilder
   pg (~> 1.1)
