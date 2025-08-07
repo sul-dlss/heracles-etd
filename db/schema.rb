@@ -10,8 +10,128 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_05_194403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "attachments", force: :cascade do |t|
+    t.bigint "submission_id", null: false
+    t.bigint "uploaded_file_id", null: false
+    t.integer "position"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["submission_id"], name: "index_attachments_on_submission_id"
+    t.index ["uploaded_file_id"], name: "index_attachments_on_uploaded_file_id"
+  end
+
+  create_table "readers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "prefix"
+    t.string "readerrole"
+    t.string "type"
+    t.string "suffix"
+    t.string "sunetid"
+    t.string "univid"
+    t.bigint "submission_id"
+    t.integer "position", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "finalreader"
+    t.index ["submission_id"], name: "index_readers_on_submission_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.string "label", null: false
+    t.string "description"
+    t.datetime "start_date", precision: nil, null: false
+    t.datetime "end_date", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string "druid", null: false
+    t.string "name"
+    t.string "prefix"
+    t.string "suffix"
+    t.string "major"
+    t.string "degree"
+    t.string "advisor"
+    t.string "etd_type", null: false
+    t.string "title"
+    t.text "abstract"
+    t.string "containscopyright"
+    t.string "sulicense"
+    t.string "cclicense"
+    t.string "cclicensetype"
+    t.string "embargo"
+    t.string "external_visibility"
+    t.string "term"
+    t.string "sub"
+    t.string "univid"
+    t.string "sunetid", null: false
+    t.string "ps_career"
+    t.string "ps_program"
+    t.string "ps_plan"
+    t.string "ps_subplan"
+    t.string "dissertation_id", null: false
+    t.string "provost"
+    t.string "degreeconfyr"
+    t.string "schoolname"
+    t.string "department"
+    t.string "readerapproval"
+    t.string "readercomment"
+    t.string "readeractiondttm"
+    t.string "regapproval"
+    t.string "regcomment"
+    t.string "regactiondttm"
+    t.string "documentaccess"
+    t.string "submit_date"
+    t.string "citation_verified"
+    t.string "abstract_provided"
+    t.string "dissertation_uploaded"
+    t.string "supplemental_files_uploaded"
+    t.string "permissions_provided"
+    t.string "permission_files_uploaded"
+    t.string "rights_selected"
+    t.string "cc_license_selected"
+    t.string "submitted_to_registrar"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "format_reviewed"
+    t.datetime "submitted_at", precision: nil
+    t.string "catkey"
+    t.datetime "last_registrar_action_at", precision: nil
+    t.datetime "last_reader_action_at", precision: nil
+    t.datetime "ils_record_updated_at", precision: nil
+    t.datetime "accessioning_started_at", precision: nil
+    t.string "folio_instance_hrid"
+    t.datetime "ils_record_created_at"
+    t.string "orcid"
+    t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
+    t.index ["druid"], name: "index_submissions_on_druid", unique: true
+  end
+
+  create_table "uploaded_files", force: :cascade do |t|
+    t.string "file_name"
+    t.string "type"
+    t.integer "size"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "label", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "login", null: false
+    t.string "email"
+    t.string "crypted_password"
+    t.text "last_search_url"
+    t.datetime "last_login", precision: nil
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+  end
+
+  add_foreign_key "attachments", "submissions"
+  add_foreign_key "attachments", "uploaded_files"
+  add_foreign_key "readers", "submissions"
 end
