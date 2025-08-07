@@ -1,0 +1,23 @@
+<%= tag.div role: 'banner', class: classes do %>
+  <%= tag.div class: icon_classes %>
+  <div class="text-body">
+    <div class="d-flex">
+      <div class="p-3 flex-grow-1">
+        <%= header %>
+        <% if title %>
+          <div class="banner-header d-flex align-items-center justify-content-between mt-3 fw-bold">
+            <%= title %>
+          </div>
+        <% end %>
+        <% if body %>
+          <div class="banner-body">
+            <%= body %>
+          </div>
+        <% end %>
+      </div>
+      <div class="ml-auto">
+        <button type="button" class="btn-close" data-bs-dismiss="banner" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<% end %>

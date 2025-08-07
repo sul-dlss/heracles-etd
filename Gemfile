@@ -40,6 +40,7 @@ gem 'bootsnap', require: false
 
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
+gem 'view_component'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
