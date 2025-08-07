@@ -1,0 +1,21 @@
+<%= render Elements::BannerComponent.new(variant: :note, title: 'Bookmark this page.') do |component| %>
+  <% component.with_header do %>
+    <div class="d-flex align-items-center gap-2">
+      <div class="h4 mb-0">Welcome, <%= first_name %></div>
+      <div class="vr vr-lg bg-su-process-black-50"></div>
+      <span class="text-uppercase"><%= degree %> student</span>
+    </div>
+  <% end %>
+  <% component.with_body do %>
+    <ul>
+      <li>You can leave and return to this page as often as needed while you prepare your thesis or dissertation for submission.</li>
+      <li>Your uploads and selections are saved automatically.</li>
+      <li>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</li>
+      <li>You can return to this page to check the status of your submission.</li>
+    </ul>
+    <div class="d-flex justify-content-between">
+      <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/graduate-degree-progress/dissertations-and-theses', label: 'Learn more about submitting your dissertation') %>
+      <div>Dissertation ID: <%= dissertation_id %></div>
+    </div>
+  <% end %>
+<% end %>

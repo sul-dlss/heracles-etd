@@ -13,6 +13,9 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'webmock/rspec'
 require 'cyperful/rspec' if ENV['CYPERFUL']
+# For view_component testing
+require 'view_component/test_helpers'
+require 'view_component/system_test_helpers'
 require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -78,4 +81,9 @@ RSpec.configure do |config|
   WebMock.disable_net_connect!(allow_localhost: true)
 
   config.include FactoryBot::Syntax::Methods
+
+  # For view_component testing
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
 end

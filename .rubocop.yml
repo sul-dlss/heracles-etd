@@ -47,6 +47,9 @@ Style/Documentation:
     - 'app/**/application_*.rb'
     - 'config/application.rb'
 
+RSpec/MultipleExpectations:
+  Enabled: false
+
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true
 Gemspec/AttributeAssignment: # new in 1.77
