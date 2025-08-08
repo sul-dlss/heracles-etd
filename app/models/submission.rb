@@ -2,9 +2,9 @@
 
 # Model for submissions.
 class Submission < ApplicationRecord
-  has_one_attached :dissertation_file
-  has_many_attached :supplemental_files
-  has_many_attached :permission_files
+  has_one_attached :dissertation_file, dependent: :purge_later
+  has_many_attached :supplemental_files, dependent: :purge_later
+  has_many_attached :permission_files, dependent: :purge_later
 
   validates :dissertation_id, presence: true
   validates :druid, presence: true
