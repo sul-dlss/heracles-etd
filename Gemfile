@@ -42,6 +42,7 @@ gem 'config'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
+gem 'state_machines-activerecord'
 gem 'view_component'
 
 group :development, :test do
