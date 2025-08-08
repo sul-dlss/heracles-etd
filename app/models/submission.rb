@@ -18,4 +18,16 @@ class Submission < ApplicationRecord
   def first_name
     name.split(', ').last
   end
+
+  def thesis?
+    etd_type == 'Thesis'
+  end
+
+  def bare_druid
+    druid&.delete_prefix('druid:')
+  end
+
+  def purl
+    "#{Settings.purl.url}/#{bare_druid}"
+  end
 end
