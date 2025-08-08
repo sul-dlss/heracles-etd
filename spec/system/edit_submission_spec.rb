@@ -20,6 +20,13 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_button('Review and submit', disabled: true)
     end
 
+    expect(page).to have_css('.progress-card li', count: 7)
+    within('.progress-card #step-1') do
+      expect(page).to have_text('Citation details verified')
+      expect(page).to have_css('.character-circle-disabled', text: '1')
+      expect(page).to have_no_css('.character-circle-success')
+    end
+
     # Step 1
     within(collapse_items[0]) do
       expect(page).to have_css('.collapse-header h2', text: 'Verify your citation details')
@@ -38,6 +45,12 @@ RSpec.describe 'Edit Submission' do
       click_button 'Undo your confirmation'
       # Collapse body
       click_button 'Confirm'
+    end
+
+    within('.progress-card #step-1') do
+      expect(page).to have_text('Citation details verified')
+      expect(page).to have_no_css('.character-circle-disabled')
+      expect(page).to have_css('.character-circle-success')
     end
 
     # Step 2

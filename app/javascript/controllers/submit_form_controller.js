@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 // This manages the expand/collapse and related functionality of the submitter form.
 export default class extends Controller {
-  static outlets = ['submit']
+  static outlets = ['submit', 'progress']
   static targets = ['collapse']
 
   collapseTargetConnected (element) {
@@ -25,6 +25,7 @@ export default class extends Controller {
 
     const stepNumber = collapseItemElement.dataset.stepNumber
     this.submitOutlets.forEach(outlet => outlet.stepDone(stepNumber))
+    this.progressOutlets.forEach(outlet => outlet.successStep(stepNumber))
   }
 
   expand (event) {
@@ -36,6 +37,7 @@ export default class extends Controller {
 
     const stepNumber = collapseItemElement.dataset.stepNumber
     this.submitOutlets.forEach(outlet => outlet.stepUndone(stepNumber))
+    this.progressOutlets.forEach(outlet => outlet.disableStep(stepNumber))
   }
 
   _toggleCollapseButton (collapseItemElement, disabled) {

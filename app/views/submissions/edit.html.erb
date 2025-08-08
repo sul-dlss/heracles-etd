@@ -2,7 +2,7 @@
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
     <%= form_with model: @submission, url: submission_path(@submission.dissertation_id) do |form| %>
-      <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit">
+      <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit" data-submit-form-progress-outlet=".progress-card">
 
         <%# STEP 1 %>
         <%= render Edit::CollapseItemComponent.new(step_number: 1,
@@ -110,6 +110,6 @@
     <% end %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
-    <%# TODO: Progress card %>
+    <%= render Edit::ProgressCardComponent.new %>
   </div>
 </div>
