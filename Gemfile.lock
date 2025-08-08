@@ -163,6 +163,9 @@ GEM
       geom2d (~> 0.4, >= 0.4.1)
       openssl (>= 2.2.1)
       strscan (>= 3.1.2)
+    honeybadger (6.0.4)
+      logger
+      ostruct
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.2.2)
@@ -224,6 +227,7 @@ GEM
     nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     openssl (3.3.0)
+    ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -457,6 +461,7 @@ DEPENDENCIES
   factory_bot_rails
   herb
   hexapdf
+  honeybadger
   importmap-rails
   jbuilder
   pg (~> 1.1)
