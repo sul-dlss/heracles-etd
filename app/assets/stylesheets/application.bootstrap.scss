@@ -52,4 +52,11 @@
   @extend .border-1;
 }
 
+.badge.badge-in-progress {
+  background-color: var(--stanford-40-black);
+}
+
+.badge.badge-completed {
+  @extend .text-bg-success;
+}
 

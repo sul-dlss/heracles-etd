@@ -19,31 +19,41 @@ export default class extends Controller {
     const target = event.currentTarget
 
     const collapseItemElement = target.closest('.collapse-item')
-    this.toggleCollapseButton(collapseItemElement, false)
-
-    const characterCircleElement = collapseItemElement.querySelector('.character-circle')
-    characterCircleElement.classList.replace('character-circle-disabled', 'character-circle-success')
+    this._toggleCollapseButton(collapseItemElement, false)
+    this._toggleBadges(collapseItemElement)
+    this._toggleCharacterCircle(collapseItemElement)
 
     const stepNumber = collapseItemElement.dataset.stepNumber
-
     this.submitOutlets.forEach(outlet => outlet.stepDone(stepNumber))
   }
 
   expand (event) {
     const target = event.currentTarget
     const collapseItemElement = target.closest('.collapse-item')
-    this.toggleCollapseButton(collapseItemElement, true)
-
-    const characterCircleElement = collapseItemElement.querySelector('.character-circle')
-    characterCircleElement.classList.replace('character-circle-success', 'character-circle-disabled')
+    this._toggleCollapseButton(collapseItemElement, true)
+    this._toggleBadges(collapseItemElement)
+    this._toggleCharacterCircle(collapseItemElement)
 
     const stepNumber = collapseItemElement.dataset.stepNumber
-
     this.submitOutlets.forEach(outlet => outlet.stepUndone(stepNumber))
   }
 
-  toggleCollapseButton (collapseItemElement, disabled) {
+  _toggleCollapseButton (collapseItemElement, disabled) {
     const buttonElement = collapseItemElement.querySelector('.collapse-header button')
     buttonElement.disabled = disabled
+  }
+
+  _toggleBadges (collapseItemElement) {
+    const inProgressBadge = collapseItemElement.querySelector('.badge-in-progress')
+    inProgressBadge.classList.toggle('d-none')
+
+    const completedBadge = collapseItemElement.querySelector('.badge-completed')
+    completedBadge.classList.toggle('d-none')
+  }
+
+  _toggleCharacterCircle (collapseItemElement) {
+    const characterCircleElement = collapseItemElement.querySelector('.character-circle')
+    characterCircleElement.classList.toggle('character-circle-disabled')
+    characterCircleElement.classList.toggle('character-circle-success')
   }
 }
