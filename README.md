@@ -1,3 +1,6 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sul-dlss/heracles-etd/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sul-dlss/heracles-etd/tree/main)
+[![codecov](https://codecov.io/gh/sul-dlss/heracles-etd/graph/badge.svg?token=YX0VEDM3J0)](https://codecov.io/gh/sul-dlss/heracles-etd)
+
 # heracles-etd
 
 ## Development
