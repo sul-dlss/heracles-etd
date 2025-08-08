@@ -2,6 +2,9 @@
 
 # Model for submissions.
 class Submission < ApplicationRecord
+  include SubmissionStateMachine
+
+  # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
   has_many_attached :supplemental_files, dependent: :purge_later
   has_many_attached :permission_files, dependent: :purge_later
