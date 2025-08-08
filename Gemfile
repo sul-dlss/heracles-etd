@@ -39,6 +39,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
+gem 'honeybadger'
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
 gem 'view_component'
 

@@ -16,3 +16,9 @@ To run linters individually, run which ones you need:
 * ERB templates: `bin/herb analyze app --no-log-file`
 * JavaScript code: `yarn run lint` (add `--fix` flag to autocorrect violations)
 * SCSS stylesheets: `yarn run stylelint` (add `--fix` flag to autocorrect violations)
+
+## Production
+
+### Monitoring
+
+The Honeybadger URL for monitoring this application is at https://app.honeybadger.io/projects/55164. Note: this Honeybadger project is used for both the Hydra & Heracles ETD applications.
