@@ -1,0 +1,36 @@
+<%= tag.div class: classes, data: do %>
+  <div class="collapse-header card-header">
+    <%= tag.div class: 'd-flex align-items-start' do %>
+      <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2') %></div>
+      <div class="flex-grow-1">
+        <div class="d-flex align-items-start">
+          <h2 class="h4"><%= title %></h2>
+        </div>
+        <div class="collapse-header-help">
+          <%= help_content %>
+        </div>
+      </div>
+      <div>
+        <%= render Elements::ButtonComponent.new(variant: :link, classes: 'text-nowrap', data: { bs_toggle: 'collapse', bs_target: "##{collapse_id}" }, 'aria-expanded': 'true', 'aria-controls': collapse_id, disabled: true) do %>
+          <div class="show-when-expanded"><%= editing_label %></div>
+          <div class="show-when-collapsed"><i class="bi bi-pencil"></i> <%= edit_label %></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= tag.div id: collapse_id, class: 'collapse show', data: { submit_form_target: 'collapse' } do %>
+    <div class="collapse-body card-body">
+      <%= body_content %>
+      <hr>
+      <% if footer_content %>
+        <%= footer_content %>
+      <% else %>
+        <div class="d-flex justify-content-between align-items-baseline">
+          <div><%= done_text %></div>
+          <%= render Elements::ButtonComponent.new(label: done_label, variant: :primary, data: { bs_toggle: 'collapse', bs_target: "##{collapse_id}" }, 'aria-expanded': 'true', 'aria-controls': collapse_id) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

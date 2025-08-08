@@ -1,2 +1,55 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+// Submit form
+.collapse-item {
+  button[aria-expanded="true"] {
+    .show-when-expanded {
+      display: inline;
+    }
+
+    .show-when-collapsed {
+      display: none;
+    }
+  }
+
+  button[aria-expanded="false"] {
+    .show-when-expanded {
+      display: none;
+    }
+
+    .show-when-collapsed {
+      display: inline;
+    }
+  }
+
+  .collapse-header-help p:last-of-type {
+    margin-bottom: 0;    
+  }
+}
+
+.character-circle {
+  @extend .d-inline-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  @extend .rounded-circle;
+  @extend .text-white;
+
+  width: 2em;
+  height: 2em;
+}
+
+.character-circle.character-circle-disabled {
+  background-color: var(--stanford-40-black);
+}
+
+.character-circle.character-circle-success {
+  @extend .bg-success;
+}
+
+.character-circle.character-circle-blank {
+  @extend .border;
+  @extend .border-1;
+}
+
+
