@@ -4,16 +4,14 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[edit update show]
 
-  def show
-    render plain: 'Not implemented yet'
-  end
+  def show; end
 
   def edit; end
 
   def update
     # All validation happens client-side, so not validating here.
     # TODO: Add update.
-    redirect_to edit_submission_path(@submission)
+    redirect_to submission_path(@submission.dissertation_id)
   end
 
   private

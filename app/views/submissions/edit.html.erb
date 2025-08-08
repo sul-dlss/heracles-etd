@@ -1,7 +1,113 @@
 <div class="row gy-2">
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
-    <%# TODO: Accordion %>
+    <%= form_with model: @submission, url: submission_path(@submission.dissertation_id) do |form| %>
+      <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit">
+
+        <%# STEP 1 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 1,
+                                                   title: 'Verify your citation details',
+                                                   edit_variant: :review,
+                                                   done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
+
+          <% component.with_help_content do %>
+            <p>This information establishes how your work will be cited, and how you will be credited.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 1 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 2 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 2,
+                                                   title: 'Enter your abstract') do |component| %>
+          <% component.with_help_content do %>
+            <p>This abstract will be indexed for online searching.</p>
+            <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 2 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 3 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 3,
+                                                   title: 'Review your dissertation\'s formatting',
+                                                   edit_variant: :review,
+                                                   done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
+
+          <% component.with_help_content do %>
+            <p>Your dissertation must be a PDF file.</p>
+            <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
+            <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 3 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 4 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 4,
+                                                   title: 'Upload your dissertation') do |component| %>
+          <% component.with_help_content do %>
+            <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 4 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 5 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 5,
+                                                   title: 'Upload permissions') do |component| %>
+          <% component.with_help_content do %>
+            <p>Permission is required for reuse of any copyrighted material in your dissertation.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 5 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 6 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 6,
+                                                   title: 'Apply copyright and license terms') do |component| %>
+          <% component.with_help_content do %>
+            <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%# TODO: Step 6 %>
+          <% end %>
+        <% end %>
+
+        <%# STEP 7 %>
+        <%= render Edit::CollapseItemComponent.new(step_number: 7,
+                                                   title: 'Review and submit to Registrar',
+                                                   data: { controller: 'submit' },
+                                                   classes: 'collapse-item-submit') do |component| %>
+
+          <% component.with_help_content do %>
+            <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+          <% end %>
+
+          <% component.with_body_content do %>
+            <%= render Elements::AlertComponent.new(value: 'You must complete sections 1-6 before you can review and submit to the Registrar.', variant: :danger, data: { submit_target: 'notReadyAlert' }) %>
+            <%= render Elements::AlertComponent.new(value: 'You have completed sections 1-6. You can now review and submit to the Registrar.', data: { submit_target: 'readyAlert' }) %>
+          <% end %>
+
+          <% component.with_footer_content do %>
+            <div class="d-flex justify-content-end align-items-baseline">
+              <%= render Elements::ButtonComponent.new(label: 'Review and submit', variant: :primary, type: :submit, data: { submit_target: 'submitButton' }) %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
     <%# TODO: Progress card %>
