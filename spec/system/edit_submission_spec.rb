@@ -24,12 +24,16 @@ RSpec.describe 'Edit Submission' do
     within(collapse_items[0]) do
       expect(page).to have_css('.collapse-header h2', text: 'Verify your citation details')
       expect(page).to have_css('.character-circle-disabled', text: '1')
+      expect(page).to have_css('.badge-in-progress', text: 'In Progress')
+      expect(page).to have_no_css('.badge-completed')
       expect(page).to have_button('Reviewing', disabled: true)
       expect(page).to have_content('By clicking Confirm, I verify ')
       click_button 'Confirm'
       # Body is collapsed.
       expect(page).to have_no_button('Confirm')
       expect(page).to have_css('.character-circle-success', text: '1')
+      expect(page).to have_no_css('.badge-in-progress')
+      expect(page).to have_css('.badge-completed', text: 'Completed')
       # Expand the body
       click_button 'Undo your confirmation'
       # Collapse body
