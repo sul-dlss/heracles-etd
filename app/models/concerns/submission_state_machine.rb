@@ -32,6 +32,25 @@ module SubmissionStateMachine
         transition cataloged: :accessioning
       end
 
+      before_transition submitted: :reader_approved do |submission|
+        submission.update!(last_reader_action_at: Time.zone.now)
+      end
+
+      before_transition reader_approved: :registrar_approved do |submission|
+        submission.update!(last_registrar_action_at: Time.zone.now)
+      end
+
+      before_transition registered_with_catalog: :registrar_approved do |submission|
+        submission.update!(ils_record_created_at: Time.zone.now)
+      end
+
+      before_transition cataloged: :registered_with_catalog do |submission|
+        submission.update!(ils_record_updated_at: Time.zone.now)
+      end
+
+      before_transition accessioning: :cataloged do |submission|
+        submission.update!(accessioning_started_at: Time.zone.now)
+      end
       # TBD: Do we need a state for "accessioned"?
     end
   end
