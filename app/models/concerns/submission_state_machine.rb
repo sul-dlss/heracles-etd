@@ -4,10 +4,10 @@
 module SubmissionStateMachine
   extend ActiveSupport::Concern
 
-  included do
+  included do # rubocop:disable Metrics/BlockLength
     # This represents the submission state during review and processing
     # This does not represent the version status in SDR.
-    state_machine :submission_state, initial: :registered do
+    state_machine :submission_state, initial: :registered do # rubocop:disable Metrics/BlockLength
       event :submitted do
         transition registered: :submitted
       end
