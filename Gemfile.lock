@@ -74,7 +74,12 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    ar_lazy_preload (1.1.2)
+      rails (>= 5.2)
     ast (2.4.3)
+    audited (5.8.0)
+      activerecord (>= 5.2, < 8.2)
+      activesupport (>= 5.2, < 8.2)
     base64 (0.3.0)
     benchmark (0.4.1)
     better_html (2.1.1)
@@ -89,6 +94,7 @@ GEM
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.3.0)
+    cancancan (3.6.1)
     capybara (3.40.0)
       addressable
       matrix
@@ -110,6 +116,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    csv (3.3.5)
     cyperful (0.3.1)
       capybara (~> 3)
       listen (~> 3)
@@ -203,6 +210,13 @@ GEM
     matrix (0.4.3)
     mini_mime (1.1.5)
     minitest (5.25.5)
+    motor-admin (0.4.37)
+      ar_lazy_preload (~> 1.0)
+      audited (~> 5.0)
+      cancancan (~> 3.0)
+      csv (>= 3.0)
+      fugit (~> 1.0)
+      rails (>= 5.2)
     msgpack (1.8.0)
     net-imap (0.5.9)
       date
@@ -469,6 +483,7 @@ DEPENDENCIES
   honeybadger
   importmap-rails
   jbuilder
+  motor-admin
   pg (~> 1.1)
   prawn
   propshaft
