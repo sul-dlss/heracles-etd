@@ -4,13 +4,19 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[edit update show]
 
-  def show; end
+  def show
+    authorize! @submission
+  end
 
-  def edit; end
+  def edit
+    authorize! @submission
+  end
 
   def update
     # All validation happens client-side, so not validating here.
-    @submission.update!(submission_params)
+    # TODO: Add update.
+    authorize! @submission
+
     redirect_to submission_path(@submission.dissertation_id)
   end
 
