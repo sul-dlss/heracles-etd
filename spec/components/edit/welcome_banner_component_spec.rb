@@ -3,7 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Edit::WelcomeBannerComponent, type: :component do
-  let(:submission) { create(:submission) }
+  let(:submission) { create(:submission, sunetid: user.sunetid) }
+  let(:user) { create(:user, first_name: 'Jane') }
+
+  before do
+    allow(Current).to receive(:user).and_return(user)
+  end
 
   it 'renders the welcome banner' do
     render_inline(described_class.new(submission: submission))
