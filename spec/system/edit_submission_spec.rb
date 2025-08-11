@@ -55,6 +55,8 @@ RSpec.describe 'Edit Submission' do
 
     # Step 2
     within(collapse_items[1]) do
+      expect(page).to have_button('Done', disabled: true)
+      fill_in 'Abstract', with: 'This is a sample abstract for testing.'
       click_button 'Done'
     end
 
@@ -87,5 +89,7 @@ RSpec.describe 'Edit Submission' do
 
     expect(page).to have_current_path(submission_path(submission.dissertation_id))
     expect(page).to have_content('Not implemented yet')
+
+    expect(submission.reload.abstract).to eq('This is a sample abstract for testing.')
   end
 end

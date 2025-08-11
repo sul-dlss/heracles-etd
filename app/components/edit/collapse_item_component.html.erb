@@ -30,7 +30,7 @@
       <% else %>
         <div class="d-flex justify-content-between align-items-baseline">
           <div><%= done_text %></div>
-          <%= render Elements::ButtonComponent.new(label: done_label, variant: :primary, data: { bs_toggle: 'collapse', bs_target: "##{collapse_id}" }, 'aria-expanded': 'true', 'aria-controls': collapse_id) %>
+          <%= render Elements::ButtonComponent.new(label: done_label, variant: :primary, data: done_data, 'aria-expanded': 'true', 'aria-controls': collapse_id) %>
         </div>
       <% end %>
     </div>

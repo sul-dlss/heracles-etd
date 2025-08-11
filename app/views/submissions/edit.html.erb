@@ -5,19 +5,7 @@
       <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit" data-submit-form-progress-outlet=".progress-card">
 
         <%= render Edit::Step1Component.new(submission: @submission) %>
-
-        <%# STEP 2 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 2,
-                                                   title: 'Enter your abstract') do |component| %>
-          <% component.with_help_content do %>
-            <p>This abstract will be indexed for online searching.</p>
-            <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
-          <% end %>
-
-          <% component.with_body_content do %>
-            <%# TODO: Step 2 %>
-          <% end %>
-        <% end %>
+        <%= render Edit::Step2Component.new(form: form) %>
 
         <%# STEP 3 %>
         <%= render Edit::CollapseItemComponent.new(step_number: 3,
