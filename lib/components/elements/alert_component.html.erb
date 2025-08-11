@@ -1,6 +1,6 @@
 <%= tag.div role: 'alert', class: classes, data:, id: do %>
   <% if icon? %>
-    <div class="fs-3 me-3 align-self-center d-flex justify-content-center"><%= icon %></div>
+    <%= tag.div class: icon_classes %>
   <% end %>
   <div class="text-body">
     <% if title.present? %>
