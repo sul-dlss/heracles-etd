@@ -15,8 +15,6 @@
 ```shell
 bin/dev
 
-```
-
 See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.
 
 ### Debugging locally
