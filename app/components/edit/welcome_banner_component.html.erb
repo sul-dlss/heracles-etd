@@ -1,7 +1,7 @@
 <%= render Elements::BannerComponent.new(variant: :note, title: 'Bookmark this page.') do |component| %>
   <% component.with_header do %>
     <div class="d-flex align-items-center gap-2">
-      <div class="h4 mb-0">Welcome, <%= first_name %></div>
+      <h2 class="h4 mb-0">Welcome, <%= first_name %></h2>
       <div class="vr vr-lg bg-su-process-black-50"></div>
       <span class="text-uppercase"><%= degree %> student</span>
     </div>
