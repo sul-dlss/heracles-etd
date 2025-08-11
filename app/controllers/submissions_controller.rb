@@ -10,7 +10,7 @@ class SubmissionsController < ApplicationController
 
   def update
     # All validation happens client-side, so not validating here.
-    # TODO: Add update.
+    @submission.update!(submission_params)
     redirect_to submission_path(@submission.dissertation_id)
   end
 
@@ -18,5 +18,9 @@ class SubmissionsController < ApplicationController
 
   def set_submission
     @submission = Submission.find_by!(dissertation_id: params[:id])
+  end
+
+  def submission_params
+    params.expect(submission: [:abstract])
   end
 end

@@ -7,7 +7,7 @@ module Edit
     renders_one :body_content
     renders_one :footer_content
     def initialize(step_number:, title:, edit_variant: :edit, data: {}, classes: [],
-                   done_text: 'Click Done to complete this section.', done_label: 'Done')
+                   done_text: 'Click Done to complete this section.', done_label: 'Done', done_data: {})
       @step_number = step_number
       @title = title
       @edit_variant = edit_variant.to_sym
@@ -15,6 +15,7 @@ module Edit
       @classes = classes
       @done_text = done_text
       @done_label = done_label
+      @done_data = done_data
 
       raise ArgumentError, 'Invalid edit variant' unless %i[edit review].include?(@edit_variant)
 
@@ -37,6 +38,10 @@ module Edit
 
     def classes
       merge_classes('collapse-item card mb-3', @classes)
+    end
+
+    def done_data
+      @done_data.merge(bs_toggle: 'collapse', bs_target: "##{collapse_id}")
     end
   end
 end
