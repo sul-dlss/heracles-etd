@@ -16,7 +16,7 @@ class Submission < ApplicationRecord
   validates :title, presence: true
 
   def first_name
-    name.split(', ').last
+    name&.split(', ')&.last || 'Aaron'
   end
 
   def thesis?

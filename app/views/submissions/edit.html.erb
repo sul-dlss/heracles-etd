@@ -58,6 +58,7 @@
 
           <% component.with_body_content do %>
             <%# TODO: Step 4 %>
+            <%= form.file_field :dissertation_file, direct_upload: true %>
           <% end %>
         <% end %>
 
@@ -70,6 +71,8 @@
 
           <% component.with_body_content do %>
             <%# TODO: Step 5 %>
+            <p>Upload any permissions you have received from copyright holders.</p>
+            <%= form.file_field :permission_files, multiple: true, direct_upload: true %>
           <% end %>
         <% end %>
 
