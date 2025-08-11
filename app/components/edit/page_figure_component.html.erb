@@ -1,0 +1,11 @@
+<div class="border border-1 position-relative" style="width: 95px; height: 135px;">
+  <div class="text-center"><small style="word-wrap: break-word; hyphens: auto;"><%= title %></small></div>
+  <% if with_x? %>
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <div class="bi bi-x-circle fs-1 text-danger"></div>
+    </div>
+  <% end %>
+  <% if footer %>
+    <div class="position-absolute bottom-0 start-50 translate-middle-x"><%= footer %></div>
+  <% end %>
+</div>

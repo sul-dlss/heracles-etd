@@ -1,0 +1,32 @@
+<%= render Edit::CollapseItemComponent.new(step_number: 3,
+                                           title: 'Review your dissertation\'s formatting',
+                                           edit_variant: :review,
+                                           done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
+
+  <% component.with_help_content do %>
+    <p>Your dissertation must be a PDF file.</p>
+    <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
+    <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <p>As the student author, this is the last opportunity to review your formatting. Most formatting errors are seen on the following pages.</p>
+
+    <%= render Elements::Tables::TableComponent.new(id: 'formatting-table', label: 'Formatting guidance', show_label: false) do |component| %>
+      <% component.with_row(label: 'Title Page', values: ['Should not be physically numbered but counts as page "i" (first page of submission).']) %>
+      <% component.with_row(label: 'Copyright and Signature Page (page ii and page iii)', values: ['These pages are inserted automatically; do not include them in your PDF file.']) %>
+      <% component.with_row(label: 'Abstract or Blank Page (page iv)', values: ['The page directly after the Title Page in your PDF file. This should be an Abstract for students who wish to include one or a blank page for those who do not.']) %>
+      <% component.with_row(label: 'Acknowledgements', values: ['Optional. If included, should be placed directly after the Abstract and before the Table of Contents.']) %>
+    <% end %>
+
+    <div class="d-flex justify-content-center gap-3">
+      <%= render Edit::PageFigureComponent.new(title: 'Title Page') %>
+      <%= render Edit::PageFigureComponent.new(title: 'Copyright', with_x: true) %>
+      <%= render Edit::PageFigureComponent.new(title: 'Signature Page', with_x: true) %>
+      <%= render Edit::PageFigureComponent.new(title: 'Abstract or Blank Page', footer: 'iv') %>
+      <%= render Edit::PageFigureComponent.new(title: 'Acknowledge&shy;ments (optional)'.html_safe, footer: 'v') %> <%# erb_lint:disable ErbSafety %>
+    </div>
+
+    <p>Lastly, ensure that you have at least 1 inch margin on all other sides of every page. Any text that runs off the page will be lost and is unrecoverable.</p>
+  <% end %>
+<% end %>
