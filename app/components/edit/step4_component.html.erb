@@ -1,0 +1,22 @@
+<%= render Edit::CollapseItemComponent.new(step_number: 4,
+                                           title: 'Upload your dissertation',
+                                           edit_variant: :review,
+                                           done_label: 'Confirm',
+                                           done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
+
+  <% component.with_help_content do %>
+    <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <p>
+      Your dissertation must be a single PDF file.
+      <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/dissertations-and-theses/prepare-your-work-submission/format', label: 'Review the Registrar\'s official submission guidelines') %>
+    </p>
+    <p>
+      After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
+    </p>
+    <%= render Edit::DissertationFileComponent.new(dissertation_file: form.object.dissertation_file) %>
+    <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf' %>
+  <% end %>
+<% end %>

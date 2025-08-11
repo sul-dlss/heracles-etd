@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :submissions, only: %i[edit update show]
+  resources :submissions, only: %i[edit update show] do
+    member do
+      get 'remove_dissertation_file'
+    end
+  end
 end

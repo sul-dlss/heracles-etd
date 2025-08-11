@@ -5,20 +5,9 @@
       <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit" data-submit-form-progress-outlet=".progress-card">
 
         <%= render Edit::Step1Component.new(submission: @submission) %>
-        <%= render Edit::Step2Component.new(form: form) %>
+        <%= render Edit::Step2Component.new(form:) %>
         <%= render Edit::Step3Component.new %>
-
-        <%# STEP 4 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 4,
-                                                   title: 'Upload your dissertation') do |component| %>
-          <% component.with_help_content do %>
-            <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
-          <% end %>
-
-          <% component.with_body_content do %>
-            <%# TODO: Step 4 %>
-          <% end %>
-        <% end %>
+        <%= render Edit::Step4Component.new(form:) %>
 
         <%# STEP 5 %>
         <%= render Edit::CollapseItemComponent.new(step_number: 5,
