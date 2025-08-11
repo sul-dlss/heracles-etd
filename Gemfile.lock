@@ -270,6 +270,11 @@ GEM
       racc (~> 1.4)
     openssl (3.3.0)
     ostruct (0.6.3)
+    overmind (2.5.1)
+    overmind (2.5.1-aarch64-linux)
+    overmind (2.5.1-arm-linux)
+    overmind (2.5.1-arm64-darwin)
+    overmind (2.5.1-x86_64-darwin)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -517,6 +522,7 @@ DEPENDENCIES
   honeybadger
   importmap-rails
   jbuilder
+  overmind
   pg (~> 1.1)
   prawn
   propshaft
