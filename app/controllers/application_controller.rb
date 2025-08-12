@@ -14,15 +14,14 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.new(
-      remote_user: request.env['REMOTE_USER'],
+      remote_user: request.env[REMOTE_USER_HEADER],
       groups: groups_from_request,
       orcid: orcid_from_request
     )
   end
 
   def deny_access
-    flash[:warning] = helpers.t('errors.not_authorized')
-    redirect_to main_app.root_path
+    render status: :unauthorized, html: 'You are unauthorized to see this'
   end
 
   # Returns the groups from shibboleth in production and the groups set in the
