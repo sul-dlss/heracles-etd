@@ -1,0 +1,130 @@
+<%= render Edit::CollapseItemComponent.new(step_number: 6,
+                                           title: 'Apply copyright and license terms',
+                                           data: { controller: 'step6' },
+                                           done_data: { step6_target: 'doneButton' }) do |component| %>
+  <% component.with_help_content do %>
+    <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Elements::Tables::TableComponent.new(id: 'copyright-details-table', label: 'Copyright and license terms details', show_label: false) do |component| %>
+      <% component.with_row(label: 'Copyright Statement', values: [copyright_statement]) %>
+      <% component.with_row(label: 'Stanford License') do |row_component| %>
+        <% row_component.with_cell do %>
+          <a data-bs-toggle="modal" href="#stanford-license-confirm" role="button">
+            <i class="bi bi-card-text me-1"></i> View the Stanford University publication license
+          </a>
+          <div class="form-check">
+            <%= form.checkbox :sulicense, { include_hidden: false, class: 'form-check-input', data: { action: 'change->step6#toggleButton', step6_target: 'licenseCheck' } }, 'true' %>
+            <%= form.label :sulicense, 'I have read and agree to the terms of the Stanford University license', class: 'form-check-label' %>
+          </div>
+        <% end %>
+      <% end %>
+      <% component.with_row(label: 'Creative Commons') do |row_component| %>
+        <% row_component.with_cell do %>
+          <a data-bs-toggle="modal" href="#cc-licenses" role="button">
+            <i class="bi bi-card-text me-1"></i> View the Creative Commons licenses
+          </a>
+          <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { action: 'change->step6#toggleButton', step6_target: 'ccLicenseSelect' } %> to my dissertation.</p>
+        <% end %>
+      <% end %>
+      <% component.with_row(label: 'External Release') do |row_component| %>
+        <% row_component.with_cell do %>
+          <p>
+            Stanford is committed to the timely and broad dissemination of the scholarly output of its students. In some cases,
+            however, it may be appropriate for a student to delay the release of his/her dissertation. For instance, a student
+            may opt to embargo the dissertation for a limited amount of time while a patent application is in process or while
+            pursuing commercial interests or other publication.
+          </p>
+          <p>
+            If an embargo is appropriate for you, please select one of the embargo options from the pulldown menu below. If you
+            have any questions about whether you should embargo your dissertation, please consult with your advisor.
+          </p>
+          <div class="d-flex align-items-baseline gap-2 mb-2 flex-wrap">
+          </div>
+          <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;' %> after final approval by the Registrar.</p>
+          <p>Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
+        <% end %>
+      <% end %>
+      <% component.with_row(label: 'Preview', values: ['Not implemented']) %>
+    <% end %>
+
+    <%= render Elements::ModalComponent.new(id: 'stanford-license-confirm') do |component| %>
+      <% component.with_header do %>
+        <div class="h3">Stanford University Thesis & Dissertation Publication License</div>
+      <% end %>
+
+      <% component.with_body do %>
+        <p>
+          In submitting a thesis or dissertation to Stanford, the Author grants The Trustees of
+          Leland Stanford Junior University (Stanford) the <strong>non-exclusive</strong>, worldwide, perpetual,
+          irrevocable right to reproduce, distribute, display and transmit Author's thesis or
+          dissertation, including any supplemental materials (the Work), in whole or in part in
+          such print and electronic formats as may be in existence now or developed in the future,
+          to sub-license others to do the same, and to preserve and protect the Work, subject
+          to any third-party release or display restrictions specified by Author on submission of
+          the Work to Stanford.
+        </p>
+        <p>
+          Author further represents and warrants that Author is the copyright holder of the Work,
+          and has obtained all necessary rights to permit Stanford to reproduce and distribute
+          third party materials contained in any part of the Work, including use of third-party images,
+          text, or music, as well as all necessary licenses relating to any non-public,
+          third-party software necessary to access, display, and run or print the Work.  Author is
+          solely responsible and will indemnify Stanford for any third party claims related
+          to the Work as submitted for publication.
+        </p>
+        <p>
+          Author warrants that the Work does not contain information protected by the Health Insurance
+          Portability and Accountability Act (HIPAA), the Family Educational Rights and
+          Privacy Act (FERPA), confidentiality agreements, or contain Stanford Prohibited, Restricted
+          or Confidential data described at <%= render Elements::ExternalLinkComponent.new(url: 'http://www.stanford.edu/group/security/securecomputing/dataclass_chart.html') %>,
+          or other data of a private nature.
+        </p>
+        <p>
+          Stanford is under no obligation to use, display or host the work in any way and may elect
+          not to use the work for any reason including copyright or other legal concerns,
+          financial resources, or programmatic need.
+        </p>
+      <% end %>
+
+      <% component.with_footer do %>
+        <div class="d-flex justify-content-end">
+          <%= render Elements::ButtonComponent.new(label: 'Close', variant: :primary, data: { bs_dismiss: 'modal' }) %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= render Elements::ModalComponent.new(id: 'cc-licenses') do |component| %>
+      <% component.with_header do %>
+        <div class="h3">Creative Commons Licenses</div>
+      <% end %>
+
+      <% component.with_body do %>
+        <p>
+          Stanford requires that all dissertations and theses submitted via this system have the Stanford License applied. The Stanford License specifically
+          gives Stanford the right to store and display your thesis or dissertation. Because Stanford will make your thesis or dissertation publicly
+          accessible, readers may locate your publication and may wish to use parts of it in their own work.
+        </p>
+        <p>
+          Because Stanford will make your thesis or dissertation publicly accessible, readers may locate your publication and may wish
+          to use parts of it in their own work. Because you hold the copyright to your work, your permission for that reuse is necessary.
+          By applying a Creative Commons license to your work, you make clear to users the terms and conditions under which they may reuse
+          your material, obviating the need for them to contact you directly. <strong>Applying a Creative Commons license does not take
+          away any of your rights; rather, it makes clear to readers of your work what kind of reuse you permit. </strong>
+        </p>
+        <p>
+          You may optionally apply one Creative Commons license from the menu below. <strong>Stanford Libraries recommends the "Attribution
+          Non-Commercial" license</strong> because it encourages open access and collaboration in the scholarly process. For more information
+          on Creative Commons license options, please see: <%= render Elements::ExternalLinkComponent.new(url: 'http://creativecommons.org/') %>.
+        </p>
+      <% end %>
+
+      <% component.with_footer do %>
+        <div class="d-flex justify-content-end">
+          <%= render Elements::ButtonComponent.new(label: 'Close', variant: :primary, data: { bs_dismiss: 'modal' }) %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -32,17 +32,7 @@
           <% end %>
         <% end %>
 
-        <%# STEP 6 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 6,
-                                                   title: 'Apply copyright and license terms') do |component| %>
-          <% component.with_help_content do %>
-            <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
-          <% end %>
-
-          <% component.with_body_content do %>
-            <%# TODO: Step 6 %>
-          <% end %>
-        <% end %>
+        <%= render Edit::Step6Component.new(submission: @submission, form:) %>
 
         <%# STEP 7 %>
         <%= render Edit::CollapseItemComponent.new(step_number: 7,
