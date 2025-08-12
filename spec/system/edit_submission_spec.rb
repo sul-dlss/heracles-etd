@@ -77,6 +77,23 @@ RSpec.describe 'Edit Submission' do
 
     # Step 6
     within(collapse_items[5]) do
+      expect(page).to have_button('Done', disabled: true)
+
+      click_link_or_button 'View the Stanford University publication license'
+      within('.modal#stanford-license-confirm') do
+        expect(page).to have_content('Stanford University Thesis & Dissertation Publication License')
+        click_button 'Close'
+      end
+
+      click_link_or_button 'View the Creative Commons licenses'
+      within('.modal#cc-licenses') do
+        expect(page).to have_content('Creative Commons Licenses')
+        click_button 'Close'
+      end
+
+      check 'I have read and agree to the terms of the Stanford University license'
+      select 'CC Attribution license', from: 'submission_cclicense'
+      select '6 months', from: 'submission_embargo'
       click_button 'Done'
     end
 
@@ -91,5 +108,9 @@ RSpec.describe 'Edit Submission' do
     expect(page).to have_content('Not implemented yet')
 
     expect(submission.reload.abstract).to eq('This is a sample abstract for testing.')
+    expect(submission.sulicense).to eq('true')
+    expect(submission.cclicense).to eq('1') # CC Attribution license
+    expect(submission.cclicensetype).to eq('CC Attribution license')
+    expect(submission.embargo).to eq('6 months')
   end
 end
