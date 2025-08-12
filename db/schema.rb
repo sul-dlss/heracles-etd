@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_09_032431) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -340,16 +340,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_032431) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "label", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "login", null: false
-    t.string "email"
-    t.string "crypted_password"
-    t.text "last_search_url"
-    t.datetime "last_login", precision: nil
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
