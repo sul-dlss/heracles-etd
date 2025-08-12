@@ -1,7 +1,7 @@
 <%= render Edit::CollapseItemComponent.new(step_number: 2,
                                            title: 'Enter your abstract',
-                                           data: { controller: 'abstract' },
-                                           done_data: { abstract_target: 'doneButton' }) do |component| %>
+                                           data: { controller: 'step2' },
+                                           done_data: { step2_target: 'doneButton' }) do |component| %>
   <% component.with_help_content do %>
     <p>This abstract will be indexed for online searching.</p>
     <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
@@ -14,7 +14,7 @@
       <%= form.label :abstract, class: 'form-label' do %>
         <span class="fw-bold">Abstract</span> <span class="text-danger">* Required</span>
       <% end %>
-      <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { action: 'keyup->abstract#toggleButton' } %>
+      <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { action: 'keyup->step2#toggleButton' } %>
     </div>
   <% end %>
 <% end %>

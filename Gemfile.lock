@@ -540,8 +540,8 @@ DEPENDENCIES
   honeybadger
   importmap-rails
   jbuilder
-  overmind
   motor-admin
+  overmind
   pg (~> 1.1)
   prawn
   propshaft

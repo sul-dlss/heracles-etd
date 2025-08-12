@@ -16,7 +16,9 @@ export default class extends Controller {
   }
 
   collapse (event) {
-    const target = event.currentTarget
+    const target = event.target
+    // This filters out collapses that are nested inside a step collapse.
+    if (!target.classList.contains('collapse-step')) return
 
     const collapseItemElement = target.closest('.collapse-item')
     this._toggleCollapseButton(collapseItemElement, false)
@@ -29,7 +31,10 @@ export default class extends Controller {
   }
 
   expand (event) {
-    const target = event.currentTarget
+    const target = event.target
+    // This filters out collapses that are nested inside a step collapse.
+    if (!target.classList.contains('collapse-step')) return
+
     const collapseItemElement = target.closest('.collapse-item')
     this._toggleCollapseButton(collapseItemElement, true)
     this._toggleBadges(collapseItemElement)
