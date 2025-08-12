@@ -1,64 +1,71 @@
+<% content_for :head do %>
+  <meta name="turbo-refresh-method" content="morph">
+  <meta name="turbo-refresh-scroll" content="preserve">
+<% end %>
+
 <div class="row gy-2">
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
-    <%= form_with model: @submission, url: submission_path(@submission.dissertation_id) do |form| %>
-      <div data-controller="submit-form" data-submit-form-submit-outlet=".collapse-item-submit" data-submit-form-progress-outlet=".progress-card">
+    <%= form_with model: @submission,
+                  url: submission_path(@submission.dissertation_id),
+                  data: { controller: 'submit-form' } do |form| %>
 
-        <%= render Edit::Step1Component.new(submission: @submission) %>
-        <%= render Edit::Step2Component.new(form: form) %>
-        <%= render Edit::Step3Component.new %>
+      <%= render Edit::Step1Component.new(submission_presenter: @submission_presenter, form:) %>
+      <%= render Edit::Step2Component.new(submission_presenter: @submission_presenter, form:) %>
+      <%= render Edit::Step3Component.new(submission_presenter: @submission_presenter, form:) %>
 
-        <%# STEP 4 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 4,
-                                                   title: 'Upload your dissertation') do |component| %>
-          <% component.with_help_content do %>
-            <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
-          <% end %>
+      <%# STEP 4 %>
+      <%= render Edit::StepComponent.new(step_number: 4,
+                                         title: 'Upload your dissertation', show: !@submission_presenter.step4_done?) do |component| %>
+        <% component.with_help_content do %>
+          <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+        <% end %>
 
-          <% component.with_body_content do %>
-            <%# TODO: Step 4 %>
+        <% component.with_body_content do %>
+          <%# TODO: Step 4 %>
+        <% end %>
+      <% end %>
+
+      <%# STEP 5 %>
+      <%= render Edit::StepComponent.new(step_number: 5,
+                                         title: 'Upload permissions', show: !@submission_presenter.step5_done?) do |component| %>
+        <% component.with_help_content do %>
+          <p>Permission is required for reuse of any copyrighted material in your dissertation.</p>
+        <% end %>
+
+        <% component.with_body_content do %>
+          <%# TODO: Step 5 %>
+        <% end %>
+      <% end %>
+
+      <%= render Edit::Step6Component.new(submission_presenter: @submission_presenter, form:) %>
+
+      <%# STEP 7 %>
+      <%= render Edit::StepComponent.new(step_number: 7,
+                                         title: 'Review and submit to Registrar',
+                                         classes: 'collapse-item-submit') do |component| %>
+
+        <% component.with_help_content do %>
+          <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+        <% end %>
+
+        <% component.with_body_content do %>
+          <% if @submission_presenter.all_done? %>
+            <%= render Elements::AlertComponent.new(value: 'You have completed sections 1-6. You can now review and submit to the Registrar.') %>
+          <% else %>
+            <%= render Elements::AlertComponent.new(value: 'You must complete sections 1-6 before you can review and submit to the Registrar.', variant: :danger) %>
           <% end %>
         <% end %>
 
-        <%# STEP 5 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 5,
-                                                   title: 'Upload permissions') do |component| %>
-          <% component.with_help_content do %>
-            <p>Permission is required for reuse of any copyrighted material in your dissertation.</p>
-          <% end %>
-
-          <% component.with_body_content do %>
-            <%# TODO: Step 5 %>
-          <% end %>
+        <% component.with_footer_content do %>
+          <div class="d-flex justify-content-end align-items-baseline">
+            <%= form.submit 'Review and submit', class: 'btn btn-primary', disabled: !@submission_presenter.all_done? %>
+          </div>
         <% end %>
-
-        <%= render Edit::Step6Component.new(submission: @submission, form:) %>
-
-        <%# STEP 7 %>
-        <%= render Edit::CollapseItemComponent.new(step_number: 7,
-                                                   title: 'Review and submit to Registrar',
-                                                   data: { controller: 'submit' },
-                                                   classes: 'collapse-item-submit') do |component| %>
-
-          <% component.with_help_content do %>
-            <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
-          <% end %>
-
-          <% component.with_body_content do %>
-            <%= render Elements::AlertComponent.new(value: 'You must complete sections 1-6 before you can review and submit to the Registrar.', variant: :danger, data: { submit_target: 'notReadyAlert' }) %>
-            <%= render Elements::AlertComponent.new(value: 'You have completed sections 1-6. You can now review and submit to the Registrar.', data: { submit_target: 'readyAlert' }) %>
-          <% end %>
-
-          <% component.with_footer_content do %>
-            <div class="d-flex justify-content-end align-items-baseline">
-              <%= render Elements::ButtonComponent.new(label: 'Review and submit', variant: :primary, type: :submit, data: { submit_target: 'submitButton' }) %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      <% end %>
     <% end %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Edit::ProgressCardComponent.new %>
+    <%= render Edit::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>
   </div>
 </div>

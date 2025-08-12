@@ -3,16 +3,22 @@
 module Edit
   # Component for editing step 6 of the submitter form
   class Step6Component < ApplicationComponent
-    def initialize(submission:, form:)
-      @submission = submission
+    def initialize(submission_presenter:, form:)
+      @submission_presenter = submission_presenter
       @form = form
       super()
     end
 
-    attr_reader :submission, :form
+    attr_reader :submission_presenter, :form
+
+    delegate :step6_done?, :first_last_name, to: :submission_presenter
+
+    def show?
+      !step6_done?
+    end
 
     def copyright_statement
-      "© #{Time.zone.today.year} by #{submission.first_last_name}. All rights reserved."
+      "© #{Time.zone.today.year} by #{first_last_name}. All rights reserved."
     end
 
     def cc_license_options

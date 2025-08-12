@@ -1,7 +1,8 @@
-<%= render Edit::CollapseItemComponent.new(step_number: 3,
-                                           title: 'Review your dissertation\'s formatting',
-                                           edit_variant: :review,
-                                           done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
+<%= render Edit::ReviewStepComponent.new(step_number: 3,
+                                         title: 'Review your dissertation\'s formatting',
+                                         form:, show: show?,
+                                         review_field: :format_reviewed,
+                                         done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
 
   <% component.with_help_content do %>
     <p>Your dissertation must be a PDF file.</p>

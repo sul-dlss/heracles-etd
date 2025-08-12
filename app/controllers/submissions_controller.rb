@@ -10,6 +10,8 @@ class SubmissionsController < ApplicationController
 
   def edit
     authorize! @submission
+
+    @submission_presenter = SubmissionPresenter.new(submission: @submission)
   end
 
   def update
@@ -17,7 +19,12 @@ class SubmissionsController < ApplicationController
     authorize! @submission
 
     @submission.update!(submission_params)
-    redirect_to submission_path(@submission.dissertation_id)
+    if params[:commit] == 'Review and submit'
+      # TODO: Implement review and submit.
+      redirect_to submission_path(@submission.dissertation_id)
+    else
+      redirect_to edit_submission_path(@submission.dissertation_id)
+    end
   end
 
   private
@@ -27,10 +34,11 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_params
-    params.expect(submission: %i[abstract sulicense cclicense embargo]).merge(cclicensetype:)
+    params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
+                                 format_reviewed]).merge(cclicensetype:)
   end
 
   def cclicensetype
-    CreativeCommonsLicense.find(params.dig(:submission, :cclicense)).name
+    CreativeCommonsLicense.find(params.dig(:submission, :cclicense))&.name
   end
 end

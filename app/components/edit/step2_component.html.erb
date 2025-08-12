@@ -1,7 +1,8 @@
-<%= render Edit::CollapseItemComponent.new(step_number: 2,
-                                           title: 'Enter your abstract',
-                                           data: { controller: 'step2' },
-                                           done_data: { step2_target: 'doneButton' }) do |component| %>
+<%= render Edit::StepComponent.new(step_number: 2,
+                                   title: 'Enter your abstract',
+                                   data: { controller: 'step2' },
+                                   show: show?,
+                                   done_data: { step2_target: 'doneButton' }, done_disabled: !step2_done?) do |component| %>
   <% component.with_help_content do %>
     <p>This abstract will be indexed for online searching.</p>
     <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>

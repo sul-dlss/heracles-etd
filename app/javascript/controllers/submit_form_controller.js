@@ -2,65 +2,38 @@ import { Controller } from '@hotwired/stimulus'
 
 // This manages the expand/collapse and related functionality of the submitter form.
 export default class extends Controller {
-  static outlets = ['submit', 'progress']
-  static targets = ['collapse']
-
-  collapseTargetConnected (element) {
-    element.addEventListener('show.bs.collapse', this.expand.bind(this))
-    element.addEventListener('hide.bs.collapse', this.collapse.bind(this))
-  }
-
-  collapseTargetDisconnected (element) {
-    element.removeEventListener('show.bs.collapse', this.expand.bind(this))
-    element.removeEventListener('hide.bs.collapse', this.collapse.bind(this))
-  }
-
-  collapse (event) {
+  toggle (event) {
     const target = event.target
-    // This filters out collapses that are nested inside a step collapse.
-    if (!target.classList.contains('collapse-step')) return
 
+    // Toggle the edit button
     const collapseItemElement = target.closest('.collapse-item')
-    this._toggleCollapseButton(collapseItemElement, false)
-    this._toggleBadges(collapseItemElement)
-    this._toggleCharacterCircle(collapseItemElement)
+    const buttonElement = collapseItemElement.querySelector('.btn-edit')
+    buttonElement.classList.toggle('d-none')
 
-    const stepNumber = collapseItemElement.dataset.stepNumber
-    this.submitOutlets.forEach(outlet => outlet.stepDone(stepNumber))
-    this.progressOutlets.forEach(outlet => outlet.successStep(stepNumber))
+    const collapseElement = document.querySelector(target.dataset.bsTarget)
+    const collapse = bootstrap.Collapse.getOrCreateInstance(collapseElement) // eslint-disable-line no-undef
+    collapse.toggle()
   }
 
-  expand (event) {
+  toggleAndSubmit (event) {
     const target = event.target
-    // This filters out collapses that are nested inside a step collapse.
-    if (!target.classList.contains('collapse-step')) return
+    const collapseElement = document.querySelector(target.dataset.bsTarget)
 
-    const collapseItemElement = target.closest('.collapse-item')
-    this._toggleCollapseButton(collapseItemElement, true)
-    this._toggleBadges(collapseItemElement)
-    this._toggleCharacterCircle(collapseItemElement)
+    // Adding event listeners so that the form is submitted once the collapse is complete.
+    const handler = function () {
+      // Remove itself
+      collapseElement.removeEventListener('shown.bs.collapse', handler)
+      collapseElement.removeEventListener('hidden.bs.collapse', handler)
 
-    const stepNumber = collapseItemElement.dataset.stepNumber
-    this.submitOutlets.forEach(outlet => outlet.stepUndone(stepNumber))
-    this.progressOutlets.forEach(outlet => outlet.disableStep(stepNumber))
+      this.toggleDone()
+    }.bind(this)
+    collapseElement.addEventListener('shown.bs.collapse', handler)
+    collapseElement.addEventListener('hidden.bs.collapse', handler)
+
+    this.toggle(event)
   }
 
-  _toggleCollapseButton (collapseItemElement, disabled) {
-    const buttonElement = collapseItemElement.querySelector('.collapse-header button')
-    buttonElement.disabled = disabled
-  }
-
-  _toggleBadges (collapseItemElement) {
-    const inProgressBadge = collapseItemElement.querySelector('.badge-in-progress')
-    inProgressBadge.classList.toggle('d-none')
-
-    const completedBadge = collapseItemElement.querySelector('.badge-completed')
-    completedBadge.classList.toggle('d-none')
-  }
-
-  _toggleCharacterCircle (collapseItemElement) {
-    const characterCircleElement = collapseItemElement.querySelector('.character-circle')
-    characterCircleElement.classList.toggle('character-circle-disabled')
-    characterCircleElement.classList.toggle('character-circle-success')
+  toggleDone () {
+    this.element.requestSubmit()
   }
 }

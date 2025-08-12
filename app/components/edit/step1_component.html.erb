@@ -1,7 +1,8 @@
-<%= render Edit::CollapseItemComponent.new(step_number: 1,
-                                           title: 'Verify your citation details',
-                                           edit_variant: :review,
-                                           done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
+<%= render Edit::ReviewStepComponent.new(step_number: 1,
+                                         title: 'Verify your citation details',
+                                         form:, show: show?,
+                                         review_field: :citation_verified,
+                                         done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
 
   <% component.with_help_content do %>
     <p>This information establishes how your work will be cited, and how you will be credited.</p>
@@ -12,21 +13,21 @@
       <h3 id="citation-details-header" class="h4">Citation details</h3>
       <p>If the information that appears here is incorrect, please consult with your department in order to correct the data in Axess.</p>
       <%= render Elements::Tables::TableComponent.new(id: 'citation-details-table', label: 'Citation details', show_label: false) do |component| %>
-        <% component.with_row(label: 'School', values: [submission.schoolname]) %>
-        <% component.with_row(label: 'Department', values: [submission.department]) %>
-        <% component.with_row(label: 'Degree', values: [submission.degree]) %>
-        <% component.with_row(label: 'Major', values: [submission.major]) %>
-        <% component.with_row(label: 'Degree Conferral Year', values: [submission.degreeconfyr]) %>
-        <% component.with_row(label: 'Title', values: [submission.title]) %>
+        <% component.with_row(label: 'School', values: [schoolname]) %>
+        <% component.with_row(label: 'Department', values: [department]) %>
+        <% component.with_row(label: 'Degree', values: [degree]) %>
+        <% component.with_row(label: 'Major', values: [major]) %>
+        <% component.with_row(label: 'Degree Conferral Year', values: [degreeconfyr]) %>
+        <% component.with_row(label: 'Title', values: [title]) %>
       <% end %>
     </section>
     <section aria-labelledby="orcid-details-header" class="mt-4">
       <h3 id="orcid-details-header" class="h4">ORCID iD (Optional)</h3>
       <p>An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher.</p>
       <%= render Elements::Tables::TableComponent.new(id: 'orcid-details-table', label: 'ORCID iD details', show_label: false) do |component| %>
-        <% component.with_row(label: 'ORCID iD', values: [submission.orcid || 'Not found']) %>
+        <% component.with_row(label: 'ORCID iD', values: [orcid || 'Not found']) %>
       <% end %>
-      <% if submission.orcid.present? %>
+      <% if orcid.present? %>
         <%= render Elements::AlertComponent.new(title: 'Your ORCID iD') do %>
           <p class="mb-0">You have an ORCID iD connected with your Stanford SUNet ID.</p>
           <ul class="mb-0">

@@ -1,7 +1,7 @@
-<%= render Edit::CollapseItemComponent.new(step_number: 6,
-                                           title: 'Apply copyright and license terms',
-                                           data: { controller: 'step6' },
-                                           done_data: { step6_target: 'doneButton' }) do |component| %>
+<%= render Edit::StepComponent.new(step_number: 6,
+                                   title: 'Apply copyright and license terms',
+                                   data: { controller: 'step6' }, show: show?,
+                                   done_data: { step6_target: 'doneButton' }, done_disabled: !step6_done?) do |component| %>
   <% component.with_help_content do %>
     <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
   <% end %>
