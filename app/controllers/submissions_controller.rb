@@ -2,7 +2,7 @@
 
 # Controller for Submissions
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: %i[edit update show]
+  before_action :set_submission
 
   def show; end
 
@@ -11,6 +11,14 @@ class SubmissionsController < ApplicationController
   def update
     # All validation happens client-side, so not validating here.
     @submission.update!(submission_params)
+    redirect_to review_submission_path(@submission.dissertation_id)
+  end
+
+  def review
+  end
+
+  def submit
+    # TODO: Submit to Registrar.
     redirect_to submission_path(@submission.dissertation_id)
   end
 

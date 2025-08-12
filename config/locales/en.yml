@@ -28,4 +28,7 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  step1:
+    help_html: >-
+      <p>This information establishes how your work will be cited, and how you will be credited.</p>
+
