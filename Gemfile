@@ -63,6 +63,7 @@ end
 
 group :development do
   gem 'erb_lint', require: false
+  gem 'motor-admin'
   gem 'overmind'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
