@@ -2,6 +2,3 @@
 import '@hotwired/turbo-rails'
 import 'controllers'
 import * as bootstrap from 'bootstrap' // eslint-disable-line no-unused-vars
-import * as ActiveStorage from "@rails/activestorage"
-
-ActiveStorage.start()

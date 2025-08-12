@@ -1,4 +1,4 @@
-    <%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table', label: 'Dissertation file', show_label: false) do |component| %>
+    <%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table', label: 'Dissertation file', show_label: false, data: { direct_uploads_target: 'dissertationFile' }) do |component| %>
       <% component.with_headers([
                                   { label: 'Dissertation File (maximum size 1GB)' },
                                   { label: 'Type' },

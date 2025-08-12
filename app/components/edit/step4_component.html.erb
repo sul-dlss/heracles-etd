@@ -16,7 +16,9 @@
     <p>
       After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
     </p>
-    <%= render Edit::DissertationFileComponent.new(dissertation_file: form.object.dissertation_file) %>
-    <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf' %>
+    <div data-controller="direct-uploads">
+      <%= render Edit::DissertationFileComponent.new(dissertation_file: form.object.dissertation_file) %>
+      <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf', data: { direct_uploads_target: 'input', action: 'direct-uploads#start' } %>
+    </div>
   <% end %>
 <% end %>
