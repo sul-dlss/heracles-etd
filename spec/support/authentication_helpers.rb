@@ -2,26 +2,16 @@
 
 # Helpers to assist with authentication.
 module AuthenticationHelpers
-  # Used by login and logout tests.
-  def authentication_headers_for(user, groups: [])
-    {
-      Authentication::REMOTE_USER_HEADER => user.email_address,
-      Authentication::FULL_NAME_HEADER => user.name,
-      Authentication::FIRST_NAME_HEADER => user.first_name,
-      Authentication::USER_GROUPS_HEADER => groups.join(';')
-    }
+  def sign_in(login = nil, groups: [])
+    TestShibbolethHeaders.user = login
+    TestShibbolethHeaders.groups = groups
+    TestShibbolethHeaders.orcid = Settings.test_orcid
   end
 
-  def sign_in(user, groups: [], example: RSpec.current_example)
-    if example.metadata[:type] == :system
-      visit test_login_path(id: user.id, groups: groups.join(';'))
-    else
-      get test_login_path(id: user.id, groups: groups.join(';'))
-    end
-  end
-
-  def request_sign_in(user, groups: [])
-    visit test_login_path(id: user.id, groups: groups.join(';'))
+  def sign_out
+    TestShibbolethHeaders.user = nil
+    TestShibbolethHeaders.groups = nil
+    TestShibbolethHeaders.orcid = nil
   end
 
   RSpec.configure do |config|

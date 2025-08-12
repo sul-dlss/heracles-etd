@@ -3,17 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit Submission' do
-  let(:submission) { create(:submission, sunetid: user.sunetid) }
-  let(:user) { create(:user) }
+  let(:submission) { create(:submission) }
 
   before do
-    sign_in(user)
+    sign_in(submission.sunetid)
   end
 
   it 'allows the user to edit a submission' do
     visit edit_submission_path(submission.dissertation_id)
 
-    expect(page).to have_content("Welcome, #{user.first_name}")
+    expect(page).to have_content("Welcome, #{submission.first_name}")
 
     collapse_items = page.all('.collapse-item')
     expect(collapse_items.length).to eq(7)
@@ -94,7 +93,6 @@ RSpec.describe 'Edit Submission' do
 
     expect(page).to have_current_path(submission_path(submission.dissertation_id))
     expect(page).to have_content('Not implemented yet')
-
     expect(submission.reload.abstract).to eq('This is a sample abstract for testing.')
   end
 end

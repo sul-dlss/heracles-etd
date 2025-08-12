@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 # Models the logged in user
-class User < ApplicationRecord
+class User
   EMAIL_SUFFIX = '@stanford.edu'
 
-  def sunetid
-    email_address.delete_suffix(EMAIL_SUFFIX)
+  def initialize(remote_user:, groups: [], orcid: nil)
+    @remote_user = remote_user
+    @sunetid = remote_user.split('@').first
+    @groups = Groups.new(groups:)
+    @orcid = orcid
   end
+
+  attr_reader :sunetid, :groups, :orcid
 end
