@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Show::StepComponent, type: :component do
+  it 'renders the component' do
+    render_inline(described_class.new(step_number: 1, title: 'Citation details'))
+
+    header = page.find('.card .card-header')
+    expect(header).to have_css('.character-circle-success', text: '1')
+    expect(header).to have_css('h2', text: 'Citation details')
+    expect(header).to have_css('.badge-completed')
+  end
+
+  context 'with help content' do
+    it 'renders the help content' do
+      render_inline(described_class.new(step_number: 5, title: 'Step 5')) do |component|
+        component.with_help_content { '<p>Helpful information here.</p>'.html_safe }
+      end
+
+      expect(page).to have_css('.card .card-header .header-help p',
+                               text: 'Helpful information here.')
+    end
+  end
+
+  context 'with body content' do
+    it 'renders the body content' do
+      render_inline(described_class.new(step_number: 6, title: 'Step 6')) do |component|
+        component.with_body_content { '<p>Body content goes here.</p>'.html_safe }
+      end
+
+      expect(page).to have_css('.card .card-body p', text: 'Body content goes here.')
+    end
+  end
+end

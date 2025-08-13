@@ -1,0 +1,7 @@
+<%= turbo_frame_tag @submission, 'review', data: { controller: 'frame-reload' } do %>
+  <%= render Elements::AlertComponent.new(variant: :warning) do %>
+    After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.
+  <% end %>
+
+  <%= render Show::Step1Component.new(submission: @submission) %>
+<% end %>

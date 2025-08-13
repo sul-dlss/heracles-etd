@@ -5,47 +5,10 @@
                                          done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
 
   <% component.with_help_content do %>
-    <p>This information establishes how your work will be cited, and how you will be credited.</p>
+    <%= t('step1.help_html') %>
   <% end %>
 
   <% component.with_body_content do %>
-    <section aria-labelledby="citation-details-header">
-      <h3 id="citation-details-header" class="h4">Citation details</h3>
-      <p>If the information that appears here is incorrect, please consult with your department in order to correct the data in Axess.</p>
-      <%= render Elements::Tables::TableComponent.new(id: 'citation-details-table', label: 'Citation details', show_label: false) do |component| %>
-        <% component.with_row(label: 'School', values: [schoolname]) %>
-        <% component.with_row(label: 'Department', values: [department]) %>
-        <% component.with_row(label: 'Degree', values: [degree]) %>
-        <% component.with_row(label: 'Major', values: [major]) %>
-        <% component.with_row(label: 'Degree Conferral Year', values: [degreeconfyr]) %>
-        <% component.with_row(label: 'Title', values: [title]) %>
-      <% end %>
-    </section>
-    <section aria-labelledby="orcid-details-header" class="mt-4">
-      <h3 id="orcid-details-header" class="h4">ORCID iD (Optional)</h3>
-      <p>An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher.</p>
-      <%= render Elements::Tables::TableComponent.new(id: 'orcid-details-table', label: 'ORCID iD details', show_label: false) do |component| %>
-        <% component.with_row(label: 'ORCID iD', values: [orcid || 'Not found']) %>
-      <% end %>
-      <% if orcid.present? %>
-        <%= render Elements::AlertComponent.new(title: 'Your ORCID iD') do %>
-          <p class="mb-0">You have an ORCID iD connected with your Stanford SUNet ID.</p>
-          <ul class="mb-0">
-            <li>You can review or change your SUNetID connection at <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>.</li>
-          </ul>
-          <p class="fst-italic mb-0"><%= orcid_text %></p>
-        <% end %>
-      <% else %>
-        <%= render Elements::AlertComponent.new(title: 'ORCID iD not found', variant: :warning) do %>
-          <p class="mb-0">You do not have an ORCID iD connected with your Stanford SUNet ID. You are encouraged but not required to connect your ORCID iD.</p>
-          <ul class="mb-0">
-            <li>If you do not have an ORCID iD yet, you can get one at <%= render Elements::ExternalLinkComponent.new(url: 'https://orcid.org', classes: 'ms-1') %>.</li>
-            <li>Then connect it to your Stanford SUNet ID at <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>.</li>
-            <li>After connecting it to your SUNet ID, you will need to log out and log back in for your ORCID iD to appear on this page. You do not need to wait for it to appear before submitting your thesis or dissertation.</li>
-          </ul>
-          <p class="fst-italic mb-0"><%= orcid_text %></p>
-        <% end %>
-      <% end %>
-    </section>
+    <%= render Shared::Step1BodyComponent.new(submission: submission_presenter) %>
   <% end %>
 <% end %>
