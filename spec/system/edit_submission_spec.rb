@@ -118,6 +118,9 @@ RSpec.describe 'Edit Submission' do
 
         # Step 1
         expect(page).to have_css('h2', text: 'Citation details')
+        # Step 2
+        expect(page).to have_css('h2', text: 'Abstract')
+        expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
 
         click_link_or_button 'Submit to Registrar'
       end
