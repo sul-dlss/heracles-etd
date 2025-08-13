@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Edit::Step6Component, type: :component do
   let(:submission) { create(:submission, name: 'Doe, Jane') }
-
+  let(:submission_presenter) { SubmissionPresenter.new(submission:) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, submission, vc_test_controller.view_context, {}) }
 
   it 'renders the component' do
-    render_inline(described_class.new(submission:, form:))
+    render_inline(described_class.new(submission_presenter:, form:))
     expect(page).to have_css('h2', text: 'Apply copyright and license terms')
     rows = page.all('table#copyright-details-table tr')
     expect(rows[0]).to have_css('th', text: 'Copyright Statement')

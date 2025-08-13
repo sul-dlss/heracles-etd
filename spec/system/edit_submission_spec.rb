@@ -50,7 +50,7 @@ RSpec.describe 'Edit Submission' do
         expect(page).to have_css('.character-circle-disabled', text: '1')
         expect(page).to have_css('.badge-in-progress', text: 'In Progress')
         expect(page).to have_no_css('.badge-completed')
-        expect(page).to have_button('Reviewing', disabled: true)
+        expect(page).to have_no_button('Undo your confirmation')
         expect(page).to have_content('By clicking Confirm, I verify ')
         click_button 'Confirm'
         # Body is collapsed.
@@ -82,15 +82,7 @@ RSpec.describe 'Edit Submission' do
         click_button 'Confirm'
       end
 
-      # Step 4
-      within(collapse_items[3]) do
-        click_button 'Done'
-      end
-
-      # Step 5
-      within(collapse_items[4]) do
-        click_button 'Done'
-      end
+      # Step 4 and 5 are not implemented yet.
 
       # Step 6
       within(collapse_items[5]) do
@@ -124,7 +116,9 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_current_path(submission_path(submission.dissertation_id))
       expect(page).to have_content('Not implemented yet')
 
-      expect(submission.reload.abstract).to eq('This is a sample abstract for testing.')
+      expect(submission.reload.citation_verified).to eq('true')
+      expect(submission.abstract).to eq('This is a sample abstract for testing.')
+      expect(submission.format_reviewed).to eq('true')
       expect(submission.sulicense).to eq('true')
       expect(submission.cclicense).to eq('1') # CC Attribution license
       expect(submission.cclicensetype).to eq('CC Attribution license')

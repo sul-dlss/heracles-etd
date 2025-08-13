@@ -2,41 +2,63 @@
 
 require 'rails_helper'
 
-RSpec.describe Edit::CollapseItemComponent, type: :component do
+RSpec.describe Edit::StepComponent, type: :component do
   let(:submission) { create(:submission) }
 
-  it 'renders the collapse item' do
+  it 'renders the step' do
     render_inline(described_class.new(step_number: 2, title: 'Step 2'))
 
     header = page.find('.collapse-item .collapse-header')
     expect(header).to have_css('.character-circle-disabled', text: '2')
     expect(header).to have_css('h2', text: 'Step 2')
-    expect(header).to have_css('button .show-when-expanded', text: 'Editing')
-    expect(header).to have_css('button .show-when-collapsed', text: 'Edit this section')
+    expect(header).to have_css('.badge-in-progress:not(.d-none)', text: 'In Progress')
+    expect(header).to have_css('.badge-completed.d-none', text: 'Completed')
+    expect(header).to have_button('Edit this section', class: 'd-none')
+
+    expect(page).to have_css('.collapse-item .collapse.show')
 
     body = page.find('.collapse-item .collapse-body')
     expect(body).to have_content('Click Done to complete this section.')
-    expect(body).to have_button('Done')
+    expect(body).to have_css('button[data-action="submit-form#toggleAndSubmit"][data-bs-target="#collapse_2"]',
+                             text: 'Done')
   end
 
-  context 'when a review variant' do
-    it 'renders the review labels' do
-      render_inline(described_class.new(step_number: 3, title: 'Step 3', edit_variant: :review))
+  context 'when not showing the step' do
+    it 'renders the step item with collapsed state' do
+      render_inline(described_class.new(step_number: 2, title: 'Step 2', show: false))
 
       header = page.find('.collapse-item .collapse-header')
-      expect(header).to have_css('button .show-when-expanded', text: 'Reviewing')
-      expect(header).to have_css('button .show-when-collapsed', text: 'Undo your confirmation')
+      expect(header).to have_css('.character-circle-success', text: '2')
+      expect(header).to have_css('.badge-in-progress.d-none', text: 'In Progress')
+      expect(header).to have_css('.badge-completed:not(.d-none)', text: 'Completed')
+      expect(header).to have_css('button:not(.d-none)', text: 'Edit this section')
+
+      expect(page).to have_css('.collapse-item .collapse:not(.show)')
     end
   end
 
-  context 'when done text and label are provided' do
+  context 'when done params are provided' do
     it 'uses the provided text and label' do
       render_inline(described_class.new(step_number: 4, title: 'Step 4', done_text: 'Finish this section',
-                                        done_label: 'Finish'))
+                                        done_label: 'Finish', done_data: { action: 'my-action#finish' },
+                                        done_disabled: true))
 
       body = page.find('.collapse-item .collapse-body')
       expect(body).to have_content('Finish this section')
-      expect(body).to have_button('Finish')
+      expect(body).to have_css('button[data-action="my-action#finish submit-form#toggleAndSubmit"][disabled]',
+                               text: 'Finish')
+    end
+  end
+
+  context 'when edit params are provided' do
+    it 'uses the provided edit label and data' do
+      render_inline(described_class.new(step_number: 3, title: 'Step 3',
+                                        edit_label: 'Modify this section',
+                                        edit_data: { action: 'edit-form#modify' }))
+
+      header = page.find('.collapse-item .collapse-header')
+      expect(header).to have_css('button.d-none[data-action="edit-form#modify"][data-bs-target="#collapse_3"]',
+                                 text: 'Modify this section')
     end
   end
 
