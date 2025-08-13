@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   REMOTE_USER_HEADER = 'REMOTE_USER'
   ORCID_ID_HEADER =  'eduPersonOrcid'
 
+  verify_authorized
+
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.

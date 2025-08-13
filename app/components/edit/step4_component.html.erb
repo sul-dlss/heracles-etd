@@ -18,7 +18,14 @@
     </p>
     <div data-controller="direct-uploads">
       <%= render Edit::DissertationFileComponent.new(dissertation_file: form.object.dissertation_file) %>
-      <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf', data: { direct_uploads_target: 'input', action: 'direct-uploads#start' } %>
+      <%= form.file_field :dissertation_file,
+                          direct_upload: true,
+                          accept: 'application/pdf',
+                          data: {
+                            direct_uploads_target: 'input',
+                            action: 'direct-uploads#start',
+                            direct_uploads_type_param: 'dissertation_file'
+                          } %>
     </div>
   <% end %>
 <% end %>

@@ -18,8 +18,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :submissions, only: %i[edit update show] do
-    member do
-      get 'remove_dissertation_file'
-    end
+    resources :attachments, only: %i[create destroy]
   end
 end

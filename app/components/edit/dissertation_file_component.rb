@@ -33,7 +33,7 @@ module Edit
     def dissertation_file_remove_link
       return unless attached?
 
-      link_to('Remove', remove_dissertation_file_submission_path(submission.dissertation_id))
+      link_to('Remove', submission_attachment_path(submission.dissertation_id, file_id: dissertation_file.id))
     end
 
     def submission
