@@ -113,6 +113,15 @@ RSpec.describe 'Edit Submission' do
         click_button('Review and submit')
       end
 
+      within('.modal#review-modal') do
+        expect(page).to have_content('Review and submit')
+
+        # Step 1
+        expect(page).to have_css('h2', text: 'Citation details')
+
+        click_link_or_button 'Submit to Registrar'
+      end
+
       expect(page).to have_current_path(submission_path(submission.dissertation_id))
       expect(page).to have_content('Not implemented yet')
 

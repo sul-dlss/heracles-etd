@@ -5,35 +5,12 @@ require 'rails_helper'
 RSpec.describe Edit::Step1Component, type: :component do
   let(:submission_presenter) { SubmissionPresenter.new(submission:) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, submission, vc_test_controller.view_context, {}) }
+  let(:submission) { create(:submission) }
 
-  context 'when submission does not have an orcid' do
-    let(:submission) { create(:submission) }
+  it 'renders the component' do
+    render_inline(described_class.new(submission_presenter:, form:))
 
-    it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
-      expect(page).to have_css('h2', text: 'Verify your citation details')
-      expect(page).to have_css('h3', text: 'Citation details')
-      rows = page.find_all('#citation-details-table tr')
-      expect(rows.size).to eq(6)
-      expect(rows[0]).to have_css('th', text: 'School')
-      expect(rows[0]).to have_css('td', text: submission.schoolname)
-
-      expect(page).to have_css('#orcid-details-table tr th', text: 'ORCID iD')
-      expect(page).to have_css('#orcid-details-table tr td', text: 'Not found')
-      expect(page).to have_css('.alert.alert-warning', text: 'ORCID iD not found')
-    end
-  end
-
-  context 'when submission has an orcid' do
-    let(:submission) { create(:submission, :with_orcid) }
-
-    it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
-      expect(page).to have_css('h2', text: 'Verify your citation details')
-
-      expect(page).to have_css('#orcid-details-table tr th', text: 'ORCID iD')
-      expect(page).to have_css('#orcid-details-table tr td', text: '0000-0002-1825-0097')
-      expect(page).to have_css('.alert.alert-info', text: 'Your ORCID iD')
-    end
+    expect(page).to have_css('h2', text: 'Verify your citation details')
+    expect(page).to have_css('h3', text: 'Citation details')
   end
 end

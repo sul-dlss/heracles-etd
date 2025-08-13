@@ -2,7 +2,7 @@
 
 # Controller for Submissions
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: %i[edit update show]
+  before_action :set_submission
 
   def show
     authorize! @submission
@@ -19,12 +19,17 @@ class SubmissionsController < ApplicationController
     authorize! @submission
 
     @submission.update!(submission_params)
-    if params[:commit] == 'Review and submit'
-      # TODO: Implement review and submit.
-      redirect_to submission_path(@submission.dissertation_id)
-    else
-      redirect_to edit_submission_path(@submission.dissertation_id)
-    end
+    redirect_to edit_submission_path(@submission.dissertation_id)
+  end
+
+  def review
+    authorize! @submission
+  end
+
+  def submit
+    authorize! @submission
+    # TODO: Submit to Registrar.
+    redirect_to submission_path(@submission.dissertation_id)
   end
 
   private

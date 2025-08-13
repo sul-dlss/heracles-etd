@@ -16,7 +16,7 @@
 
   <% component.with_footer_content do %>
     <div class="d-flex justify-content-end align-items-baseline">
-      <%= form.submit 'Review and submit', class: 'btn btn-primary', disabled: !all_done? %>
+      <%= render Elements::ButtonComponent.new(label: 'Review and submit', variant: :primary, data: { bs_toggle: 'modal', bs_target: '#review-modal' }, disabled: !all_done?) %>
     </div>
   <% end %>
 <% end %>
