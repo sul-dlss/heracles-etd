@@ -1,0 +1,22 @@
+<%= render Edit::StepComponent.new(step_number: 7,
+                                   title: 'Review and submit to Registrar',
+                                   classes: 'collapse-item-submit') do |component| %>
+
+  <% component.with_help_content do %>
+    <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <% if all_done? %>
+      <%= render Elements::AlertComponent.new(value: 'You have completed sections 1-6. You can now review and submit to the Registrar.') %>
+    <% else %>
+      <%= render Elements::AlertComponent.new(value: 'You must complete sections 1-6 before you can review and submit to the Registrar.', variant: :danger) %>
+    <% end %>
+  <% end %>
+
+  <% component.with_footer_content do %>
+    <div class="d-flex justify-content-end align-items-baseline">
+      <%= form.submit 'Review and submit', class: 'btn btn-primary', disabled: !all_done? %>
+    </div>
+  <% end %>
+<% end %>
