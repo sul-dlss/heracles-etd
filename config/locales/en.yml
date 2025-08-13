@@ -35,3 +35,9 @@ en:
     help_html: >-
       <p>This abstract will be indexed for online searching.</p>
       <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+  step3:
+    title: "Review your dissertation's formatting"
+    help_html: >-
+      <p>Your dissertation must be a PDF file.</p>
+      <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
+      <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>

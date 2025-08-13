@@ -1,0 +1,10 @@
+<%= render Show::StepComponent.new(step_number: 3,
+                                   title: t('step3.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('step3.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::Step3BodyComponent.new %>
+  <% end %>
+<% end %>
