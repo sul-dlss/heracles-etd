@@ -7,3 +7,6 @@
                                 ]) %>
       <% component.with_row(values: values_for_dissertation_file) %>
     <% end %>
+    <% if form %>
+      <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf' %>
+    <% end %>

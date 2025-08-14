@@ -15,7 +15,6 @@
     <p>
       After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
     </p>
-    <%= render Shared::Step4BodyComponent.new(submission: submission_presenter) %>
-    <%= form.file_field :dissertation_file, direct_upload: true, accept: 'application/pdf' %>
+    <%= render Shared::Step4BodyComponent.new(submission: submission_presenter, form: form) %>
   <% end %>
 <% end %>
