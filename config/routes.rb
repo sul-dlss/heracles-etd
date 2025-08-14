@@ -23,4 +23,8 @@ Rails.application.routes.draw do
       post :submit
     end
   end
+
+  namespace :admin do
+    get 'test_submission', to: 'admin#test_submission'
+  end
 end
