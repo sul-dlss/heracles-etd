@@ -4,4 +4,7 @@
   <% end %>
 
   <%= render Show::Step1Component.new(submission: @submission) %>
+  <%= render Show::Step2Component.new(submission: @submission) %>
+  <%= render Show::Step3Component.new %>
+  <%= render Show::Step6Component.new(submission: @submission) %>
 <% end %>

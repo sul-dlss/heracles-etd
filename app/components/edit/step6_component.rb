@@ -11,14 +11,10 @@ module Edit
 
     attr_reader :submission_presenter, :form
 
-    delegate :step6_done?, :first_last_name, to: :submission_presenter
+    delegate :step6_done?, :copyright_statement, to: :submission_presenter
 
     def show?
       !step6_done?
-    end
-
-    def copyright_statement
-      "© #{Time.zone.today.year} by #{first_last_name}. All rights reserved."
     end
 
     def cc_license_options
@@ -30,12 +26,9 @@ module Edit
     end
 
     def embargo_options
-      [
-        ['immediately', 'immediately'],
-        ['6 months', '6 months'],
-        ['1 year', '1 year'],
-        ['2 years', '2 years']
-      ]
+      Embargo.all.map do |embargo|
+        [embargo.id, embargo.id]
+      end
     end
   end
 end

@@ -4,8 +4,7 @@
                                    show: show?,
                                    done_data: { step2_target: 'doneButton' }, done_disabled: !step2_done?) do |component| %>
   <% component.with_help_content do %>
-    <p>This abstract will be indexed for online searching.</p>
-    <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+    <%= t('step2.help_html') %>
   <% end %>
 
   <% component.with_body_content do %>

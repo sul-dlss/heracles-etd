@@ -1,9 +1,9 @@
 <%= render Edit::StepComponent.new(step_number: 6,
-                                   title: 'Apply copyright and license terms',
+                                   title: t('step6.title'),
                                    data: { controller: 'step6' }, show: show?,
                                    done_data: { step6_target: 'doneButton' }, done_disabled: !step6_done?) do |component| %>
   <% component.with_help_content do %>
-    <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
+    <%= t('step6.help_html') %>
   <% end %>
 
   <% component.with_body_content do %>
