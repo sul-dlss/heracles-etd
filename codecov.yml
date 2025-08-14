@@ -1,0 +1,3 @@
+ignore:
+  - "lib/components"
+  - "app/helpers/icon_helper.rb"
