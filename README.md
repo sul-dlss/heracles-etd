@@ -3,6 +3,11 @@
 
 # heracles-etd
 
+## Admin
+
+### Test submission
+`/admin/test_submission` will create a new submission and redirect to the submitter page.
+
 ## Development
 
 ### Requirements
