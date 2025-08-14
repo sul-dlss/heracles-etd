@@ -28,7 +28,7 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step4_done?
-    true
+    dissertation_file.attached?
   end
 
   def step5_done?

@@ -28,6 +28,9 @@
 #       enabled: "ON"
 
 en:
+  time:
+    formats:
+      default: "%d-%b-%Y %H:%M:%S %Z"
   step1:
     title: "Citation details"
     help_html: >-
@@ -43,6 +46,10 @@ en:
       <p>Your dissertation must be a PDF file.</p>
       <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
       <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+  step4:
+    title: "Upload your dissertation"
+    help_html: >-
+      <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
   step6:
     title: "Apply copyright and license terms"
     help_html: >-

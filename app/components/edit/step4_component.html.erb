@@ -1,0 +1,20 @@
+<%= render Edit::StepComponent.new(step_number: 4,
+                                   title: t('step4.title'),
+                                   data: { controller: 'step4' },
+                                   show: show?,
+                                   done_data: { step4_target: 'doneButton' }, done_disabled: !step4_done?) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('step4.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <p>
+      Your dissertation must be a single PDF file.
+      <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/dissertations-and-theses/prepare-your-work-submission/format', label: 'Review the Registrar\'s official submission guidelines') %>
+    </p>
+    <p>
+      After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
+    </p>
+    <%= render Shared::Step4BodyComponent.new(submission: submission_presenter) %>
+  <% end %>
+<% end %>

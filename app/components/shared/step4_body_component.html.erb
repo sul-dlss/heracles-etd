@@ -1,0 +1,10 @@
+    <%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table', label: 'Dissertation file', show_label: false) do |component| %>
+      <% component.with_headers([
+                                  { label: 'Dissertation File (maximum size 1GB)' },
+                                  { label: 'Type' },
+                                  { label: 'Size' },
+                                  { label: 'Upload Date' },
+                                  { label: 'Remove' }
+                                ]) %>
+      <% component.with_row(values: values_for_dissertation_file) %>
+    <% end %>
