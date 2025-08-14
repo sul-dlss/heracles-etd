@@ -5,3 +5,6 @@ groups:
   dlss: 'sdr:etds-sul-staff'
   registrar: 'sdr:etds-registrar-staff'
   reports: 'sdr:etds-quarterly-reports'
+
+ahoy:
+  tooltip: false
