@@ -15,4 +15,8 @@ class Submission < ApplicationRecord
   def first_last_name
     name.split(', ').reverse.join(' ')
   end
+
+  def copyright_statement
+    "© #{submitted_at&.year || Time.zone.today.year} by #{first_last_name}. All rights reserved."
+  end
 end

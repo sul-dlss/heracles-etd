@@ -41,3 +41,7 @@ en:
       <p>Your dissertation must be a PDF file.</p>
       <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
       <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+  step6:
+    title: "Apply copyright and license terms"
+    help_html: >-
+      <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>

@@ -1,0 +1,24 @@
+<%= render Show::StepComponent.new(step_number: 6,
+                                   title: t('step6.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('step3.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Elements::Tables::TableComponent.new(id: 'copyright-details-table', label: 'Copyright and license terms details', show_label: false) do |component| %>
+      <% component.with_row(label: 'Copyright Statement', values: [copyright_statement]) %>
+      <% component.with_row(label: 'Creative Commons') do |row_component| %>
+        <% row_component.with_cell do %>
+          <% if license.url %>
+            <%= image_tag "https://licensebuttons.net/l/#{license.code}/4.0/88x31.png", alt: license.name, class: 'cc-license-badge float-start me-3 mt-2' %>
+            <div>This work is licensed under a <%= license.name %>.</div>
+            <%= render Elements::ExternalLinkComponent.new(url: license.url) %>
+          <% else %>
+            <div>This work is not licensed under a Creative Commons license.</div>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% component.with_row(label: 'External Release', values: [l(embargo_date, format: :long)]) %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -123,6 +123,9 @@ RSpec.describe 'Edit Submission' do
         expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
         # Step 3
         expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
+        # Step 6
+        expect(page).to have_css('h2', text: 'Apply copyright and license terms')
+        expect(page).to have_text('This work is licensed under a CC Attribution license.')
 
         click_link_or_button 'Submit to Registrar'
       end
