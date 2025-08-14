@@ -42,6 +42,7 @@ gem 'action_policy' # Authorization framework for Rails
 gem 'config'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
+gem 'local_time'
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
 gem 'view_component'
 

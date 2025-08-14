@@ -4,8 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Resume editing Submission' do
   let(:submission) do
-    create(:submission, citation_verified: 'true', abstract: 'Sample abstract', format_reviewed: 'true',
-                        sulicense: 'true', cclicense: '3', embargo: '6 months')
+    create(:submission, :submittable)
   end
 
   before do

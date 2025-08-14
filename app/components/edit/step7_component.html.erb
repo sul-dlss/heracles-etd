@@ -1,9 +1,9 @@
 <%= render Edit::StepComponent.new(step_number: 7,
-                                   title: 'Review and submit to Registrar',
+                                   title: t('step7.title'),
                                    classes: 'collapse-item-submit') do |component| %>
 
   <% component.with_help_content do %>
-    <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+    <%= t('step7.help_html') %>
   <% end %>
 
   <% component.with_body_content do %>

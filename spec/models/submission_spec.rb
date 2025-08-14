@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Submission do
-  subject(:submission) { build(:submission) }
+  subject(:submission) { build(:submission, druid: 'druid:jx000nx0003') }
 
   describe '#first_name' do
     it 'returns the first name from the name field' do
@@ -14,6 +14,18 @@ RSpec.describe Submission do
   describe '#first_last_name' do
     it 'returns the first name followed by the last name from the name field' do
       expect(submission.first_last_name).to eq('Jane Doe')
+    end
+  end
+
+  describe '#doi' do
+    it 'returns the DOI for the submission' do
+      expect(submission.doi).to eq('10.80343/jx000nx0003')
+    end
+  end
+
+  describe '#purl' do
+    it 'returns the PURL for the submission' do
+      expect(submission.purl).to eq('https://sul-purl-stage.stanford.edu/jx000nx0003')
     end
   end
 

@@ -118,7 +118,7 @@ RSpec.describe 'Edit Submission' do
     end
 
     expect(page).to have_current_path(submission_path(submission.dissertation_id))
-    expect(page).to have_content('Not implemented yet')
+    expect(page).to have_content("Welcome, #{submission.first_name}")
 
     expect(submission.reload.citation_verified).to eq('true')
     expect(submission.abstract).to eq('This is a sample abstract for testing.')

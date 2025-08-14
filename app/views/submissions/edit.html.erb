@@ -43,7 +43,7 @@
     <% end %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Edit::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>
+    <%= render Shared::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>
   </div>
 </div>
 <%= render Elements::ModalComponent.new(id: 'review-modal', scrollable: true, size: :xl) do |component| %>

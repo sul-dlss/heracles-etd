@@ -17,5 +17,19 @@ FactoryBot.define do
     trait :with_orcid do
       orcid { '0000-0002-1825-0097' }
     end
+
+    trait :submittable do
+      citation_verified { 'true' }
+      abstract { 'Sample abstract' }
+      format_reviewed { 'true' }
+      sulicense { 'true' }
+      cclicense { '3' }
+      embargo { '6 months' }
+    end
+
+    trait :submitted do
+      submittable
+      submitted_at { DateTime.parse('2023-01-01T00:00:00Z') }
+    end
   end
 end

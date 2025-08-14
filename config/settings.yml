@@ -1,6 +1,9 @@
 purl:
   url: "https://sul-purl-stage.stanford.edu"
 
+datacite:
+  prefix: '10.80343'
+
 groups:
   dlss: 'sdr:etds-sul-staff'
   registrar: 'sdr:etds-registrar-staff'
