@@ -19,8 +19,7 @@ module Shared
         filename || '[No file selected]',
         'PDF',
         number_to_human_size(byte_size),
-        uploaded_at,
-        remove_link
+        uploaded_at
       ]
     end
 
@@ -40,13 +39,6 @@ module Shared
       return unless dissertation_file.created_at.presence
 
       l(dissertation_file.created_at)
-    end
-
-    def remove_link
-      # return 'Remove'unless attached?
-
-      # link_to('Remove', remove_dissertation_file_submission_path(submission.dissertation_id))
-      'Remove'
     end
   end
 end
