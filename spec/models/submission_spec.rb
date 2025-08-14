@@ -16,4 +16,32 @@ RSpec.describe Submission do
       expect(submission.first_last_name).to eq('Jane Doe')
     end
   end
+
+  describe 'derivative fields' do
+    context 'when primary fields are not set' do
+      subject(:submission) { create(:submission) }
+
+      it 'sets derivative fields' do
+        expect(submission.abstract_provided).to eq('false')
+        expect(submission.rights_selected).to be_nil
+        expect(submission.cc_license_selected).to eq('false')
+        expect(submission.submitted_to_registrar).to eq('false')
+        expect(submission.cclicensetype).to be_nil
+      end
+    end
+
+    context 'when primary fields are set' do
+      subject(:submission) do
+        create(:submission, abstract: 'My abstract', sulicense: 'true', cclicense: '1', submitted_at: Time.zone.now)
+      end
+
+      it 'sets derivative fields' do
+        expect(submission.abstract_provided).to eq('true')
+        expect(submission.rights_selected).to eq('true')
+        expect(submission.cc_license_selected).to eq('true')
+        expect(submission.submitted_to_registrar).to eq('true')
+        expect(submission.cclicensetype).to eq('CC Attribution license')
+      end
+    end
+  end
 end
