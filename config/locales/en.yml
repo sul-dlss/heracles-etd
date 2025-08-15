@@ -51,3 +51,6 @@ en:
     title: "Review and submit to Registrar"
     help_html: >-
       <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+  submitter:
+    title: "Review and submit your dissertation"
+    subtitle: "Preserve your work in the Stanford Digital Repository"

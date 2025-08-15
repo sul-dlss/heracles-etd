@@ -12,6 +12,7 @@ RSpec.describe 'Show Submission', :rack_test do
   it 'allows the user to edit a submission' do
     visit submission_path(submission.dissertation_id)
 
+    expect(page).to have_css('header', text: 'Review and submit your dissertation')
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     expect(page).to have_css('h2', text: 'Progress')

@@ -1,7 +1,16 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
-// Submit form
+// Header
+.cardinal {
+  --bs-dark-rgb: var(--stanford-cardinal-rgb);
+}
+
+.masthead {
+  color: white;
+}
+
+// Submitter form
 .collapse-item {
   .collapse-header-help p:last-of-type {
     margin-bottom: 0;
