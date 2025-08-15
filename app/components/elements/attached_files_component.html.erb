@@ -1,4 +1,4 @@
-<%= render Elements::Tables::TableComponent.new(id:, label:, show_label: false) do |component| %>
+<%= render Elements::Tables::TableComponent.new(id:, label:, show_label: false, data:) do |component| %>
   <% component.with_headers(headers) %>
   <% files.each do |file| %>
     <% component.with_row(values: values_for_file(file)) %>

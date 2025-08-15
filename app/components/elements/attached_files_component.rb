@@ -3,8 +3,8 @@
 module Elements
   # Component for displaying a table with attached files
   class AttachedFilesComponent < ApplicationComponent
-    def initialize(type:, label: nil, files: [], required_file_type: nil, upload_button: nil)
-      @type = type
+    def initialize(file_type:, label: nil, files: [], required_file_type: nil, upload_button: nil)
+      @file_type = file_type
       @label = label
       @files = files
       @required_file_type = required_file_type
@@ -12,7 +12,7 @@ module Elements
       super()
     end
 
-    attr_reader :type, :label, :files, :required_file_type, :upload_button
+    attr_reader :file_type, :label, :files, :required_file_type, :upload_button
 
     def headers
       [
@@ -24,7 +24,11 @@ module Elements
     end
 
     def id
-      "#{type}-file-table"
+      "#{file_type}-file-table"
+    end
+
+    def data
+      { step4_target: "#{file_type}FileTable" }
     end
 
     def values_for_file(file)
@@ -64,9 +68,9 @@ module Elements
 
     def upload_link_label
       return "Upload #{required_file_type}" if required_file_type
-      return "Upload #{type} file" if files.compact.empty?
+      return "Upload #{file_type} file" if files.compact.empty?
 
-      "Upload more #{type} files"
+      "Upload more #{file_type} files"
     end
 
     def upload_file_link

@@ -8,13 +8,6 @@
   <% end %>
 
   <% component.with_body_content do %>
-    <p>
-      Your dissertation must be a single PDF file.
-      <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/dissertations-and-theses/prepare-your-work-submission/format', label: 'Review the Registrar\'s official submission guidelines') %>
-    </p>
-    <p>
-      After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
-    </p>
     <%= render Shared::Step4BodyComponent.new(submission: submission_presenter, form: form) %>
   <% end %>
 <% end %>

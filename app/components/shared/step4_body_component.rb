@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module Shared
-  # Component for the body of step 4 (dissertation file).
+  # Component for rendering the body of step 4 (dissertation file).
   class Step4BodyComponent < ApplicationComponent
+    # param [Submission] the submission being edited
+    # param [ActionView::Helpers::FormBuilder, nil] form (not included for the show page)
     def initialize(submission:, form: nil)
       @submission = submission
       @form = form
@@ -14,7 +16,7 @@ module Shared
     delegate :dissertation_file, to: :submission
 
     def supplemental_files
-      Array(submission.supplemental_files).append(nil)
+      form.present? ? Array(submission.supplemental_files).append(nil) : submission.supplemental_files
     end
   end
 end
