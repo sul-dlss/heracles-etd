@@ -8,7 +8,7 @@
   <% unless files.attached? %>
     <% component.with_row(values: [upload_file_link, required_file_type, nil, nil]) %>
   <% else %>
-    <% files.each do |file| %>
+    <% attached_files.each do |file| %>
       <% component.with_row(values: FilePresenter.new(file:, required_file_type:).values) %>
     <% end %>
     <% unless file_type == 'dissertation' %>

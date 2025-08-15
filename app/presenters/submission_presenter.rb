@@ -28,6 +28,8 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step4_done?
+    return dissertation_file.attached? && supplemental_files.attached? if with_supplemental_files
+
     dissertation_file.attached?
   end
 

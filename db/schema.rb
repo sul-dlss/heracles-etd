@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_15_144339) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -329,6 +329,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
     t.string "folio_instance_hrid"
     t.datetime "ils_record_created_at"
     t.string "orcid"
+    t.string "submission_state", default: "registered", null: false
+    t.boolean "with_supplemental_files", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end

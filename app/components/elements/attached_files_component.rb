@@ -14,6 +14,10 @@ module Elements
 
     attr_reader :file_type, :label, :files, :required_file_type, :upload_button
 
+    def attached_files
+      [files].flatten.compact
+    end
+
     def id
       "#{file_type}-file-table"
     end

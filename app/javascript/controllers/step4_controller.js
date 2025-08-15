@@ -2,7 +2,15 @@ import { Controller } from '@hotwired/stimulus'
 import { DirectUpload } from '@rails/activestorage'
 
 export default class extends Controller {
-  static targets = ['supplementalFilesSection', 'dissertationFile', 'dissertationFileTable', 'supplementalFiles', 'supplementalFileTable']
+  static targets = ['withSupplementalFiles', 'supplementalFilesSection', 'dissertationFile', 'dissertationFileTable', 'supplementalFiles', 'supplementalFileTable']
+
+  connect () {
+    if (this.withSupplementalFilesTarget.checked) {
+      this.showSupplementalFilesSection()
+    } else {
+      this.hideSupplementalFilesSection()
+    }
+  }
 
   // Supplemental files toggle selection
   showSupplementalFilesSection () {
@@ -15,12 +23,12 @@ export default class extends Controller {
   }
 
   uploadDissertationFile (event) {
-    Array.from(this.dissertationFileTarget.files).forEach(file => this.uploadFile(this.dissertationFileTarget, this.dissertationFileTableTarget, file, 0))
+    Array.from(this.dissertationFileTarget.files).forEach(file => this.uploadFile(this.dissertationFileTarget, this.dissertationFileTableTarget, file, false))
     event.preventDefault()
   }
 
   uploadSupplementalFiles (event) {
-    Array.from(this.supplementalFilesTarget.files).forEach(file => this.uploadFile(this.supplementalFilesTarget, this.supplementalFileTableTarget, file, 1))
+    Array.from(this.supplementalFilesTarget.files).forEach(file => this.uploadFile(this.supplementalFilesTarget, this.supplementalFileTableTarget, file, true))
     event.preventDefault()
   }
 
@@ -32,9 +40,14 @@ export default class extends Controller {
       if (error) {
         console.error('There was an error uploading the file.')
       } else {
-        console.log(blob)
         const pos = outputTarget.rows.length
-        outputTarget.insertRow(pos - posOffset).innerHTML = `
+        let row
+        if (posOffset) {
+          row = outputTarget.insertRow(pos - 1)
+        } else {
+          row = outputTarget.rows[pos - 1]
+        }
+        row.innerHTML = `
           <td>${blob.filename}</td>
           <td>${blob.content_type}</td>
           <td>${blob.byte_size.toLocaleString()}</td>
