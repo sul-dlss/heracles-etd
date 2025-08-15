@@ -13,33 +13,8 @@ module Shared
 
     delegate :dissertation_file, to: :submission
 
-    def values_for_dissertation_file
-      return [] unless dissertation_file.attached?
-
-      [
-        filename || '[No file selected]',
-        'PDF',
-        number_to_human_size(byte_size),
-        uploaded_at
-      ]
-    end
-
-    private
-
-    def byte_size
-      return unless dissertation_file.byte_size.presence
-
-      number_to_human_size(dissertation_file.byte_size)
-    end
-
-    def filename
-      dissertation_file.filename.presence || '[No file selected]'
-    end
-
-    def uploaded_at
-      return unless dissertation_file.created_at.presence
-
-      l(dissertation_file.created_at)
+    def supplemental_files
+      Array(submission.supplemental_files).append(nil)
     end
   end
 end

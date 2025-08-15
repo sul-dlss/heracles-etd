@@ -2,7 +2,7 @@
                                    title: t('step4.title'),
                                    data: { controller: 'step4' },
                                    show: show?,
-                                   done_data: { step4_target: 'doneButton' }, done_disabled: !step4_done?) do |component| %>
+                                   done_data: { step4_target: 'doneButton' }, done_disabled: step4_done?) do |component| %>
   <% component.with_help_content do %>
     <%= t('step4.help_html') %>
   <% end %>

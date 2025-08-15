@@ -50,6 +50,7 @@ en:
     title: "Upload your dissertation"
     help_html: >-
       <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+    supplemental_files_label: "Supplemental files (optional)"
   step6:
     title: "Apply copyright and license terms"
     help_html: >-

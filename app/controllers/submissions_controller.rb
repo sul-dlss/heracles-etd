@@ -45,8 +45,8 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_params
-    params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
-                                 format_reviewed dissertation_file]).merge(cclicensetype:)
+    params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
+                               :format_reviewed, :dissertation_file, { supplemental_files: [] }]).merge(cclicensetype:)
   end
 
   def cclicensetype

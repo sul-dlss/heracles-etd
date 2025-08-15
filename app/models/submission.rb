@@ -7,6 +7,7 @@ class Submission < ApplicationRecord
   before_save :set_derivative_fields
   # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
+  has_many_attached :supplemental_files, dependent: :purge_later
 
   has_many :readers, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :submission
 
