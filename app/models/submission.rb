@@ -22,6 +22,14 @@ class Submission < ApplicationRecord
     "© #{submitted_at&.year || Time.zone.today.year} by #{first_last_name}. All rights reserved."
   end
 
+  def doi
+    "#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')}"
+  end
+
+  def purl
+    "#{Settings.purl.url}/#{druid.delete_prefix('druid:')}"
+  end
+
   def set_derivative_fields
     # TODO: Once file uploads are implemented.
     # https://github.com/sul-dlss/heracles-etd/issues/70

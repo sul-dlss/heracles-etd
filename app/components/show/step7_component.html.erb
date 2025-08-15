@@ -1,0 +1,13 @@
+<%= render Show::StepComponent.new(step_number: 7,
+                                   title: t('step7.title')) do |component| %>
+
+  <% component.with_help_content do %>
+    <%= t('step7.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+      <%= render Elements::AlertComponent.new do %>
+        Dissertation submitted to Registrar: <%= helpers.local_time(submitted_at) %>.
+      <% end %>
+  <% end %>
+<% end %>

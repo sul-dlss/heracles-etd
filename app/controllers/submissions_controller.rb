@@ -10,8 +10,6 @@ class SubmissionsController < ApplicationController
 
   def edit
     authorize! @submission
-
-    @submission_presenter = SubmissionPresenter.new(submission: @submission)
   end
 
   def update
@@ -29,6 +27,7 @@ class SubmissionsController < ApplicationController
   def submit
     authorize! @submission
     # TODO: Submit to Registrar.
+    @submission.update!(submitted_at: Time.current)
     redirect_to submission_path(@submission.dissertation_id)
   end
 
@@ -36,6 +35,7 @@ class SubmissionsController < ApplicationController
 
   def set_submission
     @submission = Submission.find_by!(dissertation_id: params[:id])
+    @submission_presenter = SubmissionPresenter.new(submission: @submission)
   end
 
   def submission_params

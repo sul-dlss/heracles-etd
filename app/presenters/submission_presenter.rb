@@ -40,6 +40,6 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step7_done?
-    false
+    submitted_at.present?
   end
 end

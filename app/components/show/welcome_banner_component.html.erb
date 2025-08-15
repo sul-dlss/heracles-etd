@@ -1,0 +1,36 @@
+<%= render Elements::BannerComponent.new(variant: :success, title: 'Submission successful.') do |component| %>
+  <% component.with_header do %>
+    <div class="d-flex align-items-center gap-2">
+      <h2 class="h4 mb-0">Welcome, <%= first_name %></h2>
+      <div class="vr vr-lg bg-su-process-black-50"></div>
+      <span class="text-uppercase"><%= degree %> student</span>
+    </div>
+  <% end %>
+  <% component.with_body do %>
+    <ul>
+      <li>
+        Your dissertation is being processed by the University. Your designated Final Reader will be notified
+        that the submission is complete and ready for review.
+      </li>
+      <li>
+        Check back here for an update on the status of the approval process; details will appear in the Progress
+        panel on this page. You will receive automated notifications by email from Axess as steps in the approval
+        process have been made.
+      </li>
+      <li>
+        Once approved, your dissertation will be processed by Stanford University Libraries and made available online
+        at <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the
+        <%= render Elements::ExternalLinkComponent.new(label: 'Digital Object Identifier', url: 'https://www.doi.org/the-identifier/what-is-a-doi/', classes: 'ms-1') %>
+        (DOI) <%= doi %>.
+      </li>
+      <li>
+        External access (i.e., from outside Stanford) to these links is may be limited pending any release delay applied
+        at the time of submission.
+      </li>
+    </ul>
+    <div class="d-flex justify-content-between">
+      <div>Download submitted file to be implemented</div>
+      <div>Dissertation ID: <%= dissertation_id %></div>
+    </div>
+  <% end %>
+<% end %>

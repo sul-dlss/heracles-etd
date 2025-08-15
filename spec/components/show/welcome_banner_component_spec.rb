@@ -2,14 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Edit::WelcomeBannerComponent, type: :component do
+RSpec.describe Show::WelcomeBannerComponent, type: :component do
   let(:submission) { create(:submission) }
 
   it 'renders the welcome banner' do
     render_inline(described_class.new(submission: submission))
-    expect(page).to have_css('.alert.alert-note')
+    expect(page).to have_css('.alert.alert-success')
     expect(page).to have_css('h2', text: 'Welcome, Jane')
     expect(page).to have_text('Ph.D. student')
-    expect(page).to have_css('.banner-header', text: 'Bookmark this page.')
+    expect(page).to have_css('.banner-header', text: 'Submission successful.')
+    expect(page).to have_link(submission.purl)
+    expect(page).to have_text(submission.doi)
   end
 end

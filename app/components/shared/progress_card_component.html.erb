@@ -10,7 +10,9 @@
       <li id="step-4"><%= step_number_for(4) %> Dissertation uploaded</li>
       <li id="step-5"><%= step_number_for(5) %> Copyrighted material checked</li>
       <li id="step-6"><%= step_number_for(6) %> License terms applied</li>
-      <li id="step-7"><%= step_number_for(7) %> Submitted to Registrar</li>
+      <li id="step-7">
+        <%= step_number_for(7) %> <div class="d-inline-flex flex-column"><div>Submitted to Registrar</div><div class="text-muted"><%= helpers.local_time(submitted_at) if step7_done? %></div></div>
+      </li>
     </ul>
     <hr>
     <div class="d-flex align-items-center">
