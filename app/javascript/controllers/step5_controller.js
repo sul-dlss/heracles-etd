@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import { DirectUpload } from '@rails/activestorage'
 
 export default class extends Controller {
-  static targets = ['withSupplementalFiles', 'supplementalFilesSection','supplementalFiles', 'supplementalFilesTable']
+  static targets = ['withSupplementalFiles', 'supplementalFilesSection', 'supplementalFiles', 'supplementalFilesTable']
 
   connect () {
     if (this.withSupplementalFilesTarget.checked) {
@@ -36,7 +36,7 @@ export default class extends Controller {
         console.error('There was an error uploading the file.')
       } else {
         const pos = outputTarget.rows.length
-        let row = outputTarget.insertRow(pos - 1)
+        const row = outputTarget.insertRow(pos - 1)
         row.innerHTML = `
           <td>${blob.filename}</td>
           <td>${blob.content_type}</td>

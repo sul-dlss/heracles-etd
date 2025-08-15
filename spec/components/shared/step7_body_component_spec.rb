@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Shared::Step6BodyComponent, type: :component do
+RSpec.describe Shared::Step7BodyComponent, type: :component do
   let(:submission) { create(:submission, embargo: '6 months', cclicense:) }
   let(:cclicense) { '1' }
 
