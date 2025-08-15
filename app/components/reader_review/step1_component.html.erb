@@ -1,0 +1,15 @@
+<%= render Shared::StepComponent.new(title: t('step1.title')) do |component| %>
+  <% component.with_body_content do %>
+    <%= render Elements::Tables::TableComponent.new(id: 'citation-details-table', label: 'Citation details', show_label: false) do |component| %>
+      <% component.with_row(label: 'Name', values: [first_last_name]) %>
+      <% component.with_row(label: 'School', values: [schoolname]) %>
+      <% component.with_row(label: 'Department', values: [department]) %>
+      <% component.with_row(label: 'Degree', values: [degree]) %>
+      <% component.with_row(label: 'Major', values: [major]) %>
+      <% component.with_row(label: 'Degree Conferral Year', values: [degreeconfyr]) %>
+      <% component.with_row(label: 'Advisors', values: [advisors]) %>
+      <% component.with_row(label: 'Dissertation Title', values: [title]) %>
+      <% component.with_row(label: 'ORCID iD (Optional)', values: [orcid || 'Not provided']) %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -29,9 +29,11 @@
 
 en:
   step1:
+    title: "Citation details"
     help_html: >-
       <p>This information establishes how your work will be cited, and how you will be credited.</p>
   step2:
+    title: "Abstract"
     help_html: >-
       <p>This abstract will be indexed for online searching.</p>
       <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>

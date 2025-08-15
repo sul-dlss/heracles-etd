@@ -1,5 +1,5 @@
-<%= render Show::StepComponent.new(step_number: 2,
-                                   title: 'Abstract') do |component| %>
+<%= render Shared::StepComponent.new(step_number: 2,
+                                     title: t('step2.title')) do |component| %>
   <% component.with_help_content do %>
     <%= t('step2.help_html') %>
   <% end %>

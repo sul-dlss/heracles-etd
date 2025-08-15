@@ -7,4 +7,8 @@ class SubmissionPolicy < ApplicationPolicy
   def manage?
     record.sunetid == user.sunetid
   end
+
+  def reader_review?
+    record.readers.exists?(sunetid: user.sunetid)
+  end
 end

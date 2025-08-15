@@ -31,5 +31,21 @@ FactoryBot.define do
       submittable
       submitted_at { DateTime.parse('2023-01-01T00:00:00Z') }
     end
+
+    trait :with_readers do
+      transient do
+        readers_count { 1 }
+      end
+
+      readers { create_list(:reader, readers_count) }
+    end
+
+    trait :with_advisors do
+      transient do
+        advisors_count { 1 }
+      end
+
+      readers { create_list(:reader, advisors_count, :advisor) }
+    end
   end
 end

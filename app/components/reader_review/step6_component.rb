@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Show
-  # Component for displaying step 6 in the show view.
+module ReaderReview
+  # Component for displaying step 6 in the reader review view.
   class Step6Component < ApplicationComponent
     def initialize(submission:)
       @submission = submission
