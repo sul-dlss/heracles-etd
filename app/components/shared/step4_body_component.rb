@@ -13,10 +13,6 @@ module Shared
 
     attr_reader :submission, :form
 
-    delegate :dissertation_file, to: :submission
-
-    def supplemental_files
-      form.present? ? Array(submission.supplemental_files).append(nil) : submission.supplemental_files
-    end
+    delegate :dissertation_file, :supplemental_files, to: :submission
   end
 end

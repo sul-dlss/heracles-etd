@@ -9,7 +9,7 @@
 <!-- Dissertation file table -->
 <%= render Elements::AttachedFilesComponent.new(file_type: 'dissertation',
                                                 label: 'Dissertation file',
-                                                files: [dissertation_file],
+                                                files: dissertation_file,
                                                 required_file_type: 'PDF',
                                                 upload_button: 'submission_dissertation_file') %>
 
@@ -41,10 +41,10 @@
                                                       label: helpers.t('step4.supplemental_files_label'),
                                                       container_classes: 'mb-4') do |component| %>
         <% component.with_left_toggle_option(form:,
-                                            field_name: :with_supplemental_files,
-                                            label: 'Yes',
-                                            data: { action: 'change->step4#showSupplementalFilesSection' },
-                                            value: true) %>
+                                             field_name: :with_supplemental_files,
+                                             label: 'Yes',
+                                             data: { action: 'change->step4#showSupplementalFilesSection' },
+                                             value: true) %>
         <% component.with_right_toggle_option(form:,
                                               field_name: :with_supplemental_files,
                                               label: 'No',
@@ -66,7 +66,7 @@
                         } %>
   </div>
 <% else %>
-  <% if supplemental_files.present? %>
+  <% if supplemental_files.attached? %>
     <%= render Elements::AttachedFilesComponent.new(file_type: 'supplemental', label: 'Supplemental file', files: supplemental_files) %>
   <% else %>
     <p>No supplemental files have been uploaded.</p>
