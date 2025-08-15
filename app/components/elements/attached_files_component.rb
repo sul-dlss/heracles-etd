@@ -3,7 +3,7 @@
 module Elements
   # Component for displaying a table with attached files
   class AttachedFilesComponent < ApplicationComponent
-    def initialize(file_type:, files:, upload_button:, label:, required_file_type: nil)
+    def initialize(file_type:, files:, label:, required_file_type: nil, upload_button: nil)
       @file_type = file_type
       @label = label
       @files = files

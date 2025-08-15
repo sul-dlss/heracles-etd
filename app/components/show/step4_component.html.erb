@@ -1,0 +1,10 @@
+<%= render Show::StepComponent.new(step_number: 4,
+                                   title: t('step4.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('step4.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::Step4BodyComponent.new(submission:) %>
+  <% end %>
+<% end %>
