@@ -1,7 +1,9 @@
 <%= render Edit::StepComponent.new(step_number: 6,
                                    title: t('step6.title'),
-                                   data: { controller: 'step6' }, show: show?,
-                                   done_data: { step6_target: 'doneButton' }, done_disabled: !step6_done?) do |component| %>
+                                   submission_presenter:,
+                                   show: show?,
+                                   done_field: :rights_selected,
+                                   done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
     <%= t('step6.help_html') %>
   <% end %>
@@ -14,10 +16,12 @@
           <a data-bs-toggle="modal" href="#stanford-license-confirm" role="button">
             <i class="bi bi-card-text me-1"></i> View the Stanford University publication license
           </a>
-          <div class="form-check">
-            <%= form.checkbox :sulicense, { include_hidden: false, class: 'form-check-input', data: { action: 'change->step6#toggleButton', step6_target: 'licenseCheck' } }, 'true' %>
-            <%= form.label :sulicense, 'I have read and agree to the terms of the Stanford University license', class: 'form-check-label' %>
-          </div>
+          <%= helpers.with_submission_form(submission_presenter) do |form| %>
+            <div class="form-check">
+              <%= form.checkbox :sulicense, { class: 'form-check-input', data: { controller: 'submit', action: 'change->submit#submit' } }, 'true', 'false' %>
+              <%= form.label :sulicense, 'I have read and agree to the terms of the Stanford University license', class: 'form-check-label' %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
       <% component.with_row(label: 'Creative Commons') do |row_component| %>
@@ -25,7 +29,9 @@
           <a data-bs-toggle="modal" href="#cc-licenses" role="button">
             <i class="bi bi-card-text me-1"></i> View the Creative Commons licenses
           </a>
-          <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { action: 'change->step6#toggleButton', step6_target: 'ccLicenseSelect' } %> to my dissertation.</p>
+          <%= helpers.with_submission_form(submission_presenter) do |form| %>
+            <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { controller: 'submit', action: 'change->submit#submit' } %> to my dissertation.</p>
+          <% end %>
         <% end %>
       <% end %>
       <% component.with_row(label: 'External Release') do |row_component| %>
@@ -42,7 +48,9 @@
           </p>
           <div class="d-flex align-items-baseline gap-2 mb-2 flex-wrap">
           </div>
-          <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;' %> after final approval by the Registrar.</p>
+          <%= helpers.with_submission_form(submission_presenter) do |form| %>
+            <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' } %> after final approval by the Registrar.</p>
+          <% end %>
           <p>Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
         <% end %>
       <% end %>

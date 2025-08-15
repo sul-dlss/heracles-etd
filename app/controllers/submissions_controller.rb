@@ -46,6 +46,6 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
-                                 format_reviewed])
+                                 format_reviewed abstract_provided rights_selected ])
   end
 end

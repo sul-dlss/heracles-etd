@@ -15,11 +15,11 @@ RSpec.describe 'Edit Submission' do
     expect(page).to have_css('header', text: 'Review and submit your dissertation')
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
-    collapse_items = page.all('.collapse-item')
-    expect(collapse_items.length).to eq(7)
+    cards = page.all('.card-step')
+    expect(cards.length).to eq(5)
 
     # Step 7
-    within(collapse_items[6]) do
+    within(cards[4]) do
       expect(page).to have_css('.alert-danger',
                                text: 'You must complete sections 1-6')
       expect(page).to have_button('Review and submit', disabled: true)
@@ -33,8 +33,8 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Step 1
-    within(collapse_items[0]) do
-      expect(page).to have_css('.collapse-header h2', text: 'Verify your citation details')
+    within(cards[0]) do
+      expect(page).to have_css('.card-step-header h2', text: 'Verify your citation details')
       expect(page).to have_css('.character-circle-disabled', text: '1')
       expect(page).to have_css('.badge-in-progress', text: 'In Progress')
       expect(page).to have_no_css('.badge-completed')
@@ -59,21 +59,21 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Step 2
-    within(collapse_items[1]) do
+    within(cards[1]) do
       expect(page).to have_button('Done', disabled: true)
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
       click_button 'Done'
     end
 
     # Step 3
-    within(collapse_items[2]) do
+    within(cards[2]) do
       click_button 'Confirm'
     end
 
     # Step 4 and 5 are not implemented yet.
 
     # Step 6
-    within(collapse_items[5]) do
+    within(cards[3]) do
       expect(page).to have_button('Done', disabled: true)
 
       click_link_or_button 'View the Stanford University publication license'
@@ -95,7 +95,7 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Step 7
-    within(collapse_items[6]) do
+    within(cards[4]) do
       expect(page).to have_css('.alert-info',
                                text: 'You have completed sections 1-6.')
       click_button('Review and submit')

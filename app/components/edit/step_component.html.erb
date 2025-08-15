@@ -1,27 +1,29 @@
-<%= tag.div class: classes, data: do %>
-  <div class="collapse-header card-header">
+<%= tag.div class: classes, data:, id: do %>
+  <div class="card-header card-step-header">
     <%= tag.div class: 'd-flex align-items-start' do %>
       <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: character_circle_variant) %></div>
       <div class="flex-grow-1">
         <div class="d-flex align-items-start">
           <h2 class="h4"><%= title %></h2>
-          <%= render Edit::InProgressBadgeComponent.new(classes: in_progress_badge_classes) %>
-          <%= render Edit::CompletedBadgeComponent.new(classes: completed_badge_classes) %>
+          <%= render Edit::InProgressBadgeComponent.new(classes: 'ms-3 mt-1') if show? %>
+          <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1') unless show? %>
         </div>
-        <div class="collapse-header-help">
+        <div class="header-help">
           <%= help_content %>
         </div>
       </div>
       <div>
-      <%= render Elements::ButtonComponent.new(variant: :link, classes: edit_classes, data: edit_data, 'aria-expanded': false, 'aria-controls': collapse_id) do %>
-        <i class="bi bi-pencil"></i> <%= edit_label %>
-      <% end %>
+        <% unless show? %>
+          <%= render Edit::ButtonFormComponent.new(submission_presenter:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap') do %>
+            <i class="bi bi-pencil"></i> <%= edit_label %>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
   </div>
 
-  <%= tag.div id: collapse_id, class: collapse_classes do %>
-    <div class="collapse-body card-body">
+  <% if show? %>
+    <%= tag.div class: 'card-body card-step-body' do %>
       <%= body_content %>
       <hr>
       <% if footer_content %>
@@ -29,9 +31,9 @@
       <% else %>
         <div class="d-flex justify-content-between align-items-baseline">
           <div><%= done_text %></div>
-          <%= render Elements::ButtonComponent.new(label: done_label, variant: :primary, data: done_data, 'aria-expanded': true, 'aria-controls': collapse_id, disabled: done_disabled) %>
+          <%= render Edit::ButtonFormComponent.new(submission_presenter:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled) %>
         </div>
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

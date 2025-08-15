@@ -1,8 +1,10 @@
-<%= render Edit::ReviewStepComponent.new(step_number: 3,
-                                         title: t('step3.title'),
-                                         form:, show: show?,
-                                         review_field: :format_reviewed,
-                                         done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
+<%= render Edit::StepComponent.new(step_number: 3,
+                                   title: t('step3.title'),
+                                   submission_presenter:,
+                                   show: show?,
+                                   edit_label: 'Undo your confirmation',
+                                   done_field: :format_reviewed,
+                                   done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
 
   <% component.with_help_content do %>
     <%= t('step3.help_html') %>
