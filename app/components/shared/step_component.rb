@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Show
+module Shared
   # Component for displaying a step.
   class StepComponent < ApplicationComponent
     renders_one :help_content
     renders_one :body_content
-    def initialize(step_number:, title:, data: {}, classes: [])
+    def initialize(title:, step_number: nil, data: {}, classes: [])
       @step_number = step_number
       @title = title
       @data = data

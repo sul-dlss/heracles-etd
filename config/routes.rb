@@ -19,8 +19,9 @@ Rails.application.routes.draw do
 
   resources :submissions, only: %i[edit update show] do
     member do
-      get :review
+      get :review # Edit review
       post :submit
+      get :reader_review
     end
   end
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Show::StepComponent, type: :component do
+RSpec.describe Shared::StepComponent, type: :component do
   it 'renders the component' do
     render_inline(described_class.new(step_number: 1, title: 'Citation details'))
 
@@ -10,6 +10,16 @@ RSpec.describe Show::StepComponent, type: :component do
     expect(header).to have_css('.character-circle-success', text: '1')
     expect(header).to have_css('h2', text: 'Citation details')
     expect(header).to have_css('.badge-completed')
+  end
+
+  context 'without a step number' do
+    it 'does not render the character circle or completed badge' do
+      render_inline(described_class.new(title: 'Citation details'))
+
+      header = page.find('.card .card-header')
+      expect(header).to have_no_css('.character-circle-success')
+      expect(header).to have_no_css('.badge-completed')
+    end
   end
 
   context 'with help content' do

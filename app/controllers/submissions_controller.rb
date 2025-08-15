@@ -31,6 +31,10 @@ class SubmissionsController < ApplicationController
     redirect_to submission_path(@submission.dissertation_id)
   end
 
+  def reader_review
+    authorize! @submission
+  end
+
   private
 
   def set_submission

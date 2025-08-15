@@ -21,6 +21,12 @@ module Admin
         etd_type: 'Thesis',
         druid:
       )
+      submission.readers.create!(
+        sunetid: current_user.sunetid,
+        position: 1,
+        name: 'Pretender, Advisor',
+        readerrole: 'Advisor'
+      )
 
       redirect_to edit_submission_path(submission.dissertation_id)
     end

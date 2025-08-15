@@ -1,11 +1,11 @@
 <%= tag.div class: classes, data: do %>
   <div class="card-header border-0">
     <%= tag.div class: 'd-flex align-items-start' do %>
-      <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: :success) %></div>
+      <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: :success) if step_number %></div>
       <div class="flex-grow-1">
         <div class="d-flex align-items-start">
           <h2 class="h4"><%= title %></h2>
-          <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1') %>
+          <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1') if step_number %>
         </div>
         <div class="header-help">
           <%= help_content %>
