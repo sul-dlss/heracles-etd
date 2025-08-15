@@ -26,7 +26,13 @@ FactoryBot.define do
       cclicense { '3' }
       embargo { '6 months' }
       dissertation_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/dissertation.pdf'), 'application/pdf') }
-      with_supplemental_files { false }
+      supplemental_files do
+        [
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_1.pdf'), 'application/pdf'),
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_2.pdf'), 'application/pdf')
+        ]
+      end
+      with_supplemental_files { true }
     end
 
     trait :submitted do

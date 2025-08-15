@@ -8,10 +8,11 @@
       <li id="step-2"><%= step_number_for(2) %> Abstract provided</li>
       <li id="step-3"><%= step_number_for(3) %> Format reviewed</li>
       <li id="step-4"><%= step_number_for(4) %> Dissertation uploaded</li>
-      <li id="step-5"><%= step_number_for(5) %> Copyrighted material checked</li>
-      <li id="step-6"><%= step_number_for(6) %> License terms applied</li>
-      <li id="step-7">
-        <%= step_number_for(7) %> <div class="d-inline-flex flex-column"><div>Submitted to Registrar</div><div class="text-muted"><%= helpers.local_time(submitted_at) if step7_done? %></div></div>
+      <li id="step-5"><%= step_number_for(5) %> Supplemental files uploaded</li>
+      <li id="step-6"><%= step_number_for(6) %> Copyrighted material checked</li>
+      <li id="step-7"><%= step_number_for(7) %> License terms applied</li>
+      <li id="step-8">
+        <%= step_number_for(8) %> <div class="d-inline-flex flex-column"><div>Submitted to Registrar</div><div class="text-muted"><%= helpers.local_time(submitted_at) if step8_done? %></div></div>
       </li>
     </ul>
     <hr>

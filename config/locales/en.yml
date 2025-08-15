@@ -50,12 +50,15 @@ en:
     title: "Upload your dissertation"
     help_html: >-
       <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
-    supplemental_files_label: "Supplemental files (optional)"
-  step6:
+  step5:
+    title: "Supplemental files (optional)"
+    help_html: >-
+      <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+  step7:
     title: "Apply copyright and license terms"
     help_html: >-
       <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
-  step7:
+  step8:
     title: "Review and submit to Registrar"
     help_html: >-
       <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>

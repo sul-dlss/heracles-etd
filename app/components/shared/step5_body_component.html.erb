@@ -1,0 +1,73 @@
+<% if form %>
+  <div class="supplemental_files">
+    <div class="d-flex align-items-stretch">
+      <div class="p-2">
+        <p>Does your dissertation include supplemental files?<br>Click Yes if you have additional files to upload.</p>
+      </div>
+      <div class="p-2">
+        <%= render Elements::Forms::ToggleComponent.new(form:,
+                                                        field_name: :with_supplemental_files,
+                                                        label_classes: 'fw-bold',
+                                                        hidden_label: true,
+                                                        label: 'Supplemental files',
+                                                        container_classes: 'mb-4') do |component| %>
+          <% component.with_left_toggle_option(form:,
+                                               field_name: :with_supplemental_files,
+                                               label: 'Yes',
+                                               data: { step5_target: 'withSupplementalFiles', action: 'change->step5#showSupplementalFilesSection' },
+                                               value: true) %>
+          <% component.with_right_toggle_option(form:,
+                                                field_name: :with_supplemental_files,
+                                                label: 'No',
+                                                data: { step5_target: 'withSupplementalFiles', action: 'change->step5#hideSupplementalFilesSection' },
+                                                value: false) %>
+        <% end %>
+      </div>
+    </div>
+
+    <div data-step5-target="supplementalFilesSection">
+      <%= render Elements::Tables::TableComponent.new(id: 'supplemental-files-table',
+                                                      label: 'Supplemental Files',
+                                                      show_label: false,
+                                                      data: { step5_target: 'supplementalFilesTable' }) do |component| %>
+        <% component.with_headers([
+                                    { label: 'Supplemental File (maximum size 1GB)' },
+                                    { label: 'Type' },
+                                    { label: 'Size' },
+                                    { label: 'Upload Date' }
+                                  ]) %>
+        <% supplemental_files.each do |file| %>
+          <% component.with_row(values: FilePresenter.new(file: file).values) %>
+        <% end %>
+        <% component.with_row(values: [upload_file_link, nil, nil, nil]) %>
+      <% end %>
+      <%= form.file_field :supplemental_files,
+                          multiple: true,
+                          direct_upload: true,
+                          style: 'display:none;',
+                          data: {
+                            step5_target: 'supplementalFiles',
+                            action: 'step5#uploadSupplementalFiles'
+                          } %>
+    </div>
+  </div>
+<% else %>
+  <% if supplemental_files.attached? %>
+      <%= render Elements::Tables::TableComponent.new(id: 'supplemental-files-table',
+                                                      label: 'Supplemental Files',
+                                                      show_label: false,
+                                                      data: { step5_target: 'supplementalFilesTable' }) do |component| %>
+        <% component.with_headers([
+                                    { label: 'Supplemental File (maximum size 1GB)' },
+                                    { label: 'Type' },
+                                    { label: 'Size' },
+                                    { label: 'Upload Date' }
+                                  ]) %>
+        <% supplemental_files.each do |file| %>
+          <% component.with_row(values: FilePresenter.new(file: file).values) %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>No supplemental files have been uploaded.</p>
+    <% end %>
+  <% end %>

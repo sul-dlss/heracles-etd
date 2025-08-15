@@ -7,11 +7,22 @@
 </p>
 
 <!-- Dissertation file table -->
-<%= render Elements::AttachedFilesComponent.new(file_type: 'dissertation',
-                                                label: 'Dissertation file',
-                                                files: dissertation_file,
-                                                required_file_type: 'PDF',
-                                                upload_button: 'submission_dissertation_file') %>
+<%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table',
+                                                label: 'Dissertation File',
+                                                show_label: false,
+                                                data: { step4_target: 'dissertationFileTable' }) do |component| %>
+  <% component.with_headers([
+                              { label: 'Dissertation File (maximum size 1GB)' },
+                              { label: 'Type' },
+                              { label: 'Size' },
+                              { label: 'Upload Date' }
+                            ]) %>
+  <% if dissertation_file.attached? %>
+    <% component.with_row(values: FilePresenter.new(file: dissertation_file, required_file_type: 'PDF').values) %>
+  <% else %>
+    <% component.with_row(values: [upload_file_link, 'PDF', nil, nil]) %>
+  <% end %>
+<% end %>
 
 <!-- Render a hidden file input for dissertation file if on edit page -->
 <!-- The field is interacted with via a link in the above table -->
@@ -24,51 +35,4 @@
                         step4_target: 'dissertationFile',
                         action: 'step4#uploadDissertationFile'
                       } %>
-<% end %>
-
-<h3 class="h5">Supplemental Files</h3>
-
-<% if form %>
-  <div class="d-flex align-items-stretch supplemental_files">
-    <div class="p-2">
-      <p>Does your dissertation include supplemental files?<br>Click Yes if you have additional files to upload.</p>
-    </div>
-    <div class="p-2">
-      <%= render Elements::Forms::ToggleComponent.new(form:,
-                                                      field_name: :with_supplemental_files,
-                                                      label_classes: 'fw-bold',
-                                                      hidden_label: true,
-                                                      label: helpers.t('step4.supplemental_files_label'),
-                                                      container_classes: 'mb-4') do |component| %>
-        <% component.with_left_toggle_option(form:,
-                                             field_name: :with_supplemental_files,
-                                             label: 'Yes',
-                                             data: { step4_target: 'withSupplementalFiles', action: 'change->step4#showSupplementalFilesSection' },
-                                             value: true) %>
-        <% component.with_right_toggle_option(form:,
-                                              field_name: :with_supplemental_files,
-                                              label: 'No',
-                                              data: { step4_target: 'withSupplementalFiles', action: 'change->step4#hideSupplementalFilesSection' },
-                                              value: false) %>
-      <% end %>
-    </div>
-
-    <div data-step4-target="supplementalFilesSection">
-      <%= render Elements::AttachedFilesComponent.new(file_type: 'supplemental', label: 'Supplemental file', files: supplemental_files, upload_button: 'submission_supplemental_files') %>
-      <%= form.file_field :supplemental_files,
-                          multiple: true,
-                          direct_upload: true,
-                          style: 'display:none;',
-                          data: {
-                            step4_target: 'supplementalFiles',
-                            action: 'step4#uploadSupplementalFiles'
-                          } %>
-    </div>
-  </div>
-<% else %>
-  <% if supplemental_files.attached? %>
-    <%= render Elements::AttachedFilesComponent.new(file_type: 'supplemental', label: 'Supplemental file', files: supplemental_files) %>
-  <% else %>
-    <p>No supplemental files have been uploaded.</p>
-  <% end %>
 <% end %>

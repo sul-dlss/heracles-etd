@@ -11,8 +11,10 @@
     <%= render Show::Step1Component.new(submission: @submission) %>
     <%= render Show::Step2Component.new(submission: @submission) %>
     <%= render Show::Step3Component.new %>
-    <%= render Show::Step6Component.new(submission: @submission) %>
+    <%= render Show::Step4Component.new(submission: @submission) %>
+    <%= render Show::Step5Component.new(submission: @submission) %>
     <%= render Show::Step7Component.new(submission: @submission) %>
+    <%= render Show::Step8Component.new(submission: @submission) %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
     <%= render Shared::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>

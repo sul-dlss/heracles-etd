@@ -23,9 +23,9 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_css('h2', text: 'Abstract')
     # Step 3
     expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
-    # Step 6
-    expect(page).to have_css('h2', text: 'Apply copyright and license terms')
     # Step 7
+    expect(page).to have_css('h2', text: 'Apply copyright and license terms')
+    # Step 8
     expect(page).to have_css('h2', text: 'Review and submit to Registrar')
   end
 end

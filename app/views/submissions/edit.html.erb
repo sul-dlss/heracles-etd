@@ -20,21 +20,22 @@
       <%= render Edit::Step2Component.new(submission_presenter: @submission_presenter, form:) %>
       <%= render Edit::Step3Component.new(submission_presenter: @submission_presenter, form:) %>
       <%= render Edit::Step4Component.new(submission_presenter: @submission_presenter, form:) %>
+      <%= render Edit::Step5Component.new(submission_presenter: @submission_presenter, form:) %>
 
-      <%# STEP 5 %>
-      <%= render Edit::StepComponent.new(step_number: 5,
-                                         title: 'Upload permissions', show: !@submission_presenter.step5_done?) do |component| %>
+      <%# STEP 6 %>
+      <%= render Edit::StepComponent.new(step_number: 6,
+                                         title: 'Upload permissions', show: !@submission_presenter.step6_done?) do |component| %>
         <% component.with_help_content do %>
           <p>Permission is required for reuse of any copyrighted material in your dissertation.</p>
         <% end %>
 
         <% component.with_body_content do %>
-          <%# TODO: Step 5 %>
+          <%# TODO: Step 6 %>
         <% end %>
       <% end %>
 
-      <%= render Edit::Step6Component.new(submission_presenter: @submission_presenter, form:) %>
       <%= render Edit::Step7Component.new(submission_presenter: @submission_presenter, form:) %>
+      <%= render Edit::Step8Component.new(submission_presenter: @submission_presenter, form:) %>
     <% end %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">

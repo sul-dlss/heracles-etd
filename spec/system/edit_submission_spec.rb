@@ -16,16 +16,16 @@ RSpec.describe 'Edit Submission' do
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     collapse_items = page.all('.collapse-item')
-    expect(collapse_items.length).to eq(7)
+    expect(collapse_items.length).to eq(8)
 
-    # Step 7
-    within(collapse_items[6]) do
+    # Step 8
+    within(collapse_items[7]) do
       expect(page).to have_css('.alert-danger',
-                               text: 'You must complete sections 1-6')
+                               text: 'You must complete sections 1-7')
       expect(page).to have_button('Review and submit', disabled: true)
     end
 
-    expect(page).to have_css('.progress-card li', count: 7)
+    expect(page).to have_css('.progress-card li', count: 8)
     within('.progress-card #step-1') do
       expect(page).to have_text('Citation details verified')
       expect(page).to have_css('.character-circle-disabled', text: '1')
@@ -77,7 +77,12 @@ RSpec.describe 'Edit Submission' do
       attach_file Rails.root.join('spec/fixtures/files/dissertation.pdf') do
         click_link_or_button 'Upload PDF'
       end
+      click_button 'Done'
+    end
 
+    # step 5.
+    within(collapse_items[4]) do
+      expect(page).to have_button('Done', disabled: false)
       within('.supplemental_files') do
         find('label', text: 'Yes').click
         expect(page).to have_text('Upload supplemental file')
@@ -88,12 +93,13 @@ RSpec.describe 'Edit Submission' do
           click_link_or_button 'Upload supplemental file'
         end
       end
+      click_button 'Done'
     end
 
-    # step 5 is not implemented yet.
+    # Step 6 is not implemented yet.
 
-    # Step 6
-    within(collapse_items[5]) do
+    # Step 7
+    within(collapse_items[6]) do
       expect(page).to have_button('Done', disabled: true)
 
       click_link_or_button 'View the Stanford University publication license'
@@ -114,10 +120,10 @@ RSpec.describe 'Edit Submission' do
       click_button 'Done'
     end
 
-    # Step 7
-    within(collapse_items[6]) do
+    # Step 8
+    within(collapse_items[7]) do
       expect(page).to have_css('.alert-info',
-                               text: 'You have completed sections 1-6.')
+                               text: 'You have completed sections 1-7.')
       click_button('Review and submit')
     end
 
@@ -131,7 +137,7 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
       # Step 3
       expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
-      # Step 6
+      # Step 7
       expect(page).to have_css('h2', text: 'Apply copyright and license terms')
       expect(page).to have_text('This work is licensed under a CC Attribution license.')
 
