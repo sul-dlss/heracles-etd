@@ -70,7 +70,27 @@ RSpec.describe 'Edit Submission' do
       click_button 'Confirm'
     end
 
-    # Step 4 and 5 are not implemented yet.
+    # Step 4
+    within(collapse_items[3]) do
+      expect(page).to have_button('Done', disabled: false)
+      # click_link_or_button 'Upload PDF'
+      attach_file Rails.root.join('spec/fixtures/files/dissertation.pdf') do
+        click_link_or_button 'Upload PDF'
+      end
+
+      within('.supplemental_files') do
+        find('label', text: 'Yes').click
+        expect(page).to have_text('Upload supplemental file')
+        attach_file([
+                      Rails.root.join('spec/fixtures/files/supplemental_1.pdf'),
+                      Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
+                    ]) do
+          click_link_or_button 'Upload supplemental file'
+        end
+      end
+    end
+
+    # step 5 is not implemented yet.
 
     # Step 6
     within(collapse_items[5]) do

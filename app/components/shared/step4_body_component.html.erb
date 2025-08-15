@@ -29,7 +29,7 @@
 <h3 class="h5">Supplemental Files</h3>
 
 <% if form %>
-  <div class="d-flex align-items-stretch">
+  <div class="d-flex align-items-stretch supplemental_files">
     <div class="p-2">
       <p>Does your dissertation include supplemental files?<br>Click Yes if you have additional files to upload.</p>
     </div>
@@ -52,18 +52,18 @@
                                               value: false) %>
       <% end %>
     </div>
-  </div>
 
-  <div data-step4-target="supplementalFilesSection">
-    <%= render Elements::AttachedFilesComponent.new(file_type: 'supplemental', label: 'Supplemental file', files: supplemental_files, upload_button: 'submission_supplemental_files') %>
-    <%= form.file_field :supplemental_files,
-                        multiple: true,
-                        direct_upload: true,
-                        style: 'display:none;',
-                        data: {
-                          step4_target: 'supplementalFiles',
-                          action: 'step4#uploadSupplementalFiles'
-                        } %>
+    <div data-step4-target="supplementalFilesSection">
+      <%= render Elements::AttachedFilesComponent.new(file_type: 'supplemental', label: 'Supplemental file', files: supplemental_files, upload_button: 'submission_supplemental_files') %>
+      <%= form.file_field :supplemental_files,
+                          multiple: true,
+                          direct_upload: true,
+                          style: 'display:none;',
+                          data: {
+                            step4_target: 'supplementalFiles',
+                            action: 'step4#uploadSupplementalFiles'
+                          } %>
+    </div>
   </div>
 <% else %>
   <% if supplemental_files.attached? %>
