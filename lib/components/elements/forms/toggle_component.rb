@@ -11,17 +11,16 @@ module Elements
         Elements::Forms::ToggleOptionComponent.new(position: :right, **args)
       }
 
-      def initialize(form:, field_name:, label_classes:, label:, container_classes:, data: {}) # rubocop:disable Metrics/ParameterLists
+      def initialize(form:, field_name:, label:, container_classes:, data: {}) # rubocop:disable Metrics/ParameterLists
         @form = form
         @field_name = field_name
-        @label_classes = merge_classes('d-block', label_classes)
         @label = label
         @container_classes = container_classes
         @data = data
         super()
       end
 
-      attr_reader :form, :field_name, :label_classes, :label, :container_classes, :data
+      attr_reader :form, :field_name, :label, :container_classes, :data
     end
   end
 end
