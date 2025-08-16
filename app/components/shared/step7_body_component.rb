@@ -2,7 +2,7 @@
 
 module Shared
   # Component for rendering the body of step 6.
-  class Step6BodyComponent < ApplicationComponent
+  class Step7BodyComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
       super()

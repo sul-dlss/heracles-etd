@@ -4,34 +4,25 @@ require 'rails_helper'
 
 RSpec.describe Edit::Step7Component, type: :component do
   let(:submission) { create(:submission, name: 'Doe, Jane') }
-  let(:submission_presenter) { instance_double(SubmissionPresenter) }
+  let(:submission_presenter) { SubmissionPresenter.new(submission:) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, submission, vc_test_controller.view_context, {}) }
 
-  context 'when all steps are not done' do
-    before do
-      allow(submission_presenter).to receive(:all_done?).and_return(false)
-    end
+  it 'renders the component' do
+    render_inline(described_class.new(submission_presenter:, form:))
+    expect(page).to have_css('h2', text: 'Apply copyright and license terms')
+    rows = page.all('table#copyright-details-table tr')
+    expect(rows[0]).to have_css('th', text: 'Copyright Statement')
+    expect(rows[0]).to have_css('td', text: '© 2025 by Jane Doe. All rights reserved.')
 
-    it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
-      expect(page).to have_css('h2', text: 'Review and submit to Registrar')
+    expect(rows[1]).to have_css('th', text: 'Stanford License')
+    expect(rows[1]).to have_link('View the Stanford University publication license', href: '#stanford-license-confirm')
+    expect(rows[1]).to have_unchecked_field('sulicense')
 
-      expect(page).to have_css('.alert-danger', text: 'You must complete sections 1-6')
-      expect(page).to have_button('Review and submit', disabled: true)
-    end
-  end
+    expect(rows[2]).to have_css('th', text: 'Creative Commons')
+    expect(rows[2]).to have_link('View the Creative Commons licenses')
+    expect(rows[2]).to have_select('cclicense', selected: 'Select an option')
 
-  context 'when all steps are done' do
-    before do
-      allow(submission_presenter).to receive(:all_done?).and_return(true)
-    end
-
-    it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
-      expect(page).to have_css('h2', text: 'Review and submit to Registrar')
-
-      expect(page).to have_css('.alert-info', text: 'You have completed sections 1-6')
-      expect(page).to have_button('Review and submit', disabled: false)
-    end
+    expect(rows[3]).to have_css('th', text: 'External Release')
+    expect(rows[3]).to have_select('embargo')
   end
 end

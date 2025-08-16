@@ -45,7 +45,12 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_params
-    params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
-                                 format_reviewed])
+    params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
+                               :format_reviewed, :dissertation_file,
+                               :with_supplemental_files, { supplemental_files: [] }]).merge(cclicensetype:)
+  end
+
+  def cclicensetype
+    CreativeCommonsLicense.find(params.dig(:submission, :cclicense))&.name
   end
 end

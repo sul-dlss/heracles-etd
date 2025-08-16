@@ -28,18 +28,24 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step4_done?
-    true
+    dissertation_file.attached?
   end
 
   def step5_done?
-    true
+    return supplemental_files.attached? if with_supplemental_files
+
+    false
   end
 
   def step6_done?
-    sulicense == 'true' && cclicense.present? && embargo.present?
+    true
   end
 
   def step7_done?
+    sulicense == 'true' && cclicense.present? && embargo.present?
+  end
+
+  def step8_done?
     submitted_at.present?
   end
 end

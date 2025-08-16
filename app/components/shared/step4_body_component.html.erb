@@ -1,0 +1,38 @@
+<p>
+  Your dissertation must be a single PDF file.
+  <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/dissertations-and-theses/prepare-your-work-submission/format', label: 'Review the Registrar\'s official submission guidelines') %>
+</p>
+<p>
+  After the file has been uploaded, you can click the filename to download the Stanford Digital Repository's copy and verify it against your original.
+</p>
+
+<!-- Dissertation file table -->
+<%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table',
+                                                label: 'Dissertation File',
+                                                show_label: false,
+                                                data: { step4_target: 'dissertationFileTable' }) do |component| %>
+  <% component.with_headers([
+                              { label: 'Dissertation File (maximum size 1GB)' },
+                              { label: 'Type' },
+                              { label: 'Size' },
+                              { label: 'Upload Date' }
+                            ]) %>
+  <% if dissertation_file.attached? %>
+    <% component.with_row(values: FilePresenter.new(file: dissertation_file, required_file_type: 'PDF').values) %>
+  <% else %>
+    <% component.with_row(values: [upload_file_link, 'PDF', nil, nil]) %>
+  <% end %>
+<% end %>
+
+<!-- Render a hidden file input for dissertation file if on edit page -->
+<!-- The field is interacted with via a link in the above table -->
+<% if form %>
+  <%= form.file_field :dissertation_file,
+                      direct_upload: true,
+                      accept: 'application/pdf',
+                      style: 'display:none;',
+                      data: {
+                        step4_target: 'dissertationFile',
+                        action: 'step4#uploadDissertationFile'
+                      } %>
+<% end %>

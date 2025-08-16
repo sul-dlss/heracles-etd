@@ -17,11 +17,11 @@ RSpec.describe 'Resume editing Submission' do
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     expect(page).to have_css('.collapse.show', count: 1)
-    expect(page).to have_css('.collapse:not(.show)', count: 6, visible: :hidden)
+    expect(page).to have_css('.collapse:not(.show)', count: 7, visible: :hidden)
 
-    # Step 7
+    # Step 8
     expect(page).to have_css('.alert-info',
-                             text: 'You have completed sections 1-6')
+                             text: 'You have completed sections 1-7')
     expect(page).to have_button('Review and submit')
   end
 end

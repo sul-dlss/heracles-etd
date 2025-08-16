@@ -28,6 +28,9 @@
 #       enabled: "ON"
 
 en:
+  time:
+    formats:
+      default: "%d-%b-%Y %H:%M:%S %Z"
   step1:
     title: "Citation details"
     help_html: >-
@@ -43,11 +46,19 @@ en:
       <p>Your dissertation must be a PDF file.</p>
       <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
       <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
-  step6:
+  step4:
+    title: "Upload your dissertation"
+    help_html: >-
+      <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+  step5:
+    title: "Supplemental files (optional)"
+    help_html: >-
+      <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+  step7:
     title: "Apply copyright and license terms"
     help_html: >-
       <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
-  step7:
+  step8:
     title: "Review and submit to Registrar"
     help_html: >-
       <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>

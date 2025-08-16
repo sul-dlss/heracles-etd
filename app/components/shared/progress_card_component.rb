@@ -10,7 +10,7 @@ module Shared
 
     attr_reader :submission_presenter
 
-    delegate :step_done?, :step7_done?, :submitted_at, to: :submission_presenter
+    delegate :step_done?, :step8_done?, :submitted_at, to: :submission_presenter
 
     def step_number_for(step)
       if step_done?(step)
