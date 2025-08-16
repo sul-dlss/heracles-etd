@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe Edit::Step7Component, type: :component do
   let(:submission) { create(:submission, name: 'Doe, Jane') }
   let(:submission_presenter) { instance_double(SubmissionPresenter) }
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, submission, vc_test_controller.view_context, {}) }
 
   context 'when all steps are not done' do
     before do
@@ -13,7 +12,7 @@ RSpec.describe Edit::Step7Component, type: :component do
     end
 
     it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
+      render_inline(described_class.new(submission_presenter:))
       expect(page).to have_css('h2', text: 'Review and submit to Registrar')
 
       expect(page).to have_css('.alert-danger', text: 'You must complete sections 1-6')
@@ -27,7 +26,7 @@ RSpec.describe Edit::Step7Component, type: :component do
     end
 
     it 'renders the component' do
-      render_inline(described_class.new(submission_presenter:, form:))
+      render_inline(described_class.new(submission_presenter:))
       expect(page).to have_css('h2', text: 'Review and submit to Registrar')
 
       expect(page).to have_css('.alert-info', text: 'You have completed sections 1-6')

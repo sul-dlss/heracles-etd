@@ -3,15 +3,14 @@
 module Edit
   # Component for editing step 6 of the submitter form
   class Step6Component < ApplicationComponent
-    def initialize(submission_presenter:, form:)
+    def initialize(submission_presenter:)
       @submission_presenter = submission_presenter
-      @form = form
       super()
     end
 
-    attr_reader :submission_presenter, :form
+    attr_reader :submission_presenter
 
-    delegate :step6_done?, :copyright_statement, to: :submission_presenter
+    delegate :step6_done?, :copyright_statement, :sulicense, :cclicense, :embargo, to: :submission_presenter
 
     def show?
       !step6_done?
@@ -26,9 +25,15 @@ module Edit
     end
 
     def embargo_options
-      Embargo.all.map do |embargo|
-        [embargo.id, embargo.id]
+      [['Select an option', '']].tap do |options|
+        Embargo.all.map do |embargo|
+          options << [embargo.id, embargo.id]
+        end
       end
+    end
+
+    def done_disabled?
+      sulicense != 'true' || cclicense.blank? || embargo.blank?
     end
   end
 end

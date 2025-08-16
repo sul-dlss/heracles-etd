@@ -1,6 +1,6 @@
 <%= render Edit::StepComponent.new(step_number: 7,
                                    title: t('step7.title'),
-                                   classes: 'collapse-item-submit') do |component| %>
+                                   submission_presenter:) do |component| %>
 
   <% component.with_help_content do %>
     <%= t('step7.help_html') %>

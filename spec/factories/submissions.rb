@@ -25,6 +25,8 @@ FactoryBot.define do
       sulicense { 'true' }
       cclicense { '3' }
       embargo { '6 months' }
+      abstract_provided { 'true' }
+      rights_selected { 'true' }
     end
 
     trait :submitted do

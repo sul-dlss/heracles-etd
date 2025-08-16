@@ -3,13 +3,12 @@
 module Edit
   # Component for editing step 1 of the submitter form
   class Step1Component < ApplicationComponent
-    def initialize(submission_presenter:, form:)
+    def initialize(submission_presenter:)
       @submission_presenter = submission_presenter
-      @form = form
       super()
     end
 
-    attr_reader :submission_presenter, :form
+    attr_reader :submission_presenter
 
     delegate :step1_done?, to: :submission_presenter
 

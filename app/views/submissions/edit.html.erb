@@ -12,41 +12,13 @@
 <div class="row gy-2">
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
-    <%= form_with model: @submission,
-                  url: submission_path(@submission.dissertation_id),
-                  data: { controller: 'submit-form' } do |form| %>
 
-      <%= render Edit::Step1Component.new(submission_presenter: @submission_presenter, form:) %>
-      <%= render Edit::Step2Component.new(submission_presenter: @submission_presenter, form:) %>
-      <%= render Edit::Step3Component.new(submission_presenter: @submission_presenter, form:) %>
+    <%= render Edit::Step1Component.new(submission_presenter: @submission_presenter) %>
+    <%= render Edit::Step2Component.new(submission_presenter: @submission_presenter) %>
+    <%= render Edit::Step3Component.new(submission_presenter: @submission_presenter) %>
 
-      <%# STEP 4 %>
-      <%= render Edit::StepComponent.new(step_number: 4,
-                                         title: 'Upload your dissertation', show: !@submission_presenter.step4_done?) do |component| %>
-        <% component.with_help_content do %>
-          <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
-        <% end %>
-
-        <% component.with_body_content do %>
-          <%# TODO: Step 4 %>
-        <% end %>
-      <% end %>
-
-      <%# STEP 5 %>
-      <%= render Edit::StepComponent.new(step_number: 5,
-                                         title: 'Upload permissions', show: !@submission_presenter.step5_done?) do |component| %>
-        <% component.with_help_content do %>
-          <p>Permission is required for reuse of any copyrighted material in your dissertation.</p>
-        <% end %>
-
-        <% component.with_body_content do %>
-          <%# TODO: Step 5 %>
-        <% end %>
-      <% end %>
-
-      <%= render Edit::Step6Component.new(submission_presenter: @submission_presenter, form:) %>
-      <%= render Edit::Step7Component.new(submission_presenter: @submission_presenter, form:) %>
-    <% end %>
+    <%= render Edit::Step6Component.new(submission_presenter: @submission_presenter) %>
+    <%= render Edit::Step7Component.new(submission_presenter: @submission_presenter) %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
     <%= render Shared::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>

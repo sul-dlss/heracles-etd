@@ -20,7 +20,7 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step2_done?
-    abstract.present?
+    abstract_provided == 'true'
   end
 
   def step3_done?
@@ -36,7 +36,7 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def step6_done?
-    sulicense == 'true' && cclicense.present? && embargo.present?
+    rights_selected == 'true'
   end
 
   def step7_done?
