@@ -1,0 +1,10 @@
+<%= render Shared::StepComponent.new(step: SubmissionPresenter::ABSTRACT_STEP,
+                                     title: t('steps.abstract.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('steps.abstract.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <p><%= submission.abstract %></p>
+  <% end %>
+<% end %>

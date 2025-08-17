@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Shared::StepComponent, type: :component do
   it 'renders the component' do
-    render_inline(described_class.new(step_number: 1, title: 'Citation details'))
+    render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Citation details'))
 
     header = page.find('.card .card-header')
     expect(header).to have_css('.character-circle-success', text: '1')
@@ -24,7 +24,8 @@ RSpec.describe Shared::StepComponent, type: :component do
 
   context 'with help content' do
     it 'renders the help content' do
-      render_inline(described_class.new(step_number: 5, title: 'Step 5')) do |component|
+      render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP,
+                                        title: 'Citation details')) do |component|
         component.with_help_content { '<p>Helpful information here.</p>'.html_safe }
       end
 
@@ -35,7 +36,8 @@ RSpec.describe Shared::StepComponent, type: :component do
 
   context 'with body content' do
     it 'renders the body content' do
-      render_inline(described_class.new(step_number: 6, title: 'Step 6')) do |component|
+      render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP,
+                                        title: 'Citation details')) do |component|
         component.with_body_content { '<p>Body content goes here.</p>'.html_safe }
       end
 

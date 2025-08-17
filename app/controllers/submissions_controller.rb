@@ -41,7 +41,6 @@ class SubmissionsController < ApplicationController
 
   def set_submission
     @submission = Submission.find_by!(dissertation_id: params[:id])
-    @submission_presenter = SubmissionPresenter.new(submission: @submission)
   end
 
   def submission_params

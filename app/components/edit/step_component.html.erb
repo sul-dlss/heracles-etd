@@ -14,7 +14,7 @@
       </div>
       <div>
         <% unless show? %>
-          <%= render Edit::ButtonFormComponent.new(submission_presenter:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap') do %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap') do %>
             <i class="bi bi-pencil"></i> <%= edit_label %>
           <% end %>
         <% end %>
@@ -31,7 +31,7 @@
       <% else %>
         <div class="d-flex justify-content-between align-items-baseline">
           <div><%= done_text %></div>
-          <%= render Edit::ButtonFormComponent.new(submission_presenter:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled) %>
+          <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled) %>
         </div>
       <% end %>
     <% end %>

@@ -1,0 +1,5 @@
+<%= render Shared::StepComponent.new(title: 'Copyright and license terms') do |component| %>
+  <% component.with_body_content do %>
+    <%= render Shared::RightsStepBodyComponent.new(submission:) %>
+  <% end %>
+<% end %>

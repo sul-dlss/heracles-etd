@@ -1,4 +1,4 @@
-<%= helpers.with_submission_form(submission_presenter) do |form| %>
+<%= helpers.with_submission_form(submission) do |form| %>
   <%= form.hidden_field field, value: %>
   <%= render Elements::ButtonComponent.new(classes:, type: 'submit', **options) do %>
     <%= label || content %>

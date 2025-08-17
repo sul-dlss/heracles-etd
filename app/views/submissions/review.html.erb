@@ -3,8 +3,8 @@
     After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.
   <% end %>
 
-  <%= render Show::Step1Component.new(submission: @submission) %>
-  <%= render Show::Step2Component.new(submission: @submission) %>
-  <%= render Show::Step3Component.new %>
-  <%= render Show::Step6Component.new(submission: @submission) %>
+  <%= render Show::CitationStepComponent.new(submission: @submission) %>
+  <%= render Show::AbstractStepComponent.new(submission: @submission) %>
+  <%= render Show::FormatStepComponent.new %>
+  <%= render Show::RightsStepComponent.new(submission: @submission) %>
 <% end %>

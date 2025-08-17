@@ -5,8 +5,8 @@ module Shared
   class StepComponent < ApplicationComponent
     renders_one :help_content
     renders_one :body_content
-    def initialize(title:, step_number: nil, data: {}, classes: [])
-      @step_number = step_number
+    def initialize(title:, step: nil, data: {}, classes: [])
+      @step = step
       @title = title
       @data = data
       @classes = classes
@@ -14,7 +14,13 @@ module Shared
       super()
     end
 
-    attr_reader :step_number, :title, :data
+    attr_reader :title, :data
+
+    def step_number
+      return if @step.blank?
+
+      SubmissionPresenter.step_number(step: @step)
+    end
 
     def classes
       merge_classes('card border-0 mb-3', @classes)

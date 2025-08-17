@@ -7,35 +7,41 @@ module Edit
     renders_one :body_content
     renders_one :footer_content
 
-    def initialize(step_number:, title:, submission_presenter:, done_field: nil, show: true, data: {}, classes: [],
+    def initialize(step:, title:, submission:, data: {}, classes: [],
                    edit_label: 'Edit this section',
                    done_text: 'Click Done to complete this section.', done_label: 'Done', done_data: {},
                    done_disabled: false)
-      @step_number = step_number
+      @step = step
       @title = title
-      @show = show
+      @submission = submission
       @data = data.merge(step_number: step_number)
       @classes = classes
       @edit_label = edit_label
-      @done_field = done_field
       @done_text = done_text
       @done_label = done_label
       @done_data = done_data
       @done_disabled = done_disabled
-      @submission_presenter = submission_presenter
 
       super()
     end
 
-    attr_reader :step_number, :title, :done_text, :done_label, :data, :review_field, :form,
-                :done_disabled, :edit_label, :done_field, :submission_presenter, :done_data
+    attr_reader :step, :title, :done_text, :done_label, :data, :form,
+                :done_disabled, :edit_label, :done_data, :submission
 
     def classes
       merge_classes('card card-step mb-3', @classes)
     end
 
     def show?
-      @show
+      !SubmissionPresenter.step_done?(step:, submission:)
+    end
+
+    def step_number
+      SubmissionPresenter.step_number(step:)
+    end
+
+    def done_field
+      SubmissionPresenter.step_field(step:)
     end
 
     def character_circle_variant
