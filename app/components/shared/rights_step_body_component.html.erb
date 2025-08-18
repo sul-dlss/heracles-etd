@@ -3,7 +3,7 @@
   <% component.with_row(label: 'Creative Commons') do |row_component| %>
     <% row_component.with_cell do %>
       <% if license.url %>
-        <%= image_tag "https://licensebuttons.net/l/#{license.code}/4.0/88x31.png", alt: license.name, class: 'cc-license-badge float-start me-3 mt-2' %>
+        <%= image_tag license.image, alt: license.name, class: 'cc-license-badge float-start me-3 mt-2' %>
         <div>This work is licensed under a <%= license.name %>.</div>
         <%= render Elements::ExternalLinkComponent.new(url: license.url) %>
       <% else %>

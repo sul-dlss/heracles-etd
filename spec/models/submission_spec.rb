@@ -15,6 +15,13 @@ RSpec.describe Submission do
     it 'returns the first name followed by the last name from the name field' do
       expect(submission.first_last_name).to eq('Jane Doe')
     end
+
+    context 'when suffix is present' do
+      it 'includes the suffix in the full name' do
+        submission.suffix = 'Jr.'
+        expect(submission.first_last_name).to eq('Jane Doe, Jr.')
+      end
+    end
   end
 
   describe '#doi' do
@@ -26,6 +33,17 @@ RSpec.describe Submission do
   describe '#purl' do
     it 'returns the PURL for the submission' do
       expect(submission.purl).to eq('https://sul-purl-stage.stanford.edu/jx000nx0003')
+    end
+  end
+
+  describe '#thesis?' do
+    it 'returns true if the submission is a thesis' do
+      expect(submission.thesis?).to be true
+    end
+
+    it 'returns false if the submission is not a thesis' do
+      submission.etd_type = 'dissertation'
+      expect(submission.thesis?).to be false
     end
   end
 

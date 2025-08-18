@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get :review # Edit review
       post :submit
       get :reader_review
+      get :preview # Signature page preview
     end
   end
 

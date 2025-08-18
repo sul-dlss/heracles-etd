@@ -30,6 +30,14 @@ class Submission < ApplicationRecord
     "#{Settings.purl.url}/#{druid.delete_prefix('druid:')}"
   end
 
+  def thesis?
+    etd_type == 'Thesis'
+  end
+
+  def creative_commons_license
+    CreativeCommonsLicense.find(cclicense)
+  end
+
   def set_derivative_fields
     # TODO: Once file uploads are implemented.
     # https://github.com/sul-dlss/heracles-etd/issues/70

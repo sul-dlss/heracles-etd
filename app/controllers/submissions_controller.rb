@@ -41,6 +41,13 @@ class SubmissionsController < ApplicationController
     authorize! @submission
   end
 
+  def preview
+    authorize! @submission
+
+    send_file SignaturePagePreviewService.call(submission: @submission), filename: 'preview.pdf',
+                                                                         type: 'application/pdf', disposition: 'inline'
+  end
+
   private
 
   def set_submission

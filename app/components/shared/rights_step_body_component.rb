@@ -17,7 +17,7 @@ module Shared
     end
 
     def license
-      CreativeCommonsLicense.find(submission.cclicense)
+      submission.creative_commons_license
     end
   end
 end
