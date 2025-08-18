@@ -11,7 +11,7 @@ module Elements
         Elements::Forms::ToggleOptionComponent.new(position: :right, **args)
       }
 
-      def initialize(form:, field_name:, label:, container_classes:, data: {}) # rubocop:disable Metrics/ParameterLists
+      def initialize(form:, field_name:, label:, container_classes:, data: {})
         @form = form
         @field_name = field_name
         @label = label
