@@ -13,15 +13,15 @@
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
 
-    <%= render Edit::Step1Component.new(submission_presenter: @submission_presenter) %>
-    <%= render Edit::Step2Component.new(submission_presenter: @submission_presenter) %>
-    <%= render Edit::Step3Component.new(submission_presenter: @submission_presenter) %>
+    <%= render Edit::CitationStepComponent.new(submission: @submission) %>
+    <%= render Edit::AbstractStepComponent.new(submission: @submission) %>
+    <%= render Edit::FormatStepComponent.new(submission: @submission) %>
 
-    <%= render Edit::Step6Component.new(submission_presenter: @submission_presenter) %>
-    <%= render Edit::Step7Component.new(submission_presenter: @submission_presenter) %>
+    <%= render Edit::RightsStepComponent.new(submission: @submission) %>
+    <%= render Edit::SubmittedStepComponent.new(submission: @submission) %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Shared::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>
+    <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
   </div>
 </div>
 <%= render Elements::ModalComponent.new(id: 'review-modal', scrollable: true, size: :xl) do |component| %>

@@ -9,6 +9,6 @@
   <div><%= render Elements::ExternalLinkComponent.new(url: 'https://inside-studentservices.stanford.edu/supporting-students-across-topics/academic-progress-graduation/degree-progress-graduate-0', label: 'Faculty guide for reviewing theses and dissertations') %></div>
 <% end %>
 
-<%= render ReaderReview::Step1Component.new(submission: @submission) %>
-<%= render ReaderReview::Step2Component.new(submission: @submission) %>
-<%= render ReaderReview::Step6Component.new(submission: @submission) %>
+<%= render ReaderReview::CitationStepComponent.new(submission: @submission) %>
+<%= render ReaderReview::AbstractStepComponent.new(submission: @submission) %>
+<%= render ReaderReview::RightsStepComponent.new(submission: @submission) %>

@@ -4,15 +4,14 @@ require 'rails_helper'
 
 RSpec.describe Edit::StepComponent, type: :component do
   let(:submission) { create(:submission) }
-  let(:submission_presenter) { SubmissionPresenter.new(submission:) }
 
   it 'renders the step' do
-    render_inline(described_class.new(step_number: 2, title: 'Step 2',
-                                      submission_presenter:, done_field: :citation_verified))
+    render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 1',
+                                      submission:))
 
     header = page.find('.card-step .card-step-header')
-    expect(header).to have_css('.character-circle-disabled', text: '2')
-    expect(header).to have_css('h2', text: 'Step 2')
+    expect(header).to have_css('.character-circle-disabled', text: '1')
+    expect(header).to have_css('h2', text: 'Step 1')
     expect(header).to have_css('.badge-in-progress', text: 'In Progress')
     expect(header).to have_no_css('.badge-completed')
     expect(header).to have_no_button('Edit this section')
@@ -24,12 +23,14 @@ RSpec.describe Edit::StepComponent, type: :component do
   end
 
   context 'when not showing the step' do
+    let(:submission) { create(:submission, citation_verified: 'true') }
+
     it 'renders the step item without the body' do
-      render_inline(described_class.new(step_number: 2, title: 'Step 2',
-                                        submission_presenter:, done_field: :citation_verified, show: false))
+      render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 1',
+                                        submission:))
 
       header = page.find('.card-step .card-step-header')
-      expect(header).to have_css('.character-circle-success', text: '2')
+      expect(header).to have_css('.character-circle-success', text: '1')
       expect(header).to have_no_css('.badge-in-progress')
       expect(header).to have_css('.badge-completed', text: 'Completed')
       expect(header).to have_field('submission[citation_verified]', type: 'hidden', with: 'false')
@@ -41,7 +42,7 @@ RSpec.describe Edit::StepComponent, type: :component do
 
   context 'when done params are provided' do
     it 'uses the provided text and label' do
-      render_inline(described_class.new(step_number: 4, title: 'Step 4', submission_presenter:,
+      render_inline(described_class.new(step: SubmissionPresenter::FORMAT_STEP, title: 'Step 4', submission:,
                                         done_text: 'Finish this section',
                                         done_label: 'Finish', done_data: { action: 'my-action#finish' },
                                         done_disabled: true))
@@ -54,9 +55,11 @@ RSpec.describe Edit::StepComponent, type: :component do
   end
 
   context 'when edit params are provided' do
+    let(:submission) { create(:submission, format_reviewed: 'true') }
+
     it 'uses the provided edit label and data' do
-      render_inline(described_class.new(step_number: 3, title: 'Step 3', submission_presenter:,
-                                        edit_label: 'Modify this section', show: false))
+      render_inline(described_class.new(step: SubmissionPresenter::FORMAT_STEP, title: 'Step 4', submission:,
+                                        edit_label: 'Modify this section'))
 
       header = page.find('.card-step .card-step-header')
       expect(header).to have_button('Modify this section')
@@ -65,7 +68,8 @@ RSpec.describe Edit::StepComponent, type: :component do
 
   context 'with help content' do
     it 'renders the help content' do
-      render_inline(described_class.new(step_number: 5, title: 'Step 5', submission_presenter:)) do |component|
+      render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 5',
+                                        submission:)) do |component|
         component.with_help_content { '<p>Helpful information here.</p>'.html_safe }
       end
 
@@ -76,7 +80,8 @@ RSpec.describe Edit::StepComponent, type: :component do
 
   context 'with body content' do
     it 'renders the body content' do
-      render_inline(described_class.new(step_number: 6, title: 'Step 6', submission_presenter:)) do |component|
+      render_inline(described_class.new(step: SubmissionPresenter::FORMAT_STEP, title: 'Step 6',
+                                        submission:)) do |component|
         component.with_body_content { '<p>Body content goes here.</p>'.html_safe }
       end
 
@@ -86,7 +91,8 @@ RSpec.describe Edit::StepComponent, type: :component do
 
   context 'with footer content' do
     it 'renders the footer content' do
-      render_inline(described_class.new(step_number: 7, title: 'Step 7', submission_presenter:)) do |component|
+      render_inline(described_class.new(step: SubmissionPresenter::SUBMITTED_STEP, title: 'Step 7',
+                                        submission:)) do |component|
         component.with_footer_content { '<p>Footer content goes here.</p>'.html_safe }
       end
 

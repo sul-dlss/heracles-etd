@@ -8,13 +8,13 @@
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Show::WelcomeBannerComponent.new(submission: @submission) %>
 
-    <%= render Show::Step1Component.new(submission: @submission) %>
-    <%= render Show::Step2Component.new(submission: @submission) %>
-    <%= render Show::Step3Component.new %>
-    <%= render Show::Step6Component.new(submission: @submission) %>
-    <%= render Show::Step7Component.new(submission: @submission) %>
+    <%= render Show::CitationStepComponent.new(submission: @submission) %>
+    <%= render Show::AbstractStepComponent.new(submission: @submission) %>
+    <%= render Show::FormatStepComponent.new %>
+    <%= render Show::RightsStepComponent.new(submission: @submission) %>
+    <%= render Show::SubmittedStepComponent.new(submission: @submission) %>
   </div>
   <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Shared::ProgressCardComponent.new(submission_presenter: @submission_presenter) %>
+    <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
   </div>
 </div>

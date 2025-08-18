@@ -21,18 +21,18 @@ RSpec.describe 'Edit Submission' do
     # Step 7
     within(cards[4]) do
       expect(page).to have_css('.alert-danger',
-                               text: 'You must complete sections 1-6')
+                               text: 'You must complete sections 1-')
       expect(page).to have_button('Review and submit', disabled: true)
     end
 
-    expect(page).to have_css('.progress-card li', count: 7)
-    within('.progress-card #step-1') do
+    expect(page).to have_css('.progress-card li', count: 5)
+    within('.progress-card li:first-of-type') do
       expect(page).to have_text('Citation details verified')
       expect(page).to have_css('.character-circle-disabled', text: '1')
       expect(page).to have_no_css('.character-circle-success')
     end
 
-    # Step 1
+    # Citation step
     within(cards[0]) do
       expect(page).to have_css('.card-step-header h2', text: 'Verify your citation details')
       expect(page).to have_css('.character-circle-disabled', text: '1')
@@ -52,27 +52,25 @@ RSpec.describe 'Edit Submission' do
       click_button 'Confirm'
     end
 
-    within('.progress-card #step-1') do
+    within('.progress-card li:first-of-type') do
       expect(page).to have_text('Citation details verified')
       expect(page).to have_no_css('.character-circle-disabled')
       expect(page).to have_css('.character-circle-success')
     end
 
-    # Step 2
+    # Abstract step
     within(cards[1]) do
       expect(page).to have_button('Done', disabled: true)
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
       click_button 'Done'
     end
 
-    # Step 3
+    # Format step
     within(cards[2]) do
       click_button 'Confirm'
     end
 
-    # Step 4 and 5 are not implemented yet.
-
-    # Step 6
+    # Rights step
     within(cards[3]) do
       expect(page).to have_button('Done', disabled: true)
 
@@ -94,24 +92,20 @@ RSpec.describe 'Edit Submission' do
       click_button 'Done'
     end
 
-    # Step 7
+    # Submitted step
     within(cards[4]) do
       expect(page).to have_css('.alert-info',
-                               text: 'You have completed sections 1-6.')
+                               text: 'You have completed sections 1-4.')
       click_button('Review and submit')
     end
 
     within('.modal#review-modal') do
       expect(page).to have_content('Review and submit')
 
-      # Step 1
       expect(page).to have_css('h2', text: 'Citation details')
-      # Step 2
       expect(page).to have_css('h2', text: 'Abstract')
       expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
-      # Step 3
       expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
-      # Step 6
       expect(page).to have_css('h2', text: 'Apply copyright and license terms')
       expect(page).to have_text('This work is licensed under a CC Attribution license.')
 

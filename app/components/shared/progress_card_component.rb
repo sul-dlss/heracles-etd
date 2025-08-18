@@ -3,20 +3,21 @@
 module Shared
   # Component for displaying a progress card showing the steps of a submission
   class ProgressCardComponent < ApplicationComponent
-    def initialize(submission_presenter:)
-      @submission_presenter = submission_presenter
+    def initialize(submission:)
+      @submission = submission
       super()
     end
 
-    attr_reader :submission_presenter
+    attr_reader :submission
 
-    delegate :step_done?, :step7_done?, :submitted_at, to: :submission_presenter
+    delegate :submitted_at, to: :submission
 
     def step_number_for(step)
-      if step_done?(step)
+      if SubmissionPresenter.step_done?(step:, submission:)
         render(Edit::CharacterCircleComponent.new(character: '✓', variant: :success, classes: 'me-2 my-2'))
       else
-        render(Edit::CharacterCircleComponent.new(character: step, classes: 'me-2 my-2'))
+        character = SubmissionPresenter.step_number(step:)
+        render(Edit::CharacterCircleComponent.new(character:, classes: 'me-2 my-2'))
       end
     end
   end

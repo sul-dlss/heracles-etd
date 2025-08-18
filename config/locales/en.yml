@@ -28,29 +28,30 @@
 #       enabled: "ON"
 
 en:
-  step1:
-    title: "Citation details"
-    help_html: >-
-      <p>This information establishes how your work will be cited, and how you will be credited.</p>
-  step2:
-    title: "Abstract"
-    help_html: >-
-      <p>This abstract will be indexed for online searching.</p>
-      <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
-  step3:
-    title: "Review your dissertation's formatting"
-    help_html: >-
-      <p>Your dissertation must be a PDF file.</p>
-      <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
-      <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
-  step6:
-    title: "Apply copyright and license terms"
-    help_html: >-
-      <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
-  step7:
-    title: "Review and submit to Registrar"
-    help_html: >-
-      <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
+  steps:
+    citation:
+      title: "Citation details"
+      help_html: >-
+        <p>This information establishes how your work will be cited, and how you will be credited.</p>
+    abstract:
+      title: "Abstract"
+      help_html: >-
+        <p>This abstract will be indexed for online searching.</p>
+        <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+    format:
+      title: "Review your dissertation's formatting"
+      help_html: >-
+        <p>Your dissertation must be a PDF file.</p>
+        <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
+        <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+    rights:
+      title: "Apply copyright and license terms"
+      help_html: >-
+        <p>The copyright and licenses below will be printed on a page added to your dissertation.</p>
+    submitted:
+      title: "Review and submit to Registrar"
+      help_html: >-
+        <p>After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.</p>
   submitter:
     title: "Review and submit your dissertation"
     subtitle: "Preserve your work in the Stanford Digital Repository"

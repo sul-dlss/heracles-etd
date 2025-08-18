@@ -1,0 +1,22 @@
+<%= render Edit::StepComponent.new(step: SubmissionPresenter::SUBMITTED_STEP,
+                                   title: t('steps.submitted.title'),
+                                   submission:) do |component| %>
+
+  <% component.with_help_content do %>
+    <%= t('steps.submitted.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <% if all_done? %>
+      <%= render Elements::AlertComponent.new(value: "You have completed sections 1-#{step_range_end}. You can now review and submit to the Registrar.") %>
+    <% else %>
+      <%= render Elements::AlertComponent.new(value: "You must complete sections 1-#{step_range_end} before you can review and submit to the Registrar.", variant: :danger) %>
+    <% end %>
+  <% end %>
+
+  <% component.with_footer_content do %>
+    <div class="d-flex justify-content-end align-items-baseline">
+      <%= render Elements::ButtonComponent.new(label: 'Review and submit', variant: :primary, data: { bs_toggle: 'modal', bs_target: '#review-modal' }, disabled: !all_done?) %>
+    </div>
+  <% end %>
+<% end %>

@@ -3,9 +3,9 @@
 module Edit
   # Component for rendering a submit button wrapped in a form.
   class ButtonFormComponent < ApplicationComponent
-    def initialize(submission_presenter:, field:, value:, label: nil, classes: [], **options)
+    def initialize(submission:, field:, value:, label: nil, classes: [], **options)
       @label = label
-      @submission_presenter = submission_presenter
+      @submission = submission
       @field = field
       @value = value
       @classes = classes
@@ -13,6 +13,6 @@ module Edit
       super()
     end
 
-    attr_reader :submission_presenter, :field, :value, :label, :classes, :options
+    attr_reader :submission, :field, :value, :label, :classes, :options
   end
 end
