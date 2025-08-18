@@ -52,7 +52,11 @@
           <p>Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
         <% end %>
       <% end %>
-      <% component.with_row(label: 'Preview', values: ['Not implemented']) %>
+      <% component.with_row(label: 'Preview') do |row_component| %>
+        <% row_component.with_cell do %>
+          <%= render Elements::ExternalLinkComponent.new(url: preview_submission_path(submission.dissertation_id), label: 'Preview the Copyright & Signature Pages') %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <%= render Elements::ModalComponent.new(id: 'stanford-license-confirm') do |component| %>

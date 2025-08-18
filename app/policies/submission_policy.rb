@@ -2,7 +2,7 @@
 
 # Policy for managing submissions
 class SubmissionPolicy < ApplicationPolicy
-  alias_rule :edit?, :show?, :update?, to: :manage?
+  alias_rule :edit?, :show?, :update?, :preview?, to: :manage?
 
   def manage?
     record.sunetid == user.sunetid

@@ -9,5 +9,7 @@ groups:
   registrar: 'sdr:etds-registrar-staff'
   reports: 'sdr:etds-quarterly-reports'
 
+preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
+
 ahoy:
   tooltip: false

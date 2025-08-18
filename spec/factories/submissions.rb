@@ -13,6 +13,7 @@ FactoryBot.define do
     department { 'Electrical Engineering' }
     major { 'Computer Science' }
     degreeconfyr { '2023' }
+    provost { 'Sam E. Provost' }
 
     trait :with_orcid do
       orcid { '0000-0002-1825-0097' }
