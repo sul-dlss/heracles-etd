@@ -1,8 +1,10 @@
-<%= render Edit::ReviewStepComponent.new(step_number: 1,
-                                         title: 'Verify your citation details',
-                                         form:, show: show?,
-                                         review_field: :citation_verified,
-                                         done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
+<%= render Edit::StepComponent.new(step_number: 1,
+                                   title: 'Verify your citation details',
+                                   show: show?,
+                                   submission_presenter:,
+                                   edit_label: 'Undo your confirmation',
+                                   done_field: :citation_verified,
+                                   done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
 
   <% component.with_help_content do %>
     <%= t('step1.help_html') %>

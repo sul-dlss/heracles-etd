@@ -33,8 +33,6 @@ class Submission < ApplicationRecord
     # self.supplemental_files_uploaded
     # self.permissions_provided
     # self.permission_files_uploaded
-    self.abstract_provided = abstract.present? ? 'true' : 'false'
-    self.rights_selected = sulicense
     self.cc_license_selected = cclicense.present? ? 'true' : 'false'
     self.submitted_to_registrar = submitted_at.present? ? 'true' : 'false'
     self.cclicensetype = CreativeCommonsLicense.find(cclicense)&.name
