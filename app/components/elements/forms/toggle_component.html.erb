@@ -1,8 +1,6 @@
 <%= tag.div class: container_classes, data: do %>
   <div class="d-flex"> <%# Aligns label and tooltip %>
-    <%= form.label field_name, class: 'form-label d-block visually-hidden' do %>
-      <%= label %>
-    <% end %>
+    <%= form.label field_name, class: 'form-label d-block visually-hidden' %>
   </div>
   <div class="btn-group btn-group-toggle" role="group">
     <%= left_toggle_option %>
