@@ -18,7 +18,12 @@ FactoryBot.define do
       orcid { '0000-0002-1825-0097' }
     end
 
+    trait :with_dissertation_file do
+      dissertation_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/dissertation.pdf'), 'application/pdf') }
+    end
+
     trait :submittable do
+      with_dissertation_file
       citation_verified { 'true' }
       abstract { 'Sample abstract' }
       format_reviewed { 'true' }
@@ -27,6 +32,7 @@ FactoryBot.define do
       embargo { '6 months' }
       abstract_provided { 'true' }
       rights_selected { 'true' }
+      dissertation_uploaded { 'true' }
     end
 
     trait :submitted do

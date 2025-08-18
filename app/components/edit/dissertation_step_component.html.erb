@@ -1,0 +1,21 @@
+<%= render Edit::StepComponent.new(step: SubmissionPresenter::DISSERTATION_STEP,
+                                   title: t('steps.dissertation.title'),
+                                   data: { controller: 'dissertation' },
+                                   submission:,
+                                   done_disabled: done_disabled?) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('steps.dissertation.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::DissertationStepBodyHelpComponent.new %>
+    <% if dissertation_file.attached? %>
+      <%= render Shared::DissertationStepBodyTableComponent.new(submission:, with_remove: true) %>
+    <% else %>
+      <%= helpers.with_submission_form(submission) do |form| %>
+        <%= form.label :dissertation_file, 'Upload PDF (maximum size 1GB)', class: 'form-label' %>
+        <%= form.file_field :dissertation_file, accept: 'application/pdf', data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

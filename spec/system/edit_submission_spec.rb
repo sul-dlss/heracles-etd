@@ -16,16 +16,16 @@ RSpec.describe 'Edit Submission' do
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     cards = page.all('.card-step')
-    expect(cards.length).to eq(5)
+    expect(cards.length).to eq(TOTAL_STEPS)
 
     # Step 7
-    within(cards[4]) do
+    within(cards.last) do
       expect(page).to have_css('.alert-danger',
-                               text: 'You must complete sections 1-')
+                               text: "You must complete sections 1-#{TOTAL_STEPS - 1}")
       expect(page).to have_button('Review and submit', disabled: true)
     end
 
-    expect(page).to have_css('.progress-card li', count: 5)
+    expect(page).to have_css('.progress-card li', count: TOTAL_STEPS)
     within('.progress-card li:first-of-type') do
       expect(page).to have_text('Citation details verified')
       expect(page).to have_css('.character-circle-disabled', text: '1')
@@ -70,8 +70,23 @@ RSpec.describe 'Edit Submission' do
       click_button 'Confirm'
     end
 
-    # Rights step
+    # Dissertation file step
     within(cards[3]) do
+      expect(page).to have_button('Done', disabled: true)
+      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+
+      within('#dissertation-file-table') do
+        expect(page).to have_css('td', text: 'dissertation.pdf')
+        click_link_or_button 'Remove'
+      end
+
+      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+
+      click_button 'Done'
+    end
+
+    # Rights step
+    within(cards[4]) do
       expect(page).to have_button('Done', disabled: true)
 
       click_link_or_button 'View the Stanford University publication license'
@@ -93,9 +108,9 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Submitted step
-    within(cards[4]) do
+    within(cards[5]) do
       expect(page).to have_css('.alert-info',
-                               text: 'You have completed sections 1-4.')
+                               text: "You have completed sections 1-#{TOTAL_STEPS - 1}.")
       click_button('Review and submit')
     end
 
@@ -108,6 +123,9 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
       expect(page).to have_css('h2', text: 'Apply copyright and license terms')
       expect(page).to have_text('This work is licensed under a CC Attribution license.')
+      expect(page).to have_css('h2', text: 'Upload your dissertation')
+      expect(page).to have_link('dissertation.pdf')
+      expect(page).to have_no_button('Remove')
 
       click_link_or_button 'Submit to Registrar'
     end
@@ -122,5 +140,6 @@ RSpec.describe 'Edit Submission' do
     expect(submission.cclicense).to eq('1') # CC Attribution license
     expect(submission.cclicensetype).to eq('CC Attribution license')
     expect(submission.embargo).to eq('6 months')
+    expect(submission.dissertation_file.attached?).to be true
   end
 end

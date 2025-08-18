@@ -1,0 +1,24 @@
+<%= render Elements::Tables::TableComponent.new(id: 'dissertation-file-table',
+                                                label: 'Dissertation File',
+                                                show_label: false) do |component| %>
+  <% component.with_headers([
+                              { label: 'Dissertation File (maximum size 1GB)' },
+                              { label: 'Type' },
+                              { label: 'Size' },
+                              { label: 'Upload Date' },
+                              with_remove ? { label: 'Remove', classes: 'sr-only' } : { label: '' }
+                            ]) %>
+  <% component.with_row do |row_component| %>
+    <%= row_component.with_cell do %><%= link_to(filename, rails_blob_path(dissertation_file)) %><% end %>
+    <%= row_component.with_cell do %>PDF<% end %>
+    <%= row_component.with_cell do %><%= file_size %><% end %>
+    <%= row_component.with_cell do %><%= helpers.local_time(created_at) %><% end %>
+    <%= row_component.with_cell do %>
+      <% if with_remove %>
+        <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_dissertation_file, value: 'true', classes: 'p-0') do %>
+          <i class="bi bi-trash-fill me-1"></i>Remove
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+<%= render Shared::StepComponent.new(title: 'Dissertation files') do |component| %>
+  <% component.with_body_content do %>
+    <p>To open a file below, click on the filename.</p>
+
+    <%= render Shared::DissertationStepBodyTableComponent.new(submission:) %>
+  <% end %>
+<% end %>

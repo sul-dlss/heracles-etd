@@ -8,6 +8,10 @@ class Submission < ApplicationRecord
 
   has_many :readers, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :submission
 
+  # Active Storage attachments
+  has_one_attached :dissertation_file, dependent: :purge_later
+  has_many_attached :supplemental_files, dependent: :purge_later
+
   validates :dissertation_id, presence: true
   validates :druid, presence: true
   validates :etd_type, presence: true, inclusion: { in: %w[Thesis Dissertation] }
@@ -29,7 +33,6 @@ class Submission < ApplicationRecord
   def set_derivative_fields
     # TODO: Once file uploads are implemented.
     # https://github.com/sul-dlss/heracles-etd/issues/70
-    # self.dissertation_uploaded
     # self.supplemental_files_uploaded
     # self.permissions_provided
     # self.permission_files_uploaded

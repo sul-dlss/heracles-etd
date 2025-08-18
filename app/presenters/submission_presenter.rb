@@ -7,19 +7,22 @@ class SubmissionPresenter
   FORMAT_STEP = 'format'
   RIGHTS_STEP = 'rights'
   SUBMITTED_STEP = 'submitted'
+  DISSERTATION_STEP = 'dissertation'
 
   CITATION_STEP_FIELD = :citation_verified
   ABSTRACT_STEP_FIELD = :abstract_provided
   FORMAT_STEP_FIELD = :format_reviewed
   RIGHTS_STEP_FIELD = :rights_selected
   SUBMITTED_STEP_FIELD = :submitted_to_registrar
+  DISSERTATION_UPLOADED_FIELD = :dissertation_uploaded
 
   STEP_TO_FIELD = {
     CITATION_STEP => CITATION_STEP_FIELD, # step 1
     ABSTRACT_STEP => ABSTRACT_STEP_FIELD, # step 2
     FORMAT_STEP => FORMAT_STEP_FIELD, # step 3
-    RIGHTS_STEP => RIGHTS_STEP_FIELD, # step 4
-    SUBMITTED_STEP => SUBMITTED_STEP_FIELD # step 5
+    DISSERTATION_STEP => DISSERTATION_UPLOADED_FIELD, # step 4
+    RIGHTS_STEP => RIGHTS_STEP_FIELD, # step 5
+    SUBMITTED_STEP => SUBMITTED_STEP_FIELD # step 6
   }.freeze
 
   def self.all_done?(submission:)
