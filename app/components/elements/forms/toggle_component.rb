@@ -3,7 +3,7 @@
 module Elements
   module Forms
     # Component for a toggle-like radio button group field
-    class ToggleComponent < FieldComponent
+    class ToggleComponent < ApplicationComponent
       renders_one :left_toggle_option, lambda { |**args|
         Elements::Forms::ToggleOptionComponent.new(position: :left, **args)
       }
@@ -11,10 +11,15 @@ module Elements
         Elements::Forms::ToggleOptionComponent.new(position: :right, **args)
       }
 
-      def initialize(**args)
-        args[:label_classes] = merge_classes('d-block', args[:label_classes])
-        super
+      def initialize(form:, field_name:, container_classes:, data: {})
+        @form = form
+        @field_name = field_name
+        @container_classes = container_classes
+        @data = data
+        super()
       end
+
+      attr_reader :form, :field_name, :container_classes, :data
     end
   end
 end
