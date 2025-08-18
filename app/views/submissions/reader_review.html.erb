@@ -4,7 +4,7 @@
                                  subtitle: 'Reader review and approval') %>
 <% end %>
 
-<%= render Elements::AlertComponent.new do %>
+<%= render Elements::StatusAlertComponent.new do %>
   <div><span class="fw-bold">Dissertation ID:</span> <%= @submission.dissertation_id %></div>
   <div><%= render Elements::ExternalLinkComponent.new(url: 'https://inside-studentservices.stanford.edu/supporting-students-across-topics/academic-progress-graduation/degree-progress-graduate-0', label: 'Faculty guide for reviewing theses and dissertations') %></div>
 <% end %>

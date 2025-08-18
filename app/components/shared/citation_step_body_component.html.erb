@@ -17,7 +17,7 @@
     <% component.with_row(label: 'ORCID iD', values: [orcid || 'Not found']) %>
   <% end %>
   <% if orcid.present? %>
-    <%= render Elements::AlertComponent.new(title: 'Your ORCID iD') do %>
+    <%= render Elements::StatusAlertComponent.new(title: 'Your ORCID iD') do %>
       <p class="mb-0">You have an ORCID iD connected with your Stanford SUNet ID.</p>
       <ul class="mb-0">
         <li>You can review or change your SUNetID connection at <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>.</li>
@@ -25,7 +25,7 @@
       <p class="fst-italic mb-0"><%= orcid_text %></p>
     <% end %>
   <% else %>
-    <%= render Elements::AlertComponent.new(title: 'ORCID iD not found', variant: :warning) do %>
+    <%= render Elements::StatusAlertComponent.new(title: 'ORCID iD not found', variant: :warning) do %>
       <p class="mb-0">You do not have an ORCID iD connected with your Stanford SUNet ID. You are encouraged but not required to connect your ORCID iD.</p>
       <ul class="mb-0">
         <li>If you do not have an ORCID iD yet, you can get one at <%= render Elements::ExternalLinkComponent.new(url: 'https://orcid.org', classes: 'ms-1') %>.</li>

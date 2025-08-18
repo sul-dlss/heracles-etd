@@ -1,12 +1,12 @@
-<%= tag.div class: classes, data:, id: do %>
+<%= tag.section class: classes, data:, id:, 'aria-labelledby': aria_labelledby do %>
   <div class="card-header card-step-header">
     <%= tag.div class: 'd-flex align-items-start' do %>
-      <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: character_circle_variant) %></div>
+      <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: character_circle_variant, id: character_circle_id) %></div>
       <div class="flex-grow-1">
         <div class="d-flex align-items-start">
-          <h2 class="h4"><%= title %></h2>
-          <%= render Edit::InProgressBadgeComponent.new(classes: 'ms-3 mt-1') if show? %>
-          <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1') unless show? %>
+          <%= tag.h2 class: 'h4', id: title_id do %><%= title %><% end %>
+          <%= render Edit::InProgressBadgeComponent.new(classes: 'ms-3 mt-1', id: in_progress_badge_id) if show? %>
+          <%= render Edit::CompletedBadgeComponent.new(classes: 'ms-3 mt-1', id: completed_badge_id) unless show? %>
         </div>
         <div class="header-help">
           <%= help_content %>

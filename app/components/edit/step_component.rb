@@ -49,7 +49,27 @@ module Edit
     end
 
     def id
-      "step_#{step_number}"
+      "step-#{step_number}"
+    end
+
+    def in_progress_badge_id
+      "step-#{step_number}-in-progress-badge" if show?
+    end
+
+    def completed_badge_id
+      "step-#{step_number}-completed-badge" unless show?
+    end
+
+    def character_circle_id
+      "step-#{step_number}-character-circle"
+    end
+
+    def title_id
+      "step-#{step_number || 'none'}-title"
+    end
+
+    def aria_labelledby
+      [character_circle_id, title_id, in_progress_badge_id, completed_badge_id].compact.join(' ')
     end
   end
 end
