@@ -3,10 +3,11 @@
 module Edit
   # Component for displaying a single character in a circle
   class CharacterCircleComponent < ApplicationComponent
-    def initialize(character: '', classes: ['me-2 my-2'], variant: :disabled)
+    def initialize(id: nil, character: '', classes: ['me-2 my-2'], variant: :disabled)
       @character = character.to_s
       @classes = classes
       @variant = variant
+      @id = id
 
       raise ArgumentError unless %i[disabled success blank].include?(variant.to_sym)
 
@@ -19,7 +20,8 @@ module Edit
 
     def call
       tag.div(
-        class: classes
+        class: classes,
+        id: @id
       ) do
         character.to_s
       end

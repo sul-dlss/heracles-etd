@@ -14,16 +14,18 @@ module Elements
       danger: 'bi bi-exclamation-triangle-fill'
     }.freeze
 
-    def initialize(title: nil, variant: :note, classes: [])
+    def initialize(title: nil, variant: :note, classes: [], role: 'banner', aria_label: nil)
       @title = title
       @variant = variant.to_sym
       @classes = classes
+      @role = role
+      @aria_label = aria_label
       raise ArgumentError, "Unknown variant: #{variant}" unless ICONS.key?(variant)
 
       super()
     end
 
-    attr_reader :title, :variant
+    attr_reader :title, :variant, :role, :aria_label
 
     def icon_classes
       merge_classes('fs-3 me-3 align-self-center d-flex justify-content-center', ICONS[variant])

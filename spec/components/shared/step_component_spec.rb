@@ -6,6 +6,7 @@ RSpec.describe Shared::StepComponent, type: :component do
   it 'renders the component' do
     render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Citation details'))
 
+    expect(page).to have_css('section.card[aria-labelledby="step-1-character-circle step-1-title step-1-badge"]')
     header = page.find('.card .card-header')
     expect(header).to have_css('.character-circle-success', text: '1')
     expect(header).to have_css('h2', text: 'Citation details')
@@ -16,6 +17,7 @@ RSpec.describe Shared::StepComponent, type: :component do
     it 'does not render the character circle or completed badge' do
       render_inline(described_class.new(title: 'Citation details'))
 
+      expect(page).to have_css('section.card[aria-labelledby="step-none-title"]')
       header = page.find('.card .card-header')
       expect(header).to have_no_css('.character-circle-success')
       expect(header).to have_no_css('.badge-completed')

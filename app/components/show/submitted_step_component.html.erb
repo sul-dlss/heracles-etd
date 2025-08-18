@@ -6,7 +6,7 @@
   <% end %>
 
   <% component.with_body_content do %>
-      <%= render Elements::AlertComponent.new do %>
+      <%= render Elements::StatusAlertComponent.new do %>
         Dissertation submitted to Registrar: <%= helpers.local_time(submitted_at) %>.
       <% end %>
   <% end %>

@@ -25,6 +25,20 @@ RSpec.describe Elements::BannerComponent, type: :component do
     end
   end
 
+  context 'with a role' do
+    it 'renders the role' do
+      render_inline(described_class.new(role: 'region'))
+      expect(page).to have_css('.banner[role="region"]')
+    end
+  end
+
+  context 'with an aria-label' do
+    it 'renders the aria-label' do
+      render_inline(described_class.new(aria_label: 'My aria label'))
+      expect(page).to have_css('.banner[aria-label="My aria label"]')
+    end
+  end
+
   context 'with a header' do
     it 'renders the header' do
       render_inline(described_class.new.tap do |component|

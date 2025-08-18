@@ -25,5 +25,21 @@ module Shared
     def classes
       merge_classes('card border-0 mb-3', @classes)
     end
+
+    def badge_id
+      "step-#{step_number}-badge" if @step.present?
+    end
+
+    def character_circle_id
+      "step-#{step_number}-character-circle" if @step.present?
+    end
+
+    def title_id
+      "step-#{step_number || 'none'}-title"
+    end
+
+    def aria_labelledby
+      [character_circle_id, title_id, badge_id].compact.join(' ')
+    end
   end
 end

@@ -9,6 +9,8 @@ RSpec.describe Edit::StepComponent, type: :component do
     render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 1',
                                       submission:))
 
+    expect(page)
+      .to have_css('section.card-step[aria-labelledby="step-1-character-circle step-1-title step-1-in-progress-badge"]')
     header = page.find('.card-step .card-step-header')
     expect(header).to have_css('.character-circle-disabled', text: '1')
     expect(header).to have_css('h2', text: 'Step 1')
@@ -29,6 +31,8 @@ RSpec.describe Edit::StepComponent, type: :component do
       render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 1',
                                         submission:))
 
+      expect(page)
+        .to have_css('section.card-step[aria-labelledby="step-1-character-circle step-1-title step-1-completed-badge"]')
       header = page.find('.card-step .card-step-header')
       expect(header).to have_css('.character-circle-success', text: '1')
       expect(header).to have_no_css('.badge-in-progress')

@@ -1,4 +1,4 @@
-<%= render Elements::BannerComponent.new(variant: :success, title: 'Submission successful.') do |component| %>
+<%= render Elements::BannerComponent.new(variant: :success, title: 'Submission successful.', role: 'region', aria_label: 'Welcome') do |component| %>
   <% component.with_header do %>
     <div class="d-flex align-items-center gap-2">
       <h2 class="h4 mb-0">Welcome, <%= first_name %></h2>
