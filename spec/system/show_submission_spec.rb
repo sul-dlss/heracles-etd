@@ -17,15 +17,13 @@ RSpec.describe 'Show Submission', :rack_test do
 
     expect(page).to have_css('h2', text: 'Progress')
 
-    # Step 1
     expect(page).to have_css('h2', text: 'Citation details')
-    # Step 2
     expect(page).to have_css('h2', text: 'Abstract')
-    # Step 3
     expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
-    # Step 6
     expect(page).to have_css('h2', text: 'Apply copyright and license terms')
-    # Step 7
+    expect(page).to have_css('h2', text: 'Upload your dissertation')
+    expect(page).to have_link('dissertation.pdf')
+    expect(page).to have_no_button('Remove')
     expect(page).to have_css('h2', text: 'Review and submit to Registrar')
   end
 end

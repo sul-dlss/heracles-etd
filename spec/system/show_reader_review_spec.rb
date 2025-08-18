@@ -16,11 +16,10 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_css('header', text: 'View dissertation or thesis')
     expect(page).to have_css('.alert-info', text: submission.dissertation_id)
 
-    # Step 1
     expect(page).to have_css('h2', text: 'Citation details')
-    # Step 2
     expect(page).to have_css('h2', text: 'Abstract')
-    # Step 6
     expect(page).to have_css('h2', text: 'Copyright and license terms')
+    expect(page).to have_css('h2', text: 'Dissertation files')
+    expect(page).to have_link('dissertation.pdf')
   end
 end

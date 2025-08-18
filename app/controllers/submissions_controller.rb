@@ -16,7 +16,11 @@ class SubmissionsController < ApplicationController
     # All validation happens client-side, so not validating here.
     authorize! @submission
 
-    @submission.update!(submission_params)
+    if params.dig(:submission, :remove_dissertation_file)
+      @submission.dissertation_file.purge
+    else
+      @submission.update!(submission_params)
+    end
     redirect_to edit_submission_path(@submission.dissertation_id)
   end
 
@@ -45,6 +49,7 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
-                                 format_reviewed abstract_provided rights_selected ])
+                                 format_reviewed abstract_provided rights_selected dissertation_file
+                                 dissertation_uploaded ])
   end
 end

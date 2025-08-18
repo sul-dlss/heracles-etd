@@ -1,0 +1,11 @@
+<%= render Shared::StepComponent.new(step: SubmissionPresenter::DISSERTATION_STEP,
+                                     title: t('steps.dissertation.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('steps.dissertation.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::DissertationStepBodyHelpComponent.new %>
+    <%= render Shared::DissertationStepBodyTableComponent.new(submission:) %>
+  <% end %>
+<% end %>
