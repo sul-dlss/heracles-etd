@@ -21,5 +21,8 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_css('h2', text: 'Copyright and license terms')
     expect(page).to have_css('h2', text: 'Dissertation files')
     expect(page).to have_link('dissertation.pdf')
+    expect(page).to have_css('h2', text: 'Supplemental files')
+    expect(page).to have_link('supplemental_1.pdf')
+    expect(page).to have_link('supplemental_2.pdf')
   end
 end

@@ -23,8 +23,18 @@ FactoryBot.define do
       dissertation_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/dissertation.pdf'), 'application/pdf') }
     end
 
+    trait :with_supplemental_files do
+      supplemental_files do
+        [
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_1.pdf'), 'application/pdf'),
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_2.pdf'), 'application/pdf')
+        ]
+      end
+    end
+
     trait :submittable do
       with_dissertation_file
+      with_supplemental_files
       citation_verified { 'true' }
       abstract { 'Sample abstract' }
       format_reviewed { 'true' }

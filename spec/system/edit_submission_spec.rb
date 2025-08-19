@@ -85,8 +85,26 @@ RSpec.describe 'Edit Submission' do
       click_button 'Done'
     end
 
-    # Rights step
+    # Supplemental files step
     within(cards[4]) do
+      expect(page).to have_button('Done', disabled: true)
+      attach_file 'Upload supplemental files', Rails.root.join('spec/fixtures/files/supplemental_1.pdf')
+
+      within('#supplemental-files-table') do
+        expect(page).to have_css('td', text: 'supplemental_1.pdf')
+        click_link_or_button 'Remove'
+      end
+
+      attach_file 'Upload supplemental files', [
+        Rails.root.join('spec/fixtures/files/supplemental_1.pdf'),
+        Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
+      ]
+
+      click_button 'Done'
+    end
+
+    # Rights step
+    within(cards[5]) do
       expect(page).to have_button('Done', disabled: true)
 
       click_link_or_button 'View the Stanford University publication license'
@@ -108,7 +126,7 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Submitted step
-    within(cards[5]) do
+    within(cards[6]) do
       expect(page).to have_css('.alert-info',
                                text: "You have completed sections 1-#{TOTAL_STEPS - 1}.")
       click_button('Review and submit')

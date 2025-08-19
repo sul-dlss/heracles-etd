@@ -12,12 +12,14 @@ class SubmissionsController < ApplicationController
     authorize! @submission
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     # All validation happens client-side, so not validating here.
     authorize! @submission
 
     if params.dig(:submission, :remove_dissertation_file)
       @submission.dissertation_file.purge
+    elsif params.dig(:submission, :remove_supplemental_file)
+      @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).purge
     else
       @submission.update!(submission_params)
     end
@@ -55,8 +57,8 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_params
-    params.expect(submission: %i[abstract sulicense cclicense embargo citation_verified
-                                 format_reviewed abstract_provided rights_selected dissertation_file
-                                 dissertation_uploaded ])
+    params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
+                               :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
+                               :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded])
   end
 end

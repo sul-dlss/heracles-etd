@@ -1,0 +1,25 @@
+<%= render Edit::StepComponent.new(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP,
+                                   title: t('steps.supplemental_files.title'),
+                                   data: { controller: 'supplemental_files' },
+                                   submission:,
+                                   done_disabled: done_disabled?) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('steps.supplemental_files.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::SupplementalFilesStepBodyHelpComponent.new %>
+      <% if supplemental_files.attached? %>
+        <%= helpers.with_submission_form(submission) do |form| %>
+          <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
+        <% end %>
+      <% end %>
+      <%= helpers.with_submission_form(submission) do |form| %>
+        <% submission.supplemental_files.each do |supplemental_file| %>
+          <%= form.hidden_field :supplemental_files, multiple: true, value: supplemental_file.signed_id %>
+        <% end %>
+        <%= form.label :supplemental_files, 'Upload supplemental files (maximum size 1GB)', class: 'form-label' %>
+        <%= form.file_field :supplemental_files, multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+      <% end %>
+  <% end %>
+<% end %>

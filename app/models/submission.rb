@@ -41,7 +41,6 @@ class Submission < ApplicationRecord
   def set_derivative_fields
     # TODO: Once file uploads are implemented.
     # https://github.com/sul-dlss/heracles-etd/issues/70
-    # self.supplemental_files_uploaded
     # self.permissions_provided
     # self.permission_files_uploaded
     self.cc_license_selected = cclicense.present? ? 'true' : 'false'
