@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe SignaturePageService do
   let(:etd_type) { 'Thesis' }
-  let(:submission) { create(:submission, :submittable, :with_readers, :with_advisors, etd_type:) }
+  let(:submission) do
+    create(:submission, :submittable, :with_readers, :with_advisors, :with_supplemental_files, etd_type:)
+  end
   let(:temp_dir) { Dir.mktmpdir }
   let(:dissertation_path) { File.join(temp_dir, 'dissertation.pdf') }
 

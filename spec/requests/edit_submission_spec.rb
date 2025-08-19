@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Editing a submission' do
   let(:submission) { create(:submission) }
 
-  context 'when an unauthorized student tried to edit a submission' do
+  context 'when an unauthorized student tries to edit a submission' do
     before do
       sign_in('unauthorized_student')
     end
