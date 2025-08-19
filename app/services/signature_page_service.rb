@@ -63,7 +63,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
   private
 
   def augmented_dissertation_path
-    @augmented_dissertation_path ||= dissertation_path.sub('.pdf', '-augmented.pdf')
+    @augmented_dissertation_path ||= SignaturePageSupport.augmented_disseration_path(dissertation_path:)
   end
 
   # This is the PDF associated with the submission, so it can either be the student's

@@ -42,4 +42,8 @@ class User
   end
 
   attr_reader :sunetid, :groups, :orcid
+
+  def to_s
+    sunetid
+  end
 end

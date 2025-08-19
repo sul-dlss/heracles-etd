@@ -1,0 +1,35 @@
+# Locales for ActiveAdmin.
+
+en:
+  active_admin:
+    sidebars:
+      etds: 'ETDs'
+      licenses: 'CreativeCommons'
+      embargoes: 'Embargoes'
+  activerecord:
+    attributes:
+      reader:
+        name: 'Reader Name'
+        readerrole: 'Role'
+        finalreader: 'Final Reader'
+        type: 'Internal/External'
+        created_at: 'Created At (%{timezone_label})'
+        updated_at: 'Last Updated At (%{timezone_label})'
+      report:
+        custom:
+          end_date: 'End Date (%{timezone_label})'
+          start_date: 'Start Date (%{timezone_label})'
+      submission:
+        dissertation_id: 'Dissertation ID'
+        name: 'Student Name'
+        schoolname: 'School'
+        sub: 'Submit Deadline'
+        term: 'Term Code'
+        last_reader_action_at: 'Last Reader Action At (%{timezone_label})'
+        last_registrar_action_at: 'Last Registrar Action At (%{timezone_label})'
+        ils_record_created_at: 'ILS Record Created At (%{timezone_label})'
+        ils_record_updated_at: 'ILS Record Updated At (%{timezone_label})'
+        accessioning_started_at: 'Accessioning Started At (%{timezone_label})'
+        submitted_at: 'Submitted At (%{timezone_label})'
+        created_at: 'Created At (%{timezone_label})'
+        updated_at: 'Updated At (%{timezone_label})'

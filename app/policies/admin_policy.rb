@@ -2,7 +2,8 @@
 
 # Policy for admin actions
 class AdminPolicy < ApplicationPolicy
-  def test_submission?
-    user.groups.dlss?
+  # dashboard
+  def show?
+    user.groups.dlss? || user.groups.reports? || user.groups.registrar?
   end
 end

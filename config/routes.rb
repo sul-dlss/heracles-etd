@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   # Only expose motor-admin in development until an approach to administration is selected
   mount Motor::Admin => '/motor_admin' if Rails.env.development?
 
@@ -24,9 +25,5 @@ Rails.application.routes.draw do
       get :reader_review
       get :preview # Signature page preview
     end
-  end
-
-  namespace :admin do
-    get 'test_submission', to: 'admin#test_submission'
   end
 end
