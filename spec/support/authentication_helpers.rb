@@ -2,10 +2,10 @@
 
 # Helpers to assist with authentication.
 module AuthenticationHelpers
-  def sign_in(login = nil, groups: [])
+  def sign_in(login = nil, groups: [], orcid: Settings.test_orcid)
     TestShibbolethHeaders.user = login
     TestShibbolethHeaders.groups = groups
-    TestShibbolethHeaders.orcid = Settings.test_orcid
+    TestShibbolethHeaders.orcid = orcid
   end
 
   def sign_out
