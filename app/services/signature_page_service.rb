@@ -190,8 +190,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
           supplemental_files.each.with_index(1) do |file, i|
             file_listing_parts = [
               "#{i}.",
-              file.label&.truncate(120),
-              "<i>(#{file.file_name})</i>"
+              "<i>(#{file.filename})</i>"
             ]
             document.text(
               file_listing_parts.compact_blank.join(' '),

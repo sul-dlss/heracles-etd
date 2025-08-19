@@ -7,5 +7,6 @@
   <%= render Show::AbstractStepComponent.new(submission: @submission) %>
   <%= render Show::FormatStepComponent.new %>
   <%= render Show::DissertationStepComponent.new(submission: @submission) %>
+  <%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
   <%= render Show::RightsStepComponent.new(submission: @submission) %>
 <% end %>
