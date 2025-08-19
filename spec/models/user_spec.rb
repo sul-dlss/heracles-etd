@@ -49,7 +49,7 @@ RSpec.describe User do
       {
         described_class::REMOTE_USER_HEADER => 'fakeuser@stanford.edu',
         described_class::USER_GROUPS_HEADER => 'students;staff',
-        described_class::ORCID_ID_HEADER => '(null)'
+        described_class::ORCID_ID_HEADER => '0000-fake-orcid'
       }
     end
 
@@ -57,14 +57,15 @@ RSpec.describe User do
       expect(user.groups.to_s).to eq('students, staff')
     end
 
-    it 'considers a special string to indicate no orcid value' do
-      expect(user.orcid).to be_nil
+    it 'returns the ORCID ID value' do
+      expect(user.orcid).to eq('0000-fake-orcid')
     end
 
     context 'when missing groups and orcid' do
       let(:fake_env) do
         {
-          described_class::REMOTE_USER_HEADER => 'fakeuser@stanford.edu'
+          described_class::REMOTE_USER_HEADER => 'fakeuser@stanford.edu',
+          described_class::ORCID_ID_HEADER => '(null)'
         }
       end
 
