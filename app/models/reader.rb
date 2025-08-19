@@ -6,23 +6,32 @@ class Reader < ApplicationRecord
 
   self.inheritance_column = nil # allows us to use 'type' for something else, i.e. ["int"ernal | "ext"ernal]
 
-  ADVISOR_ROLES =
-    [
-      # Primary advisor roles
-      'Advisor',
-      'Doct Dissert Advisor (AC)',
-      'Outside Dissert Advisor (AC)',
-      # Co-advisor roles
-      'Co-Adv',
-      'Dissertation Co-Advisor',
-      'Doct Dissert Co-Adv (AC)',
-      'Doct Dissert Co-Adv (NonAC)',
-      'Outside Dissert Co-Adv (AC)'
-    ].freeze
+  PRIMARY_ADVISOR_ROLES = [
+    'Advisor',
+    'Doct Dissert Advisor (AC)',
+    'Outside Dissert Advisor (AC)'
+  ].freeze
+
+  COADVISOR_ROLES = [
+    'Co-Adv',
+    'Dissertation Co-Advisor',
+    'Doct Dissert Co-Adv (AC)',
+    'Doct Dissert Co-Adv (NonAC)',
+    'Outside Dissert Co-Adv (AC)'
+  ].freeze
+
+  ADVISOR_ROLES = (PRIMARY_ADVISOR_ROLES + COADVISOR_ROLES).freeze
 
   belongs_to :submission
   validates :name, presence: true
   validates :position, presence: true
 
   scope :advisors, -> { where(readerrole: ADVISOR_ROLES) }
+
+  def signature_page_role
+    return 'Primary Adviser' if readerrole.in?(PRIMARY_ADVISOR_ROLES)
+    return 'Co-Adviser' if readerrole.in?(COADVISOR_ROLES)
+
+    nil
+  end
 end
