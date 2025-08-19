@@ -22,7 +22,7 @@ begin
   desc 'Run herb against ERB files'
   task herb: :environment do
     puts 'Running ERB linter...'
-    system('bin/herb analyze app --no-log-file')
+    system('bin/herb analyze app --no-log-file --non-interactive --no-timing')
   end
 
   desc 'Run linter against JS files'
