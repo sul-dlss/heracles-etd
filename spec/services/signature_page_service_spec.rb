@@ -3,10 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe SignaturePageService do
-  let(:submission) { create(:submission, :submittable, :with_readers, :with_advisors) }
-
+  let(:etd_type) { 'Thesis' }
+  let(:submission) { create(:submission, :submittable, :with_readers, :with_advisors, etd_type:) }
   let(:temp_dir) { Dir.mktmpdir }
-
   let(:dissertation_path) { File.join(temp_dir, 'dissertation.pdf') }
 
   before do
@@ -24,11 +23,43 @@ RSpec.describe SignaturePageService do
       allow(FileUtils).to receive(:rm_f).and_call_original
     end
 
-    it 'writes a PDF' do
+    it 'writes a PDF and cleans up after itself' do
       expect(File.exist?(augmented_dissertation_path)).to be true
 
       expect(FileUtils).to have_received(:rm_f).with(%r{#{Dir.tmpdir}/submission-#{submission.id}.+.pdf}).once
       expect(augmented_dissertation_path).to end_with('-augmented.pdf')
+    end
+
+    context 'with a dissertation-type submission' do
+      let(:etd_type) { 'Dissertation' }
+
+      # Don't bother cleaning up behavior here since it was already tested above
+      it 'writes a PDF' do
+        expect(File.exist?(augmented_dissertation_path)).to be true
+      end
+    end
+
+    context 'when augmented PDF fails validation on write' do
+      let(:fake_document) { HexaPDF::Document.new }
+
+      before do
+        allow(HexaPDF::Document).to receive(:open).with(anything).and_call_original
+        allow(HexaPDF::Document).to receive(:open).with(dissertation_path).and_return(fake_document)
+        allow(fake_document).to receive(:write).with(anything, optimize: true, validate: false).and_call_original
+        allow(fake_document).to receive(:write).with(anything, optimize: true)
+                                               .and_raise(HexaPDF::Error, 'Invalid table or header')
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'notifies Honeybadger and tries again without validation' do
+        expect { augmented_dissertation_path }.not_to raise_error
+        expect(Honeybadger).to have_received(:notify).with(
+          /Error writing augmented PDF.+Retrying once without validation/,
+          error_class: HexaPDF::Error,
+          error_message: 'Invalid table or header',
+          backtrace: anything
+        )
+      end
     end
 
     context 'when the dissertation file is missing' do

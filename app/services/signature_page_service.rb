@@ -132,7 +132,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
     # Render license information
     if creative_commons_license&.cc_license?
-      document.pad(25) do # rubocop:disable Metrics/BlockLength
+      document.pad(25) do
         document.indent(25) do
           document.image(creative_commons_license.image_path)
           # Linkify the image by placing the annotation *just so*
@@ -155,7 +155,8 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
             document.text('This work is licensed under a Creative Commons Attribution-', leading: 2)
             document.text("#{creative_commons_license.signature_text}.", leading: 2)
             document.text(
-              "<color rgb='0000FF'><u><link href='#{creative_commons_license.url}'>#{creative_commons_license.url}</link></u></color>", # rubocop:disable Metrics/LineLength
+              "<color rgb='0000FF'><u><link href='#{creative_commons_license.url}'>" \
+              "#{creative_commons_license.url}</link></u></color>",
               inline_format: true,
               leading: 2
             )
@@ -283,7 +284,8 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
         end
         document.font('Times-Roman', size: 11, style: :italic) do
           document.text(
-            'This signature page was generated electronically upon submission of this dissertation in electronic format.', # rubocop:disable Layout/LineLength
+            'This signature page was generated electronically upon submission ' \
+            'of this dissertation in electronic format.',
             valign: :bottom
           )
         end
