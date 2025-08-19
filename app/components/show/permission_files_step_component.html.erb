@@ -1,0 +1,11 @@
+<%= render Shared::StepComponent.new(step: SubmissionPresenter::PERMISSION_FILES_STEP,
+                                     title: t('steps.permission_files.title')) do |component| %>
+  <% component.with_help_content do %>
+    <%= t('steps.permission_files.help_html') %>
+  <% end %>
+
+  <% component.with_body_content do %>
+    <%= render Shared::PermissionFilesStepBodyHelpComponent.new %>
+    <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:) %>
+  <% end %>
+<% end %>

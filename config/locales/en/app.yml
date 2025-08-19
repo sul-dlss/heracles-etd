@@ -60,6 +60,10 @@ en:
       title: "Add supplemental files (Optional)"
       help_html: >-
         <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
+    permission_files:
+      title: "Upload permissions"
+      help_html: >-
+        <p>Permission is required for use of any copyrighted material in your dissertation.</p>
   submitter:
     title: "Review and submit your dissertation"
     subtitle: "Preserve your work in the Stanford Digital Repository"
