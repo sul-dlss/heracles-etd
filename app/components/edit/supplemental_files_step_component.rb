@@ -11,9 +11,5 @@ module Edit
     attr_reader :submission
 
     delegate :supplemental_files, to: :submission
-
-    def done_disabled?
-      !supplemental_files.attached?
-    end
   end
 end

@@ -87,7 +87,7 @@ RSpec.describe 'Edit Submission' do
 
     # Supplemental files step
     within(cards[4]) do
-      expect(page).to have_button('Done', disabled: true)
+      expect(page).to have_button('Done', disabled: false)
       attach_file 'Upload supplemental files', Rails.root.join('spec/fixtures/files/supplemental_1.pdf')
 
       within('#supplemental-files-table') do

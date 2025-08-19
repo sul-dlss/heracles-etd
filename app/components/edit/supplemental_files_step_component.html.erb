@@ -2,7 +2,7 @@
                                    title: t('steps.supplemental_files.title'),
                                    data: { controller: 'supplemental_files' },
                                    submission:,
-                                   done_disabled: done_disabled?) do |component| %>
+                                   done_disabled: false) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.supplemental_files.help_html') %>
   <% end %>

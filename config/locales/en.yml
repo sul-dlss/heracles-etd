@@ -57,7 +57,7 @@ en:
       help_html: >-
         <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
     supplemental_files:
-      title: "Add supplemental files (optional)"
+      title: "Add supplemental files (Optional)"
       help_html: >-
         <p>The file names and descriptions in this section will be printed on a page added to your dissertation.</p>
   submitter:

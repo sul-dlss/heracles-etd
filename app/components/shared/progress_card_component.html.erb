@@ -7,9 +7,9 @@
       <li><%= step_number_for(SubmissionPresenter::CITATION_STEP) %> Citation details verified</li>
       <li><%= step_number_for(SubmissionPresenter::ABSTRACT_STEP) %> Abstract provided</li>
       <li><%= step_number_for(SubmissionPresenter::FORMAT_STEP) %> Format reviewed</li>
-      <li><%= step_number_for(SubmissionPresenter::RIGHTS_STEP) %> License terms applied</li>
       <li><%= step_number_for(SubmissionPresenter::DISSERTATION_STEP) %> Dissertation uploaded</li>
       <li><%= step_number_for(SubmissionPresenter::SUPPLEMENTAL_FILES_STEP) %> Supplemental files uploaded</li>
+      <li><%= step_number_for(SubmissionPresenter::RIGHTS_STEP) %> License terms applied</li>
       <li>
         <%= step_number_for(SubmissionPresenter::SUBMITTED_STEP) %> <div class="d-inline-flex flex-column"><div>Submitted to Registrar</div><div class="text-muted"><%= helpers.local_time(submitted_at) if submitted_at.present? %></div></div>
       </li>

@@ -9,7 +9,7 @@ RSpec.describe Edit::SupplementalFilesStepComponent, type: :component do
     it 'renders the component' do
       render_inline(described_class.new(submission:))
 
-      expect(page).to have_css('h2', text: 'Add supplemental files (optional)')
+      expect(page).to have_css('h2', text: 'Add supplemental files (Optional)')
       expect(page).to have_field('Upload supplemental files', type: 'file')
     end
   end
@@ -20,7 +20,7 @@ RSpec.describe Edit::SupplementalFilesStepComponent, type: :component do
     it 'renders the component' do
       render_inline(described_class.new(submission:))
 
-      expect(page).to have_css('h2', text: 'Add supplemental files (optional)')
+      expect(page).to have_css('h2', text: 'Add supplemental files (Optional)')
       expect(page).to have_css('table#supplemental-files-table tr', count: 3)
       rows = page.all('table#supplemental-files-table tbody tr')
       cells = rows[0].all('td')
