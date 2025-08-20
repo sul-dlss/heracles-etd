@@ -19,8 +19,8 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
+    <%# Load application.bootstrap only %>
+    <%= stylesheet_link_tag 'application.bootstrap', 'data-turbo-track': 'reload' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2025-08-07/styles/sul.css">
     <%= javascript_importmap_tags %>
   </head>
