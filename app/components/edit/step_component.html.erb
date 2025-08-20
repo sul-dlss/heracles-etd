@@ -13,7 +13,7 @@
       </div>
       <div>
         <% unless show? %>
-          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap', id: edit_id, data: edit_data) do %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap', id: edit_id, data: edit_data, 'aria-expanded': false, 'aria-controls': body_id) do %>
             <i class="bi bi-pencil"></i> <%= edit_label %>
           <% end %>
         <% end %>
@@ -21,18 +21,16 @@
     <% end %>
   <% end %>
 
-  <% if show? %>
-    <%= tag.div class: 'card-body card-step-body' do %>
-      <%= body_content %>
-      <hr>
-      <% if footer_content %>
-        <%= footer_content %>
-      <% else %>
-        <div class="d-flex justify-content-between align-items-baseline">
-          <div><%= done_text %></div>
-          <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled, id: done_id) %>
-        </div>
-      <% end %>
+  <%= tag.div class: card_body_classes, data: { collapse_target: 'body' }, id: body_id do %>
+    <%= body_content %>
+    <hr>
+    <% if footer_content %>
+      <%= footer_content %>
+    <% else %>
+      <div class="d-flex justify-content-between align-items-baseline">
+        <div><%= done_text %></div>
+        <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled, id: done_id, 'aria-expanded': true, 'aria-controls': body_id) %>
+      </div>
     <% end %>
   <% end %>
 <% end %>
