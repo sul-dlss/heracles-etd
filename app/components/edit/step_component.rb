@@ -52,24 +52,12 @@ module Edit
       "step-#{step_number}"
     end
 
-    def in_progress_badge_id
-      "step-#{step_number}-in-progress-badge" if show?
+    def aria_label
+      "#{step_number} #{title} #{show? ? 'in progress' : 'completed'}"
     end
 
-    def completed_badge_id
-      "step-#{step_number}-completed-badge" unless show?
-    end
-
-    def character_circle_id
-      "step-#{step_number}-character-circle"
-    end
-
-    def title_id
-      "step-#{step_number || 'none'}-title"
-    end
-
-    def aria_labelledby
-      [character_circle_id, title_id, in_progress_badge_id, completed_badge_id].compact.join(' ')
+    def badge_component
+      show? ? Edit::InProgressBadgeComponent : Edit::CompletedBadgeComponent
     end
   end
 end
