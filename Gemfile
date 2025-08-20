@@ -39,6 +39,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'action_policy' # Authorization framework for Rails
+gem 'activeadmin'
 gem 'config'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'

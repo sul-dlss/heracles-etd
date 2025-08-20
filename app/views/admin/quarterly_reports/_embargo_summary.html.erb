@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Count</th>
+      <th>Pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.each do |summary| %>
+      <tr>
+        <td><%= summary[:embargo_release] %></td>
+        <td><%= summary[:count] %></td>
+        <td><%= summary[:pct] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

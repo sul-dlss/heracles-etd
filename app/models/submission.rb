@@ -3,6 +3,7 @@
 # Model for submissions.
 class Submission < ApplicationRecord
   include PersonNameConcern
+  include SubmissionAdminConcern
 
   before_save :set_derivative_fields
 

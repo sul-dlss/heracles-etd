@@ -3,6 +3,7 @@
 # Model for readers associated with submissions
 class Reader < ApplicationRecord
   include PersonNameConcern
+  include ReaderAdminConcern
 
   self.inheritance_column = nil # allows us to use 'type' for something else, i.e. ["int"ernal | "ext"ernal]
 

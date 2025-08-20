@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Count</th>
+      <th>Pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.each do |summary| %>
+      <tr>
+        <td><%= summary[:code] %></td>
+        <td><%= summary[:count] %></td>
+        <td><%= summary[:pct] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

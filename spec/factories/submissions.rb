@@ -66,5 +66,10 @@ FactoryBot.define do
 
       readers { create_list(:reader, advisors_count, :advisor) }
     end
+
+    trait :reader_approved do
+      readerapproval { 'Approved' }
+      last_reader_action_at { DateTime.parse('2020-03-05T14:38:59Z') }
+    end
   end
 end

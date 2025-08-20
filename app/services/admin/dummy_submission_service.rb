@@ -1,17 +1,24 @@
 # frozen_string_literal: true
 
 module Admin
-  # Controller for admin actions
-  class AdminController < ApplicationController
-    def test_submission
-      authorize! default: AdminPolicy
+  # Service to create a dummy submission for testing purposes.
+  # This is used in the admin interface to generate test data.
+  class DummySubmissionService
+    def self.call(...)
+      new(...).call
+    end
 
+    def initialize(sunetid:)
+      @sunetid = sunetid
+    end
+
+    def call
       dissertation_id = format('%010d', Kernel.rand(1..9_999_999_999))
 
       submission = Submission.create!(
         dissertation_id:,
-        title: "Test Submission for #{current_user.sunetid} (#{dissertation_id})",
-        sunetid: current_user.sunetid,
+        title: "Test Submission for #{sunetid} (#{dissertation_id})",
+        sunetid: sunetid,
         degree: 'Ph.D.',
         name: 'Pretender, Student',
         schoolname: 'Humanities & Sciences',
@@ -22,16 +29,17 @@ module Admin
         druid:
       )
       submission.readers.create!(
-        sunetid: current_user.sunetid,
+        sunetid: sunetid,
         position: 1,
         name: 'Pretender, Advisor',
         readerrole: 'Advisor'
       )
-
-      redirect_to edit_submission_path(submission.dissertation_id)
+      submission
     end
 
     private
+
+    attr_reader :sunetid
 
     def druid
       letters = 'bcdfghjkmnpqrstvwxyz'.chars.freeze

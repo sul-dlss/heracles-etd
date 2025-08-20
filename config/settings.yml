@@ -1,6 +1,8 @@
 purl:
   url: "https://sul-purl-stage.stanford.edu"
 
+orcid_base_url: 'https://orcid.org'
+
 datacite:
   prefix: '10.80343'
 
@@ -13,3 +15,8 @@ preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
 
 ahoy:
   tooltip: false
+
+# ActiveAdmin configs
+searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s
+argo_url: https://argo.stanford.edu
+stacks_uri: 'https://stacks.stanford.edu/file/%<druid>s/%<aug_diss_file_name>s'
