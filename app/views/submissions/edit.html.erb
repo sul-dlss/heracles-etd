@@ -25,26 +25,3 @@
     <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
   </div>
 </div>
-<%= render Elements::ModalComponent.new(id: 'review-modal', scrollable: true, size: :xl) do |component| %>
-  <% component.with_header do %>
-    <div class="d-flex flex-column">
-      <div class="h3">Review and submit</div>
-      <div class="h5">Scroll down to review your details and selections before submitting.</div>
-    </div>
-  <% end %>
-
-  <% component.with_body do %>
-    <%= turbo_frame_tag @submission, 'review', src: review_submission_path(@submission.dissertation_id), loading: 'lazy' do %>
-    <% end %>
-  <% end %>
-
-  <% component.with_footer do %>
-    <div class="d-flex justify-content-between align-items-baseline w-100">
-      <div>By clicking Submit, I verify my thesis or dissertation is complete.</div>
-      <div>
-        <%= render Elements::ButtonComponent.new(label: 'Go back', variant: :'outline-primary', data: { 'bs-dismiss': 'modal' }, 'aria-label': 'Close', classes: 'me-3') %>
-        <%= render Elements::ButtonLinkComponent.new(label: 'Submit to Registrar', variant: :primary, link: submit_submission_path(@submission.dissertation_id), data: { turbo_method: :post }) %>
-      </div>
-    </div>
-  <% end %>
-<% end %>

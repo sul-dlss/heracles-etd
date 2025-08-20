@@ -132,21 +132,19 @@ RSpec.describe 'Edit Submission' do
       click_button('Review and submit')
     end
 
-    within('.modal#review-modal') do
-      expect(page).to have_content('Review and submit')
+    expect(page).to have_current_path(review_submission_path(submission.dissertation_id))
+    expect(page).to have_content('Review and submit')
+    expect(page).to have_css('h2', text: 'Citation details')
+    expect(page).to have_css('h2', text: 'Abstract')
+    expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
+    expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
+    expect(page).to have_css('h2', text: 'Apply copyright and license terms')
+    expect(page).to have_text('This work is licensed under a CC Attribution license.')
+    expect(page).to have_css('h2', text: 'Upload your dissertation')
+    expect(page).to have_link('dissertation.pdf')
+    expect(page).to have_no_button('Remove')
 
-      expect(page).to have_css('h2', text: 'Citation details')
-      expect(page).to have_css('h2', text: 'Abstract')
-      expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
-      expect(page).to have_css('h2', text: 'Review your dissertation\'s formatting')
-      expect(page).to have_css('h2', text: 'Apply copyright and license terms')
-      expect(page).to have_text('This work is licensed under a CC Attribution license.')
-      expect(page).to have_css('h2', text: 'Upload your dissertation')
-      expect(page).to have_link('dissertation.pdf')
-      expect(page).to have_no_button('Remove')
-
-      click_link_or_button 'Submit to Registrar'
-    end
+    click_link_or_button 'Submit to Registrar'
 
     expect(page).to have_current_path(submission_path(submission.dissertation_id))
     expect(page).to have_content("Welcome, #{submission.first_name}")
