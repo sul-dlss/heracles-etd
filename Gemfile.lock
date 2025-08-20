@@ -88,15 +88,10 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     airbrussh (1.5.3)
       sshkit (>= 1.6.1, != 1.7.0)
-    ar_lazy_preload (1.1.2)
-      rails (>= 5.2)
     arbre (1.7.0)
       activesupport (>= 3.0.0)
       ruby2_keywords (>= 0.0.2)
     ast (2.4.3)
-    audited (5.8.0)
-      activerecord (>= 5.2, < 8.2)
-      activesupport (>= 5.2, < 8.2)
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.1)
@@ -115,7 +110,6 @@ GEM
     bundler-audit (0.9.2)
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
-    cancancan (3.6.1)
     capistrano (3.19.2)
       airbrussh (>= 1.0.0)
       i18n
@@ -291,13 +285,6 @@ GEM
     matrix (0.4.3)
     mini_mime (1.1.5)
     minitest (5.25.5)
-    motor-admin (0.4.37)
-      ar_lazy_preload (~> 1.0)
-      audited (~> 5.0)
-      cancancan (~> 3.0)
-      csv (>= 3.0)
-      fugit (~> 1.0)
-      rails (>= 5.2)
     msgpack (1.8.0)
     net-imap (0.5.9)
       date
@@ -597,7 +584,6 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   local_time
-  motor-admin
   overmind
   pg (~> 1.1)
   prawn

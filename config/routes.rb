@@ -2,8 +2,6 @@
 
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
-  # Only expose motor-admin in development until an approach to administration is selected
-  mount Motor::Admin => '/motor_admin' if Rails.env.development?
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
