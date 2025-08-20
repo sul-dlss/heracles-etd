@@ -28,8 +28,6 @@ class SubmissionsController < ApplicationController
 
   def review
     authorize! @submission
-
-    render layout: false
   end
 
   def submit
