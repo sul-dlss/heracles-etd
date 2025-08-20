@@ -18,11 +18,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :submissions, only: %i[edit update show] do
+  # Since external applications reference legacy endpoints, we will continue to support them rather than
+  # use Rails routing conventions.
+
+  get 'view/:id' => 'submissions#reader_review', as: :reader_review_submission
+
+  resources :submissions, only: %i[edit update show], path: 'submit' do
     member do
       get :review # Edit review
       post :submit
-      get :reader_review
       get :preview # Signature page preview
     end
   end
