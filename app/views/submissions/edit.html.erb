@@ -9,7 +9,8 @@
                                  subtitle: t('submitter.subtitle')) %>
 <% end %>
 
-<div class="row gy-2">
+<div class="row gy-2" data-controller="focus" data-action="turbo:render@window->focus#restoreFocus">
+  <div id="focus" data-turbo-permanent="true" data-focus-target="permanent"></div>
   <div class="col-lg-8 order-2 order-lg-1">
     <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
 

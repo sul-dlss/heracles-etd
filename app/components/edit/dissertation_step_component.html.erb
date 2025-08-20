@@ -1,6 +1,5 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::DISSERTATION_STEP,
                                    title: t('steps.dissertation.title'),
-                                   data: { controller: 'dissertation' },
                                    submission:,
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
@@ -14,7 +13,7 @@
     <% else %>
       <%= helpers.with_submission_form(submission) do |form| %>
         <%= form.label :dissertation_file, 'Upload PDF (maximum size 1GB)', class: 'form-label' %>
-        <%= form.file_field :dissertation_file, accept: 'application/pdf', data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+        <%= form.file_field :dissertation_file, accept: 'application/pdf', data: dissertation_file_data, class: 'form-control', style: 'width: 350px;' %>
       <% end %>
     <% end %>
   <% end %>
