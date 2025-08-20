@@ -23,7 +23,7 @@ RSpec.describe 'Show admin interface as registrar user' do
 
     click_link_or_button 'Submissions'
     expect(page).to have_css('.col-title', text: submission.title)
-    click_link_or_button(submission.id)
+    click_link_or_button submission.id.to_s
 
     expect(page).to have_css('.col-name', text: reader.name)
     expect(page).to have_css('.col-file_name', text: 'dissertation.pdf')
