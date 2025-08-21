@@ -16,6 +16,7 @@ module Edit
       @title = title
       @submission = submission
       @data = data.merge(step_number: step_number)
+      @data[:controller] = merge_actions(@data[:controller], 'collapse')
       @classes = classes
       @edit_label = edit_label
       # The id of the element that gets focus after the edit button is clicked.
@@ -71,18 +72,26 @@ module Edit
       show? ? Edit::InProgressBadgeComponent : Edit::CompletedBadgeComponent
     end
 
+    def body_id
+      "step-#{step_number}-body"
+    end
+
     def edit_data
       {
-        action: 'click->focus#saveFocus',
+        action: 'click->focus#saveFocus click->collapse#expandAndSubmit',
         focus_id_param: edit_focus_id
       }
     end
 
     def add_focus(data)
       # This sets so that after the form is submitted, the focus will be set to the edit button.
-      data[:action] = merge_actions(data[:action], 'click->focus#saveFocus')
+      data[:action] = merge_actions(data[:action], 'click->focus#saveFocus click->collapse#collapseAndSubmit')
       data[:focus_id_param] = edit_id
       data
+    end
+
+    def card_body_classes
+      merge_classes('card-body card-step-body collapse', show? ? 'show' : nil)
     end
   end
 end
