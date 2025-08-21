@@ -29,7 +29,7 @@
             <i class="bi bi-card-text me-1"></i> View the Creative Commons licenses
           </a>
           <%= helpers.with_submission_form(submission) do |form| %>
-            <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { controller: 'submit', action: 'change->submit#submit' } %> to my dissertation.</p>
+            <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Creative Commons license' %> to my dissertation.</p>
           <% end %>
         <% end %>
       <% end %>
@@ -48,7 +48,7 @@
           <div class="d-flex align-items-baseline gap-2 mb-2 flex-wrap">
           </div>
           <%= helpers.with_submission_form(submission) do |form| %>
-            <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' } %> after final approval by the Registrar.</p>
+            <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Postpone release' %> after final approval by the Registrar.</p>
           <% end %>
           <p>Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
         <% end %>
