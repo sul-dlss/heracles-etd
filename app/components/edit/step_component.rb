@@ -19,8 +19,7 @@ module Edit
       @classes = classes
       @edit_label = edit_label
       # The id of the element that gets focus after the edit button is clicked.
-      @edit_focus_id = edit_focus_id
-      @edit_focus_id ||= done_id # Default to done button.
+      @edit_focus_id = edit_focus_id || done_id # Default to done button.
       @done_text = done_text
       @done_label = done_label
       @done_data = add_focus(done_data)
