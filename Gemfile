@@ -41,9 +41,12 @@ gem 'bootsnap', require: false
 gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin'
 gem 'config'
+gem 'dor-services-client'
+gem 'folio_client'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
 gem 'local_time'
+gem 'marc' # for submit_marc
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
 gem 'view_component'
 

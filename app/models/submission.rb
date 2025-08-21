@@ -35,6 +35,10 @@ class Submission < ApplicationRecord
     etd_type == 'Thesis'
   end
 
+  def submitted?
+    submitted_at.present?
+  end
+
   def creative_commons_license
     CreativeCommonsLicense.find(cclicense)
   end

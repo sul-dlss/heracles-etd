@@ -5,17 +5,6 @@
 module ReaderAdminConcern
   extend ActiveSupport::Concern
 
-  NON_ADVISOR_ROLES =
-    [
-      'Reader',
-      'Rdr',
-      'Outside Reader',
-      'Engineers Thesis/Project Adv',
-      'Doct Dissert Reader (AC)',
-      'Doct Dissert Rdr (NonAC)',
-      'Outside Dissert Reader (AC)'
-    ].freeze
-
   class_methods do
     # associations that are searchable via activeadmin
     def ransackable_associations(_auth_object = nil)
