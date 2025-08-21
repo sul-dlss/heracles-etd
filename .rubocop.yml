@@ -63,6 +63,9 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/NestedGroups:
+  Enabled: false
+
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true
 Gemspec/AttributeAssignment: # new in 1.77

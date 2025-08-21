@@ -6,6 +6,8 @@ orcid_base_url: 'https://orcid.org'
 datacite:
   prefix: '10.80343'
 
+etd_apo: 'druid:bx911tp9024' # the APO that governs all ETDs
+
 groups:
   dlss: 'sdr:etds-sul-staff'
   registrar: 'sdr:etds-registrar-staff'
@@ -13,8 +15,37 @@ groups:
 
 preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
 
-ahoy:
-  tooltip: false
+# true to post completed submission to Registrar
+dor_submit_ps_xml: false
+ps_reg_endpoint: 'http://registrar.example.edu'
+ps_reg_username: ~
+ps_reg_password: ~
+ps_env: 'test'
+
+# marc_workspace: individual stub records
+marc_workspace: '~'
+
+catalog:
+  folio:
+    okapi:
+      url: "https://okapi-stage.example.com"
+      username: "app_sdr"
+      password: "supersecret"
+      legacy_auth: true
+    tenant_id: "example_tenant"
+    marc_job_profile_uuid: ae0a94d0-1f8e-4177-bcf9-c3a90e4c9429
+    marc_job_name: 'ETDs New'
+    status:
+      cataloged_uuid: 9634a5ab-9228-4703-baf2-4d12ebc77d56
+    import:
+      timeout_seconds: 300 # default value set in folio_client gem
+      wait_seconds: 5 # wait longer between import checks to give the job enough time to be created and to finish
+      max_checks: 10 # default value set in folio_client gem
+    url: "https://folio-stage.stanford.edu" # base URL of folio instance (e.g. for linkout to record details page)
+
+dor_services:
+  url: 'http://localhost:3003'
+  token: ~
 
 # ActiveAdmin configs
 searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s
