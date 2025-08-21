@@ -5,7 +5,7 @@
   <% component.with_row(label: 'Acknowledgements', values: ['Optional. If included, should be placed directly after the Abstract and before the Table of Contents.']) %>
 <% end %>
 
-<div class="d-flex justify-content-center gap-3">
+<div class="d-flex justify-content-center gap-3" role="img" aria-label="Five pages shown. 1: Title Page. 2: Copyright Page, excluded and crossed out. 3: Signature Page, excluded and crossed out. 4: Abstract or Blank Page, labeled with Roman numeral iv. 5: Acknowledgements Page (Optional), labeled with Roman numeral v.">
   <%= render Edit::PageFigureComponent.new(title: 'Title Page') %>
   <%= render Edit::PageFigureComponent.new(title: 'Copyright', with_x: true) %>
   <%= render Edit::PageFigureComponent.new(title: 'Signature Page', with_x: true) %>
