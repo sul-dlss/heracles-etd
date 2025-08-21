@@ -68,10 +68,6 @@ module SubmissionAdminConcern
     SignaturePageSupport.augmented_disseration_path(dissertation_path: dissertation_file.filename.to_s)
   end
 
-  def embargo_release_date
-    Embargo.embargo_date(start_date: submitted_at, id: embargo)
-  end
-
   def all_required_steps_complete?
     REQUIRED_ETD_WORKFLOW_STEPS.all? { |step| self[step] == 'true' }
   end

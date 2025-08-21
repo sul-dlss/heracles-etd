@@ -11,7 +11,9 @@ class Submission < ApplicationRecord
 
   # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
+  has_one_attached :augmented_dissertation_file, dependent: :purge_later
   has_many_attached :supplemental_files, dependent: :purge_later
+  has_many_attached :permission_files, dependent: :purge_later
 
   validates :dissertation_id, presence: true
   validates :druid, presence: true
@@ -41,6 +43,10 @@ class Submission < ApplicationRecord
 
   def creative_commons_license
     CreativeCommonsLicense.find(cclicense)
+  end
+
+  def embargo_release_date
+    Embargo.embargo_date(start_date: submitted_at, id: embargo)
   end
 
   def set_derivative_fields
