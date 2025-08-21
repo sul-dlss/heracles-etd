@@ -14,6 +14,20 @@ RSpec.describe 'Editing a submission' do
       get edit_submission_path(submission.dissertation_id)
 
       expect(response).to have_http_status(:unauthorized)
+      expect(submission.reload.orcid).to be_nil
+    end
+  end
+
+  context 'when the student tries to edit a submission' do
+    before do
+      sign_in(submission.sunetid)
+    end
+
+    it 'allows the student to edit the submission' do
+      get edit_submission_path(submission.dissertation_id)
+
+      expect(response).to have_http_status(:ok)
+      expect(submission.reload.orcid).to eq(TEST_ORCID)
     end
   end
 end
