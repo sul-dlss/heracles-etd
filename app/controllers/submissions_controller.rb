@@ -32,8 +32,8 @@ class SubmissionsController < ApplicationController
 
   def submit
     authorize! @submission
-    # TODO: Submit to Registrar.
-    @submission.update!(submitted_at: Time.current)
+
+    SubmitToRegistrarService.call(submission: @submission)
     redirect_to submission_path(@submission.dissertation_id)
   end
 

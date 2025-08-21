@@ -13,8 +13,13 @@ groups:
 
 preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
 
-ahoy:
-  tooltip: false
+# true to post completed submission to Registrar
+dor_submit_ps_xml: false
+ps_reg_endpoint: 'http://registrar.example.edu'
+ps_reg_username: ~
+ps_reg_password: ~
+ps_env: 'test'
+
 
 # ActiveAdmin configs
 searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s

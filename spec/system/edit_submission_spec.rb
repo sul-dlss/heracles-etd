@@ -6,6 +6,10 @@ RSpec.describe 'Edit Submission' do
   let(:submission) { create(:submission) }
 
   before do
+    allow(SubmitToRegistrarService).to receive(:call) do |args|
+      args[:submission].update!(submitted_at: Time.current)
+    end
+
     sign_in(submission.sunetid)
   end
 
@@ -205,5 +209,7 @@ RSpec.describe 'Edit Submission' do
     expect(submission.cclicensetype).to eq('CC Attribution license')
     expect(submission.embargo).to eq('6 months')
     expect(submission.dissertation_file.attached?).to be true
+
+    expect(SubmitToRegistrarService).to have_received(:call).with(submission: submission)
   end
 end
