@@ -34,10 +34,10 @@ RSpec.describe User do
     end
 
     context 'with orcid added' do
-      let(:initialization_params) { { orcid: Settings.test_orcid } }
+      let(:initialization_params) { { orcid: TEST_ORCID } }
 
       it 'returns the supplied orcid' do
-        expect(user.orcid).to eq(Settings.test_orcid)
+        expect(user.orcid).to eq(TEST_ORCID)
       end
     end
   end

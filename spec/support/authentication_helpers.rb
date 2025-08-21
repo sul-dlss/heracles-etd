@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+TEST_ORCID = '0000-0002-2100-6108'
+
 # Helpers to assist with authentication.
 module AuthenticationHelpers
-  def sign_in(login = nil, groups: [], orcid: Settings.test_orcid)
+  def sign_in(login = nil, groups: [], orcid: TEST_ORCID)
     TestShibbolethHeaders.user = login
     TestShibbolethHeaders.groups = groups
     TestShibbolethHeaders.orcid = orcid

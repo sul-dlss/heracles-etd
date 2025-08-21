@@ -10,6 +10,8 @@ class SubmissionsController < ApplicationController
 
   def edit
     authorize! @submission
+
+    add_orcid_to_submission
   end
 
   def update # rubocop:disable Metrics/AbcSize
@@ -58,5 +60,16 @@ class SubmissionsController < ApplicationController
     params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
                                :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
                                :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded])
+  end
+
+  # The current user's orcid is provided via shibboleth.
+  # It needs to be added to the Submission.
+  def add_orcid_to_submission
+    return if @submission.orcid.present?
+    return if current_user.orcid.blank?
+    # This is redundant of the policy, but just in case the policy is changed in the future.
+    return if @submission.sunetid != current_user.sunetid
+
+    @submission.update!(orcid: current_user.orcid)
   end
 end
