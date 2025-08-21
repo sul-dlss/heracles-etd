@@ -4,23 +4,16 @@
   </div>
   <div class="card-body">
     <ul class="list-unstyled">
-      <li><%= step_number_for(SubmissionPresenter::CITATION_STEP) %> Citation details verified</li>
-      <li><%= step_number_for(SubmissionPresenter::ABSTRACT_STEP) %> Abstract provided</li>
-      <li><%= step_number_for(SubmissionPresenter::FORMAT_STEP) %> Format reviewed</li>
-      <li><%= step_number_for(SubmissionPresenter::DISSERTATION_STEP) %> Dissertation uploaded</li>
-      <li><%= step_number_for(SubmissionPresenter::SUPPLEMENTAL_FILES_STEP) %> Supplemental files uploaded</li>
-      <li><%= step_number_for(SubmissionPresenter::RIGHTS_STEP) %> License terms applied</li>
-      <li>
-        <%= step_number_for(SubmissionPresenter::SUBMITTED_STEP) %> <div class="d-inline-flex flex-column"><div>Submitted to Registrar</div><div class="text-muted"><%= helpers.local_time(submitted_at) if submitted_at.present? %></div></div>
-      </li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::ABSTRACT_STEP, label: 'Abstract provided') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::FORMAT_STEP, label: 'Format reviewed') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::DISSERTATION_STEP, label: 'Dissertation uploaded') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP, label: 'Supplemental files uploaded') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::RIGHTS_STEP, label: 'License terms applied') %></li>
+      <li><%= render progress_card_step_component(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar', step_at: submitted_at) %></li>
     </ul>
     <hr>
-    <div class="d-flex align-items-center">
-      <%= render Edit::CharacterCircleComponent.new(character: '', variant: :blank, classes: 'me-2 my-2') %><div>Verified by Final Reader</div>
-    </div>
-    <hr>
-    <div class="d-flex align-items-center">
-      <%= render Edit::CharacterCircleComponent.new(character: '', variant: :blank, classes: 'me-2 my-2') %><div>Approved by Registrar</div>
-    </div>
+    <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Verified by Final Reader', aria_label: 'Verified by Final Reader, Pending', classes: 'd-flex align-items-center') %>
+    <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Approved by Registrar', aria_label: 'Approved by Registrar, Pending', classes: 'd-flex align-items-center') %>
   </div>
 </aside>

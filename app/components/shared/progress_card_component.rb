@@ -20,5 +20,17 @@ module Shared
         render(Edit::CharacterCircleComponent.new(character:, classes: 'me-2 my-2'))
       end
     end
+
+    def progress_card_step_component(step:, label:, step_at: nil)
+      step_number = SubmissionPresenter.step_number(step:)
+      params = if SubmissionPresenter.step_done?(step:, submission:)
+                 { character: '✓', variant: :success,
+                   aria_label: ["Step #{step_number}", label, 'Completed'].join(', ') }
+               else
+                 { character: step_number, variant: :disabled,
+                   aria_label: ["Step #{step_number}", label, 'In progress'].join(', ') }
+               end
+      Shared::ProgressCardStepComponent.new(**params, label:, step_at:)
+    end
   end
 end
