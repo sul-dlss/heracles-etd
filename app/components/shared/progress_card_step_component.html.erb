@@ -1,0 +1,7 @@
+<%= tag.div class: classes, 'aria-label': aria_label do %>
+  <%= render Edit::CharacterCircleComponent.new(character:, variant:, classes: 'me-2 my-2') %>
+  <div class="d-inline-flex flex-column">
+    <div><%= label %></div>
+    <div class="text-muted"><%= helpers.local_time(step_at) if step_at.present? %></div>
+  </div>
+<% end %>
