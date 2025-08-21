@@ -6,4 +6,10 @@ module ApplicationHelper
       yield(form) if block_given?
     end
   end
+
+  def submission_form_field_id(submission, field)
+    with_submission_form(submission) do |form|
+      return form.field_id(field)
+    end
+  end
 end

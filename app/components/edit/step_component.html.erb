@@ -1,5 +1,5 @@
 <%= tag.section class: classes, data:, id:, 'aria-label': aria_label do %>
-  <div class="card-header card-step-header">
+  <%= tag.div class: 'card-header card-step-header' do %>
     <%= tag.div class: 'd-flex align-items-start' do %>
       <div><%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2', variant: character_circle_variant) %></div>
       <div class="flex-grow-1">
@@ -13,13 +13,13 @@
       </div>
       <div>
         <% unless show? %>
-          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap') do %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap', id: edit_id, data: edit_data) do %>
             <i class="bi bi-pencil"></i> <%= edit_label %>
           <% end %>
         <% end %>
       </div>
     <% end %>
-  </div>
+  <% end %>
 
   <% if show? %>
     <%= tag.div class: 'card-body card-step-body' do %>
@@ -30,7 +30,7 @@
       <% else %>
         <div class="d-flex justify-content-between align-items-baseline">
           <div><%= done_text %></div>
-          <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled) %>
+          <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled, id: done_id) %>
         </div>
       <% end %>
     <% end %>

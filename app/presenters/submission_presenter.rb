@@ -48,4 +48,8 @@ class SubmissionPresenter
   def self.step_field(step:)
     STEP_TO_FIELD.fetch(step)
   end
+
+  def self.done_id(step:)
+    "step-#{step_number(step:)}-done"
+  end
 end

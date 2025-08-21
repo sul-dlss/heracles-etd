@@ -20,5 +20,13 @@ module Shared
     def file_size
       helpers.number_to_human_size(byte_size)
     end
+
+    def remove_btn_data
+      # After a file is removed, set the focus to the file input.
+      {
+        action: 'click->focus#saveFocus',
+        focus_id_param: helpers.submission_form_field_id(submission, :dissertation_file)
+      }
+    end
   end
 end

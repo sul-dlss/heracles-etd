@@ -13,5 +13,9 @@ module Edit
     def done_disabled?
       submission.abstract.blank?
     end
+
+    def edit_focus_id
+      helpers.submission_form_field_id(submission, :abstract)
+    end
   end
 end

@@ -15,5 +15,14 @@ module Edit
     def done_disabled?
       !dissertation_file.attached?
     end
+
+    def dissertation_file_data
+      {
+        controller: 'submit',
+        # After a file is added, set the focus to the done button.
+        action: 'click->focus#saveFocus submit#submit',
+        focus_id_param: SubmissionPresenter.done_id(step: SubmissionPresenter::DISSERTATION_STEP)
+      }
+    end
   end
 end

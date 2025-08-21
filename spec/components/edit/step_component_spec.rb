@@ -46,14 +46,15 @@ RSpec.describe Edit::StepComponent, type: :component do
 
   context 'when done params are provided' do
     it 'uses the provided text and label' do
-      render_inline(described_class.new(step: SubmissionPresenter::FORMAT_STEP, title: 'Step 4', submission:,
+      render_inline(described_class.new(step: SubmissionPresenter::FORMAT_STEP, title: 'Step 3', submission:,
                                         done_text: 'Finish this section',
                                         done_label: 'Finish', done_data: { action: 'my-action#finish' },
                                         done_disabled: true))
 
       body = page.find('.card-step .card-step-body')
       expect(body).to have_content('Finish this section')
-      expect(body).to have_css('button[data-action="my-action#finish"][disabled]',
+      expect(body).to have_css('button[data-action="my-action#finish click->focus#saveFocus"]' \
+                               '[data-focus-id-param="step-3-edit"][disabled]',
                                text: 'Finish')
     end
   end

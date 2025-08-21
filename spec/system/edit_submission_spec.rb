@@ -46,8 +46,13 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('.character-circle-success', text: '1')
       expect(page).to have_no_css('.badge-in-progress')
       expect(page).to have_css('.badge-completed', text: 'Completed')
+      expect(page.active_element).to eq find_button('Undo your confirmation')
+
       # Expand the body
       click_button 'Undo your confirmation'
+      btn = find_button('Confirm')
+      expect(page.active_element).to eq btn
+
       # Collapse body
       click_button 'Confirm'
     end
@@ -62,6 +67,16 @@ RSpec.describe 'Edit Submission' do
     within(cards[1]) do
       expect(page).to have_button('Done', disabled: true)
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
+      click_button 'Done'
+      btn = find_button('Edit this section')
+      expect(page.active_element).to eq btn
+
+      # Expand body
+      click_button 'Edit this section'
+      field = find_field('Abstract')
+      expect(page.active_element).to eq field
+
+      # Collapse body
       click_button 'Done'
     end
 
@@ -83,6 +98,21 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
 
       click_button 'Done'
+
+      btn = find_button('Edit this section')
+      expect(page.active_element).to eq btn
+
+      click_button 'Edit this section'
+      btn = find_button('Done')
+      expect(page.active_element).to eq btn
+
+      click_button 'Remove'
+      field = find_field('Upload PDF')
+      expect(page.active_element).to eq field
+
+      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+
+      click_button 'Done'
     end
 
     # Supplemental files step
@@ -99,6 +129,15 @@ RSpec.describe 'Edit Submission' do
         Rails.root.join('spec/fixtures/files/supplemental_1.pdf'),
         Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
       ]
+
+      click_button 'Done'
+
+      btn = find_button('Edit this section')
+      expect(page.active_element).to eq btn
+
+      click_button 'Edit this section'
+      field = find_field('Upload supplemental files')
+      expect(page.active_element).to eq field
 
       click_button 'Done'
     end
@@ -122,6 +161,15 @@ RSpec.describe 'Edit Submission' do
       check 'I have read and agree to the terms of the Stanford University license'
       select 'CC Attribution license', from: 'submission_cclicense'
       select '6 months', from: 'submission_embargo'
+      click_button 'Done'
+
+      btn = find_button('Edit this section')
+      expect(page.active_element).to eq btn
+
+      click_button 'Edit this section'
+      field = find_field('I have read and agree to the terms of the Stanford University license')
+      expect(page.active_element).to eq field
+
       click_button 'Done'
     end
 
