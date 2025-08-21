@@ -42,6 +42,7 @@ gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin'
 gem 'config'
 gem 'dor-services-client'
+gem 'druid-tools'
 gem 'folio_client'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
