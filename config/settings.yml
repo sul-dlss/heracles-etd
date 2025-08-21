@@ -15,12 +15,11 @@ groups:
 
 preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
 
-# true to post completed submission to Registrar
-dor_submit_ps_xml: false
-ps_reg_endpoint: 'http://registrar.example.edu'
-ps_reg_username: ~
-ps_reg_password: ~
-ps_env: 'test'
+peoplesoft:
+  client_id: ~
+  client_secret: ~
+  base_url: ~
+  token_url: ~
 
 # marc_workspace: individual stub records
 marc_workspace: '~'
@@ -46,6 +45,9 @@ catalog:
 dor_services:
   url: 'http://localhost:3003'
   token: ~
+
+ahoy:
+  tooltip: false
 
 # ActiveAdmin configs
 searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s

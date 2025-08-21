@@ -57,6 +57,10 @@ Style/Documentation:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/ExpectActual:
+  Exclude:
+    - 'spec/policies/**/*.rb'
+
 RSpec/MultipleExpectations:
   Enabled: false
 

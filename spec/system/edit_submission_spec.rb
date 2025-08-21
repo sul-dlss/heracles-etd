@@ -6,6 +6,10 @@ RSpec.describe 'Edit Submission' do
   let(:submission) { create(:submission) }
 
   before do
+    allow(SubmitToRegistrarService).to receive(:call) do |args|
+      args[:submission].update!(submitted_at: Time.current)
+    end
+
     sign_in(submission.sunetid)
   end
 
@@ -118,7 +122,7 @@ RSpec.describe 'Edit Submission' do
     # Supplemental files step
     within(cards[4]) do
       expect(page).to have_button('Done', disabled: false)
-      attach_file 'Upload supplemental files', Rails.root.join('spec/fixtures/files/supplemental_1.pdf')
+      attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
       within('#supplemental-files-table') do
         expect(page).to have_css('td', text: 'supplemental_1.pdf')
@@ -126,8 +130,8 @@ RSpec.describe 'Edit Submission' do
       end
 
       attach_file 'Upload supplemental files', [
-        Rails.root.join('spec/fixtures/files/supplemental_1.pdf'),
-        Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
+        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplemental_2.pdf')
       ]
 
       click_button 'Done'
@@ -180,7 +184,7 @@ RSpec.describe 'Edit Submission' do
       click_button('Review and submit')
     end
 
-    expect(page).to have_current_path(review_submission_path(submission.dissertation_id))
+    expect(page).to have_current_path(review_submission_path(submission))
     expect(page).to have_content('Review and submit')
     expect(page).to have_css('h2', text: 'Citation details')
     expect(page).to have_css('h2', text: 'Abstract')
@@ -194,7 +198,7 @@ RSpec.describe 'Edit Submission' do
 
     click_link_or_button 'Submit to Registrar'
 
-    expect(page).to have_current_path(submission_path(submission.dissertation_id))
+    expect(page).to have_current_path(submission_path(submission))
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     expect(submission.reload.citation_verified).to eq('true')
@@ -205,5 +209,7 @@ RSpec.describe 'Edit Submission' do
     expect(submission.cclicensetype).to eq('CC Attribution license')
     expect(submission.embargo).to eq('6 months')
     expect(submission.dissertation_file.attached?).to be true
+
+    expect(SubmitToRegistrarService).to have_received(:call).with(submission: submission)
   end
 end

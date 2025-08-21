@@ -16,6 +16,7 @@ require 'cyperful/rspec' if ENV['CYPERFUL']
 # For view_component testing
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
+require 'action_policy/rspec'
 require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

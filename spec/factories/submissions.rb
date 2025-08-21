@@ -44,6 +44,9 @@ FactoryBot.define do
       abstract_provided { 'true' }
       rights_selected { 'true' }
       dissertation_uploaded { 'true' }
+      permissions_provided { 'true' }
+      reader_approved
+      registrar_approved
     end
 
     trait :submitted do
@@ -68,8 +71,16 @@ FactoryBot.define do
     end
 
     trait :reader_approved do
+      with_readers
       readerapproval { 'Approved' }
       last_reader_action_at { DateTime.parse('2020-03-05T14:38:59Z') }
+      readercomment { 'Well written!' }
+    end
+
+    trait :registrar_approved do
+      regapproval { 'Approved' }
+      last_registrar_action_at { DateTime.parse('2020-03-06T17:05:11Z') }
+      regcomment { 'Congratulations.' }
     end
   end
 end

@@ -11,6 +11,7 @@ class Submission < ApplicationRecord
 
   # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
+  has_one_attached :augmented_dissertation_file, dependent: :purge_later
   has_many_attached :supplemental_files, dependent: :purge_later
 
   validates :dissertation_id, presence: true
@@ -51,5 +52,19 @@ class Submission < ApplicationRecord
     self.cc_license_selected = cclicense.present? ? 'true' : 'false'
     self.submitted_to_registrar = submitted_at.present? ? 'true' : 'false'
     self.cclicensetype = CreativeCommonsLicense.find(cclicense)&.name
+  end
+
+  def to_peoplesoft_hash
+    {
+      dissertation_id:,
+      title:,
+      type: etd_type,
+      timestamp: submitted_at.strftime('%m/%d/%Y %H:%M:%S'),
+      purl:
+    }
+  end
+
+  def to_param
+    dissertation_id
   end
 end

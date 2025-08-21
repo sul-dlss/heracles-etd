@@ -47,6 +47,8 @@ gem 'hexapdf' # Validates and inserts copyright and signature pages into submitt
 gem 'honeybadger'
 gem 'local_time'
 gem 'marc' # for submit_marc
+gem 'nokogiri'
+gem 'oauth2'
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
 gem 'view_component'
 
