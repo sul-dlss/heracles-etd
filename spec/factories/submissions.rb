@@ -48,6 +48,7 @@ FactoryBot.define do
     trait :submittable do
       with_dissertation_file
       with_supplemental_files
+      with_permission_files
       citation_verified { 'true' }
       abstract { 'Sample abstract' }
       format_reviewed { 'true' }

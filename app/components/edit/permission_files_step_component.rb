@@ -11,5 +11,10 @@ module Edit
     attr_reader :submission
 
     delegate :permission_files, to: :submission
+
+    def edit_focus_id
+      # focus on the file upload field
+      helpers.submission_form_field_id(submission, :permission_files)
+    end
   end
 end

@@ -106,7 +106,10 @@ RSpec.describe 'Edit Submission' do
       btn = find_button('Done')
       expect(page.active_element).to eq btn
 
-      click_button 'Remove'
+      within('#dissertation-file-table') do
+        click_link_or_button 'Remove'
+      end
+
       field = find_field('Upload PDF')
       expect(page.active_element).to eq field
 
@@ -142,8 +145,35 @@ RSpec.describe 'Edit Submission' do
       click_button 'Done'
     end
 
-    # Rights step
+    # Permission files step
     within(cards[5]) do
+      expect(page).to have_button('Done', disabled: false)
+      attach_file 'Upload permission files', Rails.root.join('spec/fixtures/files/permission_1.pdf')
+
+      within('#permission-files-table') do
+        expect(page).to have_css('td', text: 'permission_1.pdf')
+        click_link_or_button 'Remove'
+      end
+
+      attach_file 'Upload permission files', [
+        Rails.root.join('spec/fixtures/files/permission_1.pdf'),
+        Rails.root.join('spec/fixtures/files/permission_2.pdf')
+      ]
+
+      click_button 'Done'
+
+      btn = find_button('Edit this section')
+      expect(page.active_element).to eq btn
+
+      click_button 'Edit this section'
+      field = find_field('Upload permission files')
+      expect(page.active_element).to eq field
+
+      click_button 'Done'
+    end
+
+    # Rights step
+    within(cards[6]) do
       expect(page).to have_button('Done', disabled: true)
 
       click_link_or_button 'View the Stanford University publication license'
@@ -174,7 +204,7 @@ RSpec.describe 'Edit Submission' do
     end
 
     # Submitted step
-    within(cards[6]) do
+    within(cards[7]) do
       expect(page).to have_css('.alert-info',
                                text: "You have completed sections 1-#{TOTAL_STEPS - 1}.")
       click_button('Review and submit')
