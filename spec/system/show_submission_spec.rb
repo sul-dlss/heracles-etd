@@ -27,6 +27,9 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_css('h2', text: 'Add supplemental files')
     expect(page).to have_link('supplemental_1.pdf')
     expect(page).to have_link('supplemental_2.pdf')
+    expect(page).to have_css('h2', text: 'Upload permissions')
+    expect(page).to have_link('permission_1.pdf')
+    expect(page).to have_link('permission_2.pdf')
     expect(page).to have_css('h2', text: 'Review and submit to Registrar')
   end
 end

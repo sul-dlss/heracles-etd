@@ -1,0 +1,26 @@
+<%= render Elements::Tables::TableComponent.new(id: 'permission-files-table',
+                                                label: 'Permission Files',
+                                                show_label: false) do |component| %>
+  <% component.with_headers([
+                              { label: 'Permission File (maximum size 1GB)' },
+                              { label: 'Type' },
+                              { label: 'Size' },
+                              { label: 'Upload Date' },
+                              with_remove ? { label: 'Remove', classes: 'sr-only' } : { label: '' }
+                            ]) %>
+  <% permission_files.each do |permission_file| %>
+    <% component.with_row do |row_component| %>
+      <%= row_component.with_cell do %><%= link_to(permission_file.filename, rails_blob_path(permission_file)) %><% end %>
+      <%= row_component.with_cell do %><%= permission_file.content_type %><% end %>
+      <%= row_component.with_cell do %><%= helpers.number_to_human_size(permission_file.byte_size) %><% end %>
+      <%= row_component.with_cell do %><%= helpers.local_time(permission_file.created_at) %><% end %>
+      <%= row_component.with_cell do %>
+        <% if with_remove %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_permission_file, value: permission_file.id, classes: 'p-0', data: remove_btn_data) do %>
+            <i class="bi bi-trash-fill me-1"></i>Remove
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
