@@ -148,11 +148,18 @@ RSpec.describe 'Edit Submission' do
     # Permission files step
     within(cards[5]) do
       expect(page).to have_button('Done', disabled: false)
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
+      end
       attach_file 'Upload permission files', Rails.root.join('spec/fixtures/files/permission_1.pdf')
 
       within('#permission-files-table') do
         expect(page).to have_css('td', text: 'permission_1.pdf')
         click_link_or_button 'Remove'
+      end
+
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
       end
 
       attach_file 'Upload permission files', [

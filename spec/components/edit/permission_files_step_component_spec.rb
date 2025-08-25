@@ -3,8 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe Edit::PermissionFilesStepComponent, type: :component do
-  context 'without an attached permission file' do
-    let(:submission) { create(:submission) }
+  let(:submission) { create(:submission, permissions_provided:) }
+  let(:permissions_provided) { false }
+
+  context 'without the permissions provided flag' do
+    it 'renders the component' do
+      render_inline(described_class.new(submission:))
+
+      expect(page).to have_css('h2', text: 'Upload permissions')
+      expect(page).to have_no_field('Upload permission files', type: 'file')
+    end
+  end
+
+  context 'with the permissions provided flag' do
+    let(:permissions_provided) { true }
 
     it 'renders the component' do
       render_inline(described_class.new(submission:))
