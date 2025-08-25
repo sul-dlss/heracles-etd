@@ -17,12 +17,12 @@ module Edit
       helpers.submission_form_field_id(submission, :permission_files)
     end
 
-    def file_display
-      'display: none;' unless ActiveModel::Type::Boolean.new.cast(permissions_provided)
+    def permissions_provided?
+      ActiveModel::Type::Boolean.new.cast(permissions_provided)
     end
 
     def done_disabled?
-      return false unless ActiveModel::Type::Boolean.new.cast(permissions_provided)
+      return false unless permissions_provided?
 
       !permission_files.attached?
     end

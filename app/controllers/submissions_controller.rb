@@ -24,6 +24,7 @@ class SubmissionsController < ApplicationController
       @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).purge
     elsif params.dig(:submission, :remove_permission_file)
       @submission.permission_files.find(params[:submission][:remove_permission_file]).purge
+      @submission.update!(permissions_provided: 'false') if @submission.permission_files.empty?
     else
       @submission.update!(submission_params)
     end
