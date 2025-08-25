@@ -22,7 +22,7 @@ RSpec.describe 'Edit Submission' do
     within(cards.last) do
       expect(page).to have_css('.alert-danger',
                                text: "You must complete sections 1-#{TOTAL_STEPS - 1}")
-      expect(page).to have_button('Review and submit', disabled: true)
+      expect(page).to have_link('Review and submit', class: 'disabled')
     end
 
     expect(page).to have_css('.progress-card li', count: TOTAL_STEPS)
@@ -214,7 +214,7 @@ RSpec.describe 'Edit Submission' do
     within(cards[7]) do
       expect(page).to have_css('.alert-info',
                                text: "You have completed sections 1-#{TOTAL_STEPS - 1}.")
-      click_button('Review and submit')
+      click_link_or_button('Review and submit')
     end
 
     expect(page).to have_current_path(review_submission_path(submission.dissertation_id))
