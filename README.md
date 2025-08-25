@@ -6,7 +6,7 @@
 ## Admin
 
 ### Test submission
-`/admin/test_submission` will create a new submission and redirect to the submitter page (`/submissions/<dissertation id>/edit`).
+`/admin/submissions/new_dummy_submission` will create a new submission and redirect to the submitter page (`/submissions/<dissertation id>/edit`).
 
 The "student" for the submission is the current user. There is also a reader created for the current user (`/submissions/<dissertation id>/reader_review`).
 
