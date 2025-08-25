@@ -2,22 +2,42 @@
                                    title: t('steps.permission_files.title'),
                                    submission:,
                                    edit_focus_id:,
-                                   done_disabled: false) do |component| %>
+                                   done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.permission_files.help_html') %>
   <% end %>
 
   <% component.with_body_content do %>
-    <%= render Shared::PermissionFilesStepBodyHelpComponent.new %>
+    <%= helpers.with_submission_form(submission) do |form| %>
+      <div class="flex-glow-1">
+        <div class="d-flex align-items-start">
+          <%= render Shared::PermissionFilesStepBodyHelpComponent.new %>
+            <%= render Elements::Forms::ToggleComponent.new(form:,
+                                                            field_name: :permissions_provided,
+                                                            container_classes: 'mb-4') do |component| %>
+              <% component.with_left_toggle_option(form:,
+                                                   field_name: :permissions_provided,
+                                                   label: 'Yes',
+                                                   data: { controller: 'submit', action: 'submit#submit' },
+                                                   value: 'true') %>
+              <% component.with_right_toggle_option(form:,
+                                                    field_name: :permissions_provided,
+                                                    label: 'No',
+                                                    data: { controller: 'submit', action: 'submit#submit' },
+                                                    value: 'false') %>
+            <% end %>
+        </div>
+      </div>
       <% if permission_files.attached? %>
         <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
       <% end %>
-      <%= helpers.with_submission_form(submission) do |form| %>
+      <div style="<%= file_display %>">
         <% submission.permission_files.each do |permission_file| %>
           <%= form.hidden_field :permission_files, multiple: true, value: permission_file.signed_id, id: nil %>
         <% end %>
         <%= form.label :permission_files, 'Upload permission files (maximum size 1GB)', class: 'form-label' %>
         <%= form.file_field :permission_files, multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
-      <% end %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

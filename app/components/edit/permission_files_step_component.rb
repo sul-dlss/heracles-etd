@@ -10,11 +10,21 @@ module Edit
 
     attr_reader :submission
 
-    delegate :permission_files, to: :submission
+    delegate :permissions_provided, :permission_files, to: :submission
 
     def edit_focus_id
       # focus on the file upload field
       helpers.submission_form_field_id(submission, :permission_files)
+    end
+
+    def file_display
+      'display: none;' unless ActiveModel::Type::Boolean.new.cast(permissions_provided)
+    end
+
+    def done_disabled?
+      return false unless ActiveModel::Type::Boolean.new.cast(permissions_provided)
+
+      !permission_files.attached?
     end
   end
 end

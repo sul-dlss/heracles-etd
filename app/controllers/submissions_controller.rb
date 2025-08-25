@@ -62,7 +62,7 @@ class SubmissionsController < ApplicationController
     params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
                                :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
                                :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded,
-                               { permission_files: [] }, :permission_files_uploaded])
+                               { permission_files: [] }, :permission_files_uploaded, :permissions_provided])
   end
 
   # The current user's orcid is provided via shibboleth.
