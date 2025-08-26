@@ -21,7 +21,7 @@ class SubmissionsController < ApplicationController
     if params.dig(:submission, :remove_dissertation_file)
       @submission.dissertation_file.purge
     elsif params.dig(:submission, :remove_supplemental_file)
-      @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).purge
+      @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).delete
     elsif params.dig(:submission, :remove_permission_file)
       @submission.permission_files.find(params[:submission][:remove_permission_file]).purge
       @submission.update!(permissions_provided: 'false') if @submission.permission_files.empty?
@@ -53,6 +53,22 @@ class SubmissionsController < ApplicationController
                                                                          type: 'application/pdf', disposition: 'inline'
   end
 
+  def attach_supplemental_files
+    authorize! @submission
+
+    supplemental_files = supplemental_file_params.fetch(:supplemental_files, [])
+    return if supplemental_files.empty?
+
+    supplemental_files.each do |file|
+      next if file.blank?
+
+      supplemental_file = SupplementalFile.new(submission: @submission)
+      supplemental_file.file.attach(file)
+      supplemental_file.save!
+    end
+    redirect_to edit_submission_path(@submission.dissertation_id)
+  end
+
   private
 
   def set_submission
@@ -64,6 +80,10 @@ class SubmissionsController < ApplicationController
                                :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
                                :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded,
                                { permission_files: [] }, :permission_files_uploaded, :permissions_provided])
+  end
+
+  def supplemental_file_params
+    params.expect(submission: [supplemental_files: []])
   end
 
   # The current user's orcid is provided via shibboleth.

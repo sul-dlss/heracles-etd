@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_26_150637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -140,6 +140,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end
 
+  create_table "supplemental_files", force: :cascade do |t|
+    t.text "description"
+    t.bigint "submission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["submission_id"], name: "index_supplemental_files_on_submission_id"
+  end
+
   create_table "uploaded_files", force: :cascade do |t|
     t.string "file_name"
     t.string "type"
@@ -154,4 +162,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_165245) do
   add_foreign_key "attachments", "submissions"
   add_foreign_key "attachments", "uploaded_files"
   add_foreign_key "readers", "submissions"
+  add_foreign_key "supplemental_files", "submissions"
 end

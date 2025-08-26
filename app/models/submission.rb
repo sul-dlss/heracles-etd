@@ -12,7 +12,10 @@ class Submission < ApplicationRecord
   # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
   has_one_attached :augmented_dissertation_file, dependent: :purge_later
-  has_many_attached :supplemental_files, dependent: :purge_later
+  # has_many_attached :supplemental_files, dependent: :purge_later
+  has_many :supplemental_files, dependent: :destroy, inverse_of: :submission
+  accepts_nested_attributes_for :supplemental_files, allow_destroy: true
+
   has_many_attached :permission_files, dependent: :purge_later
 
   validates :dissertation_id, presence: true
