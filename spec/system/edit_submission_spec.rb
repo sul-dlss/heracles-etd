@@ -133,6 +133,14 @@ RSpec.describe 'Edit Submission' do
         Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
       ]
 
+      within("form#edit_supplemental_file_#{submission.supplemental_files.first.id}") do
+        fill_in 'File description:', with: 'This is a sample first supplemental file.'
+      end
+
+      within("form#edit_supplemental_file_#{submission.supplemental_files.last.id}") do
+        fill_in 'File description:', with: 'This is a sample second supplemental file.'
+      end
+
       click_button 'Done'
 
       btn = find_button('Edit this section')

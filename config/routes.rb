@@ -25,4 +25,6 @@ Rails.application.routes.draw do
       patch :attach_supplemental_files
     end
   end
+
+  resources :supplemental_files, only: %i[update]
 end

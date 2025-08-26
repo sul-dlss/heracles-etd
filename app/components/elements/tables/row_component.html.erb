@@ -13,7 +13,7 @@
     <td><%= value %></td>
   <% end %>
   <% cells.each do |cell| %>
-    <td><%= cell %></td>
+    <td colspan="<%= colspan %>"><%= cell %></td>
   <% end %>
   <% if empty_cell? %>
     <td></td>

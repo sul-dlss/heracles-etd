@@ -9,7 +9,7 @@
 
   <% component.with_body_content do %>
     <%= render Shared::SupplementalFilesStepBodyHelpComponent.new %>
-      <% unless supplemental_files.empty? %>
+      <% if supplemental_files.any? %>
         <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
       <% end %>
       <%= helpers.with_submission_form(submission) do |form| %>
