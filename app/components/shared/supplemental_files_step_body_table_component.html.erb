@@ -10,10 +10,10 @@
                             ]) %>
   <% supplemental_files.each do |supplemental_file| %>
     <% component.with_row do |row_component| %>
-      <%= row_component.with_cell do %><%= link_to(supplemental_file.file.filename, rails_blob_path(supplemental_file.file)) %><% end %>
-      <%= row_component.with_cell do %><%= supplemental_file.file.content_type %><% end %>
-      <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.file.byte_size) %><% end %>
-      <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.file.created_at) %><% end %>
+      <%= row_component.with_cell do %><%= link_to(supplemental_file.filename, rails_blob_path(supplemental_file.file)) %><% end %>
+      <%= row_component.with_cell do %><%= supplemental_file.content_type %><% end %>
+      <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.byte_size) %><% end %>
+      <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.created_at) %><% end %>
       <%= row_component.with_cell do %>
         <% if with_remove %>
           <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_supplemental_file, value: supplemental_file.id, classes: 'p-0', data: remove_btn_data) do %>
