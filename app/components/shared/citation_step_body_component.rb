@@ -12,13 +12,5 @@ module Shared
 
     delegate :schoolname, :department, :degree, :major, :degreeconfyr, :title, :orcid,
              to: :submission
-
-    def orcid_text
-      <<~TEXT
-        If you have granted Stanford permission to update your ORCID profile, your thesis or dissertation will be
-        automatically added to your profile. You can always manually add or change the work appearing in
-        your profile at a later date.
-      TEXT
-    end
   end
 end
