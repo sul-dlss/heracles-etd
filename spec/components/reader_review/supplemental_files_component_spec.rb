@@ -11,6 +11,8 @@ RSpec.describe ReaderReview::SupplementalFilesComponent, type: :component do
     expect(page).to have_css('h2', text: 'Supplemental files')
     row = page.all('#supplemental-files-table tbody tr')
     expect(row[0]).to have_link('supplemental_1.pdf')
-    expect(row[1]).to have_link('supplemental_2.pdf')
+    expect(row[1]).to have_content('Supplemental file supplemental_1.pdf')
+    expect(row[2]).to have_link('supplemental_2.pdf')
+    expect(row[3]).to have_content('Supplemental file supplemental_2.pdf')
   end
 end

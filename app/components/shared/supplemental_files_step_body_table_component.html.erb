@@ -10,15 +10,40 @@
                             ]) %>
   <% supplemental_files.each do |supplemental_file| %>
     <% component.with_row do |row_component| %>
-      <%= row_component.with_cell do %><%= link_to(supplemental_file.filename, rails_blob_path(supplemental_file)) %><% end %>
-      <%= row_component.with_cell do %><%= supplemental_file.content_type %><% end %>
-      <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.byte_size) %><% end %>
-      <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.created_at) %><% end %>
+      <%= row_component.with_cell do %><%= link_to(supplemental_file.file.filename, rails_blob_path(supplemental_file.file)) %><% end %>
+      <%= row_component.with_cell do %><%= supplemental_file.file.content_type %><% end %>
+      <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.file.byte_size) %><% end %>
+      <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.file.created_at) %><% end %>
       <%= row_component.with_cell do %>
         <% if with_remove %>
           <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_supplemental_file, value: supplemental_file.id, classes: 'p-0', data: remove_btn_data) do %>
             <i class="bi bi-trash-fill me-1"></i>Remove
           <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% component.with_row colspan: 5 do |row_component| %>
+      <%= row_component.with_cell do %>
+        <% if with_remove %>
+          <% form_with model: supplemental_file, id: "edit_supplemental_file_#{supplemental_file.id}" do |form| %>
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-start">
+                <div class="m-1">
+                  <%= form.label :description, 'File description:', class: 'form-label fw-bold' %>
+                </div>
+                <div class="m-1">
+                  <%= form.text_field :description, class: 'form-control', size: 75, data: { controller: 'submit', action: 'blur->submit#submit' } %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="flex-grow-1">
+            <div class="d-flex align-items-start">
+              <div class="m-1 fw-bold">File description:</div>
+              <div class="m-1"><%= supplemental_file.description %></div>
+            </div>
+          </div>
         <% end %>
       <% end %>
     <% end %>

@@ -30,8 +30,8 @@ FactoryBot.define do
     trait :with_supplemental_files do
       supplemental_files do
         [
-          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_1.pdf'), 'application/pdf'),
-          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/supplemental_2.pdf'), 'application/pdf')
+          create(:supplemental_file, :first_supplement),
+          create(:supplemental_file, :second_supplement)
         ]
       end
     end
