@@ -6,6 +6,10 @@
   --bs-dark-rgb: var(--stanford-cardinal-rgb);
 }
 
+.container.without-progress-bar {
+  max-width: 960px;
+}
+
 .masthead {
   color: white;
 }

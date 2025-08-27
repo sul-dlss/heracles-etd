@@ -36,8 +36,8 @@ en:
     abstract:
       title: "Abstract"
       help_html: >-
-        <p>This abstract will be indexed for online searching.</p>
-        <p>It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
+        <p>This abstract will be indexed for online searching.<br>
+           It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
     format:
       title: "Review your dissertation's formatting"
       help_html: >-

@@ -9,21 +9,23 @@
                                  subtitle: t('submitter.subtitle')) %>
 <% end %>
 
-<div class="row gy-2" data-controller="focus" data-action="turbo:render@window->focus#restoreFocus">
-  <div id="focus" data-turbo-permanent="true" data-focus-target="permanent"></div>
-  <div class="col-lg-8 order-2 order-lg-1">
-    <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
+<div class="container">
+  <div class="row gy-2" data-controller="focus" data-action="turbo:render@window->focus#restoreFocus">
+    <div id="focus" data-turbo-permanent="true" data-focus-target="permanent"></div>
+    <div class="col-lg-8 order-2 order-lg-1">
+      <%= render Edit::WelcomeBannerComponent.new(submission: @submission) %>
 
-    <%= render Edit::CitationStepComponent.new(submission: @submission) %>
-    <%= render Edit::AbstractStepComponent.new(submission: @submission) %>
-    <%= render Edit::FormatStepComponent.new(submission: @submission) %>
-    <%= render Edit::DissertationStepComponent.new(submission: @submission) %>
-    <%= render Edit::SupplementalFilesStepComponent.new(submission: @submission) %>
-    <%= render Edit::PermissionFilesStepComponent.new(submission: @submission) %>
-    <%= render Edit::RightsStepComponent.new(submission: @submission) %>
-    <%= render Edit::SubmittedStepComponent.new(submission: @submission) %>
-  </div>
-  <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
+      <%= render Edit::CitationStepComponent.new(submission: @submission) %>
+      <%= render Edit::AbstractStepComponent.new(submission: @submission) %>
+      <%= render Edit::FormatStepComponent.new(submission: @submission) %>
+      <%= render Edit::DissertationStepComponent.new(submission: @submission) %>
+      <%= render Edit::SupplementalFilesStepComponent.new(submission: @submission) %>
+      <%= render Edit::PermissionFilesStepComponent.new(submission: @submission) %>
+      <%= render Edit::RightsStepComponent.new(submission: @submission) %>
+      <%= render Edit::SubmittedStepComponent.new(submission: @submission) %>
+    </div>
+    <div class="col-lg-3 order-1 order-lg-2">
+      <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
+    </div>
   </div>
 </div>
