@@ -56,3 +56,6 @@ dor_services:
 searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s
 argo_url: https://argo.stanford.edu
 stacks_uri: 'https://stacks.stanford.edu/file/%<druid>s/%<aug_diss_file_name>s'
+
+etd_alerts_list: 'fake-alert-list@example.com'
+etd_cataloging_list: 'fake-report-list@example.com'
