@@ -78,20 +78,6 @@ RSpec.describe AlertMailer do
     end
   end
 
-  describe '#unable_to_build_marc' do
-    let(:exception) { RuntimeError.new }
-
-    before { allow(exception).to receive(:backtrace).and_return(%w[error1 error2]) }
-
-    it 'sends a properly formatted alert email when marc cannot be built' do
-      mail = described_class.unable_to_build_marc('filename.txt', 'some detail', exception).deliver_now
-      expect(ActionMailer::Base.deliveries.size).to eq(1)
-      expect(mail.encoded).to include("Problem trying to create MARC file 'filename.txt': some detail.")
-      expect(mail.subject).to eq("#{subject_prefix} Failed to build MARC record")
-      expect(mail.to).to eq(['fake-alert-list@example.com'])
-    end
-  end
-
   context 'when not in alertable enviromment' do
     around do |example|
       original_env = Settings.ps_env

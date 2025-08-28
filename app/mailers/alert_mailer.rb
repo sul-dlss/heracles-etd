@@ -44,14 +44,6 @@ class AlertMailer < ApplicationMailer
                  template_name: 'workflow_problem')
   end
 
-  def unable_to_build_marc(filename, detail, exception)
-    @filename = filename
-    @detail = detail
-    @exception = exception
-    send_message(subject: "#{subject_prefix} Failed to build MARC record",
-                 template_name: 'marc_problem')
-  end
-
   def ready_for_cataloging
     # ETDs loaded since yesterday morning
     @etds_uncataloged_new = Submission.ils_records_created_since_yesterday_morning.order(:folio_instance_hrid)
