@@ -24,13 +24,18 @@ module Shared
     def progress_card_step_component(step:, label:, step_at: nil)
       step_number = SubmissionPresenter.step_number(step:)
       params = if SubmissionPresenter.step_done?(step:, submission:)
-                 { character: '✓', variant: :success,
-                   aria_label: ["Step #{step_number}", label, 'Completed'].join(', ') }
+                 { character: '✓', variant: :success }
                else
-                 { character: step_number, variant: :disabled,
-                   aria_label: ["Step #{step_number}", label, 'In progress'].join(', ') }
+                 { character: step_number, variant: :disabled }
                end
       Shared::ProgressCardStepComponent.new(**params, label:, step_at:)
+    end
+
+    def aria_label_for_step(step:, label:)
+      step_number = SubmissionPresenter.step_number(step:)
+      status = SubmissionPresenter.step_done?(step:, submission:) ? 'Completed' : 'In progress'
+
+      ["Step #{step_number}", label, status].join(', ')
     end
   end
 end
