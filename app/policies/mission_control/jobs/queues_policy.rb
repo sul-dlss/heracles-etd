@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+module MissionControl
+  module Jobs
+    class QueuesPolicy < ActionPolicy::Base
+      # @note These two rule macros effectively forward all rules to #manage?
+      # @see https://actionpolicy.evilmartians.io/#/aliases?id=default-rule
+      default_rule :manage?
+      alias_rule :index?, :create?, :new?, to: :manage?
+
+      def manage?
+        user.groups.dlss?
+      end
+    end
+  end
+end

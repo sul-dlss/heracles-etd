@@ -53,6 +53,7 @@ Style/Documentation:
   Exclude:
     - 'app/**/application_*.rb'
     - 'config/application.rb'
+    - 'app/policies/**/*.rb'
 
 RSpec/ExampleLength:
   Enabled: false
