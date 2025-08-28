@@ -20,11 +20,11 @@ FactoryBot.define do
     end
 
     trait :with_dissertation_file do
-      dissertation_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/dissertation.pdf'), 'application/pdf') }
+      dissertation_file { Rack::Test::UploadedFile.new(file_fixture('dissertation.pdf'), 'application/pdf') }
     end
 
     trait :with_augmented_dissertation_file do
-      augmented_dissertation_file { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/augmented_dissertation.pdf'), 'application/pdf') }
+      augmented_dissertation_file { Rack::Test::UploadedFile.new(file_fixture('augmented_dissertation.pdf'), 'application/pdf') }
     end
 
     trait :with_supplemental_files do
@@ -39,8 +39,8 @@ FactoryBot.define do
     trait :with_permission_files do
       permission_files do
         [
-          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/permission_1.pdf'), 'application/pdf'),
-          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/permission_2.pdf'), 'application/pdf')
+          Rack::Test::UploadedFile.new(file_fixture('permission_1.pdf'), 'application/pdf'),
+          Rack::Test::UploadedFile.new(file_fixture('permission_2.pdf'), 'application/pdf')
         ]
       end
     end
