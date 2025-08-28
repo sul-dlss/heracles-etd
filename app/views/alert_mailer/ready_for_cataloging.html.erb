@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  </head>
+  <body>
+    <p>
+      Good morning, ETD catalogers!
+    </p>
+
+    <div>
+      <p>
+        There are <%= @etds_uncataloged_new.size %> ETDs newly loaded and ready to be cataloged:
+      </p>
+
+      <ul>
+        <% @etds_uncataloged_new.each do |submission| %>
+          <li>
+            "<%= link_to submission.title, SubmissionPresenter.folio_record_path(submission:) %>" - <%= submission.folio_instance_hrid %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div>
+      <p>
+        All <%= @etds_uncataloged_all.size %> ETDs currently in the cataloging queue:
+      </p>
+
+      <ul>
+        <% @etds_uncataloged_all.each do |submission| %>
+          <li>
+            "<%= link_to submission.title, SubmissionPresenter.folio_record_path(submission:) %>" - <%= submission.folio_instance_hrid %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div>
+      <p>
+        Enjoy!
+      </p>
+
+      <p>
+        (Email generated daily by SDR when there are ETDs needing full cataloging)
+      </p>
+    </div>
+  </body>
+</html>

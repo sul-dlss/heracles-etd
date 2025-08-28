@@ -1,0 +1,4 @@
+alertable_environments:
+  - 'production'
+  - 'uat'
+  - 'test'

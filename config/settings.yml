@@ -59,3 +59,14 @@ stacks_uri: 'https://stacks.stanford.edu/file/%<druid>s/%<aug_diss_file_name>s'
 
 etd_alerts_list: 'fake-alert-list@example.com'
 etd_cataloging_list: 'fake-report-list@example.com'
+
+alertable_environments:
+  - 'production'
+  - 'uat'
+ps_env: 'test'
+
+# the ILS to use for back-end processing, allowed values are 'symphony' or 'folio'
+# (may vary per environment, default to 'symphony')
+catalog_record_id: 'folio'
+# Skip ETDs in the SDR Graveyard (withdrawn by registrar) or lost to us (possibly in great ETD migration of 2012)
+skip_cataloging_alert: ['druid:gh926rx4162', 'druid:wz924gg6479']
