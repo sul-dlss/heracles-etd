@@ -29,9 +29,7 @@
     <%= render Elements::SkipLinksComponent.new %>
     <%= yield :header %>
     <main id="main-container">
-      <div class="container">
-        <%= yield %>
-      </div>
+      <%= yield %>
     </main>
     <%= render FooterComponent.new %>
   </body>

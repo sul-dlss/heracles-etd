@@ -4,29 +4,31 @@
                                  subtitle: t('submitter.subtitle')) %>
 <% end %>
 
-<%= render Elements::ButtonLinkComponent.new(variant: :link, link: edit_submission_path(@submission.dissertation_id), classes: 'mb-3') do %>
-  <i class="bi bi-arrow-left me-1"></i> Go back and make changes
-<% end %>
+<div class="container without-progress-bar">
+  <%= render Elements::ButtonLinkComponent.new(variant: :link, link: edit_submission_path(@submission.dissertation_id), classes: 'mb-3') do %>
+    <i class="bi bi-arrow-left me-1"></i> Go back and make changes
+  <% end %>
 
-<div class="h3">Review and submit</div>
-<div class="h5 mb-4">Scroll down to review your details and selections before submitting.</div>
+  <div class="h3">Review and submit</div>
+  <div class="h5 mb-4">Scroll down to review your details and selections before submitting.</div>
 
-<%= render Elements::StatusAlertComponent.new(variant: :warning) do %>
-  After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.
-<% end %>
+  <%= render Elements::StatusAlertComponent.new(variant: :warning) do %>
+    After your thesis or dissertation has been submitted to the Registrar, no further changes can be made.
+  <% end %>
 
-<%= render Show::CitationStepComponent.new(submission: @submission) %>
-<%= render Show::AbstractStepComponent.new(submission: @submission) %>
-<%= render Show::FormatStepComponent.new %>
-<%= render Show::DissertationStepComponent.new(submission: @submission) %>
-<%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
-<%= render Show::PermissionFilesStepComponent.new(submission: @submission) %>
-<%= render Show::RightsStepComponent.new(submission: @submission) %>
+  <%= render Show::CitationStepComponent.new(submission: @submission) %>
+  <%= render Show::AbstractStepComponent.new(submission: @submission) %>
+  <%= render Show::FormatStepComponent.new %>
+  <%= render Show::DissertationStepComponent.new(submission: @submission) %>
+  <%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
+  <%= render Show::PermissionFilesStepComponent.new(submission: @submission) %>
+  <%= render Show::RightsStepComponent.new(submission: @submission) %>
 
-<div class="d-flex justify-content-between align-items-baseline w-100">
-  <div>By clicking Submit, I verify my thesis or dissertation is complete.</div>
-  <div>
-    <%= render Elements::ButtonLinkComponent.new(label: 'Go back', variant: :'outline-primary', link: edit_submission_path(@submission.dissertation_id), classes: 'me-3') %>
-    <%= render Elements::ButtonLinkComponent.new(label: 'Submit to Registrar', variant: :primary, link: submit_submission_path(@submission.dissertation_id), data: { turbo_method: :post }) %>
+  <div class="d-flex justify-content-between align-items-baseline w-100">
+    <div>By clicking Submit, I verify my thesis or dissertation is complete.</div>
+    <div>
+      <%= render Elements::ButtonLinkComponent.new(label: 'Go back', variant: :'outline-primary', link: edit_submission_path(@submission.dissertation_id), classes: 'me-3') %>
+      <%= render Elements::ButtonLinkComponent.new(label: 'Submit to Registrar', variant: :primary, link: submit_submission_path(@submission.dissertation_id), data: { turbo_method: :post }) %>
+    </div>
   </div>
 </div>

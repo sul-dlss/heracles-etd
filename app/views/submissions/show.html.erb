@@ -4,20 +4,22 @@
                                  subtitle: t('submitter.subtitle')) %>
 <% end %>
 
-<div class="row gy-2">
-  <div class="col-lg-8 order-2 order-lg-1">
-    <%= render Show::WelcomeBannerComponent.new(submission: @submission) %>
+<div class="container">
+  <div class="row gy-2">
+    <div class="col-lg-8 order-2 order-lg-1">
+      <%= render Show::WelcomeBannerComponent.new(submission: @submission) %>
 
-    <%= render Show::CitationStepComponent.new(submission: @submission) %>
-    <%= render Show::AbstractStepComponent.new(submission: @submission) %>
-    <%= render Show::FormatStepComponent.new %>
-    <%= render Show::DissertationStepComponent.new(submission: @submission) %>
-    <%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
-    <%= render Show::PermissionFilesStepComponent.new(submission: @submission) %>
-    <%= render Show::RightsStepComponent.new(submission: @submission) %>
-    <%= render Show::SubmittedStepComponent.new(submission: @submission) %>
-  </div>
-  <div class="col-lg-4 order-1 order-lg-2">
-    <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
+      <%= render Show::CitationStepComponent.new(submission: @submission) %>
+      <%= render Show::AbstractStepComponent.new(submission: @submission) %>
+      <%= render Show::FormatStepComponent.new %>
+      <%= render Show::DissertationStepComponent.new(submission: @submission) %>
+      <%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
+      <%= render Show::PermissionFilesStepComponent.new(submission: @submission) %>
+      <%= render Show::RightsStepComponent.new(submission: @submission) %>
+      <%= render Show::SubmittedStepComponent.new(submission: @submission) %>
+    </div>
+    <div class="col-lg-3 order-1 order-lg-2">
+      <%= render Shared::ProgressCardComponent.new(submission: @submission) %>
+    </div>
   </div>
 </div>

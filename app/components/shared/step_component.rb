@@ -23,7 +23,7 @@ module Shared
     end
 
     def classes
-      merge_classes('card border-0 mb-3', @classes)
+      merge_classes('card mb-3', @classes)
     end
 
     def badge_id
