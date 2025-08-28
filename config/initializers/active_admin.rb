@@ -342,4 +342,24 @@ ActiveAdmin.setup do |config|
   callback_chain = ActiveAdmin::Comment.send(:get_callbacks, :validate)
   author_callback = callback_chain.find { |callback| callback.filter.try(:attributes) == [:author] }
   callback_chain.delete(author_callback)
+
+  # Allow ActiveAdmin to integrate with importmap-rails
+  # See: https://henrikbjorn.medium.com/til-using-activeadmin-with-importmap-rails-289cde6f76b8
+  config.clear_javascripts!
 end
+
+module ActiveAdmin
+  module Views
+    # See: https://henrikbjorn.medium.com/til-using-activeadmin-with-importmap-rails-289cde6f76b8
+    module Head
+      def build_active_admin_head
+        within super do
+          text_node javascript_importmap_tags('active_admin')
+        end
+      end
+    end
+  end
+end
+
+# Allow ActiveAdmin to integrate with importmap-rails
+ActiveAdmin::Views::Pages::Base.prepend ActiveAdmin::Views::Head
