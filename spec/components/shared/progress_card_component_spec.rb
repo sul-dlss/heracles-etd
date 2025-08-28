@@ -11,12 +11,12 @@ RSpec.describe Shared::ProgressCardComponent, type: :component do
   it 'renders the list of steps' do
     render_inline(described_class.new(submission:))
     expect(page).to have_css('aside h2', text: 'Progress')
-    expect(page).to have_css('li', count: TOTAL_STEPS)
+    expect(page).to have_css('li', count: TOTAL_PROGRESS_STEPS)
     expect(page).to have_css('.character-circle-disabled', count: TOTAL_STEPS - 3)
     expect(page).to have_css('.character-circle-success', count: 3)
     expect(page).to have_css('.character-circle-blank', count: 2)
-    expect(page).to have_css('li:first-of-type div[aria-label="Step 1, Citation details verified, Completed"]',
+    expect(page).to have_css('li:first-of-type[aria-label="Step 1, Citation details verified, Completed"]',
                              text: 'Citation details verified')
-    expect(page).to have_css('li:last-of-type .text-muted', text: 'January  1, 2023 12:00pm')
+    expect(page).to have_css('li .text-muted', text: 'January  1, 2023 12:00pm')
   end
 end

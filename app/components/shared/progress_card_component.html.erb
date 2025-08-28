@@ -4,17 +4,37 @@
   </div>
   <div class="card-body">
     <ul class="list-unstyled">
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::ABSTRACT_STEP, label: 'Abstract provided') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::FORMAT_STEP, label: 'Format reviewed') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::DISSERTATION_STEP, label: 'Dissertation uploaded') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP, label: 'Supplemental files uploaded') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::PERMISSION_FILES_STEP, label: 'Permission files uploaded') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::RIGHTS_STEP, label: 'License terms applied') %></li>
-      <li><%= render progress_card_step_component(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar', step_at: submitted_at) %></li>
-    </ul>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') %>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::ABSTRACT_STEP, label: 'Abstract provided') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::ABSTRACT_STEP, label: 'Abstract provided') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::FORMAT_STEP, label: 'Format reviewed') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::FORMAT_STEP, label: 'Format reviewed') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::DISSERTATION_STEP, label: 'Dissertation uploaded') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::DISSERTATION_STEP, label: 'Dissertation uploaded') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP, label: 'Supplemental files uploaded') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP, label: 'Supplemental files uploaded') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::PERMISSION_FILES_STEP, label: 'Permission files uploaded') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::PERMISSION_FILES_STEP, label: 'Permission files uploaded') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::RIGHTS_STEP, label: 'License terms applied') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::RIGHTS_STEP, label: 'License terms applied') %></li>
+      <% end %>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar', step_at: submitted_at) %></li>
+      <% end %>
     <hr>
-    <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Verified by Final Reader', aria_label: 'Verified by Final Reader, Pending', classes: 'd-flex align-items-center') %>
-    <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Approved by Registrar', aria_label: 'Approved by Registrar, Pending', classes: 'd-flex align-items-center') %>
+      <li aria-label="Verified by Final Reader, Pending">
+        <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Verified by Final Reader', classes: 'd-flex align-items-center') %>
+      </li>
+      <li aria-label="Approved by Department Chair, Pending">
+        <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Approved by Registrar', classes: 'd-flex align-items-center') %>
+      </li>
+    </ul>
   </div>
 </aside>

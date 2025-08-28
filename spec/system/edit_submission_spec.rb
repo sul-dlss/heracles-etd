@@ -25,7 +25,7 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_link('Review and submit', class: 'disabled')
     end
 
-    expect(page).to have_css('.progress-card li', count: TOTAL_STEPS)
+    expect(page).to have_css('.progress-card li', count: TOTAL_PROGRESS_STEPS)
     within('.progress-card li:first-of-type') do
       expect(page).to have_text('Citation details verified')
       expect(page).to have_css('.character-circle-disabled', text: '1')
