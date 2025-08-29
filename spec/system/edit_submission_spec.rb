@@ -88,14 +88,14 @@ RSpec.describe 'Edit Submission' do
     # Dissertation file step
     within(cards[3]) do
       expect(page).to have_button('Done', disabled: true)
-      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+      attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       within('#dissertation-file-table') do
         expect(page).to have_css('td', text: 'dissertation.pdf')
         click_link_or_button 'Remove'
       end
 
-      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+      attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       click_button 'Done'
 
@@ -113,7 +113,7 @@ RSpec.describe 'Edit Submission' do
       field = find_field('Upload PDF')
       expect(page.active_element).to eq field
 
-      attach_file 'Upload PDF', Rails.root.join('spec/fixtures/files/dissertation.pdf')
+      attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       click_button 'Done'
     end
@@ -121,7 +121,7 @@ RSpec.describe 'Edit Submission' do
     # Supplemental files step
     within(cards[4]) do
       expect(page).to have_button('Done', disabled: false)
-      attach_file 'Upload supplemental files', Rails.root.join('spec/fixtures/files/supplemental_1.pdf')
+      attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
       within('#supplemental-files-table') do
         expect(page).to have_css('td', text: 'supplemental_1.pdf')
@@ -129,8 +129,8 @@ RSpec.describe 'Edit Submission' do
       end
 
       attach_file 'Upload supplemental files', [
-        Rails.root.join('spec/fixtures/files/supplemental_1.pdf'),
-        Rails.root.join('spec/fixtures/files/supplemental_2.pdf')
+        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplemental_2.pdf')
       ]
 
       within("form#edit_supplemental_file_#{submission.supplemental_files.first.id}") do
@@ -159,7 +159,7 @@ RSpec.describe 'Edit Submission' do
       within('.btn-group-toggle') do
         find('label', text: 'Yes').click
       end
-      attach_file 'Upload permission files', Rails.root.join('spec/fixtures/files/permission_1.pdf')
+      attach_file 'Upload permission files', file_fixture('permission_1.pdf')
 
       within('#permission-files-table') do
         expect(page).to have_css('td', text: 'permission_1.pdf')
@@ -171,8 +171,8 @@ RSpec.describe 'Edit Submission' do
       end
 
       attach_file 'Upload permission files', [
-        Rails.root.join('spec/fixtures/files/permission_1.pdf'),
-        Rails.root.join('spec/fixtures/files/permission_2.pdf')
+        file_fixture('permission_1.pdf'),
+        file_fixture('permission_2.pdf')
       ]
 
       click_button 'Done'

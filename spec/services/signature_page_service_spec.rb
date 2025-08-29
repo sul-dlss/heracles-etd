@@ -11,7 +11,7 @@ RSpec.describe SignaturePageService do
   let(:dissertation_path) { File.join(temp_dir, 'dissertation.pdf') }
 
   before do
-    FileUtils.cp('spec/fixtures/files/dissertation.pdf', dissertation_path)
+    FileUtils.cp(file_fixture('dissertation.pdf'), dissertation_path)
   end
 
   after do
