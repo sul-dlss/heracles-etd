@@ -33,7 +33,9 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
                      cc_license_selected submitted_to_registrar]
 
   index do
-    id_column
+    column 'Id', sortable: :id do |submission|
+      link_to submission.id, admin_submission_path(submission.id)
+    end
     index_columns.each do |index_column|
       column index_column
     end

@@ -10,7 +10,7 @@ RSpec.describe 'Edit Submission' do
   end
 
   it 'allows the user to edit a submission' do
-    visit edit_submission_path(submission.dissertation_id)
+    visit edit_submission_path(submission)
 
     expect(page).to have_css('header', text: 'Review and submit your dissertation')
     expect(page).to have_content("Welcome, #{submission.first_name}")
@@ -225,7 +225,7 @@ RSpec.describe 'Edit Submission' do
       click_link_or_button('Review and submit')
     end
 
-    expect(page).to have_current_path(review_submission_path(submission.dissertation_id))
+    expect(page).to have_current_path(review_submission_path(submission))
     expect(page).to have_content('Review and submit')
     expect(page).to have_css('h2', text: 'Citation details')
     expect(page).to have_css('h2', text: 'Abstract')
@@ -239,7 +239,7 @@ RSpec.describe 'Edit Submission' do
 
     click_link_or_button 'Submit to Registrar'
 
-    expect(page).to have_current_path(submission_path(submission.dissertation_id))
+    expect(page).to have_current_path(submission_path(submission))
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     expect(submission.reload.citation_verified).to eq('true')

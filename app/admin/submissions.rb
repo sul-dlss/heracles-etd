@@ -31,7 +31,7 @@ ActiveAdmin.register Submission do
     collection_action :new_dummy_submission, method: :get do
       submission = Admin::DummySubmissionService.call(sunetid: current_user.sunetid)
 
-      redirect_to edit_submission_path(submission.dissertation_id)
+      redirect_to edit_submission_path(submission)
     end
 
     action_item :new_dummy_submission, only: :index do
@@ -49,12 +49,14 @@ ActiveAdmin.register Submission do
   scope 'Accessioning Started', :at_accessioning_started
 
   index do
-    id_column
+    column 'Id', sortable: :id do |submission|
+      link_to submission.id, admin_submission_path(submission.id)
+    end
     column 'Druid (=> Argo)', sortable: :druid do |submission|
       link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
     end
     column 'Dissertation ID (=> /submit)', sortable: :dissertation_id do |submission|
-      link_to submission.dissertation_id, edit_submission_path(submission.dissertation_id)
+      link_to submission.dissertation_id, edit_submission_path(submission)
     end
     %i[name title].each do |c|
       column c.to_sym
@@ -196,7 +198,7 @@ ActiveAdmin.register Submission do
         link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
       end
       row 'Dissertation ID (=> /submit)' do |submission|
-        link_to submission.dissertation_id, submission_path(submission.dissertation_id)
+        link_to submission.dissertation_id, submission_path(submission)
       end
       row 'Folio Instance HRID (=> Searchworks)' do |submission|
         if submission.folio_instance_hrid

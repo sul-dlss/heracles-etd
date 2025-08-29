@@ -20,7 +20,7 @@ module Edit
     end
 
     def review_link
-      link_to(review_submission_path(@submission.dissertation_id),
+      link_to(review_submission_path(@submission),
               class: ComponentSupport::ButtonSupport.classes(variant: 'primary', classes:)) do
         'Review and submit'
       end
