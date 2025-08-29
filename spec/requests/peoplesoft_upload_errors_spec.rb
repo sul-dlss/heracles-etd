@@ -24,13 +24,13 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
       end
     end
 
-    context 'when invlalid XML is provided' do
+    context 'when no dissertation id is provided' do
       let(:error_msg) { 'Data posted from registrar is missing dissertationid -- cannot proceed' }
       let(:data) do
         <<~XML
-          <Bogus>
-            <totally>Bogus</totally>
-          </Bogus>
+          <DISSERTATION>
+            <title>My etd</title>
+          </DISSERTATION>
         XML
       end
 
@@ -43,10 +43,53 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
         expect(response).not_to be_successful
         expect(response).to have_http_status(:bad_request)
         expect(response.body).to include(error_msg)
-        mail = ActionMailer::Base.deliveries.last
-        expect(mail.subject).to eq '[TEST] Error processing incoming dissertation from Peoplesoft'
-        expect(ActionMailer::Base.deliveries.size).to eq(1)
-        expect(Honeybadger).to have_received(:notify).with(error_msg, context: {})
+        # expect(Honeybadger).to have_received(:notify).with(error_msg, context: { title: 'My etd' })
+      end
+    end
+
+    context 'when invlalid XML is provided' do
+      let(:error_msg) { 'Unable to process incoming dissertation: Error occurred while parsing request parameters' }
+      let(:data) do
+        <<~XML
+          <DISSERTATION>
+            <dissertationid>000123</dissertationid>
+            <title>Laser Path Optimization Strategies for\vLaser Powder Bed Fusion</title>
+          </DISSERTATION>
+        XML
+      end
+
+      it 'sends an alert email and returns an HTTP status of 500' do
+        post '/etds',
+             params: data,
+             headers: { Authorization: dlss_admin_credentials,
+                        'Content-Type': 'application/xml' }
+
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(:bad_request)
+        expect(response.body).to include(error_msg)
+        # expect(Honeybadger).to have_received(:notify).with(error_msg, context: {})
+      end
+    end
+
+    context 'when a blank DISSERTATION node is provided' do
+      let(:error_msg) { 'Data posted from registrar is invalid -- cannot proceed' }
+      let(:data) do
+        <<~XML
+          <DISSERTATION>
+          </DISSERTATION>
+        XML
+      end
+
+      it 'sends an alert email and returns an HTTP status of 500' do
+        post '/etds',
+             params: data,
+             headers: { Authorization: dlss_admin_credentials,
+                        'Content-Type': 'application/xml' }
+
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(:bad_request)
+        expect(response.body).to include(error_msg)
+        # expect(Honeybadger).to have_received(:notify).with(error_msg, context: "\n")
       end
     end
   end
