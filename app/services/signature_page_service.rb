@@ -17,7 +17,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
   def initialize(submission:, dissertation_path:)
     @submission = submission
-    @dissertation_path = dissertation_path
+    @dissertation_path = dissertation_path || dissertation_path_from_submission
   end
 
   attr_reader :submission, :dissertation_path
@@ -29,7 +29,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
   # @return [String] the path to the augmented PDF
   # @raise Error if fails
   def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    Honeybadger.context(submission:)
+    Honeybadger.context(submission:, dissertation_path:)
     raise Error, 'Dissertation PDF not found' unless File.exist?(dissertation_path)
 
     generate_copyright_and_signature_docs!
@@ -54,8 +54,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
     augmented_dissertation_path
   rescue StandardError => e
     Rails.logger.error("Error generating copyright & signature pages for submission #{id}: #{e}")
-    Honeybadger.notify(e)
-    raise Error, "Failed to generate signature pages for submission #{id}: #{e.message}"
+    raise
   ensure
     FileUtils.rm_f(generated_doc_path)
   end
@@ -63,7 +62,11 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
   private
 
   def augmented_dissertation_path
-    @augmented_dissertation_path ||= SignaturePageSupport.augmented_disseration_path(dissertation_path:)
+    @augmented_dissertation_path ||= SignaturePageSupport.augmented_dissertation_path(dissertation_path:)
+  end
+
+  def dissertation_path_from_submission
+    ActiveStorageSupport.filepath_for_blob(dissertation_file)
   end
 
   # This is the PDF associated with the submission, so it can either be the student's
