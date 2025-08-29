@@ -35,12 +35,6 @@ module SubmissionAdminConcern
     scope :at_accessioning_started, lambda {
       accessioning_started.ils_record_updated.has_catalog_record_id.registrar_approved.reader_approved.has_submitted_at
     }
-
-    # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
-    # It is used to by a cron job to send reminder emails to the catalogers
-    scope :ils_records_created_since_yesterday_morning, lambda {
-      at_ils_loaded.where('ils_record_created_at > ?', Time.now.yesterday.change(hour: 6).utc)
-    }
   end
 
   class_methods do

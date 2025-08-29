@@ -58,6 +58,9 @@ FactoryBot.define do
       abstract_provided { 'true' }
       rights_selected { 'true' }
       dissertation_uploaded { 'true' }
+      permissions_provided { 'true' }
+      reader_approved
+      registrar_approved
     end
 
     trait :submitted do
@@ -84,15 +87,17 @@ FactoryBot.define do
     trait :reader_approved do
       readerapproval { 'Approved' }
       last_reader_action_at { DateTime.parse('2020-03-05T14:38:59Z') }
+      readercomment { 'Well written!' }
+      with_readers
     end
 
     trait :registrar_approved do
       regapproval { 'Approved' }
       last_registrar_action_at { DateTime.parse('2020-03-06T12:38:00Z') }
+      regcomment { 'Congratulations.' }
     end
 
     trait :loaded_in_ils do
-      sequence(:catkey) { |n| format('%05<number>d', number: n) }
       sequence(:folio_instance_hrid) { |n| format('a%05<number>d', number: n) }
     end
 

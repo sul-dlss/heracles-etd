@@ -2,22 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe AlertMailer do
+RSpec.describe SubmissionMailer do
   before do
     ActionMailer::Base.deliveries = []
     # Do not send honeybadger notifications in test suite!
     allow(Honeybadger).to receive(:notify)
   end
 
-  let(:subject_prefix) { described_class.new.send(:subject_prefix) }
-
   describe '#ready_for_cataloging' do
     let(:etd_title) { 'My Thesis' }
     let(:etd_url) { "#{Settings.catalog.folio.url}/inventory/view?qindex=hrid&amp;query=in2222" }
 
     before do
-      allow(Settings).to receive_messages(catalog_record_id: 'folio',
-                                          skip_cataloging_alert: [
+      allow(Settings).to receive_messages(skip_cataloging_alert: [
                                             'druid:gh926rx4162', 'druid:wz924gg6479'
                                           ])
       create(:submission, :cataloged_in_ils, folio_instance_hrid: 'in1111')
@@ -37,7 +34,7 @@ RSpec.describe AlertMailer do
       expect(mail.encoded).to match(/in3333/)
       expect(mail.encoded).not_to match(/in4444/)
       expect(mail.encoded).to include("<a href=\"#{etd_url}\">#{etd_title}")
-      expect(mail.subject).to eq("#{subject_prefix} ETDs ready to be cataloged")
+      expect(mail.subject).to eq('[TEST] ETDs ready to be cataloged')
       expect(mail.to).to eq(['fake-report-list@example.com'])
     end
   end
@@ -45,8 +42,7 @@ RSpec.describe AlertMailer do
   context 'when no ETDs ready for cataloging' do
     describe '#ready_for_cataloging' do
       before do
-        allow(Settings).to receive_messages(catalog_record_id: 'folio',
-                                            skip_cataloging_alert: [
+        allow(Settings).to receive_messages(skip_cataloging_alert: [
                                               'druid:gh926rx4162', 'druid:wz924gg6479'
                                             ])
         create(:submission, :submitted, :reader_approved, :registrar_approved, :loaded_in_ils, :cataloged_in_ils,
