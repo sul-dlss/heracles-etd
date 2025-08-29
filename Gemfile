@@ -39,6 +39,7 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem 'actionpack-xml_parser' # XML parameter parsing for Rails
 gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin'
 gem 'config'
