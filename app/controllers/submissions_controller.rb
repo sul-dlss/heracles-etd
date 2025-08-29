@@ -28,8 +28,9 @@ class SubmissionsController < ApplicationController
   def review; end
 
   def submit
-    # TODO: Submit to Registrar.
-    @submission.update!(submitted_at: Time.current)
+    # NOTE: If the following line proves too slow in UAT/prod, use this job-based approach:
+    #       PostSubmissionJob.perform_later(submission: @submission)
+    SubmissionPoster.call(submission: @submission)
     redirect_to submission_path(@submission)
   end
 
