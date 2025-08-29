@@ -59,3 +59,6 @@ stacks_uri: 'https://stacks.stanford.edu/file/%<druid>s/%<aug_diss_file_name>s'
 
 etd_alerts_list: 'fake-alert-list@example.com'
 etd_cataloging_list: 'fake-report-list@example.com'
+
+dlss_admin: 'dummy3'
+dlss_admin_pw: 'dummy4'
