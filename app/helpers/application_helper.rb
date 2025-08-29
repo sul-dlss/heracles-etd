@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def with_submission_form(submission, &)
-    form_with model: submission, url: submission_path(submission.dissertation_id) do |form|
+    form_with model: submission, url: submission_path(submission) do |form|
       yield(form) if block_given?
     end
   end

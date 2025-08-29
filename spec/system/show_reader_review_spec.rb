@@ -11,7 +11,7 @@ RSpec.describe 'Show Submission', :rack_test do
   end
 
   it 'allows the user to view the submission' do
-    visit reader_review_submission_path(submission.dissertation_id)
+    visit reader_review_submission_path(submission)
 
     expect(page).to have_css('header', text: 'View dissertation or thesis')
     expect(page).to have_css('.alert-info', text: submission.dissertation_id)

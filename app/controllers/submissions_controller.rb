@@ -22,7 +22,7 @@ class SubmissionsController < ApplicationController
     else
       @submission.update!(submission_params)
     end
-    redirect_to edit_submission_path(@submission.dissertation_id)
+    redirect_to edit_submission_path(@submission)
   end
 
   def review; end
@@ -30,7 +30,7 @@ class SubmissionsController < ApplicationController
   def submit
     # TODO: Submit to Registrar.
     @submission.update!(submitted_at: Time.current)
-    redirect_to submission_path(@submission.dissertation_id)
+    redirect_to submission_path(@submission)
   end
 
   def reader_review; end
@@ -51,7 +51,7 @@ class SubmissionsController < ApplicationController
       supplemental_file.file.attach(file)
       supplemental_file.save!
     end
-    redirect_to edit_submission_path(@submission.dissertation_id)
+    redirect_to edit_submission_path(@submission)
   end
 
   private

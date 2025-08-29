@@ -11,7 +11,7 @@ RSpec.describe 'Showing reader review page' do
     end
 
     it 'does not allow the user to view the reader review page' do
-      get reader_review_submission_path(submission.dissertation_id)
+      get reader_review_submission_path(submission)
 
       expect(response).to have_http_status(:unauthorized)
     end

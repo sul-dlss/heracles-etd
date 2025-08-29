@@ -10,7 +10,7 @@ class SupplementalFilesController < ApplicationController
     authorize! @submission
 
     @supplemental_file.update!(supplemental_file_params)
-    redirect_to edit_submission_path(@submission.dissertation_id)
+    redirect_to edit_submission_path(@submission)
   end
 
   private

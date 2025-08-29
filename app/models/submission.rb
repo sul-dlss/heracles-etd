@@ -23,6 +23,14 @@ class Submission < ApplicationRecord
   validates :sunetid, presence: true
   validates :title, presence: true
 
+  # Defining `#to_param` this makes the diss ID the default param to use when
+  # building a path or URL for a submission. E.g., `submission_path(submission)`
+  # will now route to `/submissions/000001234` (the diss ID) instead of
+  # `/submissions/357` (the DB ID).
+  def to_param
+    dissertation_id
+  end
+
   def copyright_statement
     "© #{submitted_at&.year || Time.zone.today.year} by #{first_last_name}. All rights reserved."
   end
