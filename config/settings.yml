@@ -72,3 +72,6 @@ skip_cataloging_alert: ['druid:gh926rx4162', 'druid:wz924gg6479']
 honeybadger_checkins:
   catalog_status: test
   ready_for_cataloging: test
+
+dlss_admin: 'dummy3'
+dlss_admin_pw: 'dummy4'
