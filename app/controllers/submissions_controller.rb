@@ -2,22 +2,16 @@
 
 # Controller for Submissions
 class SubmissionsController < ApplicationController
-  before_action :set_submission
+  before_action :set_submission, :authorize_submission
 
-  def show
-    authorize! @submission
-  end
+  def show; end
 
   def edit
-    authorize! @submission
-
     add_orcid_to_submission
   end
 
   def update # rubocop:disable Metrics/AbcSize
     # All validation happens client-side, so not validating here.
-    authorize! @submission
-
     if params.dig(:submission, :remove_dissertation_file)
       @submission.dissertation_file.purge
     elsif params.dig(:submission, :remove_supplemental_file)
@@ -31,31 +25,22 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission.dissertation_id)
   end
 
-  def review
-    authorize! @submission
-  end
+  def review; end
 
   def submit
-    authorize! @submission
     # TODO: Submit to Registrar.
     @submission.update!(submitted_at: Time.current)
     redirect_to submission_path(@submission.dissertation_id)
   end
 
-  def reader_review
-    authorize! @submission
-  end
+  def reader_review; end
 
   def preview
-    authorize! @submission
-
     send_file SignaturePagePreviewService.call(submission: @submission), filename: 'preview.pdf',
                                                                          type: 'application/pdf', disposition: 'inline'
   end
 
   def attach_supplemental_files
-    authorize! @submission
-
     supplemental_files = supplemental_file_params.fetch(:supplemental_files, [])
     return if supplemental_files.empty?
 
@@ -73,6 +58,10 @@ class SubmissionsController < ApplicationController
 
   def set_submission
     @submission = Submission.find_by!(dissertation_id: params[:id])
+  end
+
+  def authorize_submission
+    authorize! @submission
   end
 
   def submission_params
