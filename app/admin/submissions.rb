@@ -150,20 +150,20 @@ ActiveAdmin.register Submission do
   ]
 
   member_action :resubmit_to_registrar, method: :post do
-    # repost ETD XML to registrar (PeopleSoft)
-    submission_id = params[:id]
-    etd = Submission.find(submission_id)
-    result = PsRegistrarService.post_ps_xml(etd)
-    message = if result
-                'ETD successfully re-posted to Registrar'
+    # Re-post submission to Registrar (via PeopleSoft)
+    submission = Submission.find(params[:id])
+    message = begin
+                SubmissionPoster.call(submission:)
+              rescue StandardError => e # rubocop:disable Layout/RescueEnsureAlignment
+                "ETD did not re-post to Registrar: #{e.message}"
               else
-                'ETD did not re-post to Registrar (check logs and/or honeybadger)'
-              end
-    redirect_to admin_submission_path(submission_id), notice: message
+                'ETD successfully re-posted to Registrar'
+              end # rubocop:disable Layout/BeginEndAlignment
+    redirect_to admin_submission_path(submission.id), notice: message
   end
 
   action_item :resubmit_to_registrar, only: :show do
-    if submission.all_required_steps_complete? && Settings.dor_submit_ps_xml
+    if submission.all_required_steps_complete? && Settings.peoplesoft.base_url.present?
       link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(submission.id),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' }

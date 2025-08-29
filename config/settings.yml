@@ -19,13 +19,11 @@ workspace_dir: <%= Rails.root.join('tmp', 'workspace').to_s %>
 sdr:
   local_workspace_root: /dor/workspace
 
-
-# true to post completed submission to Registrar
-dor_submit_ps_xml: false
-ps_reg_endpoint: 'http://registrar.example.edu'
-ps_reg_username: ~
-ps_reg_password: ~
-ps_env: 'test'
+peoplesoft:
+  client_id: ~
+  client_secret: ~
+  base_url: ~
+  token_url: ~
 
 # marc_workspace: individual stub records
 marc_workspace: '~'
