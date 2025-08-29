@@ -28,8 +28,7 @@ class SubmissionsController < ApplicationController
   def review; end
 
   def submit
-    # TODO: Submit to Registrar.
-    @submission.update!(submitted_at: Time.current)
+    SubmissionPoster.call(submission: @submission)
     redirect_to submission_path(@submission)
   end
 

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<dissertation>
+  <dissertationid><%= dissertation_id %></dissertationid>
+  <title><%= CGI.escapeHTML(title) %></title>
+  <type><%= type %></type>
+  <status code="SB">submit</status>
+  <actiondttm><%= timestamp.strftime('%m/%d/%Y %H:%M:%S') %></actiondttm>
+  <purl><%= purl %></purl>
+</dissertation>
