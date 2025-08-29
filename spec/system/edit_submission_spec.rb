@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit Submission' do
+  include_context 'with faked submission post'
+
   let(:submission) { create(:submission) }
 
   before do

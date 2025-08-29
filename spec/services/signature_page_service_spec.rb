@@ -72,14 +72,12 @@ RSpec.describe SignaturePageService do
     context 'when an error is raised' do
       before do
         allow(HexaPDF::Document).to receive(:open).and_raise(RuntimeError, 'informative error message')
-        allow(Honeybadger).to receive(:notify)
         allow(Honeybadger).to receive(:context)
       end
 
       it 'raises an error' do
-        expect { augmented_dissertation_path }.to raise_error(SignaturePageService::Error)
-        expect(Honeybadger).to have_received(:context).with(submission:)
-        expect(Honeybadger).to have_received(:notify).with(instance_of(RuntimeError))
+        expect { augmented_dissertation_path }.to raise_error(RuntimeError)
+        expect(Honeybadger).to have_received(:context).with(submission:, dissertation_path: instance_of(String))
       end
     end
   end
