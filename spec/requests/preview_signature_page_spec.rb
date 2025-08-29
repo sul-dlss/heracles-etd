@@ -13,7 +13,7 @@ RSpec.describe 'Preview of signature page' do
     end
 
     it 'generates preview' do
-      get "/submissions/#{submission.dissertation_id}/preview"
+      get "/submit/#{submission.dissertation_id}/preview"
 
       expect(response).to be_successful
       expect(response.body).to start_with("%PDF-1.5\n")
@@ -26,7 +26,7 @@ RSpec.describe 'Preview of signature page' do
     end
 
     it 'sends an unauthorized message' do
-      get "/submissions/#{submission.dissertation_id}/preview"
+      get "/submit/#{submission.dissertation_id}/preview"
 
       expect(response).to be_unauthorized
     end
