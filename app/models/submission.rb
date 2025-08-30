@@ -23,6 +23,12 @@ class Submission < ApplicationRecord
   validates :sunetid, presence: true
   validates :title, presence: true
 
+  # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
+  # It is used to by a cron job to send reminder emails to the catalogers
+  scope :ils_records_created_since_yesterday_morning, lambda {
+    at_ils_loaded.where('ils_record_created_at > ?', Time.now.yesterday.change(hour: 6).utc)
+  }
+
   # Defining `#to_param` this makes the diss ID the default param to use when
   # building a path or URL for a submission. E.g., `submission_path(submission)`
   # will now route to `/submissions/000001234` (the diss ID) instead of
