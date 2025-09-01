@@ -2,6 +2,7 @@
 
 # Presenter that provides methods to help determine when steps are done.
 class SubmissionPresenter
+  # Steps in order
   CITATION_STEP = 'citation'
   ABSTRACT_STEP = 'abstract'
   FORMAT_STEP = 'format'
@@ -54,5 +55,10 @@ class SubmissionPresenter
 
   def self.done_id(step:)
     "step-#{step_number(step:)}-done"
+  end
+
+  def self.folio_record_path(submission:)
+    params = { qindex: 'hrid', query: submission.folio_instance_hrid }
+    "#{Settings.catalog.folio.url}/inventory/view?#{params.to_query}"
   end
 end
