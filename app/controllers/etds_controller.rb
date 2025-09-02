@@ -16,51 +16,46 @@ class EtdsController < ApplicationController
   def create
     logger.info("RAW XML: #{request.raw_post}")
 
-    render_bad_request and return if error_message
+    nil if render_bad_request
   end
+
+  attr_accessor :invalid_xml_message
 
   private
 
   def dissertation_id
-    params.require(:DISSERTATION).require(:dissertationid)
+    etd_params.expect(:dissertationid)
+  end
+
+  def readers
+    etd_params.expect(:reader)
   end
 
   def etd_params
-    params.require(:DISSERTATION)
-          .permit(:title, :type, :readerapproval, :readercomment, :regapproval, :regcomment,
-                  :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
-                  :readeractiondttm, :regactiondttm, :degree, :name, :vpname,
-                  :career, :program, :plan,
-                  subplan: %i[code __content__],
-                  reader: %i[sunetid name_prefix prefix name suffix type univid readerrole finalreader])
-  rescue ActionDispatch::Http::Parameters::ParseError => e
-    error_msg = error_message(error: e, request:)
-    logger.error("Error parsing XML from Peoplesoft: #{error_msg}")
-    # Honeybadger.notify(e, context: { dissertation_id:, xml: request.raw_post })
-    render status: :internal_server_error, html: error_msg
-  rescue ActionController::ParameterMissing => e
-    error_msg = error_message(error: e, request:)
-    logger.error("Data posted from registrar is invalid -- cannot proceed: #{error_msg}")
-    # Honeybadger.notify(e, context: { xml: request.raw_post })
-    render status: :bad_request, html: error_msg
+    params.expect(DISSERTATION: [:dissertationid, :title, :type, :readerapproval, :readercomment, :regapproval,
+                                 :regcomment, :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
+                                 :readeractiondttm, :regactiondttm, :degree, :name, :vpname, :career, :program,
+                                 :plan, { subplan: %i[code __content__],
+                                          reader: %i[sunetid name_prefix prefix name suffix type
+                                                     univid readerrole finalreader] }])
   end
 
-  def error_message(error:, request:)
-    "Unable to process incoming dissertation: #{error.message}\n\n" \
-      "Incoming XML:\n\n#{request.raw_post}"
-
-    # return 'Attempting to post a dissertation without any xml' if blank_xml?
-    # return 'Data posted from registrar is invalid -- cannot proceed' unless etd_params
-
-    # 'Data posted from registrar is missing dissertationid -- cannot proceed' unless dissertation_id
+  def valid_xml?
+    true if etd_params && dissertation_id && readers
+  rescue StandardError => e
+    error_msg = "Unable to process incoming dissertation: #{e.message}"
+    @invalid_xml_message = "#{error_msg}\n\nIncoming XML:\n\n#{request.raw_post}"
+    logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
+    Honeybadger.notify(error_msg, context: { xml: request.raw_post })
+    false
   end
-
-  # def blank_xml?
-  #   request.env['RAW_POST_DATA'].nil? || request.env['RAW_POST_DATA'].strip == ''
-  # end
 
   def render_bad_request
-    render status: :bad_request, html: error_message
+    return if valid_xml?
+
+    render status: :bad_request, html: invalid_xml_message
+
+    true
   end
 
   def authenticate
