@@ -38,7 +38,6 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
 
   before do
-    allow(RegistrarDataImporter).to receive(:populate_submission).and_return(etd)
     allow(Honeybadger).to receive(:notify)
   end
 
@@ -80,7 +79,6 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
         end
 
         before do
-          # allow(RetriableWorkflowCreationJob).to receive(:perform_later)
           allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
         end
 

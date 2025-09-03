@@ -6,7 +6,10 @@ class EtdsController < ApplicationController
   before_action :authenticate, only: %i[index create]
   before_action :set_submission, only: %i[create]
 
-  attr_reader :invalid_xml_message, :submission
+  PHD_REGEX = /p\W*h\W*d/i
+  ENG_REGEX = /^eng$/i
+
+  attr_reader :invalid_xml_message, :message, :submission
 
   # GET /etds
   # only here for peoplesoft ping
@@ -16,7 +19,7 @@ class EtdsController < ApplicationController
 
   # POST /etds
   # receives xml data from peoplesoft
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     logger.info("RAW XML: #{request.raw_post}")
 
     return unless submission
@@ -24,7 +27,12 @@ class EtdsController < ApplicationController
     @submission = RegisterService.register(submission:)
     @submission.update!(submission_attributes)
     ReaderService.assign_readers(submission:, readers:)
-    render status: :created, html: "#{submission.druid} created"
+    ReaderService.action(submission:, reader_action_attributes:)
+    RegistrarService.action(submission:, registrar_action_attributes:)
+    @submission.save!
+    # we regenerate signature pages in case new readers were added
+    # SignaturePageService.regenerate_signature_page(submission)
+    render status: :created, html: "#{submission.druid} #{message}"
   end
 
   private
@@ -43,6 +51,7 @@ class EtdsController < ApplicationController
                                  :regcomment, :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
                                  :readeractiondttm, :regactiondttm, :degree, :name, :vpname, :career, :program,
                                  :plan,
+                                 { sub: [%i[deadline]] },
                                  { subplan: [%i[code __content__]],
                                    reader: [%i[sunetid name_prefix prefix name suffix type
                                                univid readerrole finalreader]] }])
@@ -50,6 +59,13 @@ class EtdsController < ApplicationController
 
   def title
     etd_params[:title].gsub(/\s+/, ' ').strip
+  end
+
+  def degree
+    return 'Ph.D.' if PHD_REGEX.match?(etd_params[:degree])
+    return 'Engineering' if ENG_REGEX.match?(etd_params[:degree])
+
+    etd_params[:degree]
   end
 
   def valid_xml?
@@ -83,9 +99,12 @@ class EtdsController < ApplicationController
     return if render_bad_request
 
     @submission = Submission.find_or_initialize_by(dissertation_id:, title:)
+    @message = @submission.new_record? ? 'created' : 'updated'
   end
 
-  def submission_attributes # rubocop:disable Metrics/AbcSize
+  def submission_attributes # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # Reader and Registratar actions are handled separately
+    # so remove them from the attributes to be updated here
     etd_params.to_h.except(:dissertationid, :reader, :title,
                            :readerapproval, :readercomment, :readeractiondttm,
                            :regapproval, :regcomment, :regactiondttm).tap do |attrs|
@@ -97,11 +116,27 @@ class EtdsController < ApplicationController
       attrs[:department] = attrs.delete(:program)
       attrs[:ps_plan] = attrs[:plan]
       attrs[:major] = attrs.delete(:plan)
-      # attrs[:degree] = EtdsHelper.normalize_degree(attrs.delete(:degree))
-      # attrs[:ps_subplan] = attrs.dig(:subplan, :__content__) if attrs[:subplan]
-      # attrs[:sub]
-      # attrs[:provost] = attrs.delete(:vpname)
-      # attrs[:name] = EtdsHelper.add_space_after_comma(attrs[:name
+      attrs[:degree] = degree
+      attrs[:ps_subplan] = attrs.delete(:subplan)[:__content__] if attrs[:subplan]
+      attrs[:sub] = "deadline #{attrs.delete(:sub)[:deadline]}" if attrs[:sub]
+      attrs[:provost] = attrs.delete(:vpname)
+      attrs[:name] = attrs.delete(:name)&.gsub(/,(\S)/, ', \1')
     end.compact
+  end
+
+  def reader_action_attributes
+    {
+      readerapproval: etd_params[:readerapproval],
+      readercomment: etd_params[:readercomment],
+      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+    }
+  end
+
+  def registrar_action_attributes
+    {
+      regapproval: etd_params[:regapproval],
+      regcomment: etd_params[:regcomment],
+      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+    }
   end
 end
