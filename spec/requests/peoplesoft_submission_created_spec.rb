@@ -34,7 +34,6 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
     XML
   end
   let(:druid) { 'druid:789' }
-  let(:etd) { Submission.new(druid:, title: 'My etd', dissertation_id: '000123') }
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
 
   before do

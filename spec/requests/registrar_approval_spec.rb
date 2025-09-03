@@ -56,7 +56,8 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
            dissertation_id:,
            druid:,
            submitted_at:,
-           title:)
+           title:,
+           embargo: 'immediately')
   end
 
   context 'when the user has valid Basic Auth for dlss_admin' do
@@ -67,6 +68,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
     context 'when passed in id is found' do
       before do
         allow(CreateStubMarcRecordJob).to receive(:perform_later)
+        allow(CreateEmbargo).to receive(:call)
         allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
       end
 
@@ -84,6 +86,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
         expect(etd.regapproval).to eq 'Approved'
         expect(CreateStubMarcRecordJob).to have_received(:perform_later).with(etd.druid).once
+        expect(CreateEmbargo).to have_received(:call).with(etd.druid, etd.embargo_release_date).once
       end
     end
   end

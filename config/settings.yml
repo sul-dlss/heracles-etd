@@ -25,6 +25,10 @@ dor_submit_ps_xml: false
 ps_reg_endpoint: 'http://registrar.example.edu'
 ps_reg_username: ~
 ps_reg_password: ~
+ps_servers:
+  - 'server1.example.com'
+ps_ips:
+  - '10.0.0.1'
 ps_env: 'test'
 
 # marc_workspace: individual stub records

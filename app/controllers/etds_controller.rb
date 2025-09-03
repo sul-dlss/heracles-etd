@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'resolv'
+
 # Controller for ETD endpoints used by Peoplesoft to transfer data to the ETD system
 class EtdsController < ApplicationController
   skip_verify_authorized only: %i[index create]
-  before_action :authenticate, only: %i[index create]
+  before_action :authenticate, only: %i[index create], unless: proc { request_from_authorized_origin? }
   before_action :set_submission, only: %i[create]
 
   PHD_REGEX = /p\W*h\W*d/i
@@ -19,31 +21,23 @@ class EtdsController < ApplicationController
 
   # POST /etds
   # receives xml data from peoplesoft
-  def create # rubocop:disable Metrics/AbcSize
+  def create
     logger.info("RAW XML: #{request.raw_post}")
 
     return unless submission
 
     @submission = RegisterService.register(submission:)
     @submission.update!(submission_attributes)
-    ReaderService.assign_readers(submission:, readers:)
-    ReaderService.action(submission:, reader_action_attributes:)
-    RegistrarService.action(submission:, registrar_action_attributes:)
-    @submission.save!
+    peoplesoft_actions
     # we regenerate signature pages in case new readers were added
     # SignaturePageService.regenerate_signature_page(submission)
-    render status: :created, html: "#{submission.druid} #{message}"
+    render_created
   end
 
   private
 
   def dissertation_id
     etd_params.expect(:dissertationid)
-  end
-
-  def readers
-    Reader.sorted_list(etd_params.expect(reader: [%i[sunetid name_prefix prefix name suffix type
-                                                     univid readerrole finalreader]]))
   end
 
   def etd_params
@@ -68,22 +62,53 @@ class EtdsController < ApplicationController
     etd_params[:degree]
   end
 
-  def valid_xml?
-    true if etd_params && dissertation_id && readers
-  rescue StandardError => e
-    error_msg = "Unable to process incoming dissertation: #{e.message}"
-    @invalid_xml_message = "#{error_msg}\n\nIncoming XML:\n\n#{request.raw_post}"
-    logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
-    Honeybadger.notify(error_msg, context: { xml: request.raw_post })
-    false
+  def peoplesoft_actions
+    peoplesoft_service.new_reader_action(readers:, reader_action_attributes:)
+    peoplesoft_service.new_registrar_action(registrar_action_attributes:)
+  end
+
+  def peoplesoft_service
+    @peoplesoft_service ||= PeoplesoftService.new(submission:)
+  end
+
+  def readers
+    Reader.sorted_list(etd_params.expect(reader: [%i[sunetid name_prefix prefix name suffix type
+                                                     univid readerrole finalreader]]))
+  end
+
+  def reader_action_attributes
+    {
+      readerapproval: etd_params[:readerapproval],
+      readercomment: etd_params[:readercomment],
+      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+    }
+  end
+
+  def registrar_action_attributes
+    {
+      regapproval: etd_params[:regapproval],
+      regcomment: etd_params[:regcomment],
+      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+    }
   end
 
   def render_bad_request
-    return if valid_xml?
-
     render status: :bad_request, html: invalid_xml_message
+  end
 
-    true
+  def render_created
+    render status: :created, html: "#{submission.druid} #{message}"
+  end
+
+  # Authentication based on a allow list of server names and IP addresses
+  def request_from_authorized_origin?
+    begin
+      remote_hostname = Resolv.getname(request.remote_addr).downcase
+      return true if Settings.ps_servers.include?(remote_hostname)
+    rescue Resolv::ResolvError
+      return true if Settings.ps_ips.include?(request.remote_addr)
+    end
+    false
   end
 
   def authenticate
@@ -96,12 +121,14 @@ class EtdsController < ApplicationController
   end
 
   def set_submission
-    return if render_bad_request
+    render_bad_request and return unless valid_xml?
 
     @submission = Submission.find_or_initialize_by(dissertation_id:, title:)
     @message = @submission.new_record? ? 'created' : 'updated'
   end
 
+  # Translate the incoming XML data to attributes on the Submission model
+  # Exclude reader and registrar actions which are handled separately
   def submission_attributes # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     # Reader and Registratar actions are handled separately
     # so remove them from the attributes to be updated here
@@ -124,19 +151,13 @@ class EtdsController < ApplicationController
     end.compact
   end
 
-  def reader_action_attributes
-    {
-      readerapproval: etd_params[:readerapproval],
-      readercomment: etd_params[:readercomment],
-      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
-    }
-  end
-
-  def registrar_action_attributes
-    {
-      regapproval: etd_params[:regapproval],
-      regcomment: etd_params[:regcomment],
-      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
-    }
+  def valid_xml?
+    true if etd_params && dissertation_id && readers
+  rescue StandardError => e
+    error_msg = "Unable to process incoming dissertation: #{e.message}"
+    @invalid_xml_message = "#{error_msg}\n\nIncoming XML:\n\n#{request.raw_post}"
+    logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
+    Honeybadger.notify(error_msg, context: { xml: request.raw_post })
+    false
   end
 end
