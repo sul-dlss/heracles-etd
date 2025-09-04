@@ -55,7 +55,7 @@ ActiveAdmin.register_page 'Dashboard' do
         end
       end
       div do
-        link_to('Argo workflow grid for registered ETDs',
+        link_to('Argo workflow grid for ETDs registered via former ETD application',
                 "#{Settings.argo_url}/report/workflow_grid?f%5Bnonhydrus_apo_title_ssim%5D%5B%5D=ETDs&f[processing_status_text_ssi][]=Registered") # rubocop:disable Layout/LineLength
       end
     end
