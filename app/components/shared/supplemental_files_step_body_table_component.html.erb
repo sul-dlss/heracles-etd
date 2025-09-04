@@ -16,7 +16,7 @@
       <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.created_at) %><% end %>
       <%= row_component.with_cell do %>
         <% if with_remove %>
-          <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_supplemental_file, value: supplemental_file.id, classes: 'p-0', data: remove_btn_data) do %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_supplemental_file, value: supplemental_file.id, classes: 'p-0', data: remove_btn_data, aria: { label: "Remove #{supplemental_file.filename}" }) do %>
             <i class="bi bi-trash-fill me-1"></i>Remove
           <% end %>
         <% end %>
