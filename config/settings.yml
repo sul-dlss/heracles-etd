@@ -66,3 +66,9 @@ mailable_environments:
 
 # Skip ETDs in the SDR Graveyard (withdrawn by registrar) or lost to us (possibly in great ETD migration of 2012)
 skip_cataloging_alert: ['druid:gh926rx4162', 'druid:wz924gg6479']
+
+# checkin keys for honeybadger (actual keys are in shared_configs per environment as needed)
+# see https://app.honeybadger.io/projects/55164/check_ins
+honeybadger_checkins:
+  catalog_status: test
+  ready_for_cataloging: test

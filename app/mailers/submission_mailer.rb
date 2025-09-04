@@ -3,6 +3,10 @@
 # Mailer for sending cataloging report emails for new submissions
 class SubmissionMailer < ApplicationMailer
   def ready_for_cataloging
+    return unless mailable_environment?
+
+    Honeybadger.check_in(Settings.honeybadger_checkins.ready_for_cataloging)
+
     # ETDs loaded since yesterday morning
     @etds_uncataloged_new = Submission.ils_records_created_since_yesterday_morning.order(:folio_instance_hrid)
     # All ETDs awaiting full cataloging
@@ -10,8 +14,6 @@ class SubmissionMailer < ApplicationMailer
                                       .order(:folio_instance_hrid)
 
     return if @etds_uncataloged_all.empty?
-
-    return unless environment.in?(Settings.mailable_environments)
 
     mail(subject: "[#{environment.upcase}] ETDs ready to be cataloged",
          template_name: 'ready_for_cataloging')
@@ -21,5 +23,9 @@ class SubmissionMailer < ApplicationMailer
 
   def environment
     Honeybadger.config[:env]
+  end
+
+  def mailable_environment?
+    environment.in?(Settings.mailable_environments)
   end
 end
