@@ -17,7 +17,7 @@ RSpec.describe Edit::RightsStepComponent, type: :component do
     expect(rows[1]).to have_unchecked_field('submission[sulicense]')
 
     expect(rows[2]).to have_css('th', text: 'Creative Commons')
-    expect(rows[2]).to have_link('View the Creative Commons licenses')
+    expect(rows[2]).to have_link('More about selecting a Creative Commons license')
     expect(rows[2]).to have_select('submission[cclicense]', selected: 'Select an option')
 
     expect(rows[3]).to have_css('th', text: 'External Release')
