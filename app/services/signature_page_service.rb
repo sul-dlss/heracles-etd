@@ -44,10 +44,10 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
     begin
       base_document.write(augmented_dissertation_path, optimize: true)
     rescue HexaPDF::Error => e
-      Honeybadger.notify("Error writing augmented PDF for #{id} with validation. Retrying once without validation",
-                         error_class: e.class,
-                         error_message: e.message,
-                         backtrace: e.backtrace)
+      Rails.logger.error("Error writing augmented PDF for #{submission.id} with validation: #{e}")
+      # NOTE: If the *second* write (with validation turned off) raises an
+      #       exception, it will be eaten below to be logged and sent to
+      #       honeybadger
       base_document.write(augmented_dissertation_path, optimize: true, validate: false)
     end
 
