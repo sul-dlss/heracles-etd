@@ -67,17 +67,11 @@ class Reader < ApplicationRecord
     1
   end
 
-  # If value is nil, return it.
-  # Otherwise clean up unnecessary whitespace, and if blank return nil, else the value
-  def self.replace_empty(field)
-    field.strip.presence unless field.nil?
-  end
-
   # Sort readers:
   #   * First, according to primary adv/co-adv/non-adv (in that order)
   #   * Second, according to internal/external (in that order)
   #   * Third, according to name
-  def self.sorted_list(readers)
+  def self.sorted_list(readers) # rubocop:disable Metrics/AbcSize
     # If there is only one reader in the document, it returns a hash rather than a list with one element.
     raw_readers = Array.wrap(readers)
     sorted_readers = raw_readers.sort_by do |reader|
@@ -91,9 +85,9 @@ class Reader < ApplicationRecord
     # Add position to each reader, and clean out unnecessary whitespace in sunetid, univid, prefix
     sorted_readers.map.with_index(1) do |reader, index|
       reader.merge('position' => index,
-                   'sunetid' => replace_empty(reader['sunetid']),
-                   'univid' => replace_empty(reader['univid']),
-                   'suffix' => replace_empty(reader['suffix']))
+                   'sunetid' => reader['sunetid']&.strip.presence,
+                   'univid' => reader['univid']&.strip.presence,
+                   'suffix' => reader['suffix']&.strip.presence)
     end
   end
 end

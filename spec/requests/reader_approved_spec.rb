@@ -72,6 +72,7 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
+      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Settings.peoplesoft_timezone) }
 
       it 'updates an existing Etd' do
         post '/etds',
@@ -83,8 +84,10 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
         etd.reload
 
         expect(etd.readerapproval).to eq 'Approved'
-        # expect(RetriableWorkflowUpdateJob).to have_received(:perform_later).with(druid, 'reader-approval',
-        #                                                                          'completed').once
+        expect(etd.readercomment).to eq 'Excellent job, infrastructure team'
+        expect(etd.last_reader_action_at).to eq last_reader_action_at
+        expect(etd.submitted_at).not_to be_nil
+        expect(etd.submitted_to_registrar).to eq 'true'
       end
     end
   end

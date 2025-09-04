@@ -12,7 +12,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
         <sunetid>lorax</sunetid>
         <type>Dissertation</type>
         <degreeconfyr>2018</degreeconfyr>
-        <readerapproval>Rejected</readerapproval>
+        <readerapproval>#{rejection}</readerapproval>
         <readercomment>Try harder next time, infrastructure team</readercomment>
         <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
         <regapproval></regapproval>
@@ -50,6 +50,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
   let(:title) { 'Reader Rejected via PeopleSoft' }
   # action_date has to be after submit date.
   let(:action_date) { Time.zone.today.strftime('%d/%m/%Y') }
+  let(:rejection) { 'Rejected' }
 
   let!(:etd) do
     create(:submission,
@@ -72,19 +73,44 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
+      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Settings.peoplesoft_timezone) }
 
-      it 'updates an existing Etd' do
-        post '/etds',
-             params: data,
-             headers: { Authorization: dlss_admin_credentials,
-                        'Content-Type': 'application/xml' }
+      context 'with a basic reader rejection' do
+        it 'updates an existing Etd' do
+          post '/etds',
+               params: data,
+               headers: { Authorization: dlss_admin_credentials,
+                          'Content-Type': 'application/xml' }
 
-        expect(response.body).to include("#{druid} updated")
-        etd.reload
+          expect(response.body).to include("#{druid} updated")
+          etd.reload
 
-        expect(etd.readerapproval).to eq 'Rejected'
-        # expect(RetriableWorkflowUpdateJob).to have_received(:perform_later).with(druid, 'reader-approval',
-        #                                                                          'completed').once
+          expect(etd.readerapproval).to eq 'Rejected'
+          expect(etd.readercomment).to eq 'Try harder next time, infrastructure team'
+          expect(etd.last_reader_action_at).to eq last_reader_action_at
+          expect(etd.submitted_at).to be_nil
+          expect(etd.submitted_to_registrar).to eq 'false'
+        end
+      end
+
+      context 'with a rejection with modification' do
+        let(:rejection) { 'Reject with modification' }
+
+        it 'updates an existing Etd' do
+          post '/etds',
+               params: data,
+               headers: { Authorization: dlss_admin_credentials,
+                          'Content-Type': 'application/xml' }
+
+          expect(response.body).to include("#{druid} updated")
+          etd.reload
+
+          expect(etd.readerapproval).to eq 'Reject with modification'
+          expect(etd.readercomment).to eq 'Try harder next time, infrastructure team'
+          expect(etd.last_reader_action_at).to eq last_reader_action_at
+          expect(etd.submitted_at).to be_nil
+          expect(etd.submitted_to_registrar).to eq 'false'
+        end
       end
     end
   end

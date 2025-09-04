@@ -16,7 +16,7 @@ class PeoplesoftService
 
     submission.update!(reader_action_attributes)
 
-    return unless /rejected/i.match?(submission.readerapproval)
+    return unless /reject/i.match?(submission.readerapproval)
 
     submission.update!(rejection_attributes)
   end
@@ -30,7 +30,7 @@ class PeoplesoftService
 
     submission.update!(registrar_action_attributes)
 
-    return complete_approval unless /reject with modification/i.match?(submission.regapproval)
+    return complete_approval unless /reject/i.match?(submission.regapproval)
 
     submission.update!(rejection_attributes)
   end

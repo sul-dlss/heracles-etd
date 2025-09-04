@@ -4,9 +4,9 @@ require 'resolv'
 
 # Controller for ETD endpoints used by Peoplesoft to transfer data to the ETD system
 class EtdsController < ApplicationController
-  skip_verify_authorized only: %i[index create]
-  before_action :authenticate, only: %i[index create], unless: proc { request_from_authorized_origin? }
-  before_action :set_submission, only: %i[create]
+  skip_verify_authorized
+  before_action :authenticate, unless: proc { request_from_authorized_origin? }
+  before_action :set_submission, only: :create
 
   PHD_REGEX = /p\W*h\W*d/i
   ENG_REGEX = /^eng$/i
@@ -16,7 +16,7 @@ class EtdsController < ApplicationController
   # GET /etds
   # only here for peoplesoft ping
   def index
-    render html: 'OK'
+    render plain: 'OK'
   end
 
   # POST /etds
@@ -29,8 +29,6 @@ class EtdsController < ApplicationController
     @submission = RegisterService.register(submission:)
     @submission.update!(submission_attributes)
     peoplesoft_actions
-    # we regenerate signature pages in case new readers were added
-    # SignaturePageService.regenerate_signature_page(submission)
     render_created
   end
 
@@ -52,7 +50,7 @@ class EtdsController < ApplicationController
   end
 
   def title
-    etd_params[:title].gsub(/\s+/, ' ').strip
+    etd_params[:title].squish
   end
 
   def degree
@@ -93,14 +91,14 @@ class EtdsController < ApplicationController
   end
 
   def render_bad_request
-    render status: :bad_request, html: invalid_xml_message
+    render status: :bad_request, plain: invalid_xml_message
   end
 
   def render_created
-    render status: :created, html: "#{submission.druid} #{message}"
+    render status: :created, plain: "#{submission.druid} #{message}"
   end
 
-  # Authentication based on a allow list of server names and IP addresses
+  # Authentication based on an allow list of server names and IP addresses
   def request_from_authorized_origin?
     begin
       remote_hostname = Resolv.getname(request.remote_addr).downcase

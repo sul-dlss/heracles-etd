@@ -74,6 +74,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
+      let(:last_registrar_action_at) { "#{action_date} 09:44:49".in_time_zone(Settings.peoplesoft_timezone) }
 
       it 'updates an existing Etd' do
         post '/etds',
@@ -85,6 +86,10 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
         etd.reload
 
         expect(etd.regapproval).to eq 'Approved'
+        expect(etd.regcomment).to eq 'Congrats on finishing your dissertation'
+        expect(etd.last_registrar_action_at).to eq last_registrar_action_at
+        expect(etd.submitted_at).not_to be_nil
+        expect(etd.submitted_to_registrar).to eq 'true'
         expect(CreateStubMarcRecordJob).to have_received(:perform_later).with(etd.druid).once
         expect(CreateEmbargo).to have_received(:call).with(etd.druid, etd.embargo_release_date).once
       end
