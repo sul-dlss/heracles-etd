@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :supplemental_files, only: %i[update]
+  resources :etds, only: %i[index create]
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
 end

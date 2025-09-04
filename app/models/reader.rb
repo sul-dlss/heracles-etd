@@ -47,4 +47,47 @@ class Reader < ApplicationRecord
 
     nil
   end
+
+  # Helps the sort algorithm in `.sorted_list` by ensuring primary advisors
+  # appear before co-advisors, and co-advisors appear before non-advisors (plain
+  # ol' readers).
+  def self.sort_order_based_on_role_label(role_label)
+    return 1 if role_label.in?(PRIMARY_ADVISOR_ROLES)
+    return 2 if role_label.in?(COADVISOR_ROLES)
+
+    3
+  end
+
+  # Helps the sort algorithm in `.sorted_list` by ensuring internal reading
+  # committee members appear before external ones. Two values are expected for
+  # the `role_type` arg: 'int' and 'ext'
+  def self.sort_order_based_on_role_type(role_type)
+    return 2 if role_type == 'ext'
+
+    1
+  end
+
+  # Sort readers:
+  #   * First, according to primary adv/co-adv/non-adv (in that order)
+  #   * Second, according to internal/external (in that order)
+  #   * Third, according to name
+  def self.sorted_list(readers) # rubocop:disable Metrics/AbcSize
+    # If there is only one reader in the document, it returns a hash rather than a list with one element.
+    raw_readers = Array.wrap(readers)
+    sorted_readers = raw_readers.sort_by do |reader|
+      [
+        sort_order_based_on_role_label(reader['readerrole']),
+        sort_order_based_on_role_type(reader['type']),
+        reader['name']
+      ]
+    end
+
+    # Add position to each reader, and clean out unnecessary whitespace in sunetid, univid, prefix
+    sorted_readers.map.with_index(1) do |reader, index|
+      reader.merge('position' => index,
+                   'sunetid' => reader['sunetid']&.strip.presence,
+                   'univid' => reader['univid']&.strip.presence,
+                   'suffix' => reader['suffix']&.strip.presence)
+    end
+  end
 end
