@@ -26,7 +26,6 @@ class EtdsController < ApplicationController
 
     return unless submission
 
-    @submission = RegisterService.register(submission:)
     @submission.update!(submission_attributes)
     peoplesoft_actions
     render_created
@@ -36,6 +35,10 @@ class EtdsController < ApplicationController
 
   def dissertation_id
     etd_params.expect(:dissertationid)
+  end
+
+  def druid
+    @druid ||= submission.druid || RegisterService.register(submission:).externalIdentifier
   end
 
   def etd_params
@@ -133,6 +136,7 @@ class EtdsController < ApplicationController
     etd_params.to_h.except(:dissertationid, :reader, :title,
                            :readerapproval, :readercomment, :readeractiondttm,
                            :regapproval, :regcomment, :regactiondttm).tap do |attrs|
+      attrs[:druid] = druid
       attrs[:dissertation_id] = dissertation_id
       attrs[:title] = title
       attrs[:etd_type] = attrs.delete(:type)
