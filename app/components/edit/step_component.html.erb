@@ -13,7 +13,7 @@
       </div>
       <div>
         <% unless show? %>
-          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap', id: edit_id, data: edit_data, 'aria-expanded': false, 'aria-controls': body_id) do %>
+          <%= render Edit::ButtonFormComponent.new(submission:, field: done_field, value: 'false', variant: :link, classes: 'btn-edit text-nowrap', id: edit_id, data: edit_data, 'aria-expanded': false, 'aria-controls': body_id, 'aria-label': "#{edit_label}: #{title}") do %>
             <i class="bi bi-pencil"></i> <%= edit_label %>
           <% end %>
         <% end %>
@@ -29,7 +29,7 @@
     <% else %>
       <div class="d-flex justify-content-between align-items-baseline">
         <div><%= done_text %></div>
-        <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled, id: done_id, 'aria-expanded': true, 'aria-controls': body_id) %>
+        <%= render Edit::ButtonFormComponent.new(submission:, label: done_label, field: done_field, value: 'true', variant: :primary, data: done_data, disabled: done_disabled, id: done_id, 'aria-expanded': true, 'aria-controls': body_id, 'aria-label': "#{done_label}: #{title}") %>
       </div>
     <% end %>
   <% end %>
