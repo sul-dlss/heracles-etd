@@ -7,6 +7,7 @@ RSpec.describe SubmissionMailer do
     ActionMailer::Base.deliveries = []
     # Do not send honeybadger notifications in test suite!
     allow(Honeybadger).to receive(:notify)
+    allow(Honeybadger).to receive(:check_in)
   end
 
   describe '#ready_for_cataloging' do
@@ -36,6 +37,7 @@ RSpec.describe SubmissionMailer do
       expect(mail.encoded).to include("<a href=\"#{etd_url}\">#{etd_title}")
       expect(mail.subject).to eq('[TEST] ETDs ready to be cataloged')
       expect(mail.to).to eq(['fake-report-list@example.com'])
+      expect(Honeybadger).to have_received(:check_in).with(Settings.honeybadger_checkins.ready_for_cataloging)
     end
   end
 
@@ -54,6 +56,7 @@ RSpec.describe SubmissionMailer do
       it 'does not send the email' do
         mail = described_class.ready_for_cataloging
         expect(mail.encoded).to be_nil
+        expect(Honeybadger).to have_received(:check_in).with(Settings.honeybadger_checkins.ready_for_cataloging)
       end
     end
   end
