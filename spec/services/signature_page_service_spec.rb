@@ -50,17 +50,13 @@ RSpec.describe SignaturePageService do
         allow(fake_document).to receive(:write).with(anything, optimize: true, validate: false).and_call_original
         allow(fake_document).to receive(:write).with(anything, optimize: true)
                                                .and_raise(HexaPDF::Error, 'Invalid table or header')
-        allow(Honeybadger).to receive(:notify)
+        allow(Rails.logger).to receive(:error)
       end
 
-      it 'notifies Honeybadger and tries again without validation' do
+      it 'logs a message and tries again once' do
         expect { augmented_dissertation_path }.not_to raise_error
-        expect(Honeybadger).to have_received(:notify).with(
-          /Error writing augmented PDF.+Retrying once without validation/,
-          error_class: HexaPDF::Error,
-          error_message: 'Invalid table or header',
-          backtrace: anything
-        )
+        expect(Rails.logger).to have_received(:error).once.with(/Error writing augmented PDF/)
+        expect(fake_document).to have_received(:write).twice
       end
     end
 

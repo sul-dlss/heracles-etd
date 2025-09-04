@@ -67,8 +67,8 @@ RSpec.describe Cocina::FileSetsGenerator do
          { contains:
            [{ type: Cocina::Models::ObjectType.file,
               externalIdentifier: 'https://cocina.sul.stanford.edu/file/xx999xx0021-3/1a652fec-9f0e-4683-b7d6-2abdcc27085e',
-              label: 'supplemental_1.pdf',
-              filename: 'supplemental_1.pdf',
+              label: 'supplémental_1.pdf',
+              filename: 'supplémental_1.pdf',
               version: 1,
               hasMessageDigests:
               [{ type: 'sha1', digest: 'b2836ab9492bb89fa288ae0f4681193b124373a1' },
