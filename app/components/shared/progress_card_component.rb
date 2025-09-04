@@ -10,7 +10,8 @@ module Shared
 
     attr_reader :submission
 
-    delegate :submitted_at, to: :submission
+    delegate :last_reader_action_at, :last_registrar_action_at, :readercomment, :regcomment, :submitted_at,
+             to: :submission
 
     def step_number_for(step)
       if SubmissionPresenter.step_done?(step:, submission:)
@@ -21,14 +22,10 @@ module Shared
       end
     end
 
-    def progress_card_step_component(step:, label:, step_at: nil)
+    def progress_card_step_component(step:, label:, step_at: nil, comment: nil)
       step_number = SubmissionPresenter.step_number(step:)
-      params = if SubmissionPresenter.step_done?(step:, submission:)
-                 { character: '✓', variant: :success }
-               else
-                 { character: step_number, variant: :disabled }
-               end
-      Shared::ProgressCardStepComponent.new(**params, label:, step_at:)
+      params = progress_step_decorator(step_number:, step_done: SubmissionPresenter.step_done?(step:, submission:))
+      Shared::ProgressCardStepComponent.new(**params, label:, step_at:, comment:)
     end
 
     def aria_label_for_step(step:, label:)
@@ -36,6 +33,13 @@ module Shared
       status = SubmissionPresenter.step_done?(step:, submission:) ? 'Completed' : 'In progress'
 
       ["Step #{step_number}", label, status].join(', ')
+    end
+
+    def progress_step_decorator(step_number:, step_done:)
+      return { character: '✓', variant: :success } if step_done
+      return { character: step_number, variant: :disabled } unless step_number > 8
+
+      { classes: 'd-flex align-items-center', variant: :blank }
     end
   end
 end

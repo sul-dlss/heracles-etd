@@ -28,13 +28,14 @@
       <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar') do %>
         <%= render progress_card_step_component(step: SubmissionPresenter::SUBMITTED_STEP, label: 'Submitted to Registrar', step_at: submitted_at) %>
       <% end %>
-    <hr>
-      <li aria-label="Verified by Final Reader, Pending">
-        <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Verified by Final Reader', classes: 'd-flex align-items-center') %>
-      </li>
-      <li aria-label="Approved by Department Chair, Pending">
-        <%= render Shared::ProgressCardStepComponent.new(variant: :blank, label: 'Approved by Registrar', classes: 'd-flex align-items-center') %>
-      </li>
+      <hr>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::READER_APPROVAL_STEP, label: 'Verified by Final Reader') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::READER_APPROVAL_STEP, label: 'Verified by Final Reader', step_at: last_reader_action_at, comment: readercomment) %>
+      <% end %>
+      <hr>
+      <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::REGISTRAR_APPROVAL_STEP, label: 'Approved by Registrar') do %>
+        <%= render progress_card_step_component(step: SubmissionPresenter::REGISTRAR_APPROVAL_STEP, label: 'Approved by Registrar', step_at: last_registrar_action_at, comment: regcomment) %>
+      <% end %>
     </ul>
   </div>
 </aside>
