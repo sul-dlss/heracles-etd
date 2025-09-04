@@ -74,7 +74,7 @@ RSpec.describe StartAccessionJob do
 
       expect(File.exist?(File.join(content_dir, 'dissertation.pdf'))).to be true
       expect(File.exist?(File.join(content_dir, 'augmented_dissertation.pdf'))).to be true
-      expect(File.exist?(File.join(content_dir, 'supplemental_1.pdf'))).to be true
+      expect(File.exist?(File.join(content_dir, 'supplémental_1.pdf'))).to be true
       expect(File.exist?(File.join(content_dir, 'supplemental_2.pdf'))).to be true
       expect(File.exist?(File.join(content_dir, 'permission_1.pdf'))).to be true
       expect(File.exist?(File.join(content_dir, 'permission_2.pdf'))).to be true

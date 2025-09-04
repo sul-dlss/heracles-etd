@@ -15,7 +15,7 @@ RSpec.describe Shared::SupplementalFilesStepBodyTableComponent, type: :component
 
     rows = page.all('table#supplemental-files-table tbody tr')
     cells = rows[0].all('th')
-    expect(cells[0]).to have_link('supplemental_1.pdf')
+    expect(cells[0]).to have_link('supplémental_1.pdf')
     cells = rows[0].all('td')
     expect(cells[1]).to have_content('14.2 KB')
     expect(cells[2]).to have_css('time')

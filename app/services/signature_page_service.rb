@@ -193,7 +193,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
               "<i>(#{file.filename})</i>"
             ]
             document.text(
-              file_listing_parts.compact_blank.join(' '),
+              file_listing_parts.compact_blank.join(' ').unicode_normalize,
               inline_format: true,
               leading: 2,
               indent_paragraphs: -10

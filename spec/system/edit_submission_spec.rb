@@ -121,15 +121,15 @@ RSpec.describe 'Edit Submission' do
     # Supplemental files step
     within(cards[4]) do
       expect(page).to have_button('Done', disabled: false)
-      attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
+      attach_file 'Upload supplemental files', file_fixture('supplémental_1.pdf')
 
       within('#supplemental-files-table') do
-        expect(page).to have_css('th', text: 'supplemental_1.pdf')
+        expect(page).to have_css('th', text: 'supplémental_1.pdf')
         click_link_or_button 'Remove'
       end
 
       attach_file 'Upload supplemental files', [
-        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplémental_1.pdf'),
         file_fixture('supplemental_2.pdf')
       ]
 
