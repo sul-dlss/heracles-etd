@@ -9,8 +9,7 @@
                               with_remove ? { label: 'Remove', classes: 'sr-only' } : { label: '' }
                             ]) %>
   <% supplemental_files.each do |supplemental_file| %>
-    <% component.with_row do |row_component| %>
-      <%= row_component.with_cell do %><%= link_to(supplemental_file.filename, rails_blob_path(supplemental_file.file)) %><% end %>
+    <% component.with_row(label: link_to(supplemental_file.filename, rails_blob_path(supplemental_file.file))) do |row_component| %>
       <%= row_component.with_cell do %><%= supplemental_file.content_type %><% end %>
       <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.byte_size) %><% end %>
       <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.created_at) %><% end %>

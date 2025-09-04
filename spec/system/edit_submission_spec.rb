@@ -91,7 +91,7 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       within('#dissertation-file-table') do
-        expect(page).to have_css('td', text: 'dissertation.pdf')
+        expect(page).to have_css('th', text: 'dissertation.pdf')
         click_link_or_button 'Remove'
       end
 
@@ -124,7 +124,7 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
       within('#supplemental-files-table') do
-        expect(page).to have_css('td', text: 'supplemental_1.pdf')
+        expect(page).to have_css('th', text: 'supplemental_1.pdf')
         click_link_or_button 'Remove'
       end
 
@@ -162,7 +162,7 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload permission files', file_fixture('permission_1.pdf')
 
       within('#permission-files-table') do
-        expect(page).to have_css('td', text: 'permission_1.pdf')
+        expect(page).to have_css('th', text: 'permission_1.pdf')
         click_link_or_button 'Remove'
       end
 

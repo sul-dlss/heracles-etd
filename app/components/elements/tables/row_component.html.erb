@@ -1,6 +1,6 @@
 <%= tag.tr id: do %>
   <% if label.present? %>
-    <th class="col-3" scope="row">
+    <th scope="row">
       <%= label %>
     </th>
   <% end %>
@@ -13,7 +13,11 @@
     <td><%= value %></td>
   <% end %>
   <% cells.each do |cell| %>
-    <td colspan="<%= colspan %>"><%= cell %></td>
+    <% if colspan.present? %>
+      <th scope="row" colspan="<%= colspan %>"><%= cell %></th>
+    <% else %>
+      <td><%= cell %></td>
+    <% end %>
   <% end %>
   <% if empty_cell? %>
     <td></td>

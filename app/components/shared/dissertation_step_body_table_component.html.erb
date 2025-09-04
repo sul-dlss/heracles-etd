@@ -8,8 +8,7 @@
                               { label: 'Upload Date' },
                               with_remove ? { label: 'Remove', classes: 'sr-only' } : { label: '' }
                             ]) %>
-  <% component.with_row do |row_component| %>
-    <%= row_component.with_cell do %><%= link_to(filename, rails_blob_path(dissertation_file)) %><% end %>
+  <% component.with_row(label: link_to(filename, rails_blob_path(dissertation_file))) do |row_component| %>
     <%= row_component.with_cell do %>PDF<% end %>
     <%= row_component.with_cell do %><%= file_size %><% end %>
     <%= row_component.with_cell do %><%= helpers.local_time(created_at) %><% end %>

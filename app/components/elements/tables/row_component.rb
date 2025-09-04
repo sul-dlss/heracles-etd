@@ -6,7 +6,7 @@ module Elements
     class RowComponent < ApplicationComponent
       renders_many :cells
 
-      def initialize(label: nil, first_value: nil, values: [], id: nil, colspan: 1)
+      def initialize(label: nil, first_value: nil, values: [], id: nil, colspan: nil)
         # Provide either label or first_value but not both; these are rendered in the first column
         # label renders with <th> (bold), first_value is a normal <td>
         @label = label

@@ -23,7 +23,7 @@ RSpec.describe Edit::DissertationStepComponent, type: :component do
       expect(page).to have_css('h2', text: 'Upload your dissertation')
       expect(page).to have_css('table#dissertation-file-table tr', count: 2)
       cells = page.all('table#dissertation-file-table tbody tr td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
     end
   end
 end
