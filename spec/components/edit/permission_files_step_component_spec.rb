@@ -36,9 +36,9 @@ RSpec.describe Edit::PermissionFilesStepComponent, type: :component do
       expect(page).to have_css('table#permission-files-table tr', count: 3)
       rows = page.all('table#permission-files-table tbody tr')
       cells = rows[0].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
       cells = rows[1].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
     end
   end
 end

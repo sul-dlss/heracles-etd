@@ -13,11 +13,12 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
     expect(headers[0]).to have_content('Dissertation File')
     expect(headers[4]).to have_no_content('Remove')
 
-    cells = page.all('table#dissertation-file-table tbody tr td')
+    cells = page.all('table#dissertation-file-table tbody tr th')
     expect(cells[0]).to have_link('dissertation.pdf')
-    expect(cells[2]).to have_content('14.2 KB')
-    expect(cells[3]).to have_css('time')
-    expect(cells[4]).to have_no_button('Remove', type: 'submit')
+    cells = page.all('table#dissertation-file-table tbody tr td')
+    expect(cells[1]).to have_content('14.2 KB')
+    expect(cells[2]).to have_css('time')
+    expect(cells[3]).to have_no_button('Remove', type: 'submit')
   end
 
   context 'when with_remove is true' do
@@ -28,7 +29,7 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
       expect(headers[4]).to have_content('Remove')
 
       cells = page.all('table#dissertation-file-table tbody tr td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
     end
   end
 end

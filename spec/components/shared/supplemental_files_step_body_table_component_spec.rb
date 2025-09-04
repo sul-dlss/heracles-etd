@@ -14,17 +14,19 @@ RSpec.describe Shared::SupplementalFilesStepBodyTableComponent, type: :component
     expect(headers[4]).to have_no_content('Remove')
 
     rows = page.all('table#supplemental-files-table tbody tr')
-    cells = rows[0].all('td')
+    cells = rows[0].all('th')
     expect(cells[0]).to have_link('supplemental_1.pdf')
-    expect(cells[2]).to have_content('14.2 KB')
-    expect(cells[3]).to have_css('time')
-    expect(cells[4]).to have_no_button('Remove', type: 'submit')
+    cells = rows[0].all('td')
+    expect(cells[1]).to have_content('14.2 KB')
+    expect(cells[2]).to have_css('time')
+    expect(cells[3]).to have_no_button('Remove', type: 'submit')
 
-    cells = rows[2].all('td')
+    cells = rows[2].all('th')
     expect(cells[0]).to have_link('supplemental_2.pdf')
-    expect(cells[2]).to have_content('14.2 KB')
-    expect(cells[3]).to have_css('time')
-    expect(cells[4]).to have_no_button('Remove', type: 'submit')
+    cells = rows[2].all('td')
+    expect(cells[1]).to have_content('14.2 KB')
+    expect(cells[2]).to have_css('time')
+    expect(cells[3]).to have_no_button('Remove', type: 'submit')
   end
 
   context 'when with_remove is true' do
@@ -36,9 +38,9 @@ RSpec.describe Shared::SupplementalFilesStepBodyTableComponent, type: :component
 
       rows = page.all('table#supplemental-files-table tbody tr')
       cells = rows[0].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
       cells = rows[2].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
     end
   end
 end

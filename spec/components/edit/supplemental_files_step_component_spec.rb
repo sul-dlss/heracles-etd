@@ -24,12 +24,12 @@ RSpec.describe Edit::SupplementalFilesStepComponent, type: :component do
       expect(page).to have_css('table#supplemental-files-table tr', count: 5)
       rows = page.all('table#supplemental-files-table tbody tr')
       cells = rows[0].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
-      cells = rows[1].all('td')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
+      cells = rows[1].all('th')
       expect(cells[0]).to have_field('File description:', type: 'text')
       cells = rows[2].all('td')
-      expect(cells[4]).to have_button('Remove', type: 'submit')
-      cells = rows[3].all('td')
+      expect(cells[3]).to have_button('Remove', type: 'submit')
+      cells = rows[3].all('th')
       expect(cells[0]).to have_field('File description:', type: 'text')
     end
   end
