@@ -193,13 +193,13 @@ RSpec.describe 'Edit Submission' do
 
       click_link_or_button 'View the Stanford University publication license'
       within('.modal#stanford-license-confirm') do
-        expect(page).to have_content('Stanford University Thesis & Dissertation Publication License')
+        expect(page).to have_content('Stanford University thesis and dissertation publication license')
         click_button 'Close'
       end
 
-      click_link_or_button 'View the Creative Commons licenses'
+      click_link_or_button 'More about selecting a Creative Commons license'
       within('.modal#cc-licenses') do
-        expect(page).to have_content('Creative Commons Licenses')
+        expect(page).to have_content('Creative Commons licenses')
         click_button 'Close'
       end
 

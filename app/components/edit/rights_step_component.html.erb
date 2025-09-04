@@ -26,43 +26,44 @@
       <% component.with_row(label: 'Creative Commons') do |row_component| %>
         <% row_component.with_cell do %>
           <a data-bs-toggle="modal" href="#cc-licenses" role="button">
-            <i class="bi bi-card-text me-1"></i> View the Creative Commons licenses
+            <i class="bi bi-card-text me-1"></i> More about selecting a Creative Commons license
           </a>
           <%= helpers.with_submission_form(submission) do |form| %>
             <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Creative Commons license' %> to my dissertation.</p>
           <% end %>
+          <p class="text-muted">
+            You may optionally apply one Creative Commons license from the menu above. Stanford Libraries recommends the
+            "Attribution Non-Commercial" license because it encourages open access and collaboration in the scholarly process.
+          </p>
         <% end %>
       <% end %>
       <% component.with_row(label: 'External Release') do |row_component| %>
         <% row_component.with_cell do %>
-          <p>
-            Stanford is committed to the timely and broad dissemination of the scholarly output of its students. In some cases,
-            however, it may be appropriate for a student to delay the release of his/her dissertation. For instance, a student
-            may opt to embargo the dissertation for a limited amount of time while a patent application is in process or while
-            pursuing commercial interests or other publication.
-          </p>
-          <p>
-            If an embargo is appropriate for you, please select one of the embargo options from the pulldown menu below. If you
-            have any questions about whether you should embargo your dissertation, please consult with your advisor.
-          </p>
-          <div class="d-flex align-items-baseline gap-2 mb-2 flex-wrap">
-          </div>
+          <a data-bs-toggle="modal" href="#delayed-release" role="button">
+            <i class="bi bi-card-text me-1"></i> More about delaying the release of a dissertation
+          </a>
           <%= helpers.with_submission_form(submission) do |form| %>
-            <p>My dissertation may be released <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Postpone release' %> after final approval by the Registrar.</p>
+            <p>
+              Release my dissertation <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Postpone release' %>
+              after final approval and processing by the Registrar.
+            </p>
           <% end %>
-          <p>Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
+          <p class="text-muted">Third-party services may display 100% of my dissertation online, as soon as it is released.</p>
         <% end %>
       <% end %>
       <% component.with_row(label: 'Preview') do |row_component| %>
         <% row_component.with_cell do %>
-          <%= render Elements::ExternalLinkComponent.new(url: preview_submission_path(submission), label: 'Preview the Copyright & Signature Pages') %>
+          <%= render Elements::ExternalLinkComponent.new(url: preview_submission_path(submission), label: 'Preview the Copyright and Signature pages') %>
+          <p class="text-muted">
+            These pages will be automatically inserted into your dissertation PDF file. See the “Review your dissertation's formatting” section for more information.
+          </p>
         <% end %>
       <% end %>
     <% end %>
 
     <%= render Elements::ModalComponent.new(id: 'stanford-license-confirm') do |component| %>
       <% component.with_header do %>
-        <div class="h3">Stanford University Thesis & Dissertation Publication License</div>
+        <div class="h3">Stanford University thesis and dissertation publication license</div>
       <% end %>
 
       <% component.with_body do %>
@@ -108,26 +109,59 @@
 
     <%= render Elements::ModalComponent.new(id: 'cc-licenses') do |component| %>
       <% component.with_header do %>
-        <div class="h3">Creative Commons Licenses</div>
+        <div class="h3">Creative Commons licenses</div>
       <% end %>
 
       <% component.with_body do %>
         <p>
-          Stanford requires that all dissertations and theses submitted via this system have the Stanford License applied. The Stanford License specifically
-          gives Stanford the right to store and display your thesis or dissertation. Because Stanford will make your thesis or dissertation publicly
-          accessible, readers may locate your publication and may wish to use parts of it in their own work.
+          Stanford requires that all dissertations and theses submitted via this system have the Stanford License applied.
+          The Stanford License specifically gives Stanford the right to store and display your thesis or dissertation.
+          Because Stanford will make your thesis or dissertation publicly accessible, readers may locate your publication
+          and may wish to use parts of it in their own work.
         </p>
         <p>
-          Because Stanford will make your thesis or dissertation publicly accessible, readers may locate your publication and may wish
-          to use parts of it in their own work. Because you hold the copyright to your work, your permission for that reuse is necessary.
-          By applying a Creative Commons license to your work, you make clear to users the terms and conditions under which they may reuse
-          your material, obviating the need for them to contact you directly. <strong>Applying a Creative Commons license does not take
-          away any of your rights; rather, it makes clear to readers of your work what kind of reuse you permit. </strong>
+          Because you hold the copyright to your work, your permission for that reuse is necessary. By applying a
+          Creative Commons license to your work, you make clear to users the terms and conditions under which they may
+          reuse your material, obviating the need for them to contact you directly. Applying a Creative Commons license
+          does not take away any of your rights; rather, it makes clear to readers of your work what kind of reuse you permit.
         </p>
         <p>
-          You may optionally apply one Creative Commons license from the menu below. <strong>Stanford Libraries recommends the "Attribution
-          Non-Commercial" license</strong> because it encourages open access and collaboration in the scholarly process. For more information
-          on Creative Commons license options, please see: <%= render Elements::ExternalLinkComponent.new(url: 'http://creativecommons.org/') %>.
+          You may optionally apply one Creative Commons license. Stanford Libraries recommends the "Attribution Non-Commercial"
+          license because it encourages open access and collaboration in the scholarly process. For more information,
+          please see  <%= render Elements::ExternalLinkComponent.new(url: 'http://creativecommons.org/', label: 'Creative commons license options') %>.
+        </p>
+      <% end %>
+
+      <% component.with_footer do %>
+        <div class="d-flex justify-content-end">
+          <%= render Elements::ButtonComponent.new(label: 'Close', variant: :primary, data: { bs_dismiss: 'modal' }) %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= render Elements::ModalComponent.new(id: 'delayed-release') do |component| %>
+      <% component.with_header do %>
+        <div class="h3">Delayed release</div>
+      <% end %>
+
+      <% component.with_body do %>
+        <p>
+          Stanford is committed to the timely and broad dissemination of the scholarly output of its students. In some cases, however,
+          it may be appropriate for a student to delay the release of their dissertation or thesis. For instance, a student may opt
+          to embargo the dissertation for a limited amount of time while a patent application is in process or while
+          pursuing commercial interests or other publication.
+        </p>
+        <p>
+          An embargo delays the release of a dissertation, meaning the dissertation cannot be read or downloaded except by Stanford affiliates.
+          This also means the dissertation cannot be accessed by search engines and other third-party distributors.
+        </p>
+        <p>
+          Whether or not you choose to embargo your dissertation, the full citation (including the abstract) will become publicly available
+          after final approval and processing by the Registrar.
+        </p>
+        <p>
+          If an embargo is appropriate for you, please select one of the release delay options. If you have any questions about whether you
+          should embargo your dissertation, please consult with your advisor.
         </p>
       <% end %>
 
