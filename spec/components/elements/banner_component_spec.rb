@@ -8,7 +8,7 @@ RSpec.describe Elements::BannerComponent, type: :component do
     expect(page).to have_css(".alert.alert-note.banner[role='banner']")
     expect(page).to have_no_css('.banner-header')
     expect(page).to have_no_css('.banner-body')
-    expect(page).to have_css('div.bi.bi-exclamation-circle-fill')
+    expect(page).to have_css('div.bi.bi-exclamation-circle-fill[role="img"][aria-label="note banner icon"]')
   end
 
   context 'with a class' do
@@ -61,7 +61,7 @@ RSpec.describe Elements::BannerComponent, type: :component do
     it 'renders the correct icon and classes for variant' do
       render_inline(described_class.new(variant: :success))
       expect(page).to have_css(".alert.alert-success.banner[role='banner']")
-      expect(page).to have_css('div.bi.bi-check-circle-fill')
+      expect(page).to have_css('div.bi.bi-check-circle-fill[role="img"][aria-label="success banner icon"]')
     end
   end
 
