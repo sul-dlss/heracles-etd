@@ -16,7 +16,11 @@
 
   <% component.with_footer_content do %>
     <div class="d-flex justify-content-end align-items-baseline">
-      <%= review_link %>
+      <%= form_with model: submission, url: review_submission_path(submission), method: :get do |form| %>
+        <%= render Elements::ButtonComponent.new(type: 'submit', variant: :primary, disabled: !all_done?) do %>
+          Review and submit
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
