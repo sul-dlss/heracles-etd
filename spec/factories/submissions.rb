@@ -24,7 +24,7 @@ FactoryBot.define do
     end
 
     trait :with_augmented_dissertation_file do
-      augmented_dissertation_file { Rack::Test::UploadedFile.new(file_fixture('augmented_dissertation.pdf'), 'application/pdf') }
+      augmented_dissertation_file { Rack::Test::UploadedFile.new(file_fixture('dissertation-augmented.pdf'), 'application/pdf') }
     end
 
     trait :with_supplemental_files do
@@ -85,15 +85,15 @@ FactoryBot.define do
     end
 
     trait :reader_approved do
-      readerapproval { 'Approved' }
       last_reader_action_at { DateTime.parse('2020-03-05T14:38:59Z') }
+      readerapproval { 'Approved' }
       readercomment { 'Well written!' }
       with_readers
     end
 
     trait :registrar_approved do
-      regapproval { 'Approved' }
       last_registrar_action_at { DateTime.parse('2020-03-06T12:38:00Z') }
+      regapproval { 'Approved' }
       regcomment { 'Congratulations.' }
     end
 

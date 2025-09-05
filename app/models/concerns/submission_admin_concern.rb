@@ -65,7 +65,7 @@ module SubmissionAdminConcern
   def augmented_dissertation_file_name
     return unless dissertation_file.attached?
 
-    SignaturePageSupport.augmented_disseration_path(dissertation_path: dissertation_file.filename.to_s)
+    SignaturePageSupport.augmented_dissertation_path(dissertation_path: dissertation_file.filename.to_s)
   end
 
   def all_required_steps_complete?
