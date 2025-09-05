@@ -15,7 +15,7 @@ module Elements
 
     # Variants are :danger, :success, :note, :info, :warning, :input
     # input is not part of the component library
-    def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: [], id: nil, # rubocop:disable Metrics/ParameterLists
+    def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: [], id: nil,
                    role: 'alert')
       raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning input].include?(variant.to_sym)
 
