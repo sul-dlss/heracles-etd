@@ -31,7 +31,7 @@
                   <%= form.label :description, 'File description:', class: 'form-label fw-bold' %>
                 </div>
                 <div class="m-1">
-                  <%= form.text_field :description, class: 'form-control', size: 75, data: { controller: 'submit', action: 'blur->submit#submit' } %>
+                  <%= form.text_field :description, class: 'form-control', size: 75, data: { controller: 'submit', action: 'blur->submit#submit' }, aria: { label: "File description for #{supplemental_file.filename}" } %>
                 </div>
               </div>
             </div>
