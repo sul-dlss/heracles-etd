@@ -16,3 +16,6 @@ production:
   ready_for_cataloging:
     command: "SubmissionMailer.ready_for_cataloging.deliver_now"
     schedule: every weekday at 6am
+  catalog_status:
+    class: CatalogStatusJob
+    schedule: every hour at minute 50
