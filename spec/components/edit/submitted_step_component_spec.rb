@@ -15,7 +15,7 @@ RSpec.describe Edit::SubmittedStepComponent, type: :component do
       expect(page).to have_css('h2', text: 'Review and submit to Registrar')
 
       expect(page).to have_css('.alert-danger', text: "You must complete sections 1-#{TOTAL_STEPS - 1}")
-      expect(page).to have_link('Review and submit', class: 'disabled')
+      expect(page).to have_button('Review and submit', disabled: true)
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe Edit::SubmittedStepComponent, type: :component do
       expect(page).to have_css('h2', text: 'Review and submit to Registrar')
 
       expect(page).to have_css('.alert-info', text: "You have completed sections 1-#{TOTAL_STEPS - 1}")
-      expect(page).to have_link('Review and submit')
+      expect(page).to have_button('Review and submit')
     end
   end
 end
