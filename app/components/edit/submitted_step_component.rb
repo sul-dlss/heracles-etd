@@ -20,18 +20,12 @@ module Edit
     end
 
     def review_link
+      return tag.span('Review and submit', class: 'btn btn-primary disabled') unless all_done?
+
       link_to(review_submission_path(@submission),
-              class: ComponentSupport::ButtonSupport.classes(variant: 'primary', classes:)) do
+              class: ComponentSupport::ButtonSupport.classes(variant: 'primary')) do
         'Review and submit'
       end
-    end
-
-    private
-
-    def classes
-      return if all_done?
-
-      'disabled'
     end
   end
 end
