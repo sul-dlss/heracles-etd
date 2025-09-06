@@ -21,6 +21,10 @@ module Edit
       ActiveModel::Type::Boolean.new.cast(permissions_provided)
     end
 
+    def no_permissions_action
+      permission_files.attached? ? 'click->submit#warn' : 'submit#submit'
+    end
+
     def done_disabled?
       return false unless permissions_provided?
 
