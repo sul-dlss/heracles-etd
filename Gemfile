@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 gem 'actionpack-xml_parser' # XML parameter parsing for Rails
 gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin'
+gem 'cocina-models', '~> 0.105'
 gem 'config'
 gem 'dor-services-client'
 gem 'druid-tools'
