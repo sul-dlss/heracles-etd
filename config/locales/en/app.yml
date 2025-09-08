@@ -39,11 +39,10 @@ en:
         <p>This abstract will be indexed for online searching.<br>
            It should be a more concise version of the abstract in your dissertation, and it must be in English.</p>
     format:
-      title: "Review your dissertation's formatting"
+      title: "Review your dissertation's formatting before upload"
       help_html: >-
-        <p>Your dissertation must be a PDF file.</p>
-        <p>Please review the Registrar's official submission guidelines in full before uploading.</p>
-        <p>All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
+        <p>Your dissertation must be a PDF file.<br>
+           All submissions are final unless rejected for modification by the Registrar's Office or Final Reader.</p>
     rights:
       title: "Apply copyright and license terms"
       help_html: >-
