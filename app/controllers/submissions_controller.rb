@@ -4,10 +4,15 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, :authorize_submission
 
-  def show; end
+  def show
+    # PeopleSoft sends all users to the show route, but if this is the student, they should see the edit view.
+    redirect_to edit_submission_path(@submission) if allowed_to?(:update?, @submission)
+  end
 
   def edit
-    add_orcid_to_submission
+    # The current user's orcid is provided via shibboleth. It needs to be added
+    # to the submission via the edit view.
+    @submission.update!(orcid: current_user.orcid) if needs_orcid_update?
   end
 
   def update # rubocop:disable Metrics/AbcSize
@@ -56,6 +61,16 @@ class SubmissionsController < ApplicationController
 
   private
 
+  def needs_orcid_update?
+    return false if @submission.orcid.present?
+    return false if current_user.orcid.blank?
+    # Note that the sunetid check is redundant given the submission policy, but
+    # we are explicit here just in case the policy is changed in the future.
+    return false if @submission.sunetid != current_user.sunetid
+
+    true
+  end
+
   def set_submission
     @submission = Submission.find_by!(dissertation_id: params[:id])
   end
@@ -73,16 +88,5 @@ class SubmissionsController < ApplicationController
 
   def supplemental_file_params
     params.expect(submission: [supplemental_files: []])
-  end
-
-  # The current user's orcid is provided via shibboleth.
-  # It needs to be added to the Submission.
-  def add_orcid_to_submission
-    return if @submission.orcid.present?
-    return if current_user.orcid.blank?
-    # This is redundant of the policy, but just in case the policy is changed in the future.
-    return if @submission.sunetid != current_user.sunetid
-
-    @submission.update!(orcid: current_user.orcid)
   end
 end

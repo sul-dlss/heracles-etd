@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  ActiveAdmin.routes(self)
-
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 
   resources :submissions, only: %i[edit update show] do
     member do
@@ -25,5 +16,10 @@ Rails.application.routes.draw do
   resources :supplemental_files, only: %i[update]
   resources :etds, only: %i[index create]
 
+  get 'view/:id', to: redirect('/submissions/%{id}/reader_review'), as: :legacy_view_show
+  get 'submit/:id', to: redirect('/submissions/%{id}'), as: :legacy_submit_show
+  get 'submit/:id/edit', to: redirect('/submissions/%{id}/edit'), as: :legacy_submit_edit
+
   mount MissionControl::Jobs::Engine, at: '/jobs'
+  ActiveAdmin.routes(self)
 end
