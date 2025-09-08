@@ -12,5 +12,15 @@ module Shared
 
     delegate :schoolname, :department, :degree, :major, :degreeconfyr, :title, :orcid,
              to: :submission
+
+    def readers
+      tag.ul class: 'list-unstyled' do
+        safe_join(
+          submission.readers.order(:position).map do |reader|
+            tag.li(reader)
+          end
+        )
+      end
+    end
   end
 end

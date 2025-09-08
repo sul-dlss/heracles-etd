@@ -46,18 +46,20 @@ RSpec.describe Reader do
     end
 
     context 'when reader has one of the primary advisor roles' do
-      subject(:reader) { build(:reader, readerrole: 'Doct Dissert Advisor (AC)') }
+      subject(:reader) { build(:reader, :with_suffix, readerrole: 'Doct Dissert Advisor (AC)') }
 
-      it 'returns Primary Adviser' do
-        expect(reader.signature_page_role).to eq('Primary Adviser')
+      it 'returns Primary Advisor' do
+        expect(reader.signature_page_role).to eq('Primary Advisor')
+        expect(reader.to_s).to eq('Doe, Jim, Jr. (Primary Advisor)')
       end
     end
 
     context 'when reader has one of the co-advisor roles' do
-      subject(:reader) { build(:reader, readerrole: 'Dissertation Co-Advisor') }
+      subject(:reader) { build(:reader, :with_suffix, readerrole: 'Dissertation Co-Advisor') }
 
-      it 'returns Co-Adviser' do
-        expect(reader.signature_page_role).to eq('Co-Adviser')
+      it 'returns Co-Advisor' do
+        expect(reader.signature_page_role).to eq('Co-Advisor')
+        expect(reader.to_s).to eq('Doe, Jim, Jr. (Co-Advisor)')
       end
     end
   end

@@ -41,9 +41,13 @@ class Reader < ApplicationRecord
   scope :advisors, -> { where(readerrole: ADVISOR_ROLES) }
   scope :non_advisors, -> { where(readerrole: NON_ADVISOR_ROLES) }
 
+  def to_s
+    name.concat(display_suffix).concat(display_role)
+  end
+
   def signature_page_role
-    return 'Primary Adviser' if readerrole.in?(PRIMARY_ADVISOR_ROLES)
-    return 'Co-Adviser' if readerrole.in?(COADVISOR_ROLES)
+    return 'Primary Advisor' if readerrole.in?(PRIMARY_ADVISOR_ROLES)
+    return 'Co-Advisor' if readerrole.in?(COADVISOR_ROLES)
 
     nil
   end
@@ -89,5 +93,20 @@ class Reader < ApplicationRecord
                    'univid' => reader['univid']&.strip.presence,
                    'suffix' => reader['suffix']&.strip.presence)
     end
+  end
+
+  private
+
+  def display_suffix
+    return '' if suffix.blank?
+
+    ", #{suffix}"
+  end
+
+  def display_role
+    return '' if readerrole.blank?
+    return '' if signature_page_role.blank?
+
+    " (#{signature_page_role})"
   end
 end
