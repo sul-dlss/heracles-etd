@@ -17,7 +17,7 @@ class SubmissionsController < ApplicationController
     elsif params.dig(:submission, :remove_supplemental_file)
       @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).delete
     elsif params.dig(:submission, :remove_permission_file)
-      @submission.permission_files.find(params[:submission][:remove_permission_file]).purge
+      @submission.permission_files.find(params[:submission][:remove_permission_file]).delete
       @submission.update!(permissions_provided: nil) if @submission.permission_files.empty?
     else
       @submission.update!(submission_params)
@@ -54,6 +54,20 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission)
   end
 
+  def attach_permission_files
+    permission_files = permission_file_params.fetch(:permission_files, [])
+    return if permission_files.empty?
+
+    permission_files.each do |file|
+      next if file.blank?
+
+      permission_file = PermissionFile.new(submission: @submission)
+      permission_file.file.attach(file)
+      permission_file.save!
+    end
+    redirect_to edit_submission_path(@submission)
+  end
+
   private
 
   def set_submission
@@ -69,6 +83,10 @@ class SubmissionsController < ApplicationController
                                :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
                                :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded,
                                { permission_files: [] }, :permission_files_uploaded, :permissions_provided])
+  end
+
+  def permission_file_params
+    params.expect(submission: [permission_files: []])
   end
 
   def supplemental_file_params

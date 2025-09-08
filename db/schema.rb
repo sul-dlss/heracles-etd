@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_26_150637) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_08_164649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_150637) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["submission_id"], name: "index_attachments_on_submission_id"
     t.index ["uploaded_file_id"], name: "index_attachments_on_uploaded_file_id"
+  end
+
+  create_table "permission_files", force: :cascade do |t|
+    t.text "description"
+    t.bigint "submission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["submission_id"], name: "index_permission_files_on_submission_id"
   end
 
   create_table "readers", force: :cascade do |t|
@@ -161,6 +169,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_150637) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attachments", "submissions"
   add_foreign_key "attachments", "uploaded_files"
+  add_foreign_key "permission_files", "submissions"
   add_foreign_key "readers", "submissions"
   add_foreign_key "supplemental_files", "submissions"
 end

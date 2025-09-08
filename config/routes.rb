@@ -19,10 +19,12 @@ Rails.application.routes.draw do
       get :reader_review
       get :preview # Signature page preview
       patch :attach_supplemental_files
+      patch :attach_permission_files
     end
   end
 
   resources :supplemental_files, only: %i[update]
+  resources :permission_files, only: %i[update]
   resources :etds, only: %i[index create]
 
   mount MissionControl::Jobs::Engine, at: '/jobs'

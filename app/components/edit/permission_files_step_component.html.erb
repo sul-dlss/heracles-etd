@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <% if permission_files.attached? %>
+    <% if permission_files.any? %>
       <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
     <% end %>
 
@@ -44,7 +44,9 @@
       <% submission.permission_files.each do |permission_file| %>
         <%= form.hidden_field :permission_files, multiple: true, value: permission_file.signed_id, id: nil %>
       <% end %>
-      <% if permissions_provided? %>
+    <% end %>
+    <% if permissions_provided? %>
+      <%= form_with model: submission, url: attach_permission_files_submission_path(submission) do |form| %>
         <%= form.label :permission_files, 'Upload permission files (maximum size 1GB)', class: 'form-label' %>
         <%= form.file_field :permission_files, accept: 'application/pdf', multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
       <% end %>

@@ -175,6 +175,14 @@ RSpec.describe 'Edit Submission' do
         file_fixture('permission_2.pdf')
       ]
 
+      within("form#edit_permission_file_#{submission.permission_files.first.id}") do
+        fill_in 'File description:', with: 'This is a sample first permission file.'
+      end
+
+      within("form#edit_permission_file_#{submission.permission_files.last.id}") do
+        fill_in 'File description:', with: 'This is a sample second permission file.'
+      end
+
       click_button 'Done'
 
       btn = find_button('Edit this section')
