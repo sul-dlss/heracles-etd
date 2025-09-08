@@ -71,5 +71,6 @@ class Submission < ApplicationRecord
     self.cc_license_selected = cclicense.present? ? 'true' : 'false'
     self.submitted_to_registrar = submitted_at.present? ? 'true' : 'false'
     self.cclicensetype = CreativeCommonsLicense.find(cclicense)&.name
+    self.permissions_provided = nil unless permissions_provided == 'true'
   end
 end

@@ -23,12 +23,18 @@
             <% component.with_right_toggle_option(form:,
                                                   field_name: :permissions_provided,
                                                   label: 'No',
-                                                  data: { controller: 'submit', action: 'submit#submit' },
-                                                  value: 'false') %>
+                                                  data: { controller: 'submit', action: no_permissions_action },
+                                                  value: nil) %>
           <% end %>
         </div>
       </div>
     <% end %>
+
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-start">
+        <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
+      </div>
+    </div>
 
     <% if permission_files.attached? %>
       <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
@@ -40,7 +46,25 @@
       <% end %>
       <% if permissions_provided? %>
         <%= form.label :permission_files, 'Upload permission files (maximum size 1GB)', class: 'form-label' %>
-        <%= form.file_field :permission_files, multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+        <%= form.file_field :permission_files, accept: 'application/pdf', multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+      <% end %>
+    <% end %>
+
+    <%= render Elements::ModalComponent.new(id: 'permission-files-message') do |component| %>
+      <% component.with_header do %>
+        <div class="h3">Attention</div>
+      <% end %>
+
+      <% component.with_body do %>
+        <p>
+          Before selecting this option, please remove any file(s) you have uploaded in this section.
+        </p>
+      <% end %>
+
+      <% component.with_footer do %>
+        <div class="d-flex justify-content-end">
+          <%= render Elements::ButtonComponent.new(label: 'Close', variant: :primary, data: { bs_dismiss: 'modal' }) %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

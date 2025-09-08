@@ -1,1 +1,5 @@
-<p>Does your dissertation include copyrighted material?<br>Upload additional files to include them in your submission.</p>
+<p>
+   Does your dissertation include copyrighted material?<br>
+   Click Yes if your dissertation contains copyrighted material.<br>
+   <%= render Elements::ExternalLinkComponent.new(url: Settings.copyright_instructions_url, label: 'More about copyright') %>
+</p>
