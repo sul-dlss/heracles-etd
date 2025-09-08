@@ -9,6 +9,7 @@
   <% end %>
 
   <% component.with_body_content do %>
+    <p>Review formatting requirements in full before upload. <%= render Elements::ExternalLinkComponent.new(url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/graduate-degree-progress/dissertations-and-theses/prepare-your-work-0', label: 'Review the Registrar\'s official submission guidelines', classes: 'ms-2') %></p>
     <p>As the student author, this is the last opportunity to review your formatting. Most formatting errors are seen on the following pages.</p>
 
     <%= render Shared::FormatStepBodyComponent.new %>
