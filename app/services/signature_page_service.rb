@@ -11,8 +11,16 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
     'Engineering' => 'Engineering'
   }.freeze
 
-  def self.call(submission:, dissertation_path: nil)
-    new(submission:, dissertation_path:).call
+  # Generates for the dissertation file and attaches as augmented dissertation file
+  def self.call_and_attach_for_dissertation_file(submission:)
+    dissertation_path = ActiveStorageSupport.filepath_for_blob(submission.dissertation_file.blob)
+    augmented_dissertation_path = new(submission:, dissertation_path:).call
+    submission.augmented_dissertation_file.attach(io: File.open(augmented_dissertation_path),
+                                                  filename: File.basename(augmented_dissertation_path))
+  end
+
+  def self.call(...)
+    new(...).call
   end
 
   def initialize(submission:, dissertation_path:)

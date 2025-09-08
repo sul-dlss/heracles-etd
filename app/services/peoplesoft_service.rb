@@ -43,6 +43,9 @@ class PeoplesoftService
   def assign_readers(readers)
     submission.readers.destroy_all
     submission.readers.create!(readers)
+
+    # Regenerate signature pages in case new readers were added
+    SignaturePageService.call_and_attach_for_dissertation_file(submission:)
   end
 
   def complete_approval
