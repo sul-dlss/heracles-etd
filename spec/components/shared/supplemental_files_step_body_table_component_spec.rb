@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Shared::SupplementalFilesStepBodyTableComponent, type: :component do
-  let(:submission) { create(:submission, :with_supplemental_files) }
+  let(:submission) { create(:submission, :with_supplemental_files, supplemental_files_provided: 'true') }
 
   it 'renders the component' do
     render_inline(described_class.new(submission:))

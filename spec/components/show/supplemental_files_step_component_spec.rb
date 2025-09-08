@@ -8,7 +8,7 @@ RSpec.describe Show::SupplementalFilesStepComponent, type: :component do
   it 'renders the component' do
     render_inline(described_class.new(submission:))
 
-    expect(page).to have_css('h2', text: 'Add supplemental files')
+    expect(page).to have_css('h2', text: 'Upload supplemental files')
 
     row = page.all('#supplemental-files-table tbody tr')
     expect(row[0]).to have_link('supplémental_1.pdf')
