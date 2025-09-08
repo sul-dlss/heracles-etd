@@ -11,5 +11,9 @@ FactoryBot.define do
     trait :advisor do
       readerrole { 'Advisor' }
     end
+
+    trait :with_suffix do
+      suffix { 'Jr.' }
+    end
   end
 end
