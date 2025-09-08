@@ -21,5 +21,30 @@
         <% end %>
       <% end %>
     <% end %>
+    <% component.with_row colspan: 5 do |row_component| %>
+      <%= row_component.with_cell do %>
+        <% if with_remove %>
+          <% form_with model: permission_file, id: "edit_permission_file_#{permission_file.id}" do |form| %>
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-start">
+                <div class="m-1">
+                  <%= form.label :description, 'File description:', class: 'form-label fw-bold' %>
+                </div>
+                <div class="m-1">
+                  <%= form.text_field :description, class: 'form-control', size: 75, data: { controller: 'submit', action: 'blur->submit#submit' } %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="flex-grow-1">
+            <div class="d-flex align-items-start">
+              <div class="m-1 fw-bold">File description:</div>
+              <div class="m-1"><%= permission_file.description %></div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

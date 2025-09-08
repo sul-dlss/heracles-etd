@@ -22,13 +22,13 @@ module Edit
     end
 
     def no_permissions_action
-      permission_files.attached? ? 'click->submit#warn' : 'submit#submit'
+      permission_files.any? ? 'click->submit#warn' : 'submit#submit'
     end
 
     def done_disabled?
       return false unless permissions_provided?
 
-      !permission_files.attached?
+      permission_files.none?
     end
   end
 end

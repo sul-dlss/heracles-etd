@@ -3,7 +3,7 @@
 # Policy for managing submissions
 class SubmissionPolicy < ApplicationPolicy
   alias_rule :preview?, to: :show?
-  alias_rule :edit?, :submit?, :review?, :attach_supplemental_files?, to: :update?
+  alias_rule :edit?, :submit?, :review?, :attach_supplemental_files?, :attach_permission_files?, to: :update?
 
   def show?
     author? || admin?

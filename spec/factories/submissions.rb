@@ -39,8 +39,8 @@ FactoryBot.define do
     trait :with_permission_files do
       permission_files do
         [
-          Rack::Test::UploadedFile.new(file_fixture('permission_1.pdf'), 'application/pdf'),
-          Rack::Test::UploadedFile.new(file_fixture('permission_2.pdf'), 'application/pdf')
+          create(:permission_file, :first_permission),
+          create(:permission_file, :second_permission)
         ]
       end
     end
