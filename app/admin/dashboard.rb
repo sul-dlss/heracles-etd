@@ -30,15 +30,15 @@ ActiveAdmin.register_page 'Dashboard' do
               td link_to(Submission.at_registrar_approved.count, "#{admin_submissions_path}?scope=registrar_approved")
             end
             tr do
-              td 'Loaded into ILS ("check-marc" in etdSubmitWF)'
+              td 'Loaded into ILS'
               td link_to(Submission.at_ils_loaded.count, "#{admin_submissions_path}?scope=loaded_into_ils")
             end
             tr do
-              td 'Cataloged in ILS ("catalog-status" in etdSubmitWF)'
+              td 'Cataloged in ILS'
               td link_to(Submission.at_ils_cataloged.count, "#{admin_submissions_path}?scope=cataloged_in_ils")
             end
             tr do
-              td 'Accessioning Started ("accessioning-started" in etdSubmitWF)'
+              td 'Accessioning Started'
               td link_to(Submission.at_accessioning_started.count,
                          "#{admin_submissions_path}?scope=accessioning_started")
             end
@@ -53,10 +53,6 @@ ActiveAdmin.register_page 'Dashboard' do
             end
           end
         end
-      end
-      div do
-        link_to('Argo workflow grid for ETDs registered via former ETD application',
-                "#{Settings.argo_url}/report/workflow_grid?f%5Bnonhydrus_apo_title_ssim%5D%5B%5D=ETDs&f[processing_status_text_ssi][]=Registered") # rubocop:disable Layout/LineLength
       end
     end
   end
