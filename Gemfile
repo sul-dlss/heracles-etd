@@ -50,7 +50,8 @@ gem 'folio_client'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
 gem 'local_time'
-gem 'marc' # for submit_marc
+gem 'marc' # Builds the stub MARC record
+gem 'oauth2' # Authorizes and posts to PeopleSoft
 gem 'okcomputer'
 gem 'prawn' # Generates copyright and signature pages for the "augmented" PDF
 gem 'view_component'

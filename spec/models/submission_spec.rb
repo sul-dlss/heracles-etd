@@ -47,6 +47,68 @@ RSpec.describe Submission do
     end
   end
 
+  describe '#to_peoplesoft_hash' do
+    subject(:submission) { build(:submission, :submitted) }
+
+    it 'returns the submission as a hash of attributes PeopleSoft requires' do
+      expect(submission.to_peoplesoft_hash).to eq({
+                                                    dissertation_id: submission.dissertation_id,
+                                                    purl: submission.purl,
+                                                    timestamp: submission.submitted_at,
+                                                    title: submission.title,
+                                                    type: submission.etd_type
+                                                  })
+    end
+  end
+
+  describe '#prepare_to_submit!' do
+    # NOTE: I can't imagine how a submission could be in this state, but it
+    #       helps us ensure `#prepare_to_submit!` changes all the values as
+    #       expected. On most calls, the fields that are `nil`ed out will
+    #       already be `nil`.
+    subject(:submission) { build(:submission, :submittable, :reader_approved, :registrar_approved) }
+
+    let(:augmented_dissertation_path) { file_fixture('dissertation-augmented.pdf') }
+    let(:now) { Time.zone.now }
+
+    before do
+      allow(Time.zone).to receive(:now).and_return(now)
+      allow(SignaturePageService).to receive(:call).and_return(augmented_dissertation_path)
+    end
+
+    it 'sets the submitted_at property' do
+      expect { submission.prepare_to_submit! }.to change(submission, :submitted_at).from(nil).to(now)
+    end
+
+    %i[readerapproval last_reader_action_at readercomment regapproval last_registrar_action_at
+       regcomment].each do |property|
+      it "clears the #{property} property on the submission" do
+        expect { submission.prepare_to_submit! }.to change { submission.public_send(property) }.to(nil)
+      end
+    end
+
+    it 'invokes the SignaturePageService to generate the augmented dissertation file' do
+      submission.prepare_to_submit!
+      expect(SignaturePageService).to have_received(:call).once.with(submission:)
+    end
+
+    it 'attaches the augmented dissertation file to the submission' do
+      expect { submission.prepare_to_submit! }.to change { submission.augmented_dissertation_file.attached? }
+                                              .from(false).to(true)
+    end
+
+    context 'when the SignaturePageService raises an error' do
+      before do
+        allow(SignaturePageService).to receive(:call).and_raise(RuntimeError, 'PDF could not generate!')
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'raises the exception' do
+        expect { submission.prepare_to_submit! }.to raise_error(RuntimeError)
+      end
+    end
+  end
+
   describe 'derivative fields' do
     context 'when primary fields are not set' do
       subject(:submission) { create(:submission) }

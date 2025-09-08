@@ -49,8 +49,8 @@ RSpec.describe Cocina::FileSetsGenerator do
          { contains:
            [{ type: Cocina::Models::ObjectType.file,
               externalIdentifier: 'https://cocina.sul.stanford.edu/file/xx999xx0021-2/fa870edf-bcf0-4618-ae9d-ab7d405c23ba',
-              label: 'augmented_dissertation.pdf',
-              filename: 'augmented_dissertation.pdf',
+              label: 'dissertation-augmented.pdf',
+              filename: 'dissertation-augmented.pdf',
               version: 1,
               hasMessageDigests:
               [{ type: 'sha1', digest: 'b2836ab9492bb89fa288ae0f4681193b124373a1' },

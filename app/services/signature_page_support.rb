@@ -2,7 +2,7 @@
 
 # Support methods for generating signature pages
 class SignaturePageSupport
-  def self.augmented_disseration_path(dissertation_path:)
+  def self.augmented_dissertation_path(dissertation_path:)
     dissertation_path.sub('.pdf', '-augmented.pdf')
   end
 end

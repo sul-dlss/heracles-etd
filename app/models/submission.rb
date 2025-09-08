@@ -39,6 +39,25 @@ class Submission < ApplicationRecord
     dissertation_id
   end
 
+  def to_honeybadger_context
+    {
+      dissertation_id:,
+      sunetid:,
+      druid:
+    }
+  end
+
+  # These are the values needed to send to PeopleSoft when submitting a submission.
+  def to_peoplesoft_hash
+    {
+      dissertation_id:,
+      title:,
+      type: etd_type,
+      timestamp: submitted_at,
+      purl:
+    }
+  end
+
   def copyright_statement
     "© #{submitted_at&.year || Time.zone.today.year} by #{first_last_name}. All rights reserved."
   end
@@ -74,5 +93,19 @@ class Submission < ApplicationRecord
     self.submitted_to_registrar = submitted_at.present? ? 'true' : 'false'
     self.cclicensetype = CreativeCommonsLicense.find(cclicense)&.name
     self.permissions_provided = nil unless permissions_provided == 'true'
+  end
+
+  def prepare_to_submit!
+    update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
+            readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
+
+    augmented_dissertation_file.attach(io: File.open(augmented_pdf_path),
+                                       filename: File.basename(augmented_pdf_path))
+  end
+
+  private
+
+  def augmented_pdf_path
+    @augmented_pdf_path ||= SignaturePageService.call(submission: self)
   end
 end

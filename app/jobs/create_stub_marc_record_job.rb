@@ -6,7 +6,7 @@ class CreateStubMarcRecordJob < ApplicationJob
 
   def perform(druid)
     @druid = druid
-    Honeybadger.context(druid: druid)
+    Honeybadger.context(druid:)
 
     record = Marc::StubRecordCreator.create(druid:)
     folio_instance_hrid = Marc::WriteStubRecord.send_to_folio(druid:, record:)
