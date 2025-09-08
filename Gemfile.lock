@@ -683,6 +683,7 @@ DEPENDENCIES
   capistrano-rails
   capybara
   capybara-lockstep
+  cocina-models (~> 0.105)
   config
   cssbundling-rails
   cyperful
