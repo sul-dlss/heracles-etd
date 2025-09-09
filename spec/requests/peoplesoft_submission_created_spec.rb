@@ -87,8 +87,8 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
                headers: { Authorization: dlss_admin_credentials,
                           'Content-Type': 'application/xml' }
 
-          expect(response.body).to include('druid:789 created')
           expect(response).to have_http_status(:created)
+          expect(response.body).to include('druid:789 created')
           submission = Submission.find_by(dissertation_id:)
           expect(submission).not_to be_nil
           expect(submission.druid).to eq druid

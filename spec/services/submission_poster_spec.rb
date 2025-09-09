@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionPoster do
-  let(:submission) { build(:submission, :submitted) }
+  let(:submission) { create(:submission, :submitted) }
 
   describe '.call' do
     let(:instance) { instance_double(described_class, call: nil) }

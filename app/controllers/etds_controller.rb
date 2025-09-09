@@ -21,17 +21,30 @@ class EtdsController < ApplicationController
 
   # POST /etds
   # receives xml data from peoplesoft
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     logger.info("RAW XML: #{request.raw_post}")
 
     return unless submission
 
-    @submission.update!(submission_attributes)
-    peoplesoft_actions
-    render_created
+    Submission.transaction do
+      submission.update!(submission_attributes)
+
+      peoplesoft_service.new_reader_action(readers:, reader_action_attributes:)
+      peoplesoft_service.new_registrar_action(registrar_action_attributes:)
+
+      submission.generate_and_attach_augmented_file!
+    end
+
+    render status: status_from_message, plain: "#{submission.druid} #{message}"
   end
 
   private
+
+  def status_from_message
+    return :created if @message == 'created'
+
+    :ok
+  end
 
   def dissertation_id
     etd_params.expect(:dissertationid)
@@ -63,11 +76,6 @@ class EtdsController < ApplicationController
     etd_params[:degree]
   end
 
-  def peoplesoft_actions
-    peoplesoft_service.new_reader_action(readers:, reader_action_attributes:)
-    peoplesoft_service.new_registrar_action(registrar_action_attributes:)
-  end
-
   def peoplesoft_service
     @peoplesoft_service ||= PeoplesoftService.new(submission:)
   end
@@ -93,14 +101,6 @@ class EtdsController < ApplicationController
     }
   end
 
-  def render_bad_request
-    render status: :bad_request, plain: invalid_xml_message
-  end
-
-  def render_created
-    render status: :created, plain: "#{submission.druid} #{message}"
-  end
-
   # Authentication based on an allow list of server names and IP addresses
   def request_from_authorized_origin?
     begin
@@ -122,7 +122,7 @@ class EtdsController < ApplicationController
   end
 
   def set_submission
-    render_bad_request and return unless valid_xml?
+    return render status: :bad_request, plain: invalid_xml_message unless valid_xml?
 
     @submission = Submission.find_or_initialize_by(dissertation_id:, title:)
     @message = @submission.new_record? ? 'created' : 'updated'
