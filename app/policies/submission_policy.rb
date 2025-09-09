@@ -2,7 +2,8 @@
 
 # Policy for managing submissions
 class SubmissionPolicy < ApplicationPolicy
-  alias_rule :preview?, to: :show?
+  alias_rule :preview?, :augmented_dissertation_file?, :dissertation_file?, :permission_file?, :supplemental_file?,
+             to: :show?
   alias_rule :edit?, :submit?, :review?, :attach_supplemental_files?, :attach_permission_files?, to: :update?
 
   def show?

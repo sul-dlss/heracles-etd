@@ -47,5 +47,8 @@ module HeraclesEtd
 
     config.autoload_paths << Rails.root.join('lib/components')
     config.eager_load_paths << Rails.root.join('lib/components')
+
+    # This is so the ActiveStorage files can be secured. See https://guides.rubyonrails.org/active_storage_overview.html#authenticated-controllers
+    config.active_storage.draw_routes = false
   end
 end

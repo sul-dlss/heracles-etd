@@ -24,6 +24,7 @@ FactoryBot.define do
     end
 
     trait :with_augmented_dissertation_file do
+      with_dissertation_file
       augmented_dissertation_file { Rack::Test::UploadedFile.new(file_fixture('dissertation-augmented.pdf'), 'application/pdf') }
     end
 
