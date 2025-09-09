@@ -52,22 +52,6 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::ModalComponent.new(id: 'permission-files-message') do |component| %>
-      <% component.with_header do %>
-        <div class="h3">Attention</div>
-      <% end %>
-
-      <% component.with_body do %>
-        <p>
-          Before selecting this option, please remove any file(s) you have uploaded in this section.
-        </p>
-      <% end %>
-
-      <% component.with_footer do %>
-        <div class="d-flex justify-content-end">
-          <%= render Elements::ButtonComponent.new(label: 'Close', variant: :primary, data: { bs_dismiss: 'modal' }) %>
-        </div>
-      <% end %>
-    <% end %>
+    <%= render Shared::FilesStillAttachedModalComponent.new %>
   <% end %>
 <% end %>

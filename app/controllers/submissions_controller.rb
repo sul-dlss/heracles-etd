@@ -16,6 +16,7 @@ class SubmissionsController < ApplicationController
       @submission.dissertation_file.purge
     elsif params.dig(:submission, :remove_supplemental_file)
       @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).delete
+      @submission.update!(supplemental_files_provided: nil) if @submission.supplemental_files.empty?
     elsif params.dig(:submission, :remove_permission_file)
       @submission.permission_files.find(params[:submission][:remove_permission_file]).delete
       @submission.update!(permissions_provided: nil) if @submission.permission_files.empty?
@@ -83,7 +84,8 @@ class SubmissionsController < ApplicationController
     params.expect(submission: [:abstract, :sulicense, :cclicense, :embargo, :citation_verified,
                                :format_reviewed, :abstract_provided, :rights_selected, :dissertation_file,
                                :dissertation_uploaded, { supplemental_files: [] }, :supplemental_files_uploaded,
-                               { permission_files: [] }, :permission_files_uploaded, :permissions_provided])
+                               { permission_files: [] }, :permission_files_uploaded, :permissions_provided,
+                               :supplemental_files_provided])
   end
 
   def permission_file_params

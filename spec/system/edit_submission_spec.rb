@@ -123,11 +123,18 @@ RSpec.describe 'Edit Submission' do
     # Supplemental files step
     within(cards[4]) do
       expect(page).to have_button('Done', disabled: false)
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
+      end
       attach_file 'Upload supplemental files', file_fixture('supplémental_1.pdf')
 
       within('#supplemental-files-table') do
         expect(page).to have_css('th', text: 'supplémental_1.pdf')
         click_link_or_button 'Remove'
+      end
+
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
       end
 
       attach_file 'Upload supplemental files', [

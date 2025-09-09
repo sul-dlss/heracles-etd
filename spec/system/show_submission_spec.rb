@@ -24,7 +24,7 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_css('h2', text: 'Upload your dissertation')
     expect(page).to have_link('dissertation.pdf')
     expect(page).to have_no_button('Remove')
-    expect(page).to have_css('h2', text: 'Add supplemental files')
+    expect(page).to have_css('h2', text: 'Upload supplemental files')
     expect(page).to have_link('supplémental_1.pdf')
     expect(page).to have_content('Supplemental file supplémental_1.pdf')
     expect(page).to have_link('supplemental_2.pdf')

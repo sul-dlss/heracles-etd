@@ -7,7 +7,7 @@ export default class extends Controller {
 
   warn (event) {
     event.preventDefault()
-    const element = new bootstrap.Modal(document.getElementById('permission-files-message')) // eslint-disable-line no-undef
+    const element = new bootstrap.Modal(document.getElementById('files-still-attached-message')) // eslint-disable-line no-undef
     element.toggle()
   }
 }
