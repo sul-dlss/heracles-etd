@@ -65,6 +65,7 @@ FactoryBot.define do
 
     trait :submitted do
       submittable
+      with_augmented_dissertation_file
       submitted_at { DateTime.parse('2023-01-01T00:00:00Z') }
     end
 
