@@ -39,7 +39,7 @@ module Shared
       return { character: '✓', variant: :success } if step_done
       return { character: step_number, variant: :disabled } unless step_number > 8
 
-      { classes: 'd-flex align-items-center', variant: :blank }
+      { variant: :blank }
     end
   end
 end

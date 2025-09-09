@@ -16,8 +16,6 @@ module Edit
       super()
     end
 
-    attr_reader :character
-
     def call
       tag.div(
         class: classes,
@@ -29,6 +27,12 @@ module Edit
 
     def classes
       merge_classes('character-circle', "character-circle-#{@variant}", @classes)
+    end
+
+    def character
+      return '&nbsp;'.html_safe if @character == ''
+
+      @character.to_s
     end
   end
 end

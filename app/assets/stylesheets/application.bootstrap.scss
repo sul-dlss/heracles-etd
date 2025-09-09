@@ -80,6 +80,10 @@
   }
 }
 
+.card-step {
+  --bs-card-cap-padding-y: 1rem;
+}
+
 .banner.alert {
   a.btn-primary {
     color: white;
