@@ -28,8 +28,11 @@
         at the time of submission.
       </li>
     </ul>
+    <%= render Elements::ButtonLinkComponent.new(link: helpers.rails_blob_path(augmented_dissertation_file), classes: 'mb-1') do %>
+      <i class="bi bi-download me-1"></i> Download your submitted file
+    <% end %>
     <div class="d-flex justify-content-between">
-      <div>Download submitted file to be implemented</div>
+      <div>This file includes the copyright and signature pages.</div>
       <div>Dissertation ID: <%= dissertation_id %></div>
     </div>
   <% end %>

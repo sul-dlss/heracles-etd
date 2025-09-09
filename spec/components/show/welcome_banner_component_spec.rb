@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Show::WelcomeBannerComponent, type: :component do
-  let(:submission) { create(:submission) }
+  let(:submission) { create(:submission, :submitted) }
 
   it 'renders the welcome banner' do
     render_inline(described_class.new(submission: submission))
@@ -13,5 +13,6 @@ RSpec.describe Show::WelcomeBannerComponent, type: :component do
     expect(page).to have_css('.banner-header', text: 'Submission successful.')
     expect(page).to have_link(submission.purl)
     expect(page).to have_text(submission.doi)
+    expect(page).to have_link('Download your submitted file')
   end
 end
