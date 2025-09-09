@@ -5,7 +5,10 @@
   <% end %>
 
   <% component.with_body_content do %>
-    <%= render Shared::PermissionFilesStepBodyHelpComponent.new %>
-    <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:) %>
+    <% if permission_files.any? %>
+      <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:) %>
+    <% else %>
+      <p>My dissertation does not include permission files.</p>
+    <% end %>
   <% end %>
 <% end %>

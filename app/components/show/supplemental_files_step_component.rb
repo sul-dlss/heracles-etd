@@ -9,5 +9,7 @@ module Show
     end
 
     attr_reader :submission
+
+    delegate :supplemental_files, to: :submission
   end
 end

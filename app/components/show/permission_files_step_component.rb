@@ -9,5 +9,7 @@ module Show
     end
 
     attr_reader :submission
+
+    delegate :permission_files, to: :submission
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Shared::SupplementalFilesStepBodyHelpComponent, type: :component do
+RSpec.describe Edit::SupplementalFilesStepBodyHelpComponent, type: :component do
   it 'renders the help content for the supplemental files step' do
     render_inline(described_class.new)
 
