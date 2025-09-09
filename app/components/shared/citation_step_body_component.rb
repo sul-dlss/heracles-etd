@@ -10,7 +10,7 @@ module Shared
 
     attr_reader :submission
 
-    delegate :schoolname, :department, :degree, :major, :degreeconfyr, :title, :orcid,
+    delegate :schoolname, :department, :degree, :major, :name, :degreeconfyr, :title, :orcid,
              to: :submission
 
     def readers

@@ -11,9 +11,11 @@ RSpec.describe Shared::CitationStepBodyComponent, type: :component do
 
       expect(page).to have_css('h3', text: 'Citation details')
       rows = page.find_all('#citation-details-table tr')
-      expect(rows.size).to eq(7)
-      expect(rows[0]).to have_css('th', text: 'School')
-      expect(rows[0]).to have_css('td', text: submission.schoolname)
+      expect(rows.size).to eq(8)
+      expect(rows[0]).to have_css('th', text: 'Name')
+      expect(rows[0]).to have_css('td', text: submission.name)
+      expect(rows[1]).to have_css('th', text: 'School')
+      expect(rows[1]).to have_css('td', text: submission.schoolname)
 
       expect(page).to have_css('#orcid-details-table tr th', text: 'ORCID iD')
       expect(page).to have_css('#orcid-details-table tr td', text: 'Not found')
