@@ -75,6 +75,36 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission)
   end
 
+  def dissertation_file
+    return head :not_found unless @submission.dissertation_file.attached?
+
+    send_file ActiveStorageSupport.filepath_for_blob(@submission.dissertation_file),
+              type: @submission.dissertation_file.content_type,
+              filename: @submission.dissertation_file.filename.to_s
+  end
+
+  def augmented_dissertation_file
+    return head :not_found unless @submission.augmented_dissertation_file.attached?
+
+    send_file ActiveStorageSupport.filepath_for_blob(@submission.augmented_dissertation_file),
+              type: @submission.augmented_dissertation_file.content_type,
+              filename: @submission.augmented_dissertation_file_name
+  end
+
+  def permission_file
+    permission_file = @submission.permission_files.find(params[:file_id])
+    send_file ActiveStorageSupport.filepath_for_blob(permission_file.file),
+              type: permission_file.content_type,
+              filename: permission_file.filename.to_s
+  end
+
+  def supplemental_file
+    supplemental_file = @submission.supplemental_files.find(params[:file_id])
+    send_file ActiveStorageSupport.filepath_for_blob(supplemental_file.file),
+              type: supplemental_file.content_type,
+              filename: supplemental_file.filename.to_s
+  end
+
   private
 
   def needs_orcid_update?

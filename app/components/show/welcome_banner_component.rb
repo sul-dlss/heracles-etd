@@ -10,6 +10,6 @@ module Show
 
     attr_reader :submission
 
-    delegate :first_name, :dissertation_id, :degree, :purl, :doi, :augmented_dissertation_file, to: :submission
+    delegate :first_name, :dissertation_id, :degree, :purl, :doi, to: :submission
   end
 end

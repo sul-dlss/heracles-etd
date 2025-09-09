@@ -11,6 +11,11 @@ Rails.application.routes.draw do
       get :preview # Signature page preview
       patch :attach_supplemental_files
       patch :attach_permission_files
+      get :supplemental_files
+      get 'permission_files/:file_id', to: 'submissions#permission_file', as: :permission_file
+      get 'supplemental_files/:file_id', to: 'submissions#supplemental_file', as: :supplemental_file
+      get :dissertation_file
+      get :augmented_dissertation_file
     end
   end
 
