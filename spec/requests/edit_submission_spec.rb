@@ -23,11 +23,22 @@ RSpec.describe 'Editing a submission' do
       sign_in(submission.sunetid)
     end
 
-    it 'allows the student to edit the submission' do
+    it 'returns an HTTP 200 & sets the ORCID' do
       get edit_submission_path(submission)
 
       expect(response).to have_http_status(:ok)
       expect(submission.reload.orcid).to eq(TEST_ORCID)
+    end
+
+    context 'when the submission already has an ORCID' do
+      let(:submission) { create(:submission, :with_orcid) }
+
+      it 'returns an HTTP 200 & does not reset the ORCID' do
+        get edit_submission_path(submission)
+
+        expect(response).to have_http_status(:ok)
+        expect(submission.reload.orcid).to eq('0000-0002-1825-0097')
+      end
     end
   end
 end
