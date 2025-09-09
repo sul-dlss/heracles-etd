@@ -40,7 +40,7 @@
     <% end %>
     <% if supplemental_files_provided? %>
       <%= form_with model: submission, url: attach_supplemental_files_submission_path(submission) do |form| %>
-        <%= form.label :supplemental_files, 'Upload supplemental files (maximum size 1GB)', class: 'form-label' %>
+        <%= form.label :supplemental_files, 'Upload supplemental files (maximum size 1GB per file)', class: 'form-label' %>
         <%= form.file_field :supplemental_files, multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
       <% end %>
     <% end %>
