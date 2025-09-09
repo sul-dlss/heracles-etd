@@ -2,6 +2,7 @@
   <h3 id="citation-details-header" class="h4">Citation details</h3>
   <p>If the information that appears here is incorrect, please consult with your department in order to correct the data in Axess.</p>
   <%= render Elements::Tables::TableComponent.new(id: 'citation-details-table', label: 'Citation details', show_label: false) do |component| %>
+    <% component.with_row(label: 'Name', values: [name]) %>
     <% component.with_row(label: 'School', values: [schoolname]) %>
     <% component.with_row(label: 'Department', values: [department]) %>
     <% component.with_row(label: 'Degree', values: [degree]) %>

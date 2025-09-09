@@ -14,7 +14,7 @@ RSpec.describe 'Edit Submission' do
   it 'allows the user to edit a submission' do
     visit edit_submission_path(submission)
 
-    expect(page).to have_css('header', text: 'Review and submit your dissertation')
+    expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
     cards = page.all('.card-step')
