@@ -1,7 +1,7 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::FORMAT_STEP,
                                    title: t('steps.format.title'),
                                    submission:,
-                                   edit_label: 'Undo your confirmation',
+                                   edit_label: 'Undo confirmation',
                                    done_label: 'Confirm', done_text: 'By clicking Confirm, I verify that I\'ve done a final review of my submission\'s format.') do |component| %>
 
   <% component.with_help_content do %>
