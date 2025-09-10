@@ -18,6 +18,8 @@ class SubmissionPoster
   def call # rubocop:disable Metrics/AbcSize
     submission.prepare_to_submit!
 
+    return unless Settings.peoplesoft.enabled
+
     Honeybadger.context(submission:, xml:)
 
     raise 'Cannot post submission because PeopleSoft base URL is blank' if Settings.peoplesoft.base_url.blank?
@@ -71,8 +73,4 @@ class SubmissionPoster
   def response
     @response ||= connection.post(API_ENDPOINT, xml)
   end
-
-  # def response
-  #   @response ||= client.client_credentials.get_token.post(API_ENDPOINT, body: xml)
-  # end
 end

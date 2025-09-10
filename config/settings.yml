@@ -20,6 +20,7 @@ sdr:
   local_workspace_root: /dor/workspace
 
 peoplesoft:
+  enabled: true
   client_id: ~
   client_secret: ~
   base_url: ~

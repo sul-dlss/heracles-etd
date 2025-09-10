@@ -5,6 +5,7 @@ require 'resolv'
 # Controller for ETD endpoints used by Peoplesoft to transfer data to the ETD system
 class EtdsController < ApplicationController
   skip_verify_authorized
+  skip_before_action :verify_authenticity_token
   before_action :authenticate, unless: proc { request_from_authorized_origin? }
   before_action :set_submission, only: :create
 
