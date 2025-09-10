@@ -46,6 +46,8 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
 
       context 'when passed in id is not found' do
         let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
+        let(:object_client) { instance_double(Dor::Services::Client::Object, workflow: workflow_client) }
+        let(:workflow_client) { instance_double(Dor::Services::Client::ObjectWorkflow, create: true) }
         let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
         let(:dissertation_id) { '000123' }
         let(:params) do
@@ -78,7 +80,7 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
         end
 
         before do
-          allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
+          allow(Dor::Services::Client).to receive_messages(objects: objects_client, object: object_client)
         end
 
         it 'creates a new Etd' do
@@ -93,6 +95,8 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
           expect(submission).not_to be_nil
           expect(submission.druid).to eq druid
           expect(submission.readers.count).to eq 2
+          expect(object_client).to have_received(:workflow).with('registrationWF')
+          expect(workflow_client).to have_received(:create).with(version: 1)
         end
       end
     end

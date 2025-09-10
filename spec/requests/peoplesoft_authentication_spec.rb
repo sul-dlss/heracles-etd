@@ -35,11 +35,13 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
   end
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
   let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
+  let(:object_client) { instance_double(Dor::Services::Client::Object, workflow: workflow_client) }
+  let(:workflow_client) { instance_double(Dor::Services::Client::ObjectWorkflow, create: true) }
   let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: 'druid:bc123df4567') }
 
   before do
     allow(Honeybadger.config).to receive(:[]).and_call_original
-    allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
+    allow(Dor::Services::Client).to receive_messages(objects: objects_client, object: object_client)
   end
 
   describe 'POST /etds' do

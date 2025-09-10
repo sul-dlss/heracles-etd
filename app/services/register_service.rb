@@ -4,7 +4,7 @@
 class RegisterService
   ETD_APO_DRUID = 'druid:bx911tp9024' # the APO that governs all ETDs
 
-  # @return [Submission] the newly registered ETD, which is modified and the caller should call save on the return value
+  # @return [Cocina::Models::DRO] the newly registered DRO
   def self.register(submission:)
     request_model = Cocina::Models.build_request({
                                                    'type' => Cocina::Models::ObjectType.object,
@@ -17,6 +17,8 @@ class RegisterService
                                                      'sourceId' => "dissertation:#{submission.dissertation_id}"
                                                    }
                                                  })
-    Dor::Services::Client.objects.register(params: request_model)
+    Dor::Services::Client.objects.register(params: request_model).tap do |cocina_object|
+      Dor::Services::Client.object(cocina_object.externalIdentifier).workflow('registrationWF').create(version: 1)
+    end
   end
 end
