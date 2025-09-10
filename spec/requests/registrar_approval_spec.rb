@@ -82,6 +82,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
              headers: { Authorization: dlss_admin_credentials,
                         'Content-Type': 'application/xml' }
 
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include("#{druid} updated")
         etd.reload
 

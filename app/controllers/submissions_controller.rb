@@ -27,6 +27,9 @@ class SubmissionsController < ApplicationController
       @submission.update!(permissions_provided: nil) if @submission.permission_files.empty?
     else
       @submission.update!(submission_params)
+      if @submission.dissertation_file.attached?
+        @submission.generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
+      end
     end
     redirect_to edit_submission_path(@submission)
   end

@@ -3,23 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe SignaturePageService do
+  let(:dissertation_path) { ActiveStorageSupport.filepath_for_blob(submission.dissertation_file.blob) }
   let(:etd_type) { 'Thesis' }
   let(:submission) do
-    create(:submission, :submittable, :with_readers, :with_advisors, :with_supplemental_files, etd_type:)
-  end
-  let(:temp_dir) { Dir.mktmpdir }
-  let(:dissertation_path) { File.join(temp_dir, 'dissertation.pdf') }
-
-  before do
-    FileUtils.cp(file_fixture('dissertation.pdf'), dissertation_path)
-  end
-
-  after do
-    FileUtils.rm_rf(temp_dir)
+    create(:submission, :submittable, :with_readers, :with_advisors, :with_dissertation_file, :with_supplemental_files,
+           etd_type:)
   end
 
   describe '#call' do
-    let(:augmented_dissertation_path) { described_class.call(submission:, dissertation_path:) }
+    let(:augmented_dissertation_path) { described_class.call(submission:) }
 
     before do
       allow(FileUtils).to receive(:rm_f).and_call_original
@@ -61,11 +53,8 @@ RSpec.describe SignaturePageService do
     end
 
     context 'when the dissertation file is missing' do
-      it 'raises an error' do
-        expect do
-          described_class.call(submission:,
-                               dissertation_path: 'missing.pdf')
-        end.to raise_error(SignaturePageService::Error)
+      it 'returns nil' do
+        expect(described_class.call(submission:, dissertation_path: 'missing.pdf')).to be_nil
       end
     end
 

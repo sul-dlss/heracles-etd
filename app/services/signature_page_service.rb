@@ -2,8 +2,6 @@
 
 # Service for generating the signature pages for an ETD
 class SignaturePageService # rubocop:disable Metrics/ClassLength
-  class Error < StandardError; end
-
   DEGREE_MAP = {
     'Ph.D.' => 'Doctor of Philosophy',
     'JSD' => 'Doctor of the Science of Law',
@@ -17,20 +15,23 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
   def initialize(submission:, dissertation_path:)
     @submission = submission
-    @dissertation_path = dissertation_path || dissertation_path_from_submission
+    @dissertation_path = dissertation_path
   end
 
-  attr_reader :submission, :dissertation_path
+  attr_reader :submission
 
   delegate :dissertation_file, :id, :druid, :readers, :purl, :supplemental_files, :thesis?, :provost,
            :creative_commons_license, :submitted_at, :degreeconfyr,
            :degree, to: :submission
 
-  # @return [String] the path to the augmented PDF
-  # @raise Error if fails
+  # @return [String, nil] the path to the augmented PDF, nil if no dissertation file uploaded yet
+  # @raise RuntimeError if any exceptions are raised
   def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Honeybadger.context(submission:, dissertation_path:)
-    raise Error, 'Dissertation PDF not found' unless File.exist?(dissertation_path)
+    # NOTE: The signature page service may be invoked before the student has
+    #       uploaded their dissertation file, in which case the service returns
+    #       early. No harm, no foul.
+    return unless File.exist?(dissertation_path)
 
     generate_copyright_and_signature_docs!
 
@@ -61,12 +62,16 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
   private
 
-  def augmented_dissertation_path
-    @augmented_dissertation_path ||= SignaturePageSupport.augmented_dissertation_path(dissertation_path:)
+  def dissertation_path
+    @dissertation_path ||= if dissertation_file.attached?
+                             ActiveStorageSupport.filepath_for_blob(dissertation_file.blob)
+                           else
+                             ''
+                           end
   end
 
-  def dissertation_path_from_submission
-    ActiveStorageSupport.filepath_for_blob(dissertation_file)
+  def augmented_dissertation_path
+    @augmented_dissertation_path ||= Dir::Tmpname.create(["submission-#{id}-", '-augmented.pdf']) {} # rubocop:disable Lint/EmptyBlock
   end
 
   # This is the PDF associated with the submission, so it can either be the student's

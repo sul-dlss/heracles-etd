@@ -97,11 +97,18 @@ class Submission < ApplicationRecord
   end
 
   def prepare_to_submit!
-    update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
-            readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
+    Submission.transaction do
+      update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
+              readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
+      generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
+    end
+  end
 
-    augmented_dissertation_file.attach(io: File.open(augmented_pdf_path),
-                                       filename: File.basename(augmented_pdf_path))
+  def generate_and_attach_augmented_file!(raise_if_dissertation_missing: false)
+    augmented_dissertation_file.attach(io: File.open(augmented_pdf_path), filename: File.basename(augmented_pdf_path))
+  rescue TypeError => e
+    # Student has not yet uploaded their dissertation file.
+    raise e if raise_if_dissertation_missing
   end
 
   private
