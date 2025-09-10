@@ -14,7 +14,6 @@ groups:
   reports: 'sdr:etds-quarterly-reports'
 
 preview_dir: <%= Rails.root.join('tmp', 'preview').to_s %>
-workspace_dir: <%= Rails.root.join('tmp', 'workspace').to_s %>
 
 sdr:
   local_workspace_root: /dor/workspace
