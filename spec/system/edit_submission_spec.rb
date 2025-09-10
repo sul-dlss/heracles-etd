@@ -52,6 +52,7 @@ RSpec.describe 'Edit Submission' do
 
       # Expand the body
       click_button 'Undo your confirmation'
+      expect(page).to have_no_button('Undo your confirmation')
       btn = find_button('Confirm')
       expect(page.active_element).to eq btn
 
@@ -70,11 +71,14 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_button('Done', disabled: true)
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
       click_button 'Done'
+      expect(page).to have_no_button('Done')
+
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       # Expand body
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('Abstract')
       expect(page.active_element).to eq field
 
@@ -100,11 +104,13 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       btn = find_button('Done')
       expect(page.active_element).to eq btn
 
@@ -127,26 +133,21 @@ RSpec.describe 'Edit Submission' do
         find('label', text: 'Yes').click
       end
 
-      # Creating a temporary copy of a supplemental file with a diacritic.
-      Dir.mktmpdir do |temp_dir|
-        supplemental_file = File.join(temp_dir, 'supplémental_1.pdf')
-        FileUtils.cp(file_fixture('supplemental_1.pdf'), supplemental_file)
-        attach_file 'Upload supplemental files', supplemental_file
+      attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
-        within('#supplemental-files-table') do
-          expect(page).to have_css('th', text: 'supplémental_1.pdf')
-          click_link_or_button 'Remove'
-        end
-
-        within('.btn-group-toggle') do
-          find('label', text: 'Yes').click
-        end
-
-        attach_file 'Upload supplemental files', [
-          supplemental_file,
-          file_fixture('supplemental_2.pdf')
-        ]
+      within('#supplemental-files-table') do
+        expect(page).to have_css('th', text: 'supplemental_1.pdf')
+        click_link_or_button 'Remove'
       end
+
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
+      end
+
+      attach_file 'Upload supplemental files', [
+        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplemental_2.pdf')
+      ]
 
       within("form#edit_supplemental_file_#{submission.supplemental_files.first.id}") do
         fill_in 'File description:', with: 'This is a sample first supplemental file.'
@@ -157,11 +158,13 @@ RSpec.describe 'Edit Submission' do
       end
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('Upload supplemental files')
       expect(page.active_element).to eq field
 
@@ -199,11 +202,14 @@ RSpec.describe 'Edit Submission' do
       end
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
+
       field = find_field('Upload permission files')
       expect(page.active_element).to eq field
 
@@ -230,11 +236,13 @@ RSpec.describe 'Edit Submission' do
       select 'CC Attribution license', from: 'submission_cclicense'
       select '6 months', from: 'submission_embargo'
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('I have read and agree to the terms of the Stanford University license')
       expect(page.active_element).to eq field
 
