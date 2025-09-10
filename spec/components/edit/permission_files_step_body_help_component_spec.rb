@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Shared::PermissionFilesStepBodyHelpComponent, type: :component do
+RSpec.describe Edit::PermissionFilesStepBodyHelpComponent, type: :component do
   it 'renders the help content for the permission files step' do
     render_inline(described_class.new)
 

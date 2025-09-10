@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Shared
+module Edit
   class PermissionFilesStepBodyHelpComponent < ApplicationComponent
   end
 end

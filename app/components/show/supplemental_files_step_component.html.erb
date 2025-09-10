@@ -5,7 +5,10 @@
   <% end %>
 
   <% component.with_body_content do %>
-    <%= render Shared::SupplementalFilesStepBodyHelpComponent.new %>
-    <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:) %>
+    <% if supplemental_files.any? %>
+      <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:) %>
+    <% else %>
+      <p>My dissertation does not include supplemental files.</p>
+    <% end %>
   <% end %>
 <% end %>
