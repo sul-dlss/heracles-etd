@@ -43,7 +43,7 @@ class StartAccessionJob < ApplicationJob
   end
 
   def source_directory
-    File.join(Settings.workspace_dir, druid)
+    File.join(Settings.file_uploads_root, druid)
   end
 
   def refresh_and_add_missing_metadata
