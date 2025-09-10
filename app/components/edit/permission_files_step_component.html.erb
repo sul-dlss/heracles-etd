@@ -11,21 +11,27 @@
     <%= helpers.with_submission_form(submission) do |form| %>
       <div class="flex-grow-1">
         <div class="d-flex align-items-start">
-          <%= render Edit::PermissionFilesStepBodyHelpComponent.new %>
-          <%= render Elements::Forms::ToggleComponent.new(form:,
-                                                          field_name: :permissions_provided,
-                                                          container_classes: 'mb-4') do |component| %>
-            <% component.with_left_toggle_option(form:,
-                                                 field_name: :permissions_provided,
-                                                 label: 'Yes',
-                                                 data: { controller: 'submit', action: 'submit#submit' },
-                                                 value: 'true') %>
-            <% component.with_right_toggle_option(form:,
-                                                  field_name: :permissions_provided,
-                                                  label: 'No',
-                                                  data: { controller: 'submit', action: no_permissions_action },
-                                                  value: nil) %>
-          <% end %>
+          <fieldset class="w-100">
+            <div>
+              <%= render Edit::PermissionFilesStepBodyHelpComponent.new %>
+            </div>
+            <div>
+              <%= render Elements::Forms::ToggleComponent.new(form:,
+                                                              field_name: :permissions_provided,
+                                                              container_classes: 'mb-4') do |component| %>
+                <% component.with_left_toggle_option(form:,
+                                                     field_name: :permissions_provided,
+                                                     label: 'Yes',
+                                                     data: { controller: 'submit', action: 'submit#submit' },
+                                                     value: 'true') %>
+                <% component.with_right_toggle_option(form:,
+                                                      field_name: :permissions_provided,
+                                                      label: 'No',
+                                                      data: { controller: 'submit', action: no_permissions_action },
+                                                      value: nil) %>
+              <% end %>
+            </div>
+          </fieldset>
         </div>
       </div>
     <% end %>

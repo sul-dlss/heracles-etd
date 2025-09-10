@@ -19,7 +19,7 @@ module Elements
       attr_reader :form, :field_name, :label, :value, :data
 
       def label_classes
-        merge_classes('btn', @position == :left ? 'rounded-start-pill' : 'rounded-end-pill')
+        merge_classes('btn px-3', @position == :left ? 'rounded-start-pill' : 'rounded-end-pill')
       end
     end
   end

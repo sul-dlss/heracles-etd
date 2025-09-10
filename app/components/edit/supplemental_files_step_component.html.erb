@@ -10,22 +10,28 @@
   <% component.with_body_content do %>
     <%= helpers.with_submission_form(submission) do |form| %>
       <div class="flex-grow-1">
-        <div class="d-flex align-items-start">
-          <%= render Edit::SupplementalFilesStepBodyHelpComponent.new %>
-          <%= render Elements::Forms::ToggleComponent.new(form:,
-                                                          field_name: :supplemental_files_provided,
-                                                          container_classes: 'mb-4') do |component| %>
-            <% component.with_left_toggle_option(form:,
-                                                 field_name: :supplemental_files_provided,
-                                                 label: 'Yes',
-                                                 data: { controller: 'submit', action: 'submit#submit' },
-                                                 value: 'true') %>
-            <% component.with_right_toggle_option(form:,
-                                                  field_name: :supplemental_files_provided,
-                                                  label: 'No',
-                                                  data: { controller: 'submit', action: no_supplemental_files_action },
-                                                  value: nil) %>
-          <% end %>
+        <div class="d-flex flex-row align-items-start">
+          <fieldset class="w-100">
+            <div>
+              <%= render Edit::SupplementalFilesStepBodyHelpComponent.new %>
+            </div>
+            <div>
+              <%= render Elements::Forms::ToggleComponent.new(form:,
+                                                              field_name: :supplemental_files_provided,
+                                                              container_classes: 'mb-4') do |component| %>
+                <% component.with_left_toggle_option(form:,
+                                                     field_name: :supplemental_files_provided,
+                                                     label: 'Yes',
+                                                     data: { controller: 'submit', action: 'submit#submit' },
+                                                     value: 'true') %>
+                <% component.with_right_toggle_option(form:,
+                                                      field_name: :supplemental_files_provided,
+                                                      label: 'No',
+                                                      data: { controller: 'submit', action: no_supplemental_files_action },
+                                                      value: nil) %>
+              <% end %>
+            </div>
+          </fieldset>
         </div>
       </div>
     <% end %>
