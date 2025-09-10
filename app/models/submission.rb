@@ -78,6 +78,10 @@ class Submission < ApplicationRecord
     submitted_at.present?
   end
 
+  def approved?
+    /approved/i.match?(regapproval)
+  end
+
   def creative_commons_license
     CreativeCommonsLicense.find(cclicense)
   end

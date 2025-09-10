@@ -1,0 +1,26 @@
+<ul>
+  <li>
+    Your dissertation has been accepted by the University and is currently being processed by Stanford University Libraries.
+  </li>
+  <li>
+    When processing is complete and it is released for online access, your dissertation will be available online at
+    <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the Digital Object Identifier (DOI) 10.NNNN/NN.
+  </li>
+  <li>
+    Once approved, your dissertation will be processed by Stanford University Libraries and made available online
+    at <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the
+    <%= render Elements::ExternalLinkComponent.new(label: 'Digital Object Identifier', url: 'https://www.doi.org/the-identifier/what-is-a-doi/', classes: 'ms-1') %>
+    (DOI) <%= doi %>.
+  </li>
+  <li>
+    External access (i.e., from outside Stanford) to these links is may be limited pending any release delay applied
+    at the time of submission.
+  </li>
+</ul>
+<%= render Elements::ButtonLinkComponent.new(link: augmented_dissertation_file_submission_path(submission), classes: 'mb-1') do %>
+  <i class="bi bi-download me-1"></i> Download your submitted file
+<% end %>
+<div class="d-flex justify-content-between">
+  <div>This file includes the copyright and signature pages.</div>
+  <div>Dissertation ID: <%= dissertation_id %></div>
+</div>

@@ -10,6 +10,18 @@ module Show
 
     attr_reader :submission
 
-    delegate :first_name, :dissertation_id, :degree, :purl, :doi, to: :submission
+    delegate :approved?, :first_name, :degree, to: :submission
+
+    def title
+      return 'Submission successful.' unless approved?
+
+      'Submission approved.'
+    end
+
+    def body_component
+      return WelcomeBannerProcessingBodyComponent.new(submission: submission) unless approved?
+
+      WelcomeBannerApprovedBodyComponent.new(submission: submission)
+    end
   end
 end

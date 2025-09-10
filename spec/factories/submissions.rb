@@ -61,7 +61,6 @@ FactoryBot.define do
       dissertation_uploaded { 'true' }
       permissions_provided { 'true' }
       reader_approved
-      registrar_approved
     end
 
     trait :submitted do
