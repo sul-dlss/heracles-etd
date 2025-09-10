@@ -60,7 +60,8 @@ searchworks_uri: https://searchworks.stanford.edu/view/%<catalog_record_id>s
 argo_url: https://argo.stanford.edu
 stacks_uri: 'https://stacks.stanford.edu/file/%<druid>s/%<aug_diss_file_name>s'
 
-etd_cataloging_list: 'fake-report-list@example.com'
+etd_mail_from: 'etd-alerts@lists.stanford.edu'
+etd_cataloging_list: 'etd-catload-reports@lists.stanford.edu'
 
 mailable_environments:
   - 'prod'
@@ -80,4 +81,4 @@ dlss_admin_pw: 'dummy4'
 
 copyright_instructions_url: 'https://drive.google.com/file/d/1do8J5rZvpDUrGrkOAYOZ96qNIvy0abfd/view'
 
-file_uploads_root: <%= Rails.root.join("storage") %>
+file_uploads_root: '/opt/app/etd/workspace'

@@ -36,7 +36,7 @@ RSpec.describe SubmissionMailer do
       expect(mail.encoded).not_to match(/in4444/)
       expect(mail.encoded).to include("<a href=\"#{etd_url}\">#{etd_title}")
       expect(mail.subject).to eq('[TEST] ETDs ready to be cataloged')
-      expect(mail.to).to eq(['fake-report-list@example.com'])
+      expect(mail.to).to eq(['etd-catload-reports@lists.stanford.edu'])
       expect(Honeybadger).to have_received(:check_in).with(Settings.honeybadger_checkins.ready_for_cataloging)
     end
   end
