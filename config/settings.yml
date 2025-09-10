@@ -64,7 +64,6 @@ etd_cataloging_list: 'fake-report-list@example.com'
 
 mailable_environments:
   - 'prod'
-  - 'uat'
   - 'test'
 
 # Skip ETDs in the SDR Graveyard (withdrawn by registrar) or lost to us (possibly in great ETD migration of 2012)
