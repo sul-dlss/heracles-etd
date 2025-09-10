@@ -52,6 +52,7 @@ RSpec.describe 'Edit Submission' do
 
       # Expand the body
       click_button 'Undo your confirmation'
+      expect(page).to have_no_button('Undo your confirmation')
       btn = find_button('Confirm')
       expect(page.active_element).to eq btn
 
@@ -70,11 +71,14 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_button('Done', disabled: true)
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
       click_button 'Done'
+      expect(page).to have_no_button('Done')
+
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       # Expand body
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('Abstract')
       expect(page.active_element).to eq field
 
@@ -100,11 +104,13 @@ RSpec.describe 'Edit Submission' do
       attach_file 'Upload PDF', file_fixture('dissertation.pdf')
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       btn = find_button('Done')
       expect(page.active_element).to eq btn
 
@@ -152,11 +158,13 @@ RSpec.describe 'Edit Submission' do
       end
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('Upload supplemental files')
       expect(page.active_element).to eq field
 
@@ -194,11 +202,14 @@ RSpec.describe 'Edit Submission' do
       end
 
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
+
       field = find_field('Upload permission files')
       expect(page.active_element).to eq field
 
@@ -225,11 +236,13 @@ RSpec.describe 'Edit Submission' do
       select 'CC Attribution license', from: 'submission_cclicense'
       select '6 months', from: 'submission_embargo'
       click_button 'Done'
+      expect(page).to have_no_button('Done')
 
       btn = find_button('Edit this section')
       expect(page.active_element).to eq btn
 
       click_button 'Edit this section'
+      expect(page).to have_no_button('Edit this section')
       field = find_field('I have read and agree to the terms of the Stanford University license')
       expect(page.active_element).to eq field
 
