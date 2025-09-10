@@ -40,7 +40,7 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('.character-circle-disabled', text: '1')
       expect(page).to have_css('.badge-in-progress', text: 'In Progress')
       expect(page).to have_no_css('.badge-completed')
-      expect(page).to have_no_button('Undo your confirmation')
+      expect(page).to have_no_button('Undo confirmation')
       expect(page).to have_content('By clicking Confirm, I verify ')
       click_button 'Confirm'
       # Body is collapsed.
@@ -48,11 +48,11 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('.character-circle-success', text: '1')
       expect(page).to have_no_css('.badge-in-progress')
       expect(page).to have_css('.badge-completed', text: 'Completed')
-      expect(page.active_element).to eq find_button('Undo your confirmation')
+      expect(page.active_element).to eq find_button('Undo confirmation')
 
       # Expand the body
-      click_button 'Undo your confirmation'
-      expect(page).to have_no_button('Undo your confirmation')
+      click_button 'Undo confirmation'
+      expect(page).to have_no_button('Undo confirmation')
       btn = find_button('Confirm')
       expect(page.active_element).to eq btn
 

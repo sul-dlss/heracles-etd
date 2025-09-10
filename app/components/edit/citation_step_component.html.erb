@@ -1,7 +1,7 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::CITATION_STEP,
                                    title: 'Verify your citation details',
                                    submission:,
-                                   edit_label: 'Undo your confirmation',
+                                   edit_label: 'Undo confirmation',
                                    done_label: 'Confirm', done_text: 'By clicking Confirm, I verify the information in this section is correct and complete.') do |component| %>
 
   <% component.with_help_content do %>
