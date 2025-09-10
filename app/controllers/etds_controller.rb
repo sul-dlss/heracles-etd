@@ -6,7 +6,7 @@ require 'resolv'
 class EtdsController < ApplicationController
   skip_verify_authorized
   skip_before_action :verify_authenticity_token
-  before_action :authenticate, unless: proc { request_from_authorized_origin? }
+  before_action :authenticate
   before_action :set_submission, only: :create
 
   PHD_REGEX = /p\W*h\W*d/i
@@ -114,12 +114,17 @@ class EtdsController < ApplicationController
   end
 
   def authenticate
-    http_basic_authenticate_or_request_with(
-      name: Settings.dlss_admin,
-      password: Settings.dlss_admin_pw,
-      realm: 'Application',
-      message: 'You are unauthorized to perform this action'
-    )
+    case Honeybadger.config[:env]
+    when 'qa', 'stage', 'test', 'development'
+      http_basic_authenticate_or_request_with(
+        name: Settings.dlss_admin,
+        password: Settings.dlss_admin_pw,
+        realm: 'Application',
+        message: 'You are unauthorized to perform this action'
+      )
+    else # When HB env is UAT or prod
+      request_from_authorized_origin? || deny_access
+    end
   end
 
   def set_submission
