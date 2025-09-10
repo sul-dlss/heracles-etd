@@ -3,11 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Re-post submission to Registrar' do
-  include_context 'with faked submission post'
-
   let(:submission) { create(:submission, :reader_approved, :submitted) }
 
   before do
+    allow(SubmissionPoster).to receive(:call) do
+      submission.prepare_to_submit!
+    end
+
     sign_in 'dlss_user', groups: [Settings.groups.dlss]
   end
 

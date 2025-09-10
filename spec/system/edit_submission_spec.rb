@@ -3,11 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit Submission' do
-  include_context 'with faked submission post'
-
   let(:submission) { create(:submission) }
 
   before do
+    allow(SubmissionPoster).to receive(:call) do
+      submission.prepare_to_submit!
+    end
+
     sign_in(submission.sunetid)
   end
 

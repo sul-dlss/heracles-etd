@@ -5,8 +5,10 @@ class SubmissionsController < ApplicationController
   before_action :set_submission, :authorize_submission
 
   def show
-    # PeopleSoft sends all users to the show route, but if this is the student, they should see the edit view.
-    redirect_to edit_submission_path(@submission) if allowed_to?(:update?, @submission)
+    # PeopleSoft sends all users to the show route, but if this is the student
+    # and the submission hasn't been submitted yet, they should see the edit
+    # view.
+    redirect_to edit_submission_path(@submission) if allowed_to?(:update?, @submission) && !@submission.submitted?
   end
 
   def edit

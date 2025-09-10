@@ -18,11 +18,13 @@ RSpec.describe 'Submitting a submission' do
   end
 
   context 'with an authorized student' do
-    include_context 'with faked submission post'
-
     let(:submission) { create(:submission, :submittable) }
 
     before do
+      allow(SubmissionPoster).to receive(:call) do
+        submission.prepare_to_submit!
+      end
+
       sign_in(submission.sunetid)
     end
 

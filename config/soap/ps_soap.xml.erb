@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://xmlns.oracle.com/Enterprise/Tools/schemas/STF_FFDORA1.v1">
+  <soapenv:Body>
+    <dissertation>
+      <dissertationid><%= @msg[:dissertation_id] %></dissertationid>
+      <title><%= CGI.escapeHTML(@msg[:title]) %></title>
+      <type><%= @msg[:type] %></type>
+      <status code="SB">submit</status>
+      <actiondttm><%= @msg[:timestamp].strftime('%m/%d/%Y %H:%M:%S') %></actiondttm>
+      <purl><%= @msg[:purl] %></purl>
+    </dissertation>
+  </soapenv:Body>
+</soapenv:Envelope>
