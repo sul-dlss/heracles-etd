@@ -57,6 +57,18 @@ RSpec.describe SubmissionPoster do
       end
     end
 
+    context 'when PeopleSoft is not enabled' do
+      before do
+        allow(Settings.peoplesoft).to receive(:enabled).and_return(false)
+      end
+
+      it 'does not call PeopleSoft' do
+        service.call
+        expect(submission).to have_received(:prepare_to_submit!).once
+        expect(service).not_to have_received(:response)
+      end
+    end
+
     context 'when post returns a non-200 response' do
       let(:status) { 500 }
 
