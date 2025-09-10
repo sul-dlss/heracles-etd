@@ -127,26 +127,21 @@ RSpec.describe 'Edit Submission' do
         find('label', text: 'Yes').click
       end
 
-      # Creating a temporary copy of a supplemental file with a diacritic.
-      Dir.mktmpdir do |temp_dir|
-        supplemental_file = File.join(temp_dir, 'supplémental_1.pdf')
-        FileUtils.cp(file_fixture('supplemental_1.pdf'), supplemental_file)
-        attach_file 'Upload supplemental files', supplemental_file
+      attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
-        within('#supplemental-files-table') do
-          expect(page).to have_css('th', text: 'supplémental_1.pdf')
-          click_link_or_button 'Remove'
-        end
-
-        within('.btn-group-toggle') do
-          find('label', text: 'Yes').click
-        end
-
-        attach_file 'Upload supplemental files', [
-          supplemental_file,
-          file_fixture('supplemental_2.pdf')
-        ]
+      within('#supplemental-files-table') do
+        expect(page).to have_css('th', text: 'supplemental_1.pdf')
+        click_link_or_button 'Remove'
       end
+
+      within('.btn-group-toggle') do
+        find('label', text: 'Yes').click
+      end
+
+      attach_file 'Upload supplemental files', [
+        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplemental_2.pdf')
+      ]
 
       within("form#edit_supplemental_file_#{submission.supplemental_files.first.id}") do
         fill_in 'File description:', with: 'This is a sample first supplemental file.'
