@@ -18,7 +18,7 @@ ActiveAdmin.register Submission do
                 :ils_record_updated_at, :accessioning_started_at
   # deliberately not including:  :univid, :external_visibility
 
-  timezone_label = Time.now.in_time_zone(Settings.display_timezone).strftime('%Z')
+  timezone_label = Time.zone.now.strftime('%Z')
 
   # NOTE: These are the fields that are displayed as columns in the `index` view
   #       without any special behavior, e.g., linking & TZ labeling.

@@ -90,7 +90,7 @@ class EtdsController < ApplicationController
     {
       readerapproval: etd_params[:readerapproval],
       readercomment: etd_params[:readercomment],
-      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Rails.application.config.time_zone)
     }
   end
 
@@ -98,7 +98,7 @@ class EtdsController < ApplicationController
     {
       regapproval: etd_params[:regapproval],
       regcomment: etd_params[:regcomment],
-      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Settings.peoplesoft_timezone)
+      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Rails.application.config.time_zone)
     }
   end
 

@@ -8,7 +8,7 @@ ActiveAdmin.register Submission, as: 'Quarterly Reports' do
   config.current_filters = false # Disable current filters and use filters defined below
   config.paginate = false # product owner does not need it, and it causes undercounts in the side panels
 
-  timezone_label = Time.now.in_time_zone(Settings.display_timezone).strftime('%Z')
+  timezone_label = Time.zone.now.strftime('%Z')
 
   filter :last_registrar_action_at, as: :date_range,
                                     label: I18n.t('activerecord.attributes.submission.last_registrar_action_at',

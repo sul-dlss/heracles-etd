@@ -20,7 +20,7 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
                 :ils_record_updated_at, :accessioning_started_at
   # deliberately not including:  :univid, :external_visibility
 
-  timezone_label = Time.now.in_time_zone(Settings.display_timezone).strftime('%Z')
+  timezone_label = Time.zone.now.strftime('%Z')
 
   index_columns = %i[druid dissertation_id name prefix suffix title folio_instance_hrid etd_type
                      embargo degreeconfyr schoolname department readerapproval regapproval
