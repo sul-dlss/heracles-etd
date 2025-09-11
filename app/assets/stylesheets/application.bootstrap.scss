@@ -30,13 +30,9 @@
   @extend .rounded-circle;
   @extend .text-white;
 
-  width: 2em;
-  height: 2em;
-}
-
-.step-header {
   width: 28px;
   height: 28px;
+  font-size: 1rem;
 }
 
 .character-circle.character-circle-disabled {
