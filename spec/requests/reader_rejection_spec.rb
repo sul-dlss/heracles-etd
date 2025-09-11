@@ -73,7 +73,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Settings.peoplesoft_timezone) }
+      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Rails.application.config.time_zone) }
 
       context 'with a basic reader rejection' do
         it 'updates an existing Etd' do

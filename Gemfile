@@ -86,6 +86,7 @@ group :test do
   gem 'capybara-lockstep'
   gem 'cyperful', require: false
   gem 'selenium-webdriver'
+  gem 'timecop'
   gem 'webmock'
 end
 

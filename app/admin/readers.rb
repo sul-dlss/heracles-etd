@@ -16,7 +16,7 @@ ActiveAdmin.register Reader do
   #   permitted
   # end
 
-  timezone_label = Time.now.in_time_zone(Settings.display_timezone).strftime('%Z')
+  timezone_label = Time.zone.now.strftime('%Z')
 
   # filters: ordering / selecting
   filter :submission, label: 'Submission (Author)'

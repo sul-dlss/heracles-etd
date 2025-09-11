@@ -7,7 +7,7 @@ ActiveAdmin.register Report do
 
   permit_params :label, :description, :start_date, :end_date
 
-  timezone_label = Time.now.in_time_zone(Settings.display_timezone).strftime('%Z')
+  timezone_label = Time.zone.now.strftime('%Z')
 
   index download_links: false, title: 'Quarterly Reports' do
     id_column
@@ -30,10 +30,10 @@ ActiveAdmin.register Report do
         *active_admin_config.resource_columns.without(:start_date, :end_date)
       )
       row helpers.t('activerecord.attributes.report.custom.start_date',
-                    timezone_label: report.start_date.in_time_zone(Settings.display_timezone).strftime('%Z')),
+                    timezone_label: report.start_date.in_time_zone(Rails.application.config.time_zone).strftime('%Z')),
           &:start_date
       row helpers.t('activerecord.attributes.report.custom.end_date',
-                    timezone_label: report.end_date.in_time_zone(Settings.display_timezone).strftime('%Z')),
+                    timezone_label: report.end_date.in_time_zone(Rails.application.config.time_zone).strftime('%Z')),
           &:end_date
     end
   end

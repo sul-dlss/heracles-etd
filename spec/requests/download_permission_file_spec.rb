@@ -36,7 +36,10 @@ RSpec.describe 'Download permission file' do
     end
 
     it 'returns a not found status' do
-      get permission_file_submission_path(submission, 10)
+      # NOTE: 99999 here is a DB ID that is unlikely to appear in any test
+      #       environment. Value was previously 10, which caused this spec to flap in
+      #       CI.
+      get permission_file_submission_path(submission, 99_999)
 
       expect(response).to have_http_status(:not_found)
     end
