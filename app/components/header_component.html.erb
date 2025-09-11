@@ -7,8 +7,23 @@
   <nav class="navbar navbar-expand-md bg-dark cardinal">
     <div class="container">
       <a class="mb-0 navbar-brand navbar-logo" href="https://library.stanford.edu">Stanford University Libraries</a>
-      <div class="d-md-block d-none">
-        <ul class="navbar-nav">
+      <button
+        class="navbar-toggler navbar-toggler-right collapsed"
+        type="button"
+        data-toggle="collapse"
+        data-bs-toggle="collapse"
+        data-target="#user-util-collapse"
+        data-bs-target="#user-util-collapse"
+        aria-controls="user-util-collapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav
+        class="collapse navbar-collapse align-items-start justify-content-md-end navbar-expand-md d-md-flex flex-column flex-md-row"
+        aria-label="browse"
+        id="user-util-collapse">
+        <ul class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100">
           <li class="nav-item dropdown">
             <button
               class="nav-link logout-dropdown dropdown-toggle"
@@ -21,7 +36,7 @@
             </ul>
           </li>
         </ul>
-      </div>
+      </nav>
     </div>
   </nav>
   <div class="masthead bg-dark cardinal">
