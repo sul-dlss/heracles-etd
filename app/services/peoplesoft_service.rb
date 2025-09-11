@@ -30,7 +30,7 @@ class PeoplesoftService
 
     submission.update!(registrar_action_attributes)
 
-    return complete_approval unless /reject/i.match?(submission.regapproval)
+    return complete_approval if submission.approved?
 
     submission.update!(rejection_attributes)
   end
