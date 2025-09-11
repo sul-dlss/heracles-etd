@@ -19,9 +19,9 @@ module Show
     end
 
     def body_component
-      return WelcomeBannerProcessingBodyComponent.new(submission: submission) unless approved?
+      return WelcomeBannerProcessingBodyComponent.new(submission:) unless approved?
 
-      WelcomeBannerApprovedBodyComponent.new(submission: submission)
+      WelcomeBannerApprovedBodyComponent.new(submission:)
     end
   end
 end

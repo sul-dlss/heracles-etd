@@ -4,16 +4,10 @@
   </li>
   <li>
     When processing is complete and it is released for online access, your dissertation will be available online at
-    <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the Digital Object Identifier (DOI) 10.NNNN/NN.
+    <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the Digital Object Identifier (DOI) <%= doi %>.
   </li>
   <li>
-    Once approved, your dissertation will be processed by Stanford University Libraries and made available online
-    at <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the
-    <%= render Elements::ExternalLinkComponent.new(label: 'Digital Object Identifier', url: 'https://www.doi.org/the-identifier/what-is-a-doi/', classes: 'ms-1') %>
-    (DOI) <%= doi %>.
-  </li>
-  <li>
-    External access (i.e., from outside Stanford) to these links is may be limited pending any release delay applied
+    External access (i.e., from outside Stanford) to these links may be limited pending any release delay applied
     at the time of submission.
   </li>
 </ul>
