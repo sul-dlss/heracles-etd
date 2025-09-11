@@ -94,3 +94,8 @@
     color: white;
   }
 }
+
+// Increase contrast for input borders
+.form-control, .form-select, .form-check-input {
+  border-color: var(--stanford-60-black);
+}
