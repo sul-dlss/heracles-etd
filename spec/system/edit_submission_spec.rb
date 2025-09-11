@@ -132,6 +132,7 @@ RSpec.describe 'Edit Submission' do
       within('.btn-group-toggle') do
         find('label', text: 'Yes').click
       end
+      expect(page).to have_button('Done', disabled: true)
 
       attach_file 'Upload supplemental files', file_fixture('supplemental_1.pdf')
 
