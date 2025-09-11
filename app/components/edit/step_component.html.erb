@@ -25,7 +25,7 @@
     <% end %>
   <% end %>
 
-  <%= tag.div class: card_body_classes, data: { collapse_target: 'body' }, id: body_id do %>
+  <%= tag.div class: card_body_classes, data: { collapse_target: 'body' }, id: body_id, tabindex: '-1' do %>
     <%= body_content %>
     <hr>
     <% if footer_content %>

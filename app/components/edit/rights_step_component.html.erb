@@ -1,7 +1,6 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::RIGHTS_STEP,
                                    title: t('steps.rights.title'),
                                    submission:,
-                                   edit_focus_id:,
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.rights.help_html') %>

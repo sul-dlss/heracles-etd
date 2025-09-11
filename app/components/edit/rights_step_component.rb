@@ -31,9 +31,5 @@ module Edit
     def done_disabled?
       sulicense != 'true' || cclicense.blank? || embargo.blank?
     end
-
-    def edit_focus_id
-      helpers.submission_form_field_id(submission, :sulicense)
-    end
   end
 end
