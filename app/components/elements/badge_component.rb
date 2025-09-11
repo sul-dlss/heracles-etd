@@ -3,10 +3,9 @@
 module Elements
   # Component for displaying a badge
   class BadgeComponent < ApplicationComponent
-    def initialize(value:, variant: :primary, classes: [], id: nil)
+    def initialize(value:, variant: :primary, id: nil)
       @value = value
       @variant = variant
-      @classes = classes
       @id = id
       super()
     end
@@ -14,7 +13,7 @@ module Elements
     attr_reader :value, :variant, :id
 
     def classes
-      merge_classes('badge', "badge-#{@variant}", @classes)
+      merge_classes('badge', "badge-#{@variant}", 'ms-3 mt-1')
     end
 
     def call

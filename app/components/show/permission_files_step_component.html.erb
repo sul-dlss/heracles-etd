@@ -1,6 +1,6 @@
-<%= render Shared::StepComponent.new(step:,
+<%= render Shared::StepComponent.new(step: SubmissionPresenter::PERMISSION_FILES_STEP,
                                      title: t('steps.permission_files.title'),
-                                     done: step_complete?) do |component| %>
+                                     submission:) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.permission_files.help_html') %>
   <% end %>

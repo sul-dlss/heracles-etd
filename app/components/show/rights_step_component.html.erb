@@ -1,6 +1,6 @@
-<%= render Shared::StepComponent.new(step:,
+<%= render Shared::StepComponent.new(step: SubmissionPresenter::RIGHTS_STEP,
                                      title: t('steps.rights.title'),
-                                     done: step_complete?) do |component| %>
+                                     submission:) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.rights.help_html') %>
   <% end %>

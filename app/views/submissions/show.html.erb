@@ -8,12 +8,11 @@
 <div class="container">
   <div class="row gy-2">
     <div class="col-lg-8 order-2 order-lg-1">
-      <% if @current_user.sunetid == @submission.sunetid %>
-        <%= render Show::WelcomeBannerComponent.new(submission: @submission) %>
-      <% else %>
+      <% unless @current_user.sunetid == @submission.sunetid %>
         <%= render Elements::StatusAlertComponent.new(title: 'Read-only administrative view', value: "This is a read-only view of the student's ETD submission", variant: :warning) %>
       <% end %>
 
+      <%= render Show::WelcomeBannerComponent.new(submission: @submission) %>
       <%= render Show::CitationStepComponent.new(submission: @submission) %>
       <%= render Show::AbstractStepComponent.new(submission: @submission) %>
       <%= render Show::FormatStepComponent.new(submission: @submission) %>

@@ -5,11 +5,10 @@ module Show
   class PermissionFilesStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-      @step = SubmissionPresenter::PERMISSION_FILES_STEP
       super()
     end
 
-    attr_reader :step, :submission
+    attr_reader :submission
 
     delegate :permission_files, to: :submission
   end

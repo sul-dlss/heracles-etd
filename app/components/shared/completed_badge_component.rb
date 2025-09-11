@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Edit
+module Shared
   # Component for displaying a "completed" badge
   class CompletedBadgeComponent < ApplicationComponent
     def initialize(**args)

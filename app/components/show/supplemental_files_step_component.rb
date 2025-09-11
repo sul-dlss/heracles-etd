@@ -5,11 +5,10 @@ module Show
   class SupplementalFilesStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-      @step = SubmissionPresenter::SUPPLEMENTAL_FILES_STEP
       super()
     end
 
-    attr_reader :step, :submission
+    attr_reader :submission
 
     delegate :supplemental_files, to: :submission
   end

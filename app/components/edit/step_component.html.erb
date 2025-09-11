@@ -7,7 +7,7 @@
             <%= render Edit::CharacterCircleComponent.new(character: step_number, classes: 'me-2 step-header', variant: character_circle_variant) %>
             <%= title %>
           </h2>
-          <%= render badge_component.new(classes: 'ms-3 mt-1') %>
+          <%= render badge_component.new %>
           <div class="flex-fill">
             <div class="d-flex justify-content-end">
               <% unless show? %>

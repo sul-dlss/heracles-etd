@@ -5,10 +5,9 @@ module Show
   class AbstractStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-      @step = SubmissionPresenter::ABSTRACT_STEP
       super()
     end
 
-    attr_reader :step, :submission
+    attr_reader :submission
   end
 end

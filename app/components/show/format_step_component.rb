@@ -5,10 +5,9 @@ module Show
   class FormatStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-      @step = SubmissionPresenter::FORMAT_STEP
       super()
     end
 
-    attr_reader :step, :submission
+    attr_reader :submission
   end
 end
