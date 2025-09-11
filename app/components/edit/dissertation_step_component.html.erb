@@ -12,7 +12,9 @@
       <%= render Shared::DissertationStepBodyTableComponent.new(submission:, with_remove: true) %>
     <% else %>
       <%= helpers.with_submission_form(submission) do |form| %>
-        <%= form.label :dissertation_file, 'Upload PDF (maximum size 1GB)', class: 'form-label' %>
+        <%= form.label :dissertation_file, class: 'form-label' do %>
+          Upload PDF (maximum size 1GB) <%= helpers.required_field %>
+        <% end %>
         <%= form.file_field :dissertation_file, accept: 'application/pdf', data: dissertation_file_data, class: 'form-control', style: 'width: 350px;' %>
       <% end %>
     <% end %>

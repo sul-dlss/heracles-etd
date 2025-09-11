@@ -15,7 +15,7 @@
     <%= helpers.with_submission_form(submission) do |form| %>
       <div>
         <%= form.label :abstract, class: 'form-label' do %>
-          <span class="fw-bold">Abstract</span> <span class="text-danger">* Required</span>
+          <span class="fw-bold">Abstract</span> <%= helpers.required_field %>
         <% end %>
         <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { controller: 'submit', action: 'blur->submit#submit keyup->abstract#toggleButton' } %>
       </div>
