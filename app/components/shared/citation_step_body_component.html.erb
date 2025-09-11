@@ -15,8 +15,7 @@
 <section aria-labelledby="orcid-details-header" class="mt-4">
   <h3 id="orcid-details-header" class="h4">ORCID iD (Optional)</h3>
   <p class='mb-2'>An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher.</p>
-  <%# This still needs the url to be set. See https://github.com/sul-dlss/heracles-etd/issues/144 %>
-  <%= render Elements::ExternalLinkComponent.new(label: 'More about connecting an ORCID iD', url: '#') %>
+  <%= render Elements::ExternalLinkComponent.new(label: 'More about connecting an ORCID iD', url: 'https://studentservices.stanford.edu/my-academics/earn-my-degree/graduate-degree-progress/dissertations-and-theses/prepare-your-work-3') %>
   <%= render Elements::Tables::TableComponent.new(id: 'orcid-details-table', label: 'ORCID iD details', show_label: false) do |component| %>
     <% component.with_row(label: 'ORCID iD', values: [orcid || 'Not found']) %>
   <% end %>
