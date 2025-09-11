@@ -63,11 +63,7 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::ModalComponent.new(id: 'stanford-license-confirm') do |component| %>
-      <% component.with_header do %>
-        <div class="h3">Stanford University thesis and dissertation publication license</div>
-      <% end %>
-
+    <%= render Elements::ModalComponent.new(id: 'stanford-license-confirm', title: 'Stanford University thesis and dissertation publication license') do |component| %>
       <% component.with_body do %>
         <p>
           In submitting a thesis or dissertation to Stanford, the Author grants The Trustees of
@@ -109,11 +105,7 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::ModalComponent.new(id: 'cc-licenses') do |component| %>
-      <% component.with_header do %>
-        <div class="h3">Creative Commons licenses</div>
-      <% end %>
-
+    <%= render Elements::ModalComponent.new(id: 'cc-licenses', title: 'Creative Commons licenses') do |component| %>
       <% component.with_body do %>
         <p>
           Stanford requires that all dissertations and theses submitted via this system have the Stanford License applied.
@@ -141,11 +133,7 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::ModalComponent.new(id: 'delayed-release') do |component| %>
-      <% component.with_header do %>
-        <div class="h3">Delayed release</div>
-      <% end %>
-
+    <%= render Elements::ModalComponent.new(id: 'delayed-release', title: 'Delayed release') do |component| %>
       <% component.with_body do %>
         <p>
           Stanford is committed to the timely and broad dissemination of the scholarly output of its students. In some cases, however,

@@ -1,8 +1,4 @@
-<%= render Elements::ModalComponent.new(id: 'files-still-attached-message') do |component| %>
-  <% component.with_header do %>
-    <div class="h3">Attention</div>
-  <% end %>
-
+<%= render Elements::ModalComponent.new(id: 'files-still-attached-message', title: 'Attention') do |component| %>
   <% component.with_body do %>
     <p>
       Before selecting this option, please remove any file(s) you have uploaded in this section.
