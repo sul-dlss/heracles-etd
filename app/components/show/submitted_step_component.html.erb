@@ -1,5 +1,6 @@
-<%= render Shared::StepComponent.new(step: SubmissionPresenter::SUBMITTED_STEP,
-                                     title: t('steps.submitted.title')) do |component| %>
+<%= render Shared::StepComponent.new(step:,
+                                     title: t('steps.submitted.title'),
+                                     done: step_complete?) do |component| %>
 
   <% component.with_help_content do %>
     <%= t('steps.submitted.help_html') %>
@@ -7,7 +8,11 @@
 
   <% component.with_body_content do %>
       <%= render Elements::StatusAlertComponent.new do %>
-        Dissertation submitted to Registrar: <%= helpers.local_time(submitted_at) %>.
+        <% if submitted_at.present? %>
+          Dissertation submitted to Registrar: <%= helpers.local_time(submitted_at) %>.
+        <% else %>
+          Dissertation not yet submitted to Registrar.
+        <% end %>
       <% end %>
   <% end %>
 <% end %>

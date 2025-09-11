@@ -1,5 +1,6 @@
-<%= render Shared::StepComponent.new(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP,
-                                     title: t('steps.supplemental_files.title')) do |component| %>
+<%= render Shared::StepComponent.new(step:,
+                                     title: t('steps.supplemental_files.title'),
+                                     done: step_complete?) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.supplemental_files.help_html') %>
   <% end %>

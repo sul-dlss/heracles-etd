@@ -5,11 +5,11 @@ module Show
   class SubmittedStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-
+      @step = SubmissionPresenter::SUBMITTED_STEP
       super()
     end
 
-    attr_reader :submission
+    attr_reader :step, :submission
 
     delegate :submitted_at, to: :submission
   end

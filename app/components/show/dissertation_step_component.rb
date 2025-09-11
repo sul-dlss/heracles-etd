@@ -5,9 +5,10 @@ module Show
   class DissertationStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
+      @step = SubmissionPresenter::DISSERTATION_STEP
       super()
     end
 
-    attr_reader :submission
+    attr_reader :step, :submission
   end
 end

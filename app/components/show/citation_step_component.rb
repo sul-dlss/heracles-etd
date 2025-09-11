@@ -5,9 +5,10 @@ module Show
   class CitationStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
+      @step = SubmissionPresenter::CITATION_STEP
       super()
     end
 
-    attr_reader :submission
+    attr_reader :step, :submission
   end
 end

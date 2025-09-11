@@ -5,9 +5,10 @@ module Show
   class RightsStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
+      @step = SubmissionPresenter::RIGHTS_STEP
       super()
     end
 
-    attr_reader :submission
+    attr_reader :step, :submission
   end
 end

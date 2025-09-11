@@ -5,16 +5,16 @@ module Shared
   class StepComponent < ApplicationComponent
     renders_one :help_content
     renders_one :body_content
-    def initialize(title:, step: nil, data: {}, classes: [])
+    def initialize(title:, step: nil, data: {}, classes: [], done: true)
       @step = step
       @title = title
       @data = data
       @classes = classes
-
+      @done = done
       super()
     end
 
-    attr_reader :title, :data
+    attr_reader :done, :title, :data
 
     def step_number
       return if @step.blank?

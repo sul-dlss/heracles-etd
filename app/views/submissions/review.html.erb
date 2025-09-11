@@ -19,7 +19,7 @@
 
   <%= render Show::CitationStepComponent.new(submission: @submission) %>
   <%= render Show::AbstractStepComponent.new(submission: @submission) %>
-  <%= render Show::FormatStepComponent.new %>
+  <%= render Show::FormatStepComponent.new(submission: @submission) %>
   <%= render Show::DissertationStepComponent.new(submission: @submission) %>
   <%= render Show::SupplementalFilesStepComponent.new(submission: @submission) %>
   <%= render Show::PermissionFilesStepComponent.new(submission: @submission) %>
