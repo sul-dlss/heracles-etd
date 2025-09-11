@@ -35,11 +35,13 @@
       </div>
     <% end %>
 
-    <div class="flex-grow-1">
-      <div class="d-flex align-items-start">
-        <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
+    <% if permissions_provided? %>
+      <div class="flex-grow-1">
+        <div class="d-flex align-items-start">
+          <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <% if permission_files.any? %>
       <%= render Shared::PermissionFilesStepBodyTableComponent.new(submission:, with_remove: true) %>
