@@ -9,7 +9,6 @@ module Edit
 
     def initialize(step:, title:, submission:, data: {}, classes: [],
                    edit_label: 'Edit this section',
-                   edit_focus_id: nil,
                    done_text: 'Click Done to complete this section.', done_label: 'Done', done_data: {},
                    done_disabled: false)
       @step = step
@@ -20,7 +19,6 @@ module Edit
       @classes = classes
       @edit_label = edit_label
       # The id of the element that gets focus after the edit button is clicked.
-      @edit_focus_id = edit_focus_id || done_id # Default to done button.
       @done_text = done_text
       @done_label = done_label
       @done_data = add_focus(done_data)
@@ -30,7 +28,7 @@ module Edit
     end
 
     attr_reader :step, :title, :done_text, :done_label, :data, :form,
-                :done_disabled, :edit_label, :done_data, :submission, :edit_focus_id
+                :done_disabled, :edit_label, :done_data, :submission
 
     def classes
       merge_classes('card card-step mb-3', @classes)
@@ -79,7 +77,7 @@ module Edit
     def edit_data
       {
         action: 'click->focus#saveFocus click->collapse#expandAndSubmit',
-        focus_id_param: edit_focus_id
+        focus_id_param: body_id
       }
     end
 

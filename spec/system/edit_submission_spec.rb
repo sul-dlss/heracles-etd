@@ -53,8 +53,7 @@ RSpec.describe 'Edit Submission' do
       # Expand the body
       click_button 'Undo confirmation'
       expect(page).to have_no_button('Undo confirmation')
-      btn = find_button('Confirm')
-      expect(page.active_element).to eq btn
+      expect(page.active_element).to eq find_by_id('step-1-body')
 
       # Collapse body
       click_button 'Confirm'
@@ -79,8 +78,7 @@ RSpec.describe 'Edit Submission' do
       # Expand body
       click_button 'Edit this section'
       expect(page).to have_no_button('Edit this section')
-      field = find_field('Abstract')
-      expect(page.active_element).to eq field
+      expect(page.active_element).to eq find_by_id('step-2-body')
 
       # Collapse body
       click_button 'Done'
@@ -111,8 +109,7 @@ RSpec.describe 'Edit Submission' do
 
       click_button 'Edit this section'
       expect(page).to have_no_button('Edit this section')
-      btn = find_button('Done')
-      expect(page.active_element).to eq btn
+      expect(page.active_element).to eq find_by_id('step-4-body')
 
       within('#dissertation-file-table') do
         click_link_or_button 'Remove'
@@ -166,8 +163,7 @@ RSpec.describe 'Edit Submission' do
 
       click_button 'Edit this section'
       expect(page).to have_no_button('Edit this section')
-      field = find_field('Upload supplemental files')
-      expect(page.active_element).to eq field
+      expect(page.active_element).to eq find_by_id('step-5-body')
 
       click_button 'Done'
     end
@@ -210,9 +206,7 @@ RSpec.describe 'Edit Submission' do
 
       click_button 'Edit this section'
       expect(page).to have_no_button('Edit this section')
-
-      field = find_field('Upload permission files')
-      expect(page.active_element).to eq field
+      expect(page.active_element).to eq find_by_id('step-6-body')
 
       click_button 'Done'
     end
@@ -244,8 +238,7 @@ RSpec.describe 'Edit Submission' do
 
       click_button 'Edit this section'
       expect(page).to have_no_button('Edit this section')
-      field = find_field('I have read and agree to the terms of the Stanford University license')
-      expect(page.active_element).to eq field
+      expect(page.active_element).to eq find_by_id('step-7-body')
 
       click_button 'Done'
     end

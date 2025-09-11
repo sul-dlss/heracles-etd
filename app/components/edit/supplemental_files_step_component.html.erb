@@ -1,7 +1,6 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::SUPPLEMENTAL_FILES_STEP,
                                    title: t('steps.supplemental_files.title'),
                                    submission:,
-                                   edit_focus_id:,
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.supplemental_files.help_html') %>
