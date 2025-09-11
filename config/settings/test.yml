@@ -1,0 +1,6 @@
+peoplesoft:
+  oauth_enabled: true
+  base_url: 'https://registrar.example.edu/peoplesoft'
+  token_url: 'http://tokensrus.example.edu'
+  client_id: 'foo'
+  client_secret: 'bar'

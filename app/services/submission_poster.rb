@@ -2,8 +2,17 @@
 
 # Post an XML representation of a submission to the Registrar via PeopleSoft
 class SubmissionPoster
+  # TODO: Replace the code of this method with the following when legacy PS integration can be dropped:
+  #
+  # new(...).call
   def self.call(...)
-    new(...).call
+    instance = if Settings.peoplesoft.oauth_enabled
+                 new(...)
+               else
+                 LegacySubmissionPoster.new(...)
+               end
+
+    instance.call
   end
 
   API_ENDPOINT = '/library/v1'
@@ -12,9 +21,8 @@ class SubmissionPoster
     @submission = submission
   end
 
-  # @raise [RuntimeError] if the PeopleSoft URL is blank, the PeopleSoft
-  #   response is not successful, or if an exception is raised
-  # @return [NilClass] nil if succeeds
+  # @raise [RuntimeError] if the PeopleSoft response is not successful, or if an exception is raised
+  # @return [NilClass] return nil if request succeeds or if the service is disabled
   def call # rubocop:disable Metrics/AbcSize
     submission.prepare_to_submit!
 
@@ -22,13 +30,11 @@ class SubmissionPoster
 
     Honeybadger.context(submission:, xml:)
 
-    raise 'Cannot post submission because PeopleSoft base URL is blank' if Settings.peoplesoft.base_url.blank?
-
     Rails.logger.info("Submitting ETD update to PeopleSoft: #{xml}")
 
-    return if response.status == 200 && JSON.parse(response.body).dig('response', 'status') == 'SUCCESS'
+    return if response.status == 200 && response.parsed.dig(:response, :status) == 'SUCCESS'
 
-    raise "Failed to post submission XML to PeopleSoft, received status '#{response.status}': #{response.body}"
+    raise "Failed to post submission XML to PeopleSoft, received status '#{response.status}': #{response.parsed}"
   rescue StandardError => e
     Rails.logger.error(
       "Unable to post submission XML to PeopleSoft for dissertation ID #{submission.dissertation_id}: #{e.message}"
@@ -40,6 +46,14 @@ class SubmissionPoster
 
   attr_reader :submission
 
+  def xml
+    @xml ||= SubmissionsController.render(:submit, locals: submission.to_peoplesoft_hash, formats: :xml)
+  end
+
+  def response
+    @response ||= client.client_credentials.get_token.post(API_ENDPOINT, body: xml)
+  end
+
   def client
     @client ||= OAuth2::Client.new(
       Settings.peoplesoft.client_id,
@@ -50,27 +64,8 @@ class SubmissionPoster
     )
   end
 
-  def xml
-    @xml ||= SubmissionsController.render(:submit, locals: submission.to_peoplesoft_hash, formats: :xml)
-  end
-
-  def token
-    @token ||= client.client_credentials.get_token.token
-  end
-
-  def connection
-    @connection ||= Faraday.new(url: Settings.peoplesoft.base_url, request: request_options) do |conn|
-      conn.request :authorization, :Bearer, token
-      conn.adapter :net_http
-    end
-  end
-
   # Default timeouts were not long enough when testing
   def request_options
     { read_timeout: 300, timeout: 300 }
-  end
-
-  def response
-    @response ||= connection.post(API_ENDPOINT, xml)
   end
 end
