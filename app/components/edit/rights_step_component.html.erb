@@ -19,7 +19,7 @@
             <div class="form-check">
               <%= form.checkbox :sulicense, { class: 'form-check-input', data: { controller: 'submit', action: 'change->submit#submit' } }, 'true', 'false' %>
               <%= form.label :sulicense, class: 'form-check-label' do %>
-                I have read and agree to the terms of the Stanford University license <span class="text-danger">* Required</span>
+                I have read and agree to the terms of the Stanford University license. <%= helpers.required_field %>
               <% end %>
             </div>
           <% end %>
@@ -32,7 +32,7 @@
           </a>
           <%= helpers.with_submission_form(submission) do |form| %>
             <p>Apply <%= form.select :cclicense, cc_license_options, {}, class: 'form-select d-inline', style: 'width: 375px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Creative Commons license (required)' %>
-            to my dissertation. <span class="text-danger">* Required</span></p>
+            to my dissertation. <%= helpers.required_field %></p>
           <% end %>
           <p class="text-muted">
             You may optionally apply one Creative Commons license from the menu above. Stanford Libraries recommends the
@@ -48,7 +48,7 @@
           <%= helpers.with_submission_form(submission) do |form| %>
             <p>
               Release my dissertation <%= form.select :embargo, embargo_options, {}, class: 'form-select d-inline', style: 'width: 175px;', data: { controller: 'submit', action: 'change->submit#submit' }, 'aria-label' => 'Delayed release (required)' %>
-              after final approval and processing by the Registrar.<br><span class="text-danger">* Required</span>
+              after final approval and processing by the Registrar. <%= helpers.required_field %>
             </p>
           <% end %>
         <% end %>

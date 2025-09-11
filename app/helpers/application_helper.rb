@@ -12,4 +12,8 @@ module ApplicationHelper
       return form.field_id(field)
     end
   end
+
+  def required_field
+    content_tag(:span, '* Required', class: 'text-danger')
+  end
 end
