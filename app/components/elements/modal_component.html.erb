@@ -1,13 +1,11 @@
-<%= tag.div class: classes, tabindex: '-1', id: do %>
+<%= tag.div class: classes, tabindex: '-1', id:, 'aria-labelledby': title_id do %>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
           <div class="position-absolute top-0 end-0">
             <button type="button" class="btn-close mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        <% if header? %>
-          <%= header %>
-        <% end %>
+          <%= tag.h3 id: title_id do %><%= title %><% end %>
       </div>
       <div class="modal-body">
         <%= body %>
