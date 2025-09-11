@@ -20,5 +20,11 @@ module Edit
     def no_supplemental_files_action
       supplemental_files.any? ? 'click->submit#warn' : 'submit#submit'
     end
+
+    def done_disabled?
+      return false unless supplemental_files_provided?
+
+      supplemental_files.none?
+    end
   end
 end
