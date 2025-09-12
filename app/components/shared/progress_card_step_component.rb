@@ -4,7 +4,7 @@ module Shared
   # Component for rendering the progress of a single step on a progress card
   class ProgressCardStepComponent < ApplicationComponent
     def initialize(variant:, label:, character: '', classes: [], step_at: nil, comment: nil)
-      @character = variant == :success ? '✓' : character
+      @character = variant == :success ? '' : character
       @variant = variant
       @classes = classes
       @label = label

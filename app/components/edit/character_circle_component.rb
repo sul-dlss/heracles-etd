@@ -26,10 +26,16 @@ module Edit
     end
 
     def classes
-      merge_classes('character-circle', "character-circle-#{@variant}", @classes)
+      merge_classes('character-circle', "character-circle-#{@variant}", check? ? 'character-circle-check' : nil,
+                    @classes)
+    end
+
+    def check?
+      @character == '' && @variant == :success
     end
 
     def character
+      return '&#xF633;'.html_safe if check?
       return '&nbsp;'.html_safe if @character == ''
 
       @character.to_s

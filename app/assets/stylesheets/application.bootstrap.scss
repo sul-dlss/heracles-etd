@@ -48,6 +48,10 @@
   @extend .border-1;
 }
 
+.character-circle.character-circle-check {
+  font-family: bootstrap-icons !important;
+}
+
 .badge.badge-in-progress {
   background-color: var(--stanford-60-black);
 }
