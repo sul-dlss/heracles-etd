@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Create stub MARC record for ETD
-class CreateStubMarcRecordJob < ApplicationJob
+class CreateStubMarcRecordJob < RetriableJob
   queue_as :submit_marc
 
   def perform(druid)
