@@ -140,10 +140,6 @@ RSpec.describe 'Edit Submission' do
         click_link_or_button 'Remove'
       end
 
-      within('.btn-group-toggle') do
-        find('label', text: 'Yes').click
-      end
-
       attach_file 'Upload supplemental files', [
         file_fixture('supplemental_1.pdf'),
         file_fixture('supplemental_2.pdf')
@@ -181,10 +177,6 @@ RSpec.describe 'Edit Submission' do
       within('#permission-files-table') do
         expect(page).to have_css('th', text: 'permission_1.pdf')
         click_link_or_button 'Remove'
-      end
-
-      within('.btn-group-toggle') do
-        find('label', text: 'Yes').click
       end
 
       attach_file 'Upload permission files', [
