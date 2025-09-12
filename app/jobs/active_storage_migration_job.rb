@@ -7,8 +7,8 @@ class ActiveStorageMigrationJob < ApplicationJob
 
   def perform(submission_id)
     submission = Submission.find(submission_id)
+    Honeybadger.context(submission:)
     legacy_submission = ActiveStorage::LegacySubmission.new(submission:)
-
     ActiveStorage::MigratorService.migrate(legacy_submission:)
   end
 end
