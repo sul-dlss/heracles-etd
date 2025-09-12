@@ -3,7 +3,7 @@
 module Elements
   # Component for displaying a badge
   class BadgeComponent < ApplicationComponent
-    def initialize(value:, variant: :primary, classes: [], id: nil)
+    def initialize(value:, variant: :primary, classes: %w[ms-3 mt-1], id: nil)
       @value = value
       @variant = variant
       @classes = classes

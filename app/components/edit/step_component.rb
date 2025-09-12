@@ -67,7 +67,7 @@ module Edit
     end
 
     def badge_component
-      show? ? Edit::InProgressBadgeComponent : Edit::CompletedBadgeComponent
+      show? ? Shared::InProgressBadgeComponent : Shared::CompletedBadgeComponent
     end
 
     def body_id

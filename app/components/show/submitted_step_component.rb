@@ -5,7 +5,6 @@ module Show
   class SubmittedStepComponent < ApplicationComponent
     def initialize(submission:)
       @submission = submission
-
       super()
     end
 

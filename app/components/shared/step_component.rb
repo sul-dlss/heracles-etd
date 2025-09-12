@@ -5,33 +5,34 @@ module Shared
   class StepComponent < ApplicationComponent
     renders_one :help_content
     renders_one :body_content
-    def initialize(title:, step: nil, data: {}, classes: [])
+    def initialize(title:, step: nil, submission: nil, data: {}, classes: [])
       @step = step
       @title = title
+      @submission = submission
       @data = data
       @classes = classes
 
       super()
     end
 
-    attr_reader :title, :data
-
-    def step_number
-      return if @step.blank?
-
-      SubmissionPresenter.step_number(step: @step)
-    end
+    attr_reader :data, :title, :submission, :step
 
     def classes
       merge_classes('card mb-3', @classes)
     end
 
-    def badge_id
-      "step-#{step_number}-badge" if @step.present?
+    def step_number
+      return if step.blank?
+
+      SubmissionPresenter.step_number(step:)
+    end
+
+    def id
+      "step-#{step_number}-badge" if step.present?
     end
 
     def character_circle_id
-      "step-#{step_number}-character-circle" if @step.present?
+      "step-#{step_number}-character-circle" if step.present?
     end
 
     def title_id
@@ -39,7 +40,21 @@ module Shared
     end
 
     def aria_labelledby
-      [character_circle_id, title_id, badge_id].compact.join(' ')
+      [character_circle_id, title_id, id].compact.join(' ')
+    end
+
+    def step_done?
+      SubmissionPresenter.step_done?(submission:, step:)
+    end
+
+    def character_circle_variant
+      step_done? ? :success : :disabled
+    end
+
+    def badge_component
+      return Shared::CompletedBadgeComponent.new if submission.blank?
+
+      step_done? ? Shared::CompletedBadgeComponent.new(id:) : Shared::InProgressBadgeComponent.new(id:)
     end
   end
 end

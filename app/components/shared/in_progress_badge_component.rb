@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Edit
+module Shared
   # Component for displaying an "in progress" badge
   class InProgressBadgeComponent < ApplicationComponent
     def initialize(**args)
