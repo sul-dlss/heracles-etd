@@ -140,6 +140,35 @@ RSpec.describe Marc::StubRecordCreator do
       end
     end
 
+    describe '024' do
+      let(:field024) { marc_record.fields('024').first }
+
+      it 'has one 024 field' do
+        expect(marc_record.fields('024').count).to eq(1)
+      end
+
+      it 'has expected first and second indicators' do
+        expect(field024.indicator1).to eq('7')
+        expect(field024.indicator2).to eq(' ')
+      end
+
+      it 'has subfields a & 2 in order' do
+        expect(field024.subfields.map(&:code)).to eq(%w[a 2])
+      end
+
+      it 'subfield a contains DOI value' do
+        subfields_a = field024.subfields.select { |subfield| subfield.code == 'a' }
+        expect(subfields_a.count).to eq(1)
+        expect(subfields_a.first.value).to eq('10.80343/cg532dg5405')
+      end
+
+      it 'subfield 2 contains DOI string' do
+        subfields_two = field024.subfields.select { |subfield| subfield.code == '2' }
+        expect(subfields_two.count).to eq(1)
+        expect(subfields_two.first.value).to eq('doi')
+      end
+    end
+
     describe '040' do
       let(:field040) { marc_record.fields('040').first }
 
@@ -785,8 +814,9 @@ RSpec.describe Marc::StubRecordCreator do
           expect(fields710[0]['a']).to eq('Stanford University.')
           expect(fields710[0]['b']).to eq('School of Engineering.')
           expect(fields710[0]['0']).to eq('http://id.loc.gov/authorities/names/n82220006')
-
+          expect(fields710[0]['1']).to eq('https://ror.org/00f54p054')
           expect(fields710[1]['b']).to eq('Department of Electrical Engineering.')
+          expect(fields710[1]['1']).to eq('https://ror.org/00f54p054')
         end
       end
 
@@ -808,6 +838,7 @@ RSpec.describe Marc::StubRecordCreator do
           expect(fields710.count).to eq(1)
           expect(fields710[0]['a']).to eq('Stanford School of Earth, Energy & Environmental Sciences.')
           expect(fields710[0]['0']).to match('^http://id.loc.gov/authorities/names/')
+          expect(fields710[0]['1']).to eq('https://ror.org/00f54p054')
         end
       end
 
@@ -818,6 +849,7 @@ RSpec.describe Marc::StubRecordCreator do
         it 'adds a 710 for school only' do
           expect(fields710.count).to eq(1)
           expect(fields710[0]['b']).to eq('Graduate School of Business.')
+          expect(fields710[0]['1']).to eq('https://ror.org/00f54p054')
         end
       end
     end

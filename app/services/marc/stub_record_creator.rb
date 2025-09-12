@@ -52,7 +52,7 @@ module Marc
     private_constant :SCHOOL_MAP
 
     # Create skeleton MARC record - fixed fields and 040
-    def initialize_marc # rubocop:disable Metrics/AbcSize
+    def initialize_marc # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       marc = MARC::Record.new
 
       # Populate the MARC leader
@@ -69,6 +69,10 @@ module Marc
       marc.append(MARC::ControlField.new('007', 'cr un'))
       cf008 = "#{Time.zone.now.strftime('%y%m%d')}t#{publication_year}#{copyright_year}cau     om    000 0 eng d"
       marc.append(MARC::ControlField.new('008', cf008))
+
+      marc.append(
+        MARC::DataField.new('024', '7', ' ', ['a', "#{Settings.datacite.prefix}/#{bare_druid}"], %w[2 doi])
+      )
 
       # Begin building data fields
       marc.append(MARC::DataField.new('040', ' ', ' ', %w[a CSt], %w[b eng], %w[e rda], %w[c CSt]))
@@ -167,21 +171,28 @@ module Marc
       end
     end
 
-    def add_school_and_department(marc) # rubocop:disable Metrics/AbcSize
+    STANFORD_ROR_URI = 'https://ror.org/00f54p054'
+    private_constant :STANFORD_ROR_URI
+
+    def add_school_and_department(marc) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       schoolname = etd.schoolname
       school = SCHOOL_MAP.fetch(schoolname)
-      if ['Doerr School of Sustainability', 'School of Earth,Energy,EnvSci'].include?(schoolname)
-        marc.append(MARC::DataField.new('710', '2', ' ', ['a', format_aacr2(school.name)], ['0', school.uri]))
-      else
-        marc.append(MARC::DataField.new('710', '2', ' ', ['a', 'Stanford University.'],
-                                        ['b', format_aacr2(school.name)], ['0', school.uri]))
-      end
+      school_contributor = if ['Doerr School of Sustainability', 'School of Earth,Energy,EnvSci'].include?(schoolname)
+                             MARC::DataField.new('710', '2', ' ', ['a', format_aacr2(school.name)], ['0', school.uri])
+                           else
+                             MARC::DataField.new('710', '2', ' ', ['a', 'Stanford University.'],
+                                                 ['b', format_aacr2(school.name)], ['0', school.uri])
+                           end
+      school_contributor.append(MARC::Subfield.new('1', STANFORD_ROR_URI))
+      marc.append(school_contributor)
 
       department = etd.department
       return if department.blank? || department.match?(/Business|Education|Law/)
 
-      marc.append(MARC::DataField.new('710', '2', ' ', ['a', 'Stanford University.'],
-                                      ['b', "Department of #{format_aacr2(department)}"]))
+      department_contributor = MARC::DataField.new('710', '2', ' ', ['a', 'Stanford University.'],
+                                                   ['b', "Department of #{format_aacr2(department)}"])
+      department_contributor.append(MARC::Subfield.new('1', STANFORD_ROR_URI))
+      marc.append(department_contributor)
     end
 
     def formatted_degreeconf_year
