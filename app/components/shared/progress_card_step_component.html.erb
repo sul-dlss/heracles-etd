@@ -1,6 +1,8 @@
 <%= tag.div class: classes do %>
-  <%= render Edit::CharacterCircleComponent.new(character:, variant:, classes: 'me-2 my-2') %>
-  <div class="d-inline-flex flex-column">
+  <div class="col-1 col-lg-2">
+    <%= render Edit::CharacterCircleComponent.new(character:, variant:, classes: 'me-2 my-2') %>
+  </div>
+  <div class="col-11 col-lg-10 mt-2 pt-1 ps-3 ps-xl-0 d-inline-flex flex-column lh-sm">
     <div><%= label %></div>
     <div class="text-muted"><%= helpers.local_time(step_at) if step_at.present? %></div>
     <div class="text-muted mt-2 pt-2"><%= comment %></div>
