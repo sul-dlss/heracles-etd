@@ -15,7 +15,7 @@ module Shared
 
     def step_number_for(step)
       if SubmissionPresenter.step_done?(step:, submission:)
-        render(Edit::CharacterCircleComponent.new(character: '✓', variant: :success, classes: 'me-2 my-2'))
+        render(Edit::CharacterCircleComponent.new(variant: :success, classes: 'me-2 my-2'))
       else
         character = SubmissionPresenter.step_number(step:)
         render(Edit::CharacterCircleComponent.new(character:, classes: 'me-2 my-2'))
@@ -36,7 +36,7 @@ module Shared
     end
 
     def progress_step_decorator(step_number:, step_done:)
-      return { character: '✓', variant: :success } if step_done
+      return { variant: :success } if step_done
       return { character: step_number, variant: :disabled } unless step_number > 8
 
       { variant: :blank }

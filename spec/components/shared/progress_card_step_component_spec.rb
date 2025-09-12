@@ -6,7 +6,7 @@ RSpec.describe Shared::ProgressCardStepComponent, type: :component do
   context 'when success variant' do
     it 'renders the step' do
       render_inline(described_class.new(variant: :success, label: 'Verified citation'))
-      expect(page).to have_css('.character-circle-success', text: '✓')
+      expect(page).to have_css('.character-circle-success.character-circle-check', text: '') # U+F633
       expect(page).to have_css('div', text: 'Verified citation')
     end
   end
