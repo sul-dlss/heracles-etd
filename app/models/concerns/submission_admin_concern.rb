@@ -25,14 +25,14 @@ module SubmissionAdminConcern
     scope :at_submitted, -> { has_submitted_at.not_reader_approved }
     scope :at_reader_approved, -> { reader_approved.not_registrar_approved.has_submitted_at }
     scope :at_registrar_approved, -> { registrar_approved.no_catalog_record_id.reader_approved.has_submitted_at }
-    scope :at_ils_loaded, lambda {
+    scope :at_ils_loaded, -> {
       has_catalog_record_id.ils_record_not_updated.registrar_approved.reader_approved.has_submitted_at
     }
-    scope :at_ils_cataloged, lambda {
+    scope :at_ils_cataloged, -> {
       ils_record_updated.accessioning_not_started.has_catalog_record_id.registrar_approved
                         .reader_approved.has_submitted_at
     }
-    scope :at_accessioning_started, lambda {
+    scope :at_accessioning_started, -> {
       accessioning_started.ils_record_updated.has_catalog_record_id.registrar_approved.reader_approved.has_submitted_at
     }
   end

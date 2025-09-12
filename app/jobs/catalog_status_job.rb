@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Job to update catalog status of ETDs and trigger accessioning when ready
-class CatalogStatusJob < ApplicationJob
+class CatalogStatusJob < RetriableJob
   def perform
     Honeybadger.check_in(Settings.honeybadger_checkins.catalog_status)
 
