@@ -14,7 +14,8 @@ class SubmissionsController < ApplicationController
 
   def edit
     if @submission.submitted?
-      authorize! @submission, to: :show?
+      # Allow the redirect to happen, and let the `show` action do its own authorization
+      skip_verify_authorized!
       return redirect_to submission_path(@submission)
     end
 
