@@ -6,40 +6,37 @@ module ActiveStorage
   class MigratorService
     WORKSPACE_DIR = '/opt/app/etd/workspace'
 
-    def initialize(submission:)
-      @submission = submission
+    def self.migrate_all(logger:)
+      new(logger: logger).migrate_all
     end
 
-    attr_reader :submission
+    def initialize(logger:)
+      @logger = logger
+    end
+
+    attr_reader :logger
+
+    def migrate_all
+      logger.info "Starting migration of legacy attachments at #{Time.current}"
+      logger.info "Using workspace directory: #{WORKSPACE_DIR}"
+      logger.info "Found #{legacy_submissions.count} submissions to process"
+      legacy_submissions.each do |legacy_submission|
+        logger.info "Processing submission #{legacy_submission.id}, dissertation_id: #{legacy_submission.druid}"
+        # Migrate permission files first
+        # Permission files
+        if legacy_submission.permission_files.none?
+          logger.info "No permission files found for submission #{legacy_submission.id}"
+        end
+      end
+    end
 
     private
 
     # Returns all submissions that do not have an ActiveStorage attachment for the dissertation file
     def legacy_submissions
-      Submission.left_joins(:dissertation_file_attachment).where(active_storage_attachments: { id: nil })
-    end
-
-    # Generates SQL to find legacy attachments of a specific type for the current submission
-    def legacy_attachment_sql(file_type)
-      'SELECT * FROM attachments ' \
-        'JOIN uploaded_files ON attachments.uploaded_file_id = uploaded_files.id ' \
-        "WHERE attachments.submission_id = #{submission.id} " \
-        "AND uploaded_files.type = '#{file_type}'"
-    end
-
-    def legacy_permission_files
-      sql = legacy_attachment_sql('PermissionFile')
-      ActiveRecord::Base.connection.execute(sql)
-    end
-
-    def legacy_supplemental_files
-      sql = legacy_attachment_sql('SupplementalFile')
-      ActiveRecord::Base.connection.execute(sql)
-    end
-
-    def legacy_dissertation_file
-      sql = legacy_attachment_sql('DissertationFile')
-      ActiveRecord::Base.connection.execute(sql)
+      @legacy_submissions ||= Submission.left_joins(:dissertation_file_attachment)
+                                        .where(active_storage_attachments: { id: nil })
+                                        .map { |submission| ActiveStorage::LegacySubmission.new(submission:) }
     end
 
     def legacy_file_path(file_name)
