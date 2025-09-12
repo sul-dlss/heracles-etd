@@ -25,6 +25,7 @@ RSpec.describe Show::SupplementalFilesStepComponent, type: :component do
       row = page.all('#supplemental-files-table tbody tr')
       expect(row[0]).to have_link('supplémental_1.pdf')
       expect(row[0]).to have_no_button('Remove')
+      expect(row[0]).to have_css('td', text: 'pdf', exact_text: true)
       expect(row[1]).to have_content('Supplemental file supplémental_1.pdf')
       expect(row[2]).to have_link('supplemental_2.pdf')
       expect(row[2]).to have_no_button('Remove')

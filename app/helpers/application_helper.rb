@@ -16,4 +16,8 @@ module ApplicationHelper
   def required_field
     content_tag(:span, '* Required', class: 'text-danger')
   end
+
+  def human_content_type(content_type)
+    content_type.split('/').last
+  end
 end

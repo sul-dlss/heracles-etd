@@ -10,7 +10,7 @@
                             ]) %>
   <% permission_files.each do |permission_file| %>
     <% component.with_row(label: link_to(permission_file.filename, permission_file_submission_path(submission, permission_file))) do |row_component| %>
-      <%= row_component.with_cell do %><%= permission_file.content_type %><% end %>
+      <%= row_component.with_cell do %><%= helpers.human_content_type(permission_file.content_type) %><% end %>
       <%= row_component.with_cell do %><%= helpers.number_to_human_size(permission_file.byte_size) %><% end %>
       <%= row_component.with_cell do %><%= helpers.local_time(permission_file.created_at) %><% end %>
       <%= row_component.with_cell do %>
