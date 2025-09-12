@@ -25,7 +25,7 @@ RSpec.describe Embargo do
 
   describe '.embargo_date' do
     let(:embargo_date) { described_class.embargo_date(start_date:, id: '2 years') }
-    let(:start_date) { Time.zone.today }
+    let(:start_date) { Time.zone.today.beginning_of_day }
     let(:expected_embargo_date) { (start_date + 2.years).to_time }
 
     it 'returns the correct embargo date' do
