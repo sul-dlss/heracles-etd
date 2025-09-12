@@ -10,7 +10,7 @@
                             ]) %>
   <% supplemental_files.each do |supplemental_file| %>
     <% component.with_row(label: link_to(supplemental_file.filename, supplemental_file_submission_path(submission, supplemental_file))) do |row_component| %>
-      <%= row_component.with_cell do %><%= supplemental_file.content_type %><% end %>
+      <%= row_component.with_cell do %><%= helpers.human_content_type(supplemental_file.content_type) %><% end %>
       <%= row_component.with_cell do %><%= helpers.number_to_human_size(supplemental_file.byte_size) %><% end %>
       <%= row_component.with_cell do %><%= helpers.local_time(supplemental_file.created_at) %><% end %>
       <%= row_component.with_cell do %>
