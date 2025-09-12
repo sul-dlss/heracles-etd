@@ -23,10 +23,8 @@ class SubmissionsController < ApplicationController
       @submission.dissertation_file.purge
     elsif params.dig(:submission, :remove_supplemental_file)
       @submission.supplemental_files.find(params[:submission][:remove_supplemental_file]).delete
-      @submission.update!(supplemental_files_provided: nil) if @submission.supplemental_files.empty?
     elsif params.dig(:submission, :remove_permission_file)
       @submission.permission_files.find(params[:submission][:remove_permission_file]).delete
-      @submission.update!(permissions_provided: nil) if @submission.permission_files.empty?
     else
       @submission.update!(submission_params)
       if @submission.dissertation_file.attached?
