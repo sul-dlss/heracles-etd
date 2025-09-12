@@ -3,7 +3,7 @@
     <h2 class="h4 mb-0">Progress</h2>
   </div>
   <div class="card-body">
-    <ul class="list-unstyled">
+    <ul class="list-unstyled mb-0">
       <%= tag.li 'aria-label': aria_label_for_step(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') do %>
         <%= render progress_card_step_component(step: SubmissionPresenter::CITATION_STEP, label: 'Citation details verified') %>
       <% end %>
