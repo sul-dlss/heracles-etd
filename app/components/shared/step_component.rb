@@ -5,15 +5,21 @@ module Shared
   class StepComponent < ApplicationComponent
     renders_one :help_content
     renders_one :body_content
-    def initialize(title:, step: nil, submission: nil)
+    def initialize(title:, step: nil, submission: nil, data: {}, classes: [])
       @step = step
       @title = title
       @submission = submission
+      @data = data
+      @classes = classes
 
       super()
     end
 
-    attr_reader :title, :submission, :step
+    attr_reader :data, :title, :submission, :step
+
+    def classes
+      merge_classes('card mb-3', @classes)
+    end
 
     def step_number
       return if step.blank?
@@ -46,7 +52,7 @@ module Shared
     end
 
     def badge_component
-      return if step.blank?
+      return Shared::CompletedBadgeComponent.new if submission.blank?
 
       step_done? ? Shared::CompletedBadgeComponent.new(id:) : Shared::InProgressBadgeComponent.new(id:)
     end
