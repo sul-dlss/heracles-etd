@@ -2,7 +2,8 @@
 
 # Controller for Submissions
 class SubmissionsController < ApplicationController
-  before_action :set_submission, :authorize_submission
+  before_action :set_submission
+  before_action :authorize_submission, except: [:edit]
 
   def show
     # PeopleSoft sends all users to the show route, but if this is the student
@@ -12,6 +13,13 @@ class SubmissionsController < ApplicationController
   end
 
   def edit
+    if @submission.submitted?
+      authorize! @submission, to: :show?
+      return redirect_to submission_path(@submission)
+    end
+
+    authorize! @submission # Authorization has to happen after the redirect check
+
     # The current user's orcid is provided via shibboleth. It needs to be added
     # to the submission via the edit view.
     @submission.update!(orcid: current_user.orcid) if needs_orcid_update?

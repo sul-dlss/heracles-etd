@@ -41,4 +41,18 @@ RSpec.describe 'Editing a submission' do
       end
     end
   end
+
+  context 'when the student tries to edit a submitted submission' do
+    let(:submission) { create(:submission, :submitted) }
+
+    before do
+      sign_in(submission.sunetid)
+    end
+
+    it 'redirects to the submission show page' do
+      get edit_submission_path(submission)
+
+      expect(response).to redirect_to(submission_path(submission))
+    end
+  end
 end
