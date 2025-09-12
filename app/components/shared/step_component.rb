@@ -18,7 +18,7 @@ module Shared
     attr_reader :data, :title, :submission, :step
 
     def classes
-      merge_classes('card mb-3', @classes)
+      merge_classes('card card-step mb-3', @classes)
     end
 
     def step_number
