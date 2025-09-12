@@ -17,7 +17,7 @@ module Shared
     attr_reader :character, :comment, :variant, :label, :step_at
 
     def classes
-      merge_classes(@classes)
+      merge_classes('row', @classes)
     end
   end
 end
