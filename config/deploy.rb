@@ -55,6 +55,4 @@ set :solid_queue_systemd_use_hooks, true
 
 # configure capistrano-rails to work with propshaft instead of sprockets
 # (we don't have public/assets/.sprockets-manifest* or public/assets/manifest*.*)
-set :assets_manifests, lambda {
-  [release_path.join('public', fetch(:assets_prefix), '.manifest.json')]
-}
+set :assets_manifests, -> { [release_path.join('public', fetch(:assets_prefix), '.manifest.json')] }

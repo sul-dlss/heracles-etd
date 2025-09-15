@@ -55,6 +55,9 @@ Style/Documentation:
     - 'config/application.rb'
     - 'app/policies/**/*.rb'
 
+Style/Lambda:
+  EnforcedStyle: literal
+
 RSpec/ExampleLength:
   Enabled: false
 

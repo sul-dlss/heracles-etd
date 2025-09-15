@@ -4,10 +4,10 @@ module Elements
   module Forms
     # Component for a toggle-like radio button group field
     class ToggleComponent < ApplicationComponent
-      renders_one :left_toggle_option, lambda { |**args|
+      renders_one :left_toggle_option, ->(**args) {
         Elements::Forms::ToggleOptionComponent.new(position: :left, **args)
       }
-      renders_one :right_toggle_option, lambda { |**args|
+      renders_one :right_toggle_option, ->(**args) {
         Elements::Forms::ToggleOptionComponent.new(position: :right, **args)
       }
 
