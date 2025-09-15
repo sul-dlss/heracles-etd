@@ -49,7 +49,7 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Reader Approved via PeopleSoft' }
   # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%d/%m/%Y') }
+  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
 
   let!(:etd) do
     create(:submission,
@@ -66,13 +66,14 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
 
     context 'when passed in id is found' do
       before do
-        # allow(RetriableWorkflowUpdateJob).to receive(:perform_later)
         allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
       end
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Rails.application.config.time_zone) }
+      let(:last_reader_action_at) do
+        DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
+      end
 
       it 'updates an existing Etd' do
         post '/etds',

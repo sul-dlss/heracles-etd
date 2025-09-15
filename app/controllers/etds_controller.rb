@@ -90,7 +90,7 @@ class EtdsController < ApplicationController
     {
       readerapproval: etd_params[:readerapproval],
       readercomment: etd_params[:readercomment],
-      last_reader_action_at: etd_params[:readeractiondttm]&.in_time_zone(Rails.application.config.time_zone)
+      last_reader_action_at: parse_datetime(etd_params[:readeractiondttm])
     }
   end
 
@@ -98,7 +98,7 @@ class EtdsController < ApplicationController
     {
       regapproval: etd_params[:regapproval],
       regcomment: etd_params[:regcomment],
-      last_registrar_action_at: etd_params[:regactiondttm]&.in_time_zone(Rails.application.config.time_zone)
+      last_registrar_action_at: parse_datetime(etd_params[:regactiondttm])
     }
   end
 
@@ -167,5 +167,11 @@ class EtdsController < ApplicationController
     logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
     Honeybadger.notify(error_msg, context: { xml: request.raw_post })
     false
+  end
+
+  def parse_datetime(date_string)
+    return if date_string.blank?
+
+    DateTime.strptime(date_string, '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
   end
 end
