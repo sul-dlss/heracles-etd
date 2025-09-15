@@ -145,6 +145,15 @@ RSpec.describe 'Edit Submission' do
         click_link_or_button 'Remove'
       end
 
+      # Testing max file uploads
+      attach_file 'Upload supplemental files', [
+        file_fixture('supplemental_1.pdf'),
+        file_fixture('supplemental_2.pdf'),
+        file_fixture('supplemental_3.pdf')
+      ]
+      expect(page).to have_css('div[role="alert"]',
+                               text: 'You can upload a maximum of 2 files. Please select fewer files.')
+
       attach_file 'Upload supplemental files', [
         file_fixture('supplemental_1.pdf'),
         file_fixture('supplemental_2.pdf')
@@ -183,6 +192,16 @@ RSpec.describe 'Edit Submission' do
         expect(page).to have_css('th', text: 'permission_1.pdf')
         click_link_or_button 'Remove'
       end
+
+      # Testing max file uploads
+      attach_file 'Upload permission files', [
+        file_fixture('permission_1.pdf'),
+        file_fixture('permission_2.pdf'),
+        file_fixture('permission_3.pdf')
+      ]
+
+      expect(page).to have_css('div[role="alert"]',
+                               text: 'You can upload a maximum of 2 files. Please select fewer files.')
 
       attach_file 'Upload permission files', [
         file_fixture('permission_1.pdf'),

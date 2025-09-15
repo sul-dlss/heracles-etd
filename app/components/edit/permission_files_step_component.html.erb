@@ -36,11 +36,8 @@
     <% end %>
 
     <% if permissions_provided? %>
-      <div class="flex-grow-1">
-        <div class="d-flex align-items-start">
-          <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
-        </div>
-      </div>
+      <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
+      <p>You can upload a maximum of <%= max_files %> permission files. Optionally enter a short description for each file.</p>
     <% end %>
 
     <% if permission_files.any? %>
@@ -53,11 +50,12 @@
       <% end %>
     <% end %>
     <% if permissions_provided? %>
-      <%= form_with model: submission, url: attach_permission_files_submission_path(submission) do |form| %>
+      <%= form_with model: submission, url: attach_permission_files_submission_path(submission), data: form_data do |form| %>
         <%= form.label :permission_files, class: 'form-label' do %>
           Upload permission files (maximum size 1GB per file) <%= helpers.required_field %>
         <% end %>
-        <%= form.file_field :permission_files, accept: 'application/pdf', multiple: true, data: { controller: 'submit', action: 'submit#submit' }, class: 'form-control', style: 'width: 350px;' %>
+        <%= form.file_field :permission_files, accept: 'application/pdf', multiple: true, data: file_field_data, class: 'form-control', style: 'width: 350px;' %>
+        <div id="permission-files-error" class="text-danger mt-1 d-none" role="alert" data-files-target="warning">You can upload a maximum of <%= max_files %> files. Please select fewer files.</div>
       <% end %>
     <% end %>
 
