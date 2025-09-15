@@ -5,14 +5,6 @@ class UploadedFile < ApplicationRecord
   has_many :attachments, dependent: :destroy
   has_many :submissions, through: :attachments
 
-  # this will allow the subclasses that Rails automagically instantiates through
-  # STI to be checked by the correct policy
-  # https://actionpolicy.evilmartians.io/#/lookup_chain
-  # https://api.rubyonrails.org/classes/ActiveRecord/Inheritance.html
-  def self.policy_class
-    UploadedFilePolicy
-  end
-
   def parent
     submissions.first
   end

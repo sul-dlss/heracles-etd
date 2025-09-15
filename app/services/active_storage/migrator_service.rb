@@ -18,9 +18,12 @@ module ActiveStorage
     delegate :legacy_parts, to: :submission
 
     def migrate
-      migrate_permission_files
-      migrate_supplemental_files
-      migrate_dissertation_file
+      submission.transaction do
+        migrate_permission_files
+        migrate_supplemental_files
+        migrate_dissertation_file
+        submission.save!
+      end
     end
 
     private
