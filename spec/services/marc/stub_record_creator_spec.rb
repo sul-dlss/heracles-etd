@@ -14,7 +14,7 @@ RSpec.describe Marc::StubRecordCreator do
       areas for about a half century in fields including control,
       finance, signal processing, data mining, and machine learning.
       This thesis focuses on several topics involving convex optimization,
-      with the specific application of machine learning.
+      with the specific application of machine learning. $aves money!
     ABSTRACT
   end
   let(:submission) do
@@ -710,13 +710,20 @@ RSpec.describe Marc::StubRecordCreator do
     end
 
     describe '520 field for abstract' do
+      subject(:abstracts) { marc_record.fields('520') }
+
       it 'has one 520 for the abstract' do
-        expect(marc_record.fields('520').count).to eq(1)
+        expect(abstracts.count).to eq(1)
       end
 
       it 'has the contents of the abstract as subfield a' do
-        field = marc_record.fields('520').first
-        expect(field['a']).to eq creator.send(:format_aacr2, abstract)
+        expect(abstracts.first['a']).to eq(
+          'Convex optimization has been well-studied as a mathematical topic for more than a century, ' \
+          'and has been applied in practice in many application areas for about a half century in ' \
+          'fields including control, finance, signal processing, data mining, and machine learning. ' \
+          'This thesis focuses on several topics involving convex optimization, with the specific ' \
+          'application of machine learning. {dollar}aves money!.'
+        )
       end
     end
 
