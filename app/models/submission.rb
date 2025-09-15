@@ -9,6 +9,10 @@ class Submission < ApplicationRecord
 
   has_many :readers, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :submission
 
+  # Legacy Attachments: to be removed after migration to Active Storage is complete
+  has_many :attachments, dependent: :destroy
+  has_many :legacy_parts, through: :attachments, source: :uploaded_file
+
   # Active Storage attachments
   has_one_attached :dissertation_file, dependent: :purge_later
   has_one_attached :augmented_dissertation_file, dependent: :purge_later

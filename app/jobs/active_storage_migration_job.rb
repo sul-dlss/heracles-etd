@@ -5,10 +5,9 @@
 class ActiveStorageMigrationJob < ApplicationJob
   queue_as :default
 
-  def perform(submission_id)
-    submission = Submission.find(submission_id)
-    Honeybadger.context(submission:)
-    legacy_submission = ActiveStorage::LegacySubmission.new(submission:)
-    ActiveStorage::MigratorService.migrate(legacy_submission:)
+  def perform(legacy_dissertation_file_id)
+    dissertation_file = LegacyDissertationFile.find(legacy_dissertation_file_id)
+    Honeybadger.context(submission: dissertation_file.submissions.first)
+    ActiveStorage::MigratorService.migrate(dissertation_file:)
   end
 end
