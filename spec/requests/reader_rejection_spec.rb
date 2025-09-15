@@ -49,7 +49,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Reader Rejected via PeopleSoft' }
   # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%d/%m/%Y') }
+  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
   let(:rejection) { 'Rejected' }
 
   let!(:etd) do
@@ -73,7 +73,9 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_reader_action_at) { "#{action_date} 09:44:49".in_time_zone(Rails.application.config.time_zone) }
+      let(:last_reader_action_at) do
+        DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
+      end
 
       context 'with a basic reader rejection' do
         it 'updates an existing Etd' do
