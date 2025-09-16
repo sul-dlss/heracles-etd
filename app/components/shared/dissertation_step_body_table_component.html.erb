@@ -8,10 +8,10 @@
                               { label: 'Upload Date' },
                               with_remove ? { label: 'Remove', classes: 'sr-only' } : { label: '' }
                             ]) %>
-  <% component.with_row(label: link_to(filename, dissertation_file_submission_path(submission))) do |row_component| %>
+  <% component.with_row(label: dissertation_file? ? link_to(filename, dissertation_file_submission_path(submission)) : 'Not uploaded') do |row_component| %>
     <%= row_component.with_cell do %>PDF<% end %>
-    <%= row_component.with_cell do %><%= file_size %><% end %>
-    <%= row_component.with_cell do %><%= helpers.local_time(created_at) %><% end %>
+    <%= row_component.with_cell do %><%= file_size if file_size %><% end %>
+    <%= row_component.with_cell do %><%= helpers.local_time(created_at) if created_at %><% end %>
     <%= row_component.with_cell do %>
       <% if with_remove %>
         <%= render Edit::ButtonFormComponent.new(submission:, field: :remove_dissertation_file, value: 'true', classes: 'p-0', data: remove_btn_data, aria: { label: "Remove #{filename}" }) do %>
