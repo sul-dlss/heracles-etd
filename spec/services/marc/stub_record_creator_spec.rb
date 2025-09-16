@@ -128,7 +128,7 @@ RSpec.describe Marc::StubRecordCreator do
       let(:field006) { marc_record.fields('006').first }
 
       it 'has bytes set as expected' do
-        expect(field006.value).to eq('m        d        ')
+        expect(field006.value).to eq('m     o  d        ')
       end
     end
 
