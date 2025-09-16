@@ -5,10 +5,6 @@ module Marc
   class WriteStubRecord
     attr_reader :druid, :record
 
-    def self.output_file!(druid:, record:)
-      new(druid:, record:).output_file!
-    end
-
     def self.send_to_folio(druid:, record:)
       new(druid:, record:).send_to_folio
     end
@@ -18,16 +14,6 @@ module Marc
     def initialize(druid:, record:)
       @druid = druid
       @record = record
-    end
-
-    # Write MARC record to latest working directory
-    def output_file!
-      FileUtils.mkdir_p(output_directory)
-
-      File.open(File.join(output_directory, "#{druid.tr(':', '_')}.marc"), 'w') do |f|
-        writer = MARC::Writer.new(f)
-        writer.write(record)
-      end
     end
 
     # Send MARC record to folio
@@ -47,7 +33,7 @@ module Marc
 
     private
 
-    def data_importer # rubocop:disable Metrics/AbcSize
+    def data_importer
       @data_importer ||= FolioClient.data_import(
         records: [record],
         job_profile_id: Settings.catalog.folio.marc_job_profile_uuid,
@@ -55,12 +41,7 @@ module Marc
       )
     rescue FolioClient::ResourceNotFound => e
       Rails.logger.error("#{e.class}: #{e.message}. Error sending stub MARC record to FOLIO for #{druid}")
-      Honeybadger.notify(
-        'Error sending stub MARC record to FOLIO.',
-        error_message: e.message,
-        error_class: e.class,
-        context: { druid: }
-      )
+      Honeybadger.context(druid:)
       raise e
     end
 
