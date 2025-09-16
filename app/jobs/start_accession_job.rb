@@ -47,11 +47,13 @@ class StartAccessionJob < ApplicationJob
   end
 
   def refresh_and_add_missing_metadata
-    object_client.refresh_metadata
+    object_client.refresh_descriptive_metadata_from_ils
     object_client
       .find
       .then { |existing_dro| add_access_and_structural(existing_dro) }
       .then { |updated_dro| maybe_add_orcid_type_attribute(updated_dro) }
+      .then { |updated_dro| add_doi_identifier(updated_dro) }
+      .then { |updated_dro| add_datacite_resource_types(updated_dro) }
   end
 
   def object_client
@@ -65,6 +67,37 @@ class StartAccessionJob < ApplicationJob
         file_sets = Cocina::FileSetsGenerator.file_sets(submission:, dro_version: existing_dro.version.to_i)
         props[:contains] = file_sets if file_sets.present?
       end
+    )
+  end
+
+  def add_doi_identifier(dro)
+    dro.new(
+      identification: dro.identification.new(
+        doi: "#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')}"
+      )
+    )
+  end
+
+  def add_datacite_resource_types(dro)
+    dro.new(
+      description: dro.description.new(
+        form: dro.description.form.push(
+          {
+            source: {
+              value: 'DataCite resource types'
+            },
+            type: 'resource type',
+            value: 'Dissertation'
+          },
+          {
+            source: {
+              value: 'Stanford self-deposit resource types'
+            },
+            type: 'resource type',
+            structuredValue: [{ type: 'subtype', value: 'Academic thesis' }]
+          }
+        )
+      )
     )
   end
 

@@ -54,7 +54,7 @@ RSpec.describe StartAccessionJob do
   end
   let(:content_dir) { Dir.mktmpdir('content') }
   let(:druid_tools) { instance_double(DruidTools::Druid, content_dir:) }
-  let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client, refresh_metadata: true, find: existing_dro, update: true) }
+  let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client, refresh_descriptive_metadata_from_ils: true, find: existing_dro, update: true) }
   let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, close: nil, current: 1) }
 
   before do
@@ -79,12 +79,43 @@ RSpec.describe StartAccessionJob do
       expect(File.exist?(File.join(content_dir, 'permission_1.pdf'))).to be true
       expect(File.exist?(File.join(content_dir, 'permission_2.pdf'))).to be true
 
-      expect(object_client).to have_received(:update) do |args|
-        dro = args[:params]
-        expect(dro.access).to be_present
-        expect(dro.structural).to be_present
+      expect(object_client).to have_received(:update) do |params:|
+        expect(params.access).to be_present
+        expect(params.structural).to be_present
+        expect(params.description.to_h[:form].first).to include(
+          {
+            source: {
+              note: [],
+              value: 'DataCite resource types'
+            },
+            type: 'resource type',
+            value: 'Dissertation'
+          }
+        )
+        expect(params.description.to_h[:form].second).to include(
+          {
+            source: {
+              note: [],
+              value: 'Stanford self-deposit resource types'
+            },
+            type: 'resource type',
+            structuredValue: [
+              {
+                appliesTo: [],
+                groupedValue: [],
+                identifier: [],
+                note: [],
+                parallelValue: [],
+                structuredValue: [],
+                type: 'subtype',
+                value: 'Academic thesis'
+              }
+            ]
+          }
+        )
+        expect(params.identification.doi).to eq("10.80343/#{druid.delete_prefix('druid:')}")
         # normalizes the ORCID identifier for the author
-        expect(dro.description.contributor.first.identifier.first.to_h).to eq(
+        expect(params.description.contributor.first.identifier.first.to_h).to eq(
           {
             appliesTo: [],
             groupedValue: [],
