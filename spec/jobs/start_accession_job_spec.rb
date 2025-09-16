@@ -54,7 +54,7 @@ RSpec.describe StartAccessionJob do
   end
   let(:content_dir) { Dir.mktmpdir('content') }
   let(:druid_tools) { instance_double(DruidTools::Druid, content_dir:) }
-  let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client, refresh_metadata: true, find: existing_dro, update: true) }
+  let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client, refresh_descriptive_metadata_from_ils: true, find: existing_dro, update: true) }
   let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, close: nil, current: 1) }
 
   before do

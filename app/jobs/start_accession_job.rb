@@ -47,7 +47,7 @@ class StartAccessionJob < ApplicationJob
   end
 
   def refresh_and_add_missing_metadata
-    object_client.refresh_metadata
+    object_client.refresh_descriptive_metadata_from_ils
     object_client
       .find
       .then { |existing_dro| add_access_and_structural(existing_dro) }
