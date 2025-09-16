@@ -4,3 +4,5 @@ peoplesoft:
   token_url: 'http://tokensrus.example.edu'
   client_id: 'foo'
   client_secret: 'bar'
+
+file_uploads_root: <%= Rails.root.join("tmp/storage") %>
