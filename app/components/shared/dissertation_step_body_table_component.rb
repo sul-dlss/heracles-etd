@@ -28,5 +28,9 @@ module Shared
         focus_id_param: helpers.submission_form_field_id(submission, :dissertation_file)
       }
     end
+
+    def dissertation_file?
+      dissertation_file.attached?
+    end
   end
 end
