@@ -3,6 +3,31 @@
 
 # heracles-etd
 
+`Heracles ETD` is Stanford University's application for submitting and approving electronic theses and dissertations. It is used by students and by staff at both the Office of the Registrar and the Stanford Libraries. 
+
+This application is a successor to [Hydra ETD](https://github.com/sul-dlss-deprecated/hydra_etd), which was retired in September 2025.
+
+Additional documentation is available in the [https://github.com/sul-dlss/heracles-etd/wiki](wiki).
+
+## Data flow
+
+1. First the **Registrar** POSTs to the `EtdsController` to create the Submission record in this app and register the item in SDR.
+1. Next, the **student** visits `/submit/{DISSERTATION_ID_OR_DRUID}` to upload their files and enter metadata. This updates the Submission record, including attaching files for the dissertation, supplemental files, and permission files.
+1. Once the **student** has completed all requirements from the prior step, the now ready submission is posted back to the Registrar system.
+1. Next the **Registrar** hits `EtdsController` (again) when all the readers have weighed in, and again when Registrar updates the ETD status. The Submission record is updated accordingly.
+   1. Repeat previous 2 steps and this one until dissertation has both reader and Registrar approval, per Registrar.
+1. Once approved by the readers and registrar, the `CreateStubMarcRecordJob` runs to create a stub MARC record and write it to Folio, getting the folio_instance_hrid back from Folio. The folio_instance_hrid is recorded in the Submission record and the SDR item is updated (adding the folio_instance_hrid as a catalog link).
+1. Once a day, **catalogers** are sent an email listing the submissions that are ready for cataloging.
+1. A **cataloger** catalogs the submission in Folio.
+1. Every hour the `CatalogStatusJob` runs to query Folio to determine if uncataloged submissions have been cataloged. If so, it kicks off the `StartAccessionJob`.
+1. The `StartAccesionJob`**:
+   1. Refreshes the metadata of the SDR item.
+   2. Retrieves the SDR item and updates the cocina with access metadata (including embargo) and structural metadata (for the files).
+   3. Copies files to the DOR workspace.
+   4. Adds administrative and project tags to the SDR item for the ETD project.
+   5. Closes the version (which initiates accessioning)
+1. The SDR items proceeds with normal accessioning.
+
 ## Admin
 
 ### Test submission
