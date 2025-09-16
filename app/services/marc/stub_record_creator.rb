@@ -65,7 +65,7 @@ module Marc
 
       # Add control fields
       marc.append(MARC::ControlField.new('001', "dor#{bare_druid}"))
-      marc.append(MARC::ControlField.new('006', 'm        d        '))
+      marc.append(MARC::ControlField.new('006', 'm     o  d        '))
       marc.append(MARC::ControlField.new('007', 'cr un'))
       cf008 = "#{Time.zone.now.strftime('%y%m%d')}t#{publication_year}#{copyright_year}cau     om    000 0 eng d"
       marc.append(MARC::ControlField.new('008', cf008))
