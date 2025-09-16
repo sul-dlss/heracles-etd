@@ -22,34 +22,6 @@ RSpec.describe Marc::WriteStubRecord do
     FileUtils.rm_rf(marc_workspace)
   end
 
-  describe '.output_file!' do
-    before do
-      allow(described_class).to receive(:new).and_return(writer)
-      allow(writer).to receive(:output_file!)
-    end
-
-    it 'calls #output_file! on a new instance' do
-      described_class.output_file!(druid:, record:)
-      expect(writer).to have_received(:output_file!).once
-    end
-  end
-
-  describe '#output_file!' do
-    let(:output_dir) { writer.send(:output_directory) }
-    let(:output_file) { File.join(output_dir, "#{druid.tr(':', '_')}.marc") }
-
-    before do
-      FileUtils.remove_dir(output_dir, true)
-    end
-
-    it 'writes expected marc record to the correct location' do
-      expect(File.exist?(output_file)).to be false
-      writer.output_file!
-      expect(File.exist?(output_file)).to be true
-      expect(FileUtils.compare_file(output_file, marc_file)).to be true
-    end
-  end
-
   describe '.send_to_folio' do
     before do
       allow(described_class).to receive(:new).and_return(writer)
@@ -90,7 +62,8 @@ RSpec.describe Marc::WriteStubRecord do
       it 'raises an exception with job_execution_id' do
         expect do
           writer.send_to_folio
-        end.to raise_error("Record import failed.  See the import log in Folio for #{job_execution_id} for more information. #{druid}") # rubocop:disable Layout/LineLength
+        end.to raise_error('Record import failed.  See the import log in Folio for ' \
+                           "#{job_execution_id} for more information. #{druid}")
       end
     end
 
@@ -100,18 +73,13 @@ RSpec.describe Marc::WriteStubRecord do
       before do
         allow(FolioClient).to receive(:data_import).and_raise(FolioClient::ResourceNotFound)
         allow(Rails.logger).to receive(:error)
-        allow(Honeybadger).to receive(:notify)
+        allow(Honeybadger).to receive(:context)
       end
 
       it 'raises an exception and notifies' do
         expect { writer.send_to_folio }.to raise_error(FolioClient::ResourceNotFound)
         expect(Rails.logger).to have_received(:error)
-        expect(Honeybadger).to have_received(:notify)
-          .with('Error sending stub MARC record to FOLIO.',
-                error_message: 'FolioClient::ResourceNotFound',
-                error_class: FolioClient::ResourceNotFound,
-                context: { druid: 'druid:cg532dg5405' })
-          .once
+        expect(Honeybadger).to have_received(:context).with(druid: 'druid:cg532dg5405').once
       end
     end
   end
