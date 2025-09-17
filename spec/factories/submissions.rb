@@ -58,7 +58,7 @@ FactoryBot.define do
       embargo { '6 months' }
       abstract_provided { true }
       rights_selected { 'true' }
-      dissertation_uploaded { 'true' }
+      dissertation_uploaded { true }
       permissions_provided { 'true' }
     end
 

@@ -1,5 +1,5 @@
 class ChangeSubmissionFieldsToBoolean < ActiveRecord::Migration[8.0]
-  FIELDS = %i[citation_verified abstract_provided].freeze
+  FIELDS = %i[citation_verified abstract_provided dissertation_uploaded].freeze
   def up
     # add_column :submissions, :citation_verified_bool, :boolean, default: false, null: false
     # Submission.reset_column_information
