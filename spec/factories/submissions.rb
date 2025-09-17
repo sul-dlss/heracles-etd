@@ -56,7 +56,7 @@ FactoryBot.define do
       sulicense { 'true' }
       cclicense { '3' }
       embargo { '6 months' }
-      abstract_provided { 'true' }
+      abstract_provided { true }
       rights_selected { 'true' }
       dissertation_uploaded { 'true' }
       permissions_provided { 'true' }
