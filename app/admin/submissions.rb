@@ -41,7 +41,7 @@ ActiveAdmin.register Submission do
     end
 
     action_item :new_dummy_submission, only: :index do
-      link_to 'Create Dummy Submission', new_dummy_submission_admin_submissions_path
+      link_to 'Create Dummy Submission', new_dummy_submission_admin_submissions_path, class: 'action-item-button'
     end
   end
 
@@ -181,9 +181,10 @@ ActiveAdmin.register Submission do
     # NOTE: `resource` here is the submission whose show page is being rendered.
     # This is ActiveAdmin-speak.
     if Settings.peoplesoft.enabled && resource.submitted? && SubmissionPresenter.all_done?(submission: resource)
-      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(resource.id),
+      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(resource),
               method: :post,
-              data: { confirm: 'Are you sure you want to re-post to the registrar?' }
+              data: { confirm: 'Are you sure you want to re-post to the registrar?' },
+              class: 'action-item-button'
     end
   end
 
