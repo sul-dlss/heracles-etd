@@ -20,18 +20,22 @@ RSpec.describe 'Show admin interface as DLSS user' do
     expect(page).to have_link('Fall, 2009')
 
     click_link_or_button 'Readers'
-    expect(page).to have_css('.col-name', text: 'Doe, Jim')
+    expect(page).to have_text('Doe, Jim')
 
     click_link_or_button reader.id.to_s
     expect(page).to have_link('Edit Reader')
     expect(page).to have_link('Delete Reader')
 
     click_link_or_button 'Submissions'
-    expect(page).to have_css('.col-title', text: submission.title)
+    within("#submission_#{submission.id}") do
+      expect(page).to have_text(submission.title)
+    end
     click_link_or_button submission.id.to_s
 
-    expect(page).to have_css('.col-name', text: reader.name)
-    expect(page).to have_css('.col-file_name', text: 'dissertation.pdf')
+    within("#reader_#{reader.id}") do
+      expect(page).to have_text(reader.name)
+    end
+    expect(page).to have_text('dissertation.pdf')
     expect(page).to have_link('Edit Submission')
   end
 end
