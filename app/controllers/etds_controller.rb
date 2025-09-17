@@ -30,8 +30,7 @@ class EtdsController < ApplicationController
     Submission.transaction do
       submission.update!(submission_attributes)
 
-      peoplesoft_service.new_reader_action(readers:, reader_action_attributes:)
-      peoplesoft_service.new_registrar_action(registrar_action_attributes:)
+      PeoplesoftService.update(submission:, submission_params: etd_params.to_h)
 
       submission.generate_and_attach_augmented_file!
     end
@@ -45,10 +44,6 @@ class EtdsController < ApplicationController
     return :created if @message == 'created'
 
     :ok
-  end
-
-  def dissertation_id
-    etd_params.expect(:dissertationid)
   end
 
   def druid
@@ -66,8 +61,16 @@ class EtdsController < ApplicationController
                                                univid readerrole finalreader]] }])
   end
 
+  def dissertation_id
+    etd_params.expect(:dissertationid)
+  end
+
   def title
-    etd_params[:title].squish
+    etd_params.expect(:title).squish
+  end
+
+  def readers
+    etd_params.expect(reader: [%i[sunetid name_prefix prefix name suffix type univid readerrole finalreader]])
   end
 
   def degree
@@ -75,31 +78,6 @@ class EtdsController < ApplicationController
     return 'Engineering' if ENG_REGEX.match?(etd_params[:degree])
 
     etd_params[:degree]
-  end
-
-  def peoplesoft_service
-    @peoplesoft_service ||= PeoplesoftService.new(submission:)
-  end
-
-  def readers
-    Reader.sorted_list(etd_params.expect(reader: [%i[sunetid name_prefix prefix name suffix type
-                                                     univid readerrole finalreader]]))
-  end
-
-  def reader_action_attributes
-    {
-      readerapproval: etd_params[:readerapproval],
-      readercomment: etd_params[:readercomment],
-      last_reader_action_at: parse_datetime(etd_params[:readeractiondttm])
-    }
-  end
-
-  def registrar_action_attributes
-    {
-      regapproval: etd_params[:regapproval],
-      regcomment: etd_params[:regcomment],
-      last_registrar_action_at: parse_datetime(etd_params[:regactiondttm])
-    }
   end
 
   # Authentication based on an allow list of server names and IP addresses
@@ -160,18 +138,12 @@ class EtdsController < ApplicationController
   end
 
   def valid_xml?
-    true if etd_params && dissertation_id && readers
+    etd_params && dissertation_id && readers
   rescue StandardError => e
     error_msg = "Unable to process incoming dissertation: #{e.message}"
     @invalid_xml_message = "#{error_msg}\n\nIncoming XML:\n\n#{request.raw_post}"
     logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
     Honeybadger.notify(error_msg, context: { xml: request.raw_post })
     false
-  end
-
-  def parse_datetime(date_string)
-    return if date_string.blank?
-
-    DateTime.strptime(date_string, '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
   end
 end

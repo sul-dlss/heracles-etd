@@ -94,7 +94,7 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
         XML
       end
 
-      it 'Notifies Honeybadger and returns an HTTP status of 400' do
+      it 'notifies Honeybadger and returns an HTTP status of 400' do
         post '/etds',
              params: data,
              headers: { Authorization: dlss_admin_credentials,

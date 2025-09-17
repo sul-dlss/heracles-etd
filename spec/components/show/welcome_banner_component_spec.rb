@@ -19,7 +19,7 @@ RSpec.describe Show::WelcomeBannerComponent, type: :component do
   end
 
   context 'with an approved submission' do
-    let(:submission) { create(:submission, :submitted, :registrar_approved) }
+    let(:submission) { create(:submission, :submitted, :ready_for_cataloging) }
 
     it 'renders the welcome banner' do
       render_inline(described_class.new(submission: submission))

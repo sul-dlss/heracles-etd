@@ -83,8 +83,8 @@ class Submission < ApplicationRecord
     submitted_at.present?
   end
 
-  def approved?
-    /approved/i.match?(regapproval)
+  def ready_for_cataloging?
+    /approved/i.match?(regapproval) && /approved/i.match?(readerapproval)
   end
 
   def creative_commons_license
