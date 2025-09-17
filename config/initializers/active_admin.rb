@@ -4,21 +4,28 @@ ActiveAdmin.setup do |config|
   # == Site Title
   #
   # Set the title that is displayed on the main layout
-  # for each of the active admin pages.
+  # for each of the active admin pages. Can also be customized
+  # by extracting the _site_header partial into your project
+  # to use your own logo, styles, etc.
   #
-  config.site_title = 'ETD Management'
+  config.site_title = 'ETD Admin Dashboard'
 
-  # Set the link url for the title. For example, to take
-  # users to your main site. Defaults to no link.
+  # == Load Paths
   #
-  # config.site_title_link = "/"
-
-  # Set an optional image to be displayed for the header
-  # instead of a string (overrides :site_title)
+  # By default Active Admin files go inside app/admin/.
+  # You can change this directory.
   #
-  # Note: Aim for an image that's 21px high so it fits in the header.
+  # eg:
+  #   config.load_paths = [File.join(Rails.root, 'app', 'ui')]
   #
-  # config.site_title_image = "logo.png"
+  # Or, you can also load more directories.
+  # Useful when setting namespaces with users that are not your main AdminUser entity.
+  #
+  # eg:
+  #   config.load_paths = [
+  #     File.join(Rails.root, 'app', 'admin'),
+  #     File.join(Rails.root, 'app', 'cashier')
+  #   ]
 
   # == Default Namespace
   #
@@ -56,8 +63,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # within the application controller.
-
-  # No, this isn't authentication. See this method for more explanation.
+  # config.authentication_method = :authenticate_admin_user!
   config.authentication_method = :skip_authorize_for_active_admin!
 
   # == User Authorization
@@ -65,7 +71,10 @@ ActiveAdmin.setup do |config|
   # Active Admin will automatically call an authorization
   # method in a before filter of all controller actions to
   # ensure that there is a user with proper rights. You can use
-  # CanCanAdapter or make your own. Please refer to documentation.
+  # CanCanAdapter, PunditAdapter, or make your own. Please
+  # refer to the documentation.
+  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  # config.authorization_adapter = ActiveAdmin::PunditAdapter
   config.authorization_adapter = 'Admin::ActionPolicyAdapter'
 
   # In case you prefer Pundit over other solutions you can here pass
@@ -86,6 +95,7 @@ ActiveAdmin.setup do |config|
   # because, by default, user gets redirected to Dashboard. If user
   # doesn't have access to Dashboard, he'll end up in a redirect loop.
   # Method provided here should be defined in application_controller.rb.
+  # config.on_unauthorized_access = :access_denied
   config.on_unauthorized_access = :deny_access
 
   # == Current User
@@ -95,6 +105,7 @@ ActiveAdmin.setup do |config|
   #
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
+  # config.current_user_method = :current_admin_user
   config.current_user_method = :current_user
 
   # == Logging Out
@@ -103,17 +114,12 @@ ActiveAdmin.setup do |config|
   # settings configure the location and method used for the link.
   #
   # This setting changes the path where the link points to. If it's
-  # a string, the strings is used as the path. If it's a Symbol, we
+  # a string, the string is used as the path. If it's a Symbol, we
   # will call the method to return the path.
   #
   # Default:
-  config.logout_link_path = 'https://login.stanford.edu/idp/profile/Logout' # :destroy_admin_user_session_path
-
-  # This setting changes the http method used when rendering the
-  # link. For example :get, :delete, :put, etc..
-  #
-  # Default:
-  # config.logout_link_method = :get
+  # config.logout_link_path = :destroy_admin_user_session_path
+  config.logout_link_path = 'https://login.stanford.edu/idp/profile/Logout'
 
   # == Root
   #
@@ -129,7 +135,7 @@ ActiveAdmin.setup do |config|
   #
   # You can completely disable comments:
   config.comments = false
-  #
+
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
   #
@@ -154,7 +160,7 @@ ActiveAdmin.setup do |config|
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
-  # config.around_action :coerce_timezone_to_local
+  # config.before_action :do_something_awesome
 
   # == Attribute Filters
   #
@@ -174,23 +180,6 @@ ActiveAdmin.setup do |config|
   #
   config.localize_format = :long
 
-  # == Setting a Favicon
-  #
-  # config.favicon = 'favicon.ico'
-
-  # == Meta Tags
-  #
-  # Add additional meta tags to the head element of active admin pages.
-  #
-  # Add tags to all pages logged in users see:
-  #   config.meta_tags = { author: 'My Company' }
-
-  # By default, sign up/sign in/recover password pages are excluded
-  # from showing up in search engine results by adding a robots meta
-  # tag. You can reset the hash of meta tags included in logged out
-  # pages:
-  #   config.meta_tags_for_logged_out_pages = {}
-
   # == Removing Breadcrumbs
   #
   # Breadcrumbs are enabled by default. You can customize them for individual
@@ -205,21 +194,6 @@ ActiveAdmin.setup do |config|
   #
   # config.create_another = true
 
-  # == Register Stylesheets & Javascripts
-  #
-  # We recommend using the built in Active Admin layout and loading
-  # up your own stylesheets / javascripts to customize the look
-  # and feel.
-  #
-  # To load a stylesheet:
-  #   config.register_stylesheet 'my_stylesheet.css'
-  #
-  # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
-  #   config.register_stylesheet 'my_print_stylesheet.css', media: :print
-  #
-  # To load a javascript file:
-  #   config.register_javascript 'my_javascript.js'
-
   # == CSV options
   #
   # Set the CSV builder separator
@@ -232,20 +206,11 @@ ActiveAdmin.setup do |config|
   #
   # You can add a navigation menu to be used in your application, or configure a provided menu
   #
-  # To change the default utility navigation to show a link to your website & a logout btn
-  #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :utility_navigation do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #       admin.add_logout_button_to_menu menu
-  #     end
-  #   end
-  #
   # If you wanted to add a static menu item to the default menu provided:
   #
   #   config.namespace :admin do |admin|
   #     admin.build_menu :default do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
+  #       menu.add label: "My Great Website", url: "https://mygreatwebsite.example.com", html_options: { target: "_blank" }
   #     end
   #   end
 
@@ -261,11 +226,10 @@ ActiveAdmin.setup do |config|
   #     # Disable the links entirely
   #     admin.download_links = false
   #
-  #     # Only show XML & PDF options
+  #     # Only show XML & PDF options. You must register the format mime type with `Mime::Type.register`.
   #     admin.download_links = [:xml, :pdf]
   #
-  #     # Enable/disable the links based on block
-  #     #   (for example, with cancan)
+  #     # Enable/disable the links based on block (for example, with cancan)
   #     admin.download_links = proc { can?(:view_download_links) }
   #
   #   end
@@ -298,7 +262,7 @@ ActiveAdmin.setup do |config|
   # config.include_default_association_filters = true
 
   # config.maximum_association_filter_arity = 256 # default value of :unlimited will change to 256 in a future version
-  # config.filter_columns_for_large_association, [
+  # config.filter_columns_for_large_association = [
   #    :display_name,
   #    :full_name,
   #    :name,
@@ -307,21 +271,7 @@ ActiveAdmin.setup do |config|
   #    :title,
   #    :email,
   #  ]
-  # config.filter_method_for_large_association, '_starts_with'
-
-  # == Head
-  #
-  # You can add your own content to the site head like analytics. Make sure
-  # you only pass content you trust.
-  #
-  # config.head = ''.html_safe
-
-  # == Footer
-  #
-  # By default, the footer shows the current Active Admin version. You can
-  # override the content of the footer here.
-  #
-  # config.footer = 'my custom footer text'
+  # config.filter_method_for_large_association = '_start'
 
   # == Sorting
   #
@@ -329,37 +279,4 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
-
-  # == Webpacker
-  #
-  # By default, Active Admin uses Sprocket's asset pipeline.
-  # You can switch to using Webpacker here.
-  #
-  # config.use_webpacker = true
-
-  # This removes the author validation callback that blocks comments
-  # Taken from a known issue: https://github.com/activeadmin/activeadmin/issues/5258#issuecomment-576398958
-  callback_chain = ActiveAdmin::Comment.send(:get_callbacks, :validate)
-  author_callback = callback_chain.find { |callback| callback.filter.try(:attributes) == [:author] }
-  callback_chain.delete(author_callback)
-
-  # Allow ActiveAdmin to integrate with importmap-rails
-  # See: https://henrikbjorn.medium.com/til-using-activeadmin-with-importmap-rails-289cde6f76b8
-  config.clear_javascripts!
 end
-
-module ActiveAdmin
-  module Views
-    # See: https://henrikbjorn.medium.com/til-using-activeadmin-with-importmap-rails-289cde6f76b8
-    module Head
-      def build_active_admin_head
-        within super do
-          text_node javascript_importmap_tags('active_admin')
-        end
-      end
-    end
-  end
-end
-
-# Allow ActiveAdmin to integrate with importmap-rails
-ActiveAdmin::Views::Pages::Base.prepend ActiveAdmin::Views::Head
