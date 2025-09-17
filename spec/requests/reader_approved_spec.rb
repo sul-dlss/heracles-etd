@@ -50,47 +50,34 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
   let(:title) { 'Reader Approved via PeopleSoft' }
   # action_date has to be after submit date.
   let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
-
-  let!(:etd) do
-    create(:submission,
-           dissertation_id:,
-           druid:,
-           submitted_at:,
-           title:)
+  let!(:etd) { create(:submission, dissertation_id:, druid:, submitted_at:, title:) }
+  let(:dlss_admin_credentials) do
+    ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw)
+  end
+  let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
+  let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
+  let(:last_reader_action_at) do
+    DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
   end
 
-  context 'when the user has valid Basic Auth for dlss_admin' do
-    let(:dlss_admin_credentials) do
-      ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw)
-    end
+  before do
+    allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
+  end
 
-    context 'when passed in id is found' do
-      before do
-        allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
-      end
+  it 'updates an existing Etd' do
+    post '/etds',
+         params: data,
+         headers: { Authorization: dlss_admin_credentials,
+                    'Content-Type': 'application/xml' }
 
-      let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
-      let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_reader_action_at) do
-        DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
-      end
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("#{druid} updated")
+    etd.reload
 
-      it 'updates an existing Etd' do
-        post '/etds',
-             params: data,
-             headers: { Authorization: dlss_admin_credentials,
-                        'Content-Type': 'application/xml' }
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include("#{druid} updated")
-        etd.reload
-
-        expect(etd.readerapproval).to eq 'Approved'
-        expect(etd.readercomment).to eq 'Excellent job, infrastructure team'
-        expect(etd.last_reader_action_at).to eq last_reader_action_at
-        expect(etd.submitted_at).not_to be_nil
-        expect(etd.submitted_to_registrar).to eq 'true'
-      end
-    end
+    expect(etd.readerapproval).to eq 'Approved'
+    expect(etd.readercomment).to eq 'Excellent job, infrastructure team'
+    expect(etd.last_reader_action_at).to eq last_reader_action_at
+    expect(etd.submitted_at).not_to be_nil
+    expect(etd.submitted_to_registrar).to eq 'true'
   end
 end

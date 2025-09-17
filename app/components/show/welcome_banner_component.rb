@@ -10,16 +10,16 @@ module Show
 
     attr_reader :submission
 
-    delegate :approved?, :first_name, :degree, to: :submission
+    delegate :ready_for_cataloging?, :first_name, :degree, to: :submission
 
     def title
-      return 'Submission successful.' unless approved?
+      return 'Submission successful.' unless ready_for_cataloging?
 
       'Submission approved.'
     end
 
     def body_component
-      return WelcomeBannerProcessingBodyComponent.new(submission:) unless approved?
+      return WelcomeBannerProcessingBodyComponent.new(submission:) unless ready_for_cataloging?
 
       WelcomeBannerApprovedBodyComponent.new(submission:)
     end

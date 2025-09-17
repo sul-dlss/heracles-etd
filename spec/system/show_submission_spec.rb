@@ -46,7 +46,7 @@ RSpec.describe 'Show Submission', :rack_test do
     end
 
     context 'with an approved submission' do
-      let(:submission) { create(:submission, :submitted, :registrar_approved) }
+      let(:submission) { create(:submission, :submitted, :ready_for_cataloging) }
 
       it 'shows the approved submission' do
         visit submission_path(submission)

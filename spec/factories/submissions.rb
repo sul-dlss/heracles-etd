@@ -97,6 +97,11 @@ FactoryBot.define do
       regcomment { 'Congratulations.' }
     end
 
+    trait :ready_for_cataloging do
+      reader_approved
+      registrar_approved
+    end
+
     trait :loaded_in_ils do
       sequence(:folio_instance_hrid) { |n| format('a%05<number>d', number: n) }
     end
