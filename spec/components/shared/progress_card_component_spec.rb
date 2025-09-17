@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Shared::ProgressCardComponent, type: :component do
   let(:submission) do
-    build(:submission, citation_verified: 'true', abstract_provided: 'true', submitted_to_registrar: 'true',
+    build(:submission, citation_verified: true, abstract_provided: true, submitted_to_registrar: 'true',
                        submitted_at: DateTime.new(2023, 1, 1, 12, 0, 0))
   end
 
