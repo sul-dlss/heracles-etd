@@ -1,7 +1,7 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::ABSTRACT_STEP,
                                    submission:,
                                    title: 'Enter your abstract',
-                                   data: { controller: 'abstract' },
+                                   data: { controller: 'abstract', action: 'turbo:morph@window->abstract#warnFormatting' },
                                    done_data: { abstract_target: 'doneButton' },
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
@@ -10,13 +10,15 @@
 
   <% component.with_body_content do %>
     <p>Enter your abstract in plain text (no HTML or special formatting, such as bullets or indentation).</p>
+    <p>Do not include special formatting tags, such as Markdown and LaTeX tags, as these will not be rendered correctly.</p>
 
     <%= helpers.with_submission_form(submission) do |form| %>
       <div>
         <%= form.label :abstract, class: 'form-label' do %>
           <span class="fw-bold">Abstract</span> <%= helpers.required_field %>
         <% end %>
-        <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { controller: 'submit', action: 'blur->submit#submit keyup->abstract#toggleButton' } %>
+        <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { controller: 'submit', action: 'blur->submit#submit keyup->abstract#warnFormatting keyup->abstract#toggleButton', abstract_target: 'input' } %>
+        <div class="text-danger mt-1 d-none" role="alert" data-abstract-target="warning">Warning: Please remove any Markdown or LaTeX formatting tags, as these will not be rendered correctly.</div>
       </div>
     <% end %>
   <% end %>
