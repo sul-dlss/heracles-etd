@@ -163,8 +163,10 @@ ActiveAdmin.register Submission do
   end
 
   action_item :resubmit_to_registrar, only: :show do
-    if submission.all_required_steps_complete? && Settings.peoplesoft.enabled
-      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(submission.id),
+    # NOTE: `resource` here is the submission whose show page is being rendered.
+    # This is ActiveAdmin-speak.
+    if resource.all_required_steps_complete? && Settings.peoplesoft.enabled
+      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(resource.id),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' }
     end
