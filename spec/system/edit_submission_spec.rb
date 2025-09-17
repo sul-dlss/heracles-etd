@@ -285,7 +285,7 @@ RSpec.describe 'Edit Submission' do
     expect(page).to have_current_path(submission_path(submission))
     expect(page).to have_content("Welcome, #{submission.first_name}")
 
-    expect(submission.reload.citation_verified).to eq('true')
+    expect(submission.reload.citation_verified).to be(true)
     expect(submission.abstract).to eq('This is a sample abstract for testing.')
     expect(submission.format_reviewed).to eq('true')
     expect(submission.sulicense).to eq('true')
