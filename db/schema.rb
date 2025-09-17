@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_17_191214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -123,7 +123,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.string "regactiondttm"
     t.string "documentaccess"
     t.string "submit_date"
-    t.string "citation_verified"
     t.string "abstract_provided"
     t.string "dissertation_uploaded"
     t.string "supplemental_files_uploaded"
@@ -145,6 +144,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.datetime "ils_record_created_at"
     t.string "orcid"
     t.string "supplemental_files_provided"
+    t.boolean "citation_verified", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end

@@ -50,7 +50,8 @@ class SubmissionPresenter
   end
 
   def self.step_done?(step:, submission:)
-    %w[true Approved].include? submission.public_send(step_field(step:))
+    # TODO: Remove 'true'
+    ['true', 'Approved', true].include? submission.public_send(step_field(step:))
   end
 
   def self.step_number(step:)
