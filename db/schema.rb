@@ -123,9 +123,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_191214) do
     t.string "regactiondttm"
     t.string "documentaccess"
     t.string "submit_date"
-    t.string "supplemental_files_uploaded"
     t.string "permissions_provided"
-    t.string "permission_files_uploaded"
     t.string "rights_selected"
     t.string "cc_license_selected"
     t.string "submitted_to_registrar"
@@ -145,6 +143,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_191214) do
     t.boolean "citation_verified", default: false, null: false
     t.boolean "abstract_provided", default: false, null: false
     t.boolean "dissertation_uploaded", default: false, null: false
+    t.boolean "supplemental_files_uploaded", default: false, null: false
+    t.boolean "permission_files_uploaded", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end
