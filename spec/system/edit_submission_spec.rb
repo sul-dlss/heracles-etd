@@ -70,7 +70,12 @@ RSpec.describe 'Edit Submission' do
     # Abstract step
     within(cards[1]) do
       expect(page).to have_button('Done', disabled: true)
+      fill_in 'Abstract', with: '$This is LaTex$ formatting'
+      expect(page).to have_css('div[role="alert"]',
+                               text: 'Warning: Please remove any Markdown or LaTeX formatting tags')
+
       fill_in 'Abstract', with: 'This is a sample abstract for testing.'
+      expect(page).to have_no_css('div[role="alert"]')
       click_button 'Done'
       expect(page).to have_no_button('Done')
 
