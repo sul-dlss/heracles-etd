@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create quarterly report' do
+RSpec.describe 'Manage reports on the admin dashboard' do
   let!(:etd) do
     create(:submission, :reader_approved, :submitted,
            last_registrar_action_at: 'Fri, 02 Feb 2024 10:03:00.000000000 UTC +00:00',
@@ -16,12 +16,12 @@ RSpec.describe 'Create quarterly report' do
            abstract: 'My abstract', schoolname: 'Doerr School of Sustainability')
   end
 
-  context 'when creating and displaying reports' do
-    before do
-      sign_in 'dlss_user', groups: [Settings.groups.dlss]
-    end
+  before { sign_in('user', groups:) }
 
-    it 'shows the report and correct query results' do
+  context 'with a user in the DLSS group' do
+    let(:groups) { [Settings.groups.dlss] }
+
+    it 'shows the report, query results, and create report button' do
       visit '/admin/reports/new'
       fill_in 'Label', with: 'Winter 2024'
       fill_in 'Description', with: 'The first quarter of 2024'

@@ -5,7 +5,7 @@ module ActiveAdminConcern
   extend ActiveSupport::Concern
   include ActionPolicy::Behaviour
 
-  # Action Policy requires authorization. For ActiveAdmin, authorization is performed by ActiveAdminAdapter,
+  # ActionPolicy requires authorization. For ActiveAdmin, authorization is performed by ActionPolicyAdapter,
   # so skip it here.
   def skip_authorize_for_active_admin!
     skip_verify_authorized!

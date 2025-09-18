@@ -3,7 +3,8 @@
 module Admin
   # Policy for managing readers
   class ReaderPolicy < ApplicationPolicy
-    # manage? is the default rule.
+    alias_rule :new?, :create?, :index?, to: :manage?
+
     def manage?
       user.groups.dlss?
     end
