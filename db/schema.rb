@@ -118,7 +118,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.string "submitted_to_registrar"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "format_reviewed"
     t.datetime "submitted_at", precision: nil
     t.string "catkey"
     t.datetime "last_registrar_action_at", precision: nil
@@ -135,6 +134,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.boolean "supplemental_files_uploaded", default: false, null: false
     t.boolean "permission_files_uploaded", default: false, null: false
     t.boolean "rights_selected", default: false, null: false
+    t.boolean "format_reviewed", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end

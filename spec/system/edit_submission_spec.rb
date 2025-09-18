@@ -287,7 +287,7 @@ RSpec.describe 'Edit Submission' do
 
     expect(submission.reload.citation_verified).to be(true)
     expect(submission.abstract).to eq('This is a sample abstract for testing.')
-    expect(submission.format_reviewed).to eq('true')
+    expect(submission.format_reviewed).to eq(true)
     expect(submission.sulicense).to eq('true')
     expect(submission.cclicense).to eq('1') # CC Attribution license
     expect(submission.cclicensetype).to eq('CC Attribution license')

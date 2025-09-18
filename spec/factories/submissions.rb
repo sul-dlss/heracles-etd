@@ -52,7 +52,7 @@ FactoryBot.define do
       with_permission_files
       citation_verified { true }
       abstract { 'Sample abstract' }
-      format_reviewed { 'true' }
+      format_reviewed { true }
       sulicense { 'true' }
       cclicense { '3' }
       embargo { '6 months' }
