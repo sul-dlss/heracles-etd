@@ -69,7 +69,6 @@ module SubmissionAdminConcern
   end
 
   def all_required_steps_complete?
-    # TODO: Just use true
-    REQUIRED_ETD_WORKFLOW_STEPS.all? { |step| ['true', true].include?(self[step]) } # rubocop:disable Performance/CollectionLiteralInLoop
+    REQUIRED_ETD_WORKFLOW_STEPS.all? { |step| self[step] == true }
   end
 end

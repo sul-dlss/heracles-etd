@@ -12,16 +12,12 @@ module Edit
 
     delegate :permissions_provided, :permission_files, to: :submission
 
-    def permissions_provided?
-      ActiveModel::Type::Boolean.new.cast(permissions_provided)
-    end
-
     def no_permissions_action
       permission_files.any? ? 'click->submit#warn' : 'submit#submit'
     end
 
     def done_disabled?
-      return false unless permissions_provided?
+      return false unless permissions_provided
 
       permission_files.none?
     end

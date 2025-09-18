@@ -1,5 +1,17 @@
 class ChangeSubmissionFieldsToBoolean < ActiveRecord::Migration[8.0]
-  FIELDS = %i[citation_verified abstract_provided dissertation_uploaded supplemental_files_uploaded permission_files_uploaded rights_selected format_reviewed sulicense].freeze
+  FIELDS = %i[
+    citation_verified
+    abstract_provided
+    dissertation_uploaded
+    supplemental_files_uploaded
+    permission_files_uploaded
+    rights_selected
+    format_reviewed
+    sulicense
+    permissions_provided
+    supplemental_files_provided
+  ].freeze
+
   def up
     FIELDS.each { |field| column_str_to_bool(field) }
   end
