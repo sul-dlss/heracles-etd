@@ -163,7 +163,6 @@ class Submission < ApplicationRecord
   end
 
   def set_derivative_fields
-    self.cc_license_selected = cclicense.present? ? 'true' : 'false'
     self.submitted_to_registrar = submitted_at.present? ? 'true' : 'false'
     self.cclicensetype = CreativeCommonsLicense.find(cclicense)&.name
   end

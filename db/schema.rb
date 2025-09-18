@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_153115) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_22_170816) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,7 +85,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_153115) do
     t.string "etd_type", null: false
     t.string "title"
     t.text "abstract"
-    t.string "containscopyright"
     t.string "cclicense"
     t.string "cclicensetype"
     t.string "embargo"
@@ -107,7 +106,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_153115) do
     t.string "regcomment"
     t.string "regactiondttm"
     t.string "documentaccess"
-    t.string "cc_license_selected"
     t.string "submitted_to_registrar"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
