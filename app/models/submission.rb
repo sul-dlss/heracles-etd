@@ -5,6 +5,67 @@ class Submission < ApplicationRecord
   include PersonNameConcern
   include SubmissionAdminConcern
 
+  # Fields transferred from PeopleSoft
+  # - dissertation_id
+  # - title
+  # - etd_type (from type field)
+  # - ps_career (from career)
+  # - department (from program)
+  # - degree
+  # - major (from plan)
+  # - degree
+  # - ps_subplan
+  # - provost (from vpname)
+  # - name
+  # - sub
+  # - readerapproval
+  # - readercomment
+  # - readeractiondttm
+  # - regapproval
+  # - regcomment
+  # - regactiondttm
+  # - documentaccess
+  # - univid
+  # - sunetid
+  # - degreeconfyr
+  # - schoolname
+
+  # Values provided by student
+  # - abstract
+  # - containscopyright (boolean; used in Hydra but not Heracles)
+  # - sulicense (boolean for checkbox; currently has "true" or nil)
+  # - cclicense (creative commons license)
+  # - embargo
+
+  # Derivative fields (set in Submission based on other fields)
+  # - cclicensetype (set from cclicense)
+  # - submitted_to_registrar (boolean; set if submitted_at present)
+
+  # UI section flags (boolean)
+  # - citation_verified
+  # - abstract_provided
+  # - dissertation_uploaded
+  # - supplemental_files_uploaded
+  # - permission_files_uploaded
+  # - rights_selected
+  # - format_reviewed
+
+  # Other UI flags (boolean)
+  # - permissions_provided (toggle indicating that permission files will be provided)
+  # - supplemental_files_provided (toggle indicating that supplemental files will be provided)
+
+  # Dates
+  # - submitted_at (set by SubmissionPoster service)
+  # - last_registrar_action_at
+  # - last_reader_action_at
+  # - ils_record_created_at (set by CreateStubMarcRecordJob)
+  # - ils_record_updated_at (unclear; previously set by CatalogStatusJob)
+  # - accessioning_started_at (set by StartAccessionJob)
+
+  # Other
+  # - folio_instance_hrid (set by CreateStubMarcRecordJob)
+  # - orcid (set by SubmissionsController)
+
   before_save :set_derivative_fields
 
   has_many :readers, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :submission
