@@ -125,9 +125,7 @@ class EtdsController < ApplicationController
       attrs[:title] = title
       attrs[:etd_type] = attrs.delete(:type)
       attrs[:ps_career] = attrs.delete(:career)
-      attrs[:ps_program] = attrs[:program]
       attrs[:department] = attrs.delete(:program)
-      attrs[:ps_plan] = attrs[:plan]
       attrs[:major] = attrs.delete(:plan)
       attrs[:degree] = degree
       attrs[:ps_subplan] = attrs.delete(:subplan)[:__content__] if attrs[:subplan]

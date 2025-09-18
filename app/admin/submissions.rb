@@ -3,11 +3,11 @@
 ActiveAdmin.register Submission do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  permit_params :druid, :name, :prefix, :suffix, :major, :degree, :advisor,
+  permit_params :druid, :name, :prefix, :suffix, :major, :degree,
                 :etd_type, :title, :folio_instance_hrid, :abstract, :containscopyright,
                 :sulicense, :cclicense, :cclicensetype,
-                :embargo, :term, :sub, :sunetid,
-                :ps_career, :ps_program, :ps_plan, :ps_subplan, :dissertation_id,
+                :embargo, :sub, :sunetid,
+                :ps_career, :ps_subplan, :dissertation_id,
                 :provost, :degreeconfyr, :schoolname, :department, :readerapproval,
                 :readercomment, :last_reader_action_at, :regapproval, :regcomment,
                 :last_registrar_action_at, :documentaccess, :submitted_at,
@@ -105,13 +105,12 @@ ActiveAdmin.register Submission do
                         label: I18n.t('activerecord.attributes.submission.submitted_at', timezone_label:)
   filter :degreeconfyr, as: :select
   filter :etd_type, as: :select
-  filter :department # same as ps_program
-  filter :major # same as ps_plan
+  filter :department
+  filter :major
   filter :ps_subplan
   filter :schoolname, as: :select
   filter :degree, as: :select # ["Ph.D.", "JSD", "DMA", "Engineering"]
   filter :sunetid
-  filter :advisor
   filter :sub # submit deadline
   filter :submitted_to_registrar, as: :select
   filter :last_reader_action_at,
@@ -139,7 +138,6 @@ ActiveAdmin.register Submission do
   # IGNORING:
   # prefix, suffix, abstract
   # ps_career # ["Graduate", "Graduate School of Business", "Law"]
-  # term # this is a code, no longer needed
   # containscopyright # ["false", "true", nil]
   # sulicense  # ["true", nil]
   # provost, :readercomment, :regcomment
@@ -150,8 +148,8 @@ ActiveAdmin.register Submission do
   # NOTE: These are the fields that are displayed as columns in the `form` view
   #       without any special behavior, e.g., TZ labeling.
   form_columns = %i[
-    dissertation_id druid name prefix suffix major degree advisor etd_type title
-    folio_instance_hrid abstract term sub sunetid ps_career ps_program ps_plan ps_subplan
+    dissertation_id druid name prefix suffix major degree etd_type title
+    folio_instance_hrid abstract sub sunetid ps_career ps_subplan
     provost degreeconfyr schoolname department readerapproval readercomment
     regapproval regcomment documentaccess
   ]
@@ -219,7 +217,6 @@ ActiveAdmin.register Submission do
           :druid,
           :dissertation_id,
           :folio_instance_hrid,
-          :submit_date,
           :submitted_at,
           :last_reader_action_at,
           :last_registrar_action_at,

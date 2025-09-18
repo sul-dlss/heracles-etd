@@ -5,11 +5,11 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  permit_params :druid, :name, :prefix, :suffix, :major, :degree, :advisor,
+  permit_params :druid, :name, :prefix, :suffix, :major, :degree,
                 :etd_type, :title, :folio_instance_hrid, :abstract, :containscopyright,
                 :sulicense, :cclicense, :cclicensetype,
-                :embargo, :term, :sub, :sunetid,
-                :ps_career, :ps_program, :ps_plan, :ps_subplan, :dissertation_id,
+                :embargo, :sub, :sunetid,
+                :ps_career, :ps_subplan, :dissertation_id,
                 :provost, :degreeconfyr, :schoolname, :department, :readerapproval,
                 :readercomment, :last_reader_action_at, :regapproval, :regcomment,
                 :last_registrar_action_at, :documentaccess, :submitted_at,
@@ -25,9 +25,9 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   index_columns = %i[druid dissertation_id name prefix suffix title folio_instance_hrid etd_type
                      embargo degreeconfyr schoolname department readerapproval regapproval
                      containscopyright sulicense cclicense cclicensetype external_visibility
-                     term sub univid sunetid major degree advisor ps_career
-                     ps_program ps_plan ps_subplan provost readercomment readeractiondttm
-                     regcomment regactiondttm documentaccess submit_date citation_verified
+                     sub univid sunetid major degree ps_career
+                     ps_subplan provost readercomment readeractiondttm
+                     regcomment regactiondttm documentaccess citation_verified
                      abstract_provided format_reviewed dissertation_uploaded supplemental_files_uploaded
                      permissions_provided permission_files_uploaded rights_selected
                      cc_license_selected submitted_to_registrar]
@@ -72,7 +72,6 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   filter :schoolname, as: :select
   filter :degree, as: :select
   filter :sunetid
-  filter :advisor
   filter :abstract
   filter :sub
   filter :submitted_to_registrar, as: :select
@@ -100,18 +99,14 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   filter :cclicense
   filter :cclicensetype
   filter :external_visibility
-  filter :term
   filter :univid
   filter :ps_career
-  filter :ps_program
-  filter :ps_plan
   filter :provost
   filter :readercomment
   filter :readeractiondttm
   filter :regcomment
   filter :regactiondttm
   filter :documentaccess
-  filter :submit_date
   filter :citation_verified
   filter :abstract_provided
   filter :format_reviewed
