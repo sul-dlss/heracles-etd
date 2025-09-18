@@ -16,7 +16,7 @@ ActiveAdmin.register Submission do
                 :permission_files_uploaded, :rights_selected,
                 :submitted_to_registrar, :format_reviewed, :ils_record_created_at,
                 :ils_record_updated_at, :accessioning_started_at
-  # deliberately not including:  :univid, :external_visibility
+  # deliberately not including:  :univid
 
   timezone_label = Time.zone.now.strftime('%Z')
 

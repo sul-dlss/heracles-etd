@@ -18,13 +18,13 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
                 :permission_files_uploaded, :rights_selected,
                 :submitted_to_registrar, :format_reviewed, :ils_record_created_at,
                 :ils_record_updated_at, :accessioning_started_at
-  # deliberately not including:  :univid, :external_visibility
+  # deliberately not including:  :univid
 
   timezone_label = Time.zone.now.strftime('%Z')
 
   index_columns = %i[druid dissertation_id name prefix suffix title folio_instance_hrid etd_type
                      embargo degreeconfyr schoolname department readerapproval regapproval
-                     sulicense cclicense cclicensetype external_visibility
+                     sulicense cclicense cclicensetype
                      sub univid sunetid major degree ps_career
                      ps_subplan provost readercomment readeractiondttm
                      regcomment regactiondttm documentaccess citation_verified
@@ -97,7 +97,6 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   filter :sulicense
   filter :cclicense
   filter :cclicensetype
-  filter :external_visibility
   filter :univid
   filter :ps_career
   filter :provost

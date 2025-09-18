@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_22_170816) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_23_164824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,7 +88,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_170816) do
     t.string "cclicense"
     t.string "cclicensetype"
     t.string "embargo"
-    t.string "external_visibility"
     t.string "sub"
     t.string "univid"
     t.string "sunetid", null: false
