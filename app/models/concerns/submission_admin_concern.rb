@@ -48,7 +48,7 @@ module SubmissionAdminConcern
       %w[abstract abstract_provided accessioning_started_at advisor catkey
          cc_license_selected cclicense cclicensetype citation_verified containscopyright
          created_at degree degreeconfyr department dissertation_id dissertation_uploaded
-         documentaccess druid embargo etd_type folio_instance_hrid external_visibility
+         documentaccess druid embargo etd_type folio_instance_hrid
          format_reviewed id ils_record_created_at ils_record_updated_at last_reader_action_at
          last_registrar_action_at major name permission_files_uploaded permissions_provided
          prefix provost ps_career ps_plan ps_program ps_subplan readeractiondttm
