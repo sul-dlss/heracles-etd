@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Submission do
-  subject(:submission) { build(:submission, druid: 'druid:jx000nx0003') }
+  subject(:submission) { build(:submission, druid:) }
+
+  let(:druid) { 'druid:jx000nx0003' }
 
   describe '#first_name' do
     it 'returns the first name from the name field' do
@@ -25,8 +27,30 @@ RSpec.describe Submission do
   end
 
   describe '#doi' do
-    it 'returns the DOI for the submission' do
-      expect(submission.doi).to eq('10.80343/jx000nx0003')
+    context 'when created date is nil' do
+      it 'returns nil' do
+        expect(submission.doi).to be_nil
+      end
+    end
+
+    context 'when created date is before the date the DOI service was enabled' do
+      subject(:submission) do
+        Timecop.freeze(Date.parse('2025-09-17')) do
+          create(:submission, druid:)
+        end
+      end
+
+      it 'returns nil' do
+        expect(submission.doi).to be_nil
+      end
+    end
+
+    context 'when created date is after or the same as the date the DOI service was enabled' do
+      subject(:submission) { create(:submission, druid:) }
+
+      it 'returns the DOI for the submission' do
+        expect(submission.doi).to eq('10.80343/jx000nx0003')
+      end
     end
   end
 

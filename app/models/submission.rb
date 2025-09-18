@@ -5,6 +5,8 @@ class Submission < ApplicationRecord
   include PersonNameConcern
   include SubmissionAdminConcern
 
+  DOI_SERVICE_ENABLED_DATE = Date.parse('2025-09-18').freeze
+
   # Fields transferred from PeopleSoft
   # - dissertation_id
   # - title
@@ -129,6 +131,14 @@ class Submission < ApplicationRecord
   end
 
   def doi
+    # On 2025-09-18, the ETD application began registering DOIs for every
+    # submission, and we want to display the DOI so users have a record before
+    # it is minted. Any submissions created before that date should be
+    # considered not to have DOIs. We also guard against returning a DOI for
+    # in-memory submissions, which do not yet have a created_at value to compare
+    # against, as this can occur in the test suite.
+    return if created_at.blank? || created_at < DOI_SERVICE_ENABLED_DATE
+
     "#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')}"
   end
 
