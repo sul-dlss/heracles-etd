@@ -14,7 +14,7 @@ RSpec.describe 'Re-post submission to Registrar' do
   end
 
   it 'allows the user to re-post the submission' do
-    visit admin_submission_path(submission.id)
+    visit admin_submission_path(submission)
     expect(page).to have_content(submission.title)
     expect(page).to have_link('Re-post to registrar')
     accept_alert do
