@@ -27,7 +27,7 @@
                                                       field_name: :supplemental_files_provided,
                                                       label: 'No',
                                                       data: { controller: 'submit', action: no_supplemental_files_action },
-                                                      value: nil) %>
+                                                      value: 'false') %>
               <% end %>
             </div>
           </fieldset>
@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if supplemental_files_provided? %>
+    <% if supplemental_files_provided %>
       <p>You can upload a maximum of <%= max_files %> supplemental files. Optionally enter a short description for each file.</p>
     <% end %>
 
@@ -47,7 +47,7 @@
         <%= form.hidden_field :supplemental_files, multiple: true, value: supplemental_file.signed_id, id: nil %>
       <% end %>
     <% end %>
-    <% if supplemental_files_provided? %>
+    <% if supplemental_files_provided %>
       <%= form_with model: submission, url: attach_supplemental_files_submission_path(submission), data: form_data do |form| %>
         <%= form.label :supplemental_files, class: 'form-label' do %>
           Upload supplemental files (maximum size 1GB per file) <%= helpers.required_field %>

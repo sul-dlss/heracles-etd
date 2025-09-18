@@ -27,7 +27,7 @@
                                                       field_name: :permissions_provided,
                                                       label: 'No',
                                                       data: { controller: 'submit', action: no_permissions_action },
-                                                      value: nil) %>
+                                                      value: 'false') %>
               <% end %>
             </div>
           </fieldset>
@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if permissions_provided? %>
+    <% if permissions_provided %>
       <p>You must provide a permissions letter (in PDF format) from the copyright owner of any copyrighted work you have included in your thesis or dissertation.</p>
       <p>You can upload a maximum of <%= max_files %> permission files. Optionally enter a short description for each file.</p>
     <% end %>
@@ -49,7 +49,7 @@
         <%= form.hidden_field :permission_files, multiple: true, value: permission_file.signed_id, id: nil %>
       <% end %>
     <% end %>
-    <% if permissions_provided? %>
+    <% if permissions_provided %>
       <%= form_with model: submission, url: attach_permission_files_submission_path(submission), data: form_data do |form| %>
         <%= form.label :permission_files, class: 'form-label' do %>
           Upload permission files (maximum size 1GB per file) <%= helpers.required_field %>

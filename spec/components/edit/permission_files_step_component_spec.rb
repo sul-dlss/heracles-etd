@@ -18,7 +18,7 @@ RSpec.describe Edit::PermissionFilesStepComponent, type: :component do
   end
 
   context 'with the permissions provided flag' do
-    let(:permissions_provided) { 'true' }
+    let(:permissions_provided) { true }
 
     it 'renders the component' do
       render_inline(described_class.new(submission:))

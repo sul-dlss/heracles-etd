@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_19_191214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -112,7 +112,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.string "regactiondttm"
     t.string "documentaccess"
     t.string "submit_date"
-    t.string "permissions_provided"
     t.string "cc_license_selected"
     t.string "submitted_to_registrar"
     t.datetime "created_at", precision: nil, null: false
@@ -126,7 +125,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.string "folio_instance_hrid"
     t.datetime "ils_record_created_at"
     t.string "orcid"
-    t.string "supplemental_files_provided"
     t.boolean "citation_verified", default: false, null: false
     t.boolean "abstract_provided", default: false, null: false
     t.boolean "dissertation_uploaded", default: false, null: false
@@ -135,6 +133,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.boolean "rights_selected", default: false, null: false
     t.boolean "format_reviewed", default: false, null: false
     t.boolean "sulicense", default: false, null: false
+    t.boolean "permissions_provided", default: false, null: false
+    t.boolean "supplemental_files_provided", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end
