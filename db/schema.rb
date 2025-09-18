@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_153115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -92,7 +92,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.string "suffix"
     t.string "major"
     t.string "degree"
-    t.string "advisor"
     t.string "etd_type", null: false
     t.string "title"
     t.text "abstract"
@@ -102,13 +101,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.string "cclicensetype"
     t.string "embargo"
     t.string "external_visibility"
-    t.string "term"
     t.string "sub"
     t.string "univid"
     t.string "sunetid", null: false
     t.string "ps_career"
-    t.string "ps_program"
-    t.string "ps_plan"
     t.string "ps_subplan"
     t.string "dissertation_id", null: false
     t.string "provost"
@@ -122,7 +118,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.string "regcomment"
     t.string "regactiondttm"
     t.string "documentaccess"
-    t.string "submit_date"
     t.string "citation_verified"
     t.string "abstract_provided"
     t.string "dissertation_uploaded"
@@ -136,7 +131,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "format_reviewed"
     t.datetime "submitted_at", precision: nil
-    t.string "catkey"
     t.datetime "last_registrar_action_at", precision: nil
     t.datetime "last_reader_action_at", precision: nil
     t.datetime "ils_record_updated_at", precision: nil
