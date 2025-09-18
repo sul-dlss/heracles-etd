@@ -4,7 +4,7 @@
   </li>
   <li>
     When processing is complete and it is released for online access, your dissertation will be available online at
-    <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %> with the Digital Object Identifier (DOI) <%= doi %>.
+    <%= render Elements::ExternalLinkComponent.new(url: purl, classes: 'ms-1') %><% if doi %>with the Digital Object Identifier (DOI) <%= doi %>.<% end %>
   </li>
   <li>
     External access (i.e., from outside Stanford) to these links may be limited pending any release delay applied
