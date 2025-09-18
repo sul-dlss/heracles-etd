@@ -87,7 +87,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.string "title"
     t.text "abstract"
     t.string "containscopyright"
-    t.string "sulicense"
     t.string "cclicense"
     t.string "cclicensetype"
     t.string "embargo"
@@ -135,6 +134,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
     t.boolean "permission_files_uploaded", default: false, null: false
     t.boolean "rights_selected", default: false, null: false
     t.boolean "format_reviewed", default: false, null: false
+    t.boolean "sulicense", default: false, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end

@@ -29,7 +29,7 @@ module Edit
     end
 
     def done_disabled?
-      sulicense != 'true' || cclicense.blank? || embargo.blank?
+      !sulicense || cclicense.blank? || embargo.blank?
     end
   end
 end
