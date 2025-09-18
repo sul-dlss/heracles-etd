@@ -21,5 +21,24 @@ module Edit
 
       supplemental_files.none?
     end
+
+    def max_files
+      Settings.supplemental_files.max_files
+    end
+
+    def form_data
+      {
+        controller: 'files',
+        files_max_files_value: max_files,
+        files_existing_files_value: supplemental_files.size
+      }
+    end
+
+    def file_field_data
+      {
+        controller: 'submit',
+        action: 'files#validate submit#submit'
+      }
+    end
   end
 end
