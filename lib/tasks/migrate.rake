@@ -39,4 +39,35 @@ namespace :migrate do
 
     puts "Migration complete with #{failure_count} failures. See log/migration_errors.log for details."
   end
+
+  desc 'Remove legacy parts from submissions after migration'
+  task remove_legacy_parts: :environment do
+    puts 'Starting removal of legacy parts from submissions...'
+
+    Submission.where.associated(:legacy_parts).distinct.each do |submission|
+      puts "Removing legacy parts from submission #{submission.dissertation_id} (#{submission.druid})"
+      submission.legacy_parts.each do |part|
+        case part
+        when LegacySupplementalFile
+          next unless submission.supplemental_files.any? { |sf| sf.blob.filename == part.file_name }
+
+          puts "  Deleting legacy supplemental file at #{part.file_name}"
+        when LegacyPermissionFile
+          next unless submission.permission_files.any? { |pf| pf.blob.filename == part.file_name }
+
+          puts "  Deleting legacy permission file at #{part.file_name}"
+        when LegacyDissertationFile
+          next unless submission.dissertation_file.attached?
+          next unless submission.dissertation_file.blob.filename == part.file_name
+
+          puts "  Deleting legacy dissertation file at #{part.file_name} (no active dissertation attached)"
+        else
+          puts "  Unknown legacy part type: #{part.class.name} for file #{part.file_name}"
+          next
+        end
+        part.destroy!
+      end
+    end
+    puts 'Removal of legacy parts complete.'
+  end
 end
