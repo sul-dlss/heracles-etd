@@ -50,7 +50,7 @@ ActiveAdmin.register Submission do
 
   index do
     column 'Id', sortable: :id do |submission|
-      link_to submission.id, admin_submission_path(submission.id)
+      link_to submission.id, admin_submission_path(submission)
     end
     column 'Druid (=> Argo)', sortable: :druid do |submission|
       link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
@@ -83,6 +83,13 @@ ActiveAdmin.register Submission do
     column helpers.t('activerecord.attributes.submission.accessioning_started_at', timezone_label:),
            :accessioning_started_at
     actions
+  end
+
+  # Find submissions by disseration id, not id.
+  controller do
+    def find_resource
+      Submission.find_by(dissertation_id: params[:id])
+    end
   end
 
   # filters: ordering / selecting
@@ -151,7 +158,7 @@ ActiveAdmin.register Submission do
 
   member_action :resubmit_to_registrar, method: :post do
     # Re-post submission to Registrar (via PeopleSoft)
-    submission = Submission.find(params[:id])
+    submission = Submission.find_by(dissertation_id: params[:id])
     message = begin
                 SubmissionPoster.call(submission:)
               rescue StandardError => e # rubocop:disable Layout/RescueEnsureAlignment
@@ -159,12 +166,12 @@ ActiveAdmin.register Submission do
               else
                 'ETD successfully re-posted to Registrar'
               end # rubocop:disable Layout/BeginEndAlignment
-    redirect_to admin_submission_path(submission.id), notice: message
+    redirect_to admin_submission_path(submission), notice: message
   end
 
   action_item :resubmit_to_registrar, only: :show do
     if submission.all_required_steps_complete? && Settings.peoplesoft.enabled
-      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(submission.id),
+      link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(submission),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' }
     end
