@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_225521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,16 +40,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "attachments", force: :cascade do |t|
-    t.bigint "submission_id", null: false
-    t.bigint "uploaded_file_id", null: false
-    t.integer "position"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["submission_id"], name: "index_attachments_on_submission_id"
-    t.index ["uploaded_file_id"], name: "index_attachments_on_uploaded_file_id"
   end
 
   create_table "permission_files", force: :cascade do |t|
@@ -157,19 +147,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_230847) do
     t.index ["submission_id"], name: "index_supplemental_files_on_submission_id"
   end
 
-  create_table "uploaded_files", force: :cascade do |t|
-    t.string "file_name"
-    t.string "type"
-    t.integer "size"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "label", null: false
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "attachments", "submissions"
-  add_foreign_key "attachments", "uploaded_files"
   add_foreign_key "permission_files", "submissions"
   add_foreign_key "readers", "submissions"
   add_foreign_key "supplemental_files", "submissions"
