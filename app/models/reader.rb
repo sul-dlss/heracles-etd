@@ -10,6 +10,7 @@ class Reader < ApplicationRecord
   PRIMARY_ADVISOR_ROLES = [
     'Advisor',
     'Doct Dissert Advisor (AC)',
+    'Doct Dissert Advisor (NonAC)',
     'Outside Dissert Advisor (AC)'
   ].freeze
 

@@ -7,12 +7,9 @@ class EtdsController < ApplicationController
   skip_verify_authorized
   skip_before_action :verify_authenticity_token
   before_action :authenticate
-  before_action :set_submission, only: :create
+  before_action :set_submission_params, only: :create
 
-  PHD_REGEX = /p\W*h\W*d/i
-  ENG_REGEX = /^eng$/i
-
-  attr_reader :invalid_xml_message, :message, :submission
+  attr_reader :submission_params
 
   # GET /etds
   # only here for peoplesoft ping
@@ -25,57 +22,40 @@ class EtdsController < ApplicationController
   def create # rubocop:disable Metrics/AbcSize
     logger.info("RAW XML: #{request.raw_post}")
 
-    return unless submission
+    return render status: :bad_request, plain: 'No dissertation input provided' unless submission
 
     Submission.transaction do
-      submission.update!(submission_attributes)
+      submission.update!(**submission_params.slice(*submission_update_params), druid:)
 
-      PeoplesoftService.update(submission:, submission_params: etd_params.to_h)
+      PeoplesoftService.update(submission:, submission_params:)
 
       submission.generate_and_attach_augmented_file!
     end
 
-    render status: status_from_message, plain: "#{submission.druid} #{message}"
+    render status: return_status, plain: "#{submission.druid} #{message}"
   end
 
   private
 
-  def status_from_message
-    return :created if @message == 'created'
+  def message
+    new_submission? ? 'created' : 'updated'
+  end
 
-    :ok
+  def return_status
+    new_submission? ? :created : :ok
+  end
+
+  def new_submission?
+    @new_submission
   end
 
   def druid
     @druid ||= submission.druid || RegisterService.register(submission:).externalIdentifier
   end
 
-  def etd_params
-    params.require(:DISSERTATION) # rubocop:disable Rails/StrongParametersExpect
-          .permit(:dissertationid, :title, :type, :readerapproval, :readercomment, :regapproval,
-                  :regcomment, :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
-                  :readeractiondttm, :regactiondttm, :degree, :name, :vpname, :career, :program, :plan,
-                  reader: %i[sunetid name_prefix prefix name suffix type univid readerrole finalreader],
-                  subplan: %i[code __content__])
-  end
-
-  def dissertation_id
-    etd_params.fetch(:dissertationid)
-  end
-
-  def title
-    etd_params.fetch(:title).squish
-  end
-
-  def readers
-    Array(etd_params.fetch(:reader))
-  end
-
-  def degree
-    return 'Ph.D.' if PHD_REGEX.match?(etd_params[:degree])
-    return 'Engineering' if ENG_REGEX.match?(etd_params[:degree])
-
-    etd_params[:degree]
+  def submission_update_params
+    %i[dissertation_id title etd_type ps_career ps_program department ps_plan
+       major degree ps_subplan sub provost name sunetid]
   end
 
   # Authentication based on an allow list of server names and IP addresses
@@ -103,43 +83,28 @@ class EtdsController < ApplicationController
     end
   end
 
-  def set_submission
-    return render status: :bad_request, plain: invalid_xml_message unless valid_xml?
-
-    @submission = Submission.find_or_initialize_by(dissertation_id:, title:)
-    @message = @submission.new_record? ? 'created' : 'updated'
-  end
-
-  # Translate the incoming XML data to attributes on the Submission model
-  # Exclude reader and registrar actions which are handled separately
-  def submission_attributes # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    # Reader and Registratar actions are handled separately
-    # so remove them from the attributes to be updated here
-    etd_params.to_h.except(:dissertationid, :reader, :title,
-                           :readerapproval, :readercomment, :readeractiondttm,
-                           :regapproval, :regcomment, :regactiondttm).tap do |attrs|
-      attrs[:druid] = druid
-      attrs[:dissertation_id] = dissertation_id
-      attrs[:title] = title
-      attrs[:etd_type] = attrs.delete(:type)
-      attrs[:ps_career] = attrs.delete(:career)
-      attrs[:department] = attrs.delete(:program)
-      attrs[:major] = attrs.delete(:plan)
-      attrs[:degree] = degree
-      attrs[:ps_subplan] = attrs.delete(:subplan)[:__content__] if attrs[:subplan]
-      attrs[:sub] = "deadline #{attrs.delete(:sub)[:deadline]}" if attrs[:sub]
-      attrs[:provost] = attrs.delete(:vpname)
-      attrs[:name] = attrs.delete(:name)&.gsub(/,(\S)/, ', \1')
-    end.compact
-  end
-
-  def valid_xml?
-    etd_params && dissertation_id && readers
+  def set_submission_params
+    @submission_params = Registrar::SubmissionInputParser.parse(**Hash.from_xml(request.raw_post)&.deep_symbolize_keys)
   rescue StandardError => e
-    error_msg = "Unable to process incoming dissertation: #{e.message}"
-    @invalid_xml_message = "#{error_msg}\n\nIncoming XML:\n\n#{request.raw_post}"
-    logger.error("Error parsing XML from Peoplesoft: #{invalid_xml_message}")
-    Honeybadger.notify(error_msg, context: { xml: request.raw_post })
-    false
+    Honeybadger.notify('Error processing dissertation input',
+                       context: { xml: request.raw_post },
+                       error_message: e.message,
+                       error_class: e.class,
+                       backtrace: e.backtrace)
+    logger.error("Error processing dissertation input (see Honeybadger for details): #{request.raw_post}")
+
+    render status: :bad_request, plain: 'Error processing dissertation input'
+  end
+
+  def submission
+    @submission ||= Submission.find_or_initialize_by(dissertation_id: submission_params[:dissertation_id],
+                                                     title: submission_params[:title]).tap do |etd|
+      # Record early whether we're dealing with a brand new ETD or one that was
+      # already in the DB. We can't rely on checking this later since some
+      # operations in #create will persist the ETD between now and when we care
+      # about whether this is new or not, which would make every ETD look like a
+      # not new record.
+      @new_submission = etd.new_record?
+    end
   end
 end
