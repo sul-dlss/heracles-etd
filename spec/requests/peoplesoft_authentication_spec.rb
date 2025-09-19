@@ -3,36 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ETDs created from Peoplesoft upload' do
-  let(:data) do
-    <<~XML
-      <DISSERTATION>
-        <reader>
-          <sunetid>READ1</sunetid>
-          <prefix>Mr.</prefix>
-          <name>Reader,First</name>
-          <suffix>Jr.</suffix>
-          <type>int</type>
-          <univid>05358772</univid>
-          <readerrole>Doct Dissert Advisor (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <reader>
-          <sunetid> </sunetid>
-          <prefix>Dr</prefix>
-          <name>Reader,Second</name>
-          <suffix> </suffix>
-          <type>ext</type>
-          <univid> </univid>
-          <readerrole>External Reader</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <dissertationid>000123</dissertationid>
-        <title>My etd</title>
-        <type>Dissertation</type>
-        <sunetid>student1</sunetid>
-      </DISSERTATION>
-    XML
-  end
+  let(:data) { registrar_xml }
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
   let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
   let(:object_client) { instance_double(Dor::Services::Client::Object, workflow: workflow_client) }
