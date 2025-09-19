@@ -31,5 +31,7 @@ RSpec.describe 'Show Submission', :rack_test do
     expect(page).to have_content('Permission file permission_1.pdf')
     expect(page).to have_link('permission_2.pdf')
     expect(page).to have_content('Permission file permission_2.pdf')
+
+    expect(page).to have_css('.progress-card li', count: 3)
   end
 end

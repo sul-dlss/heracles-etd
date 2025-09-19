@@ -5,16 +5,23 @@
                                  subtitle: 'Reader review and approval') %>
 <% end %>
 
-<div class="container without-progress-bar">
-  <%= render Elements::StatusAlertComponent.new do %>
-    <div><span class="fw-bold">Dissertation ID:</span> <%= @submission.dissertation_id %></div>
-    <div><%= render Elements::ExternalLinkComponent.new(url: 'https://inside-studentservices.stanford.edu/supporting-students-across-topics/academic-progress-graduation/degree-progress-graduate-0', label: 'Faculty guide for reviewing theses and dissertations') %></div>
-  <% end %>
+<div class="container">
+  <div class="row gy-2">
+    <div class="col-lg-8 order-2 order-lg-1">
+      <%= render Elements::StatusAlertComponent.new do %>
+        <div><span class="fw-bold">Dissertation ID:</span> <%= @submission.dissertation_id %></div>
+        <div><%= render Elements::ExternalLinkComponent.new(url: 'https://inside-studentservices.stanford.edu/supporting-students-across-topics/academic-progress-graduation/degree-progress-graduate-0', label: 'Faculty guide for reviewing theses and dissertations') %></div>
+      <% end %>
 
-  <%= render ReaderReview::CitationStepComponent.new(submission: @submission) %>
-  <%= render ReaderReview::AbstractStepComponent.new(submission: @submission) %>
-  <%= render ReaderReview::RightsStepComponent.new(submission: @submission) %>
-  <%= render ReaderReview::DissertationComponent.new(submission: @submission) %>
-  <%= render ReaderReview::SupplementalFilesComponent.new(submission: @submission) %>
-  <%= render ReaderReview::PermissionFilesComponent.new(submission: @submission) %>
+      <%= render ReaderReview::CitationStepComponent.new(submission: @submission) %>
+      <%= render ReaderReview::AbstractStepComponent.new(submission: @submission) %>
+      <%= render ReaderReview::RightsStepComponent.new(submission: @submission) %>
+      <%= render ReaderReview::DissertationComponent.new(submission: @submission) %>
+      <%= render ReaderReview::SupplementalFilesComponent.new(submission: @submission) %>
+      <%= render ReaderReview::PermissionFilesComponent.new(submission: @submission) %>
+    </div>
+    <div class="col-lg-3 order-1 order-lg-2">
+      <%= render Shared::ProgressCardComponent.new(submission: @submission, with_student_steps: false) %>
+    </div>
+  </div>
 </div>
