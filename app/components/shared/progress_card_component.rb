@@ -3,8 +3,9 @@
 module Shared
   # Component for displaying a progress card showing the steps of a submission
   class ProgressCardComponent < ApplicationComponent
-    def initialize(submission:)
+    def initialize(submission:, with_student_steps: true)
       @submission = submission
+      @with_student_steps = with_student_steps
       super()
     end
 
@@ -40,6 +41,10 @@ module Shared
       return { character: step_number, variant: :disabled } unless step_number > 8
 
       { variant: :blank }
+    end
+
+    def with_student_steps?
+      @with_student_steps
     end
   end
 end
