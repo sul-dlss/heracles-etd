@@ -138,7 +138,6 @@ RSpec.describe Submission do
       subject(:submission) { create(:submission) }
 
       it 'sets derivative fields' do
-        expect(submission.cc_license_selected).to eq('false')
         expect(submission.submitted_to_registrar).to eq('false')
         expect(submission.cclicensetype).to be_nil
       end
@@ -150,7 +149,6 @@ RSpec.describe Submission do
       end
 
       it 'sets derivative fields' do
-        expect(submission.cc_license_selected).to eq('true')
         expect(submission.submitted_to_registrar).to eq('true')
         expect(submission.cclicensetype).to eq('CC Attribution license')
       end
