@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ReaderReview::AbstractStepComponent, type: :component do
-  let(:submission) { create(:submission, abstract: 'My abstract', abstract_provided: 'true') }
+  let(:submission) { create(:submission, abstract: 'My abstract', abstract_provided: true) }
 
   it 'renders the component' do
     render_inline(described_class.new(submission:))

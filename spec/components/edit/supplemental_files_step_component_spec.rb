@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Edit::SupplementalFilesStepComponent, type: :component do
   let(:submission) { create(:submission, supplemental_files_provided:) }
-  let(:supplemental_files_provided) { 'false' }
+  let(:supplemental_files_provided) { false }
 
   context 'without an attached supplemental file' do
     it 'renders the component' do
@@ -17,7 +17,7 @@ RSpec.describe Edit::SupplementalFilesStepComponent, type: :component do
   end
 
   context 'with the supplemental file provided flag' do
-    let(:supplemental_files_provided) { 'true' }
+    let(:supplemental_files_provided) { true }
 
     it 'renders the component' do
       render_inline(described_class.new(submission:))

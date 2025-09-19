@@ -146,7 +146,7 @@ RSpec.describe Submission do
 
     context 'when primary fields are set' do
       subject(:submission) do
-        create(:submission, abstract: 'My abstract', sulicense: 'true', cclicense: '1', submitted_at: Time.zone.now)
+        create(:submission, abstract: 'My abstract', sulicense: true, cclicense: '1', submitted_at: Time.zone.now)
       end
 
       it 'sets derivative fields' do
