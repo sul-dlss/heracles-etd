@@ -4,59 +4,16 @@ require 'rails_helper'
 
 RSpec.describe 'Peoplesoft sends the registrar rejection message' do
   let(:data) do
-    <<~XML
-      <DISSERTATION>
-        <dissertationid>#{dissertation_id}</dissertationid>
-        <title>#{title}</title>
-        <name>The Lorax</name>
-        <sunetid>lorax</sunetid>
-        <type>Dissertation</type>
-        <degreeconfyr>2018</degreeconfyr>
-        <readerapproval>Approved</readerapproval>
-        <readercomment>Excellent job, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
-        <regapproval>Reject with modification</regapproval>
-        <regcomment>So close, infrastructure team</regcomment>
-        <regactiondttm>#{action_date} 09:44:49</regactiondttm>
-        <reader type="int">
-          <sunetid>kme</sunetid>
-          <name>Eisenhardt, Kathleen</name>
-          <readerrole>Doct Dissert Advisor (AC)</readerrole>
-          <finalreader>Yes</finalreader>
-        </reader>
-        <reader type="int">
-          <sunetid>rkatila</sunetid>
-          <name>Katila, Riitta</name>
-          <readerrole>Doct Dissert Reader (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <reader type="int">
-          <sunetid>cee</sunetid>
-          <name>Eesley, Charles</name>
-          <readerrole>Doct Dissert Reader (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <schoolname>School of Engineering</schoolname>
-        <career code="GR">Graduate</career>
-        <program code="MGTSC">Mgmt Sci &amp; Engineering</program>
-        <plan code="MGTSC-PHD">Management Science and Engineering</plan>
-        <degree>PHD</degree>
-      </DISSERTATION>
-    XML
+    registrar_xml(dissertation_id:, title:, regapproval: 'Reject with modification',
+                  regcomment: 'So close, infrastructure team', regactiondttm: "#{action_date} 09:44:49")
   end
-  let(:druid) { 'druid:789' }
+  let(:druid) { etd.druid }
   let(:dissertation_id) { '000123' }
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Registrar rejected via PeopleSoft' }
-  # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
-
-  let!(:etd) do
-    create(:submission,
-           dissertation_id:,
-           druid:,
-           submitted_at:,
-           title:)
+  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') } # must be after submit date.
+  let(:etd) do
+    create(:submission, dissertation_id:, submitted_at:, title:)
   end
 
   context 'when the user has valid Basic Auth for dlss_admin' do

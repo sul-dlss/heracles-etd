@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'ETD creation errors from Peoplesoft' do
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
-  let(:context) { { xml: data } }
+  let(:context) { { xml: data, error_message: /#{error_message}/ } }
 
   before do
     allow(Honeybadger).to receive(:notify)
@@ -12,12 +12,8 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
 
   describe 'POST /etds' do
     context 'when no XML is provided' do
-      let(:error_msg) do
-        'Unable to process incoming dissertation: param is missing or the value is empty or invalid: DISSERTATION'
-      end
-      let(:data) do
-        ''
-      end
+      let(:error_message) { 'DISSERTATION is missing' }
+      let(:data) { '' }
 
       it 'Notifies Honeybadger and returns an HTTP status of 400' do
         post '/etds',
@@ -27,15 +23,13 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
 
         expect(response).not_to be_successful
         expect(response).to have_http_status(:bad_request)
-        expect(response.body).to include(error_msg)
-        expect(Honeybadger).to have_received(:notify).with(error_msg, context:)
+        expect(response.body).to include(error_message)
+        expect(Honeybadger).to have_received(:notify).with('Invalid dissertation input', context:)
       end
     end
 
     context 'when no dissertation id is provided' do
-      let(:error_msg) do
-        'Unable to process incoming dissertation: param is missing or the value is empty or invalid: dissertationid'
-      end
+      let(:error_message) { 'dissertationid is missing' }
       let(:data) do
         <<~XML
           <DISSERTATION>
@@ -52,13 +46,14 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
 
         expect(response).not_to be_successful
         expect(response).to have_http_status(:bad_request)
-        expect(response.body).to include(error_msg)
-        expect(Honeybadger).to have_received(:notify).with(error_msg, context:)
+        expect(response.body).to include(error_message)
+        expect(Honeybadger).to have_received(:notify).with('Invalid dissertation input', context:)
       end
     end
 
-    context 'when invlalid XML is provided' do
-      let(:error_msg) { 'Unable to process incoming dissertation: Error occurred while parsing request parameters' }
+    context 'when invalid XML is provided' do
+      let(:context) { { xml: data } }
+      let(:error_message) { 'Error processing dissertation input' }
       let(:data) do
         <<~XML
           <DISSERTATION>
@@ -76,15 +71,19 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
 
         expect(response).not_to be_successful
         expect(response).to have_http_status(:bad_request)
-        expect(response.body).to include(error_msg)
-        expect(Honeybadger).to have_received(:notify).with(error_msg, context:)
+        expect(response.body).to include(error_message)
+        expect(Honeybadger).to have_received(:notify).with(
+          error_message,
+          context:,
+          error_message: /Illegal character/,
+          error_class: REXML::ParseException,
+          backtrace: anything
+        )
       end
     end
 
     context 'when no readers are passed in' do
-      let(:error_msg) do
-        'Unable to process incoming dissertation: param is missing or the value is empty or invalid: reader'
-      end
+      let(:error_message) { 'reader is missing' }
       let(:data) do
         <<~XML
           <DISSERTATION>
@@ -102,8 +101,8 @@ RSpec.describe 'ETD creation errors from Peoplesoft' do
 
         expect(response).not_to be_successful
         expect(response).to have_http_status(:bad_request)
-        expect(response.body).to include(error_msg)
-        expect(Honeybadger).to have_received(:notify).with(error_msg, context:)
+        expect(response.body).to include(error_message)
+        expect(Honeybadger).to have_received(:notify).with('Invalid dissertation input', context:)
       end
     end
   end
