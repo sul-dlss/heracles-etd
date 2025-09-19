@@ -10,7 +10,8 @@ class Reader < ApplicationRecord
   PRIMARY_ADVISOR_ROLES = [
     'Advisor',
     'Doct Dissert Advisor (AC)',
-    'Outside Dissert Advisor (AC)'
+    'Doct Dissert Advisor (NonAC)',
+    'Outside Dissert Advisor (AC)' # not present in prod DB
   ].freeze
 
   COADVISOR_ROLES = [
@@ -18,7 +19,7 @@ class Reader < ApplicationRecord
     'Dissertation Co-Advisor',
     'Doct Dissert Co-Adv (AC)',
     'Doct Dissert Co-Adv (NonAC)',
-    'Outside Dissert Co-Adv (AC)'
+    'Outside Dissert Co-Adv (AC)' # not present in prod DB
   ].freeze
 
   ADVISOR_ROLES = (PRIMARY_ADVISOR_ROLES + COADVISOR_ROLES).freeze
@@ -31,7 +32,7 @@ class Reader < ApplicationRecord
       'Engineers Thesis/Project Adv',
       'Doct Dissert Reader (AC)',
       'Doct Dissert Rdr (NonAC)',
-      'Outside Dissert Reader (AC)'
+      'Outside Dissert Reader (AC)' # not present in prod DB
     ].freeze
 
   belongs_to :submission
