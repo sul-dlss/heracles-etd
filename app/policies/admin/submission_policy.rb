@@ -3,16 +3,22 @@
 module Admin
   # Policy for managing submissions
   class SubmissionPolicy < ApplicationPolicy
-    def read?
-      user.groups.dlss? || user.groups.registrar? || user.groups.reports?
+    alias_rule :new?, to: :create?
+
+    def index?
+      user.groups.dlss? || user.groups.reports?
+    end
+
+    def show?
+      user.groups.dlss?
     end
 
     def destroy?
       false
     end
 
-    def new?
-      false
+    def create?
+      user.groups.dlss?
     end
 
     def manage?

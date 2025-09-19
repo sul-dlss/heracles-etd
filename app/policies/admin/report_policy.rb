@@ -4,9 +4,10 @@ module Admin
   # Policy for managing reports
   class ReportPolicy < ApplicationPolicy
     alias_rule :new?, :create?, to: :manage?
+    alias_rule :index?, to: :show?
 
-    def read?
-      user.groups.dlss? || user.groups.reports? || user.groups.registrar?
+    def show?
+      user.groups.dlss? || user.groups.reports?
     end
 
     def manage?

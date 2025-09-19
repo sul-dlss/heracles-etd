@@ -4,6 +4,6 @@
 class AdminPolicy < ApplicationPolicy
   # dashboard
   def show?
-    user.groups.dlss? || user.groups.reports? || user.groups.registrar?
+    user.groups.dlss? || user.groups.reports?
   end
 end
