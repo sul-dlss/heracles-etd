@@ -4,7 +4,7 @@ ActiveAdmin.register Submission do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   permit_params :druid, :name, :prefix, :suffix, :major, :degree,
-                :etd_type, :title, :folio_instance_hrid, :abstract, :containscopyright,
+                :etd_type, :title, :folio_instance_hrid, :abstract,
                 :sulicense, :cclicense, :cclicensetype,
                 :embargo, :sub, :sunetid,
                 :ps_career, :ps_subplan, :dissertation_id,
@@ -13,7 +13,7 @@ ActiveAdmin.register Submission do
                 :last_registrar_action_at, :documentaccess, :submitted_at,
                 :citation_verified, :abstract_provided, :dissertation_uploaded,
                 :supplemental_files_uploaded, :permissions_provided,
-                :permission_files_uploaded, :rights_selected, :cc_license_selected,
+                :permission_files_uploaded, :rights_selected,
                 :submitted_to_registrar, :format_reviewed, :ils_record_created_at,
                 :ils_record_updated_at, :accessioning_started_at
   # deliberately not including:  :univid, :external_visibility
@@ -138,12 +138,11 @@ ActiveAdmin.register Submission do
   # IGNORING:
   # prefix, suffix, abstract
   # ps_career # ["Graduate", "Graduate School of Business", "Law"]
-  # containscopyright # ["false", "true", nil]
   # sulicense  # ["true", nil]
   # provost, :readercomment, :regcomment
   # :documentaccess # yes / no?
   # citation_verified, abstract_provided, format_reviewed, dissertation_uploaded, supplemental_files_uploaded
-  # permissions_provided, permission_files_uploaded, rights_selected, cc_license_selected, cclicense, cclicensetype
+  # permissions_provided, permission_files_uploaded, rights_selected, cclicense, cclicensetype
 
   # NOTE: These are the fields that are displayed as columns in the `form` view
   #       without any special behavior, e.g., TZ labeling.

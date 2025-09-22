@@ -46,7 +46,7 @@ module SubmissionAdminConcern
     # attributes that are searchable via activeadmin
     def ransackable_attributes(_auth_object = nil)
       %w[abstract abstract_provided accessioning_started_at
-         cc_license_selected cclicense cclicensetype citation_verified containscopyright
+         cclicense cclicensetype citation_verified
          created_at degree degreeconfyr department dissertation_id dissertation_uploaded
          documentaccess druid embargo etd_type folio_instance_hrid external_visibility
          format_reviewed id ils_record_created_at ils_record_updated_at last_reader_action_at

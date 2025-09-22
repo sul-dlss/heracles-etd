@@ -6,7 +6,7 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   permit_params :druid, :name, :prefix, :suffix, :major, :degree,
-                :etd_type, :title, :folio_instance_hrid, :abstract, :containscopyright,
+                :etd_type, :title, :folio_instance_hrid, :abstract,
                 :sulicense, :cclicense, :cclicensetype,
                 :embargo, :sub, :sunetid,
                 :ps_career, :ps_subplan, :dissertation_id,
@@ -15,7 +15,7 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
                 :last_registrar_action_at, :documentaccess, :submitted_at,
                 :citation_verified, :abstract_provided, :dissertation_uploaded,
                 :supplemental_files_uploaded, :permissions_provided,
-                :permission_files_uploaded, :rights_selected, :cc_license_selected,
+                :permission_files_uploaded, :rights_selected,
                 :submitted_to_registrar, :format_reviewed, :ils_record_created_at,
                 :ils_record_updated_at, :accessioning_started_at
   # deliberately not including:  :univid, :external_visibility
@@ -24,13 +24,13 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
 
   index_columns = %i[druid dissertation_id name prefix suffix title folio_instance_hrid etd_type
                      embargo degreeconfyr schoolname department readerapproval regapproval
-                     containscopyright sulicense cclicense cclicensetype external_visibility
+                     sulicense cclicense cclicensetype external_visibility
                      sub univid sunetid major degree ps_career
                      ps_subplan provost readercomment readeractiondttm
                      regcomment regactiondttm documentaccess citation_verified
                      abstract_provided format_reviewed dissertation_uploaded supplemental_files_uploaded
                      permissions_provided permission_files_uploaded rights_selected
-                     cc_license_selected submitted_to_registrar]
+                     submitted_to_registrar]
 
   index do
     column 'Id', sortable: :id do |submission|
@@ -94,7 +94,6 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
                                                      timezone_label:)
   filter :updated_at, as: :date_range, label: I18n.t('activerecord.attributes.submission.updated_at',
                                                      timezone_label:)
-  filter :containscopyright
   filter :sulicense
   filter :cclicense
   filter :cclicensetype
@@ -115,7 +114,6 @@ ActiveAdmin.register Submission, as: 'Full Submissions' do
   filter :permissions_provided
   filter :permission_files_uploaded
   filter :rights_selected
-  filter :cc_license_selected
 
   show title: :title do
     attributes_table do
