@@ -35,19 +35,13 @@ module Cocina
     attr_reader :submission
 
     def world?
-      releasable_date?(submission.embargo_release_date) && world_visible?(submission.external_visibility)
+      releasable_date?(submission.embargo_release_date)
     end
 
     # submission.embargo can now be nil, which is equivalent to 'immediate' (= no embargo)
     #   this means release_date is also set to nil
     def releasable_date?(release_date)
       release_date.blank? || release_date.past?
-    end
-
-    # visibility used to be set to 20 or 100 percent, but this stopped being used,
-    #  so more recent objects have a value of nil
-    def world_visible?(visibility)
-      visibility == '100' || visibility.nil?
     end
 
     def copyright_statement
