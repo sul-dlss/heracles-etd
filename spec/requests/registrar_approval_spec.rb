@@ -14,10 +14,10 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
         <degreeconfyr>2018</degreeconfyr>
         <readerapproval>Approved</readerapproval>
         <readercomment>Excellent job, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
+        <readeractiondttm>#{action_date_str} 09:44:49</readeractiondttm>
         <regapproval>Approved</regapproval>
         <regcomment>Congrats on finishing your dissertation</regcomment>
-        <regactiondttm>#{action_date} 09:44:49</regactiondttm>
+        <regactiondttm>#{action_date_str} 09:44:49</regactiondttm>
         <reader type="int">
           <sunetid>kme</sunetid>
           <name>Eisenhardt, Kathleen</name>
@@ -48,8 +48,8 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
   let(:dissertation_id) { '000123' }
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Registrar approved via PeopleSoft' }
-  # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
+  let(:action_date) { Time.zone.now.change(usec: 0) }
+  let(:action_date_str) { action_date.in_time_zone(Rails.application.config.time_zone).strftime('%m/%d/%Y %T') }
 
   let!(:etd) do
     create(:submission,
@@ -74,9 +74,6 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_registrar_action_at) do
-        DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
-      end
 
       it 'updates an existing Etd' do
         post '/etds',
@@ -90,7 +87,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
         expect(etd.regapproval).to eq 'Approved'
         expect(etd.regcomment).to eq 'Congrats on finishing your dissertation'
-        expect(etd.last_registrar_action_at).to eq last_registrar_action_at
+        expect(etd.last_registrar_action_at).to eq action_date
         expect(etd.submitted_at).not_to be_nil
         expect(etd.submitted_to_registrar).to eq 'true'
         expect(CreateStubMarcRecordJob).to have_received(:perform_later).with(etd.druid).once
