@@ -10,6 +10,6 @@ module Edit
 
     attr_reader :submission
 
-    delegate :first_name, :dissertation_id, :degree, to: :submission
+    delegate :first_last_name, :dissertation_id, :degree, to: :submission
   end
 end

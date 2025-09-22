@@ -10,7 +10,7 @@ module Show
 
     attr_reader :submission
 
-    delegate :ready_for_cataloging?, :first_name, :degree, to: :submission
+    delegate :ready_for_cataloging?, :first_last_name, :degree, to: :submission
 
     def title
       return 'Submission successful.' unless ready_for_cataloging?
