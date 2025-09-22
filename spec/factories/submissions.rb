@@ -39,6 +39,7 @@ FactoryBot.define do
     end
 
     trait :with_permission_files do
+      permissions_provided { true }
       permission_files do
         [
           create(:permission_file, :first_permission),
@@ -60,7 +61,6 @@ FactoryBot.define do
       abstract_provided { true }
       rights_selected { true }
       dissertation_uploaded { true }
-      permissions_provided { true }
     end
 
     trait :submitted do
