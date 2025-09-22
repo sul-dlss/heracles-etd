@@ -29,6 +29,7 @@ FactoryBot.define do
     end
 
     trait :with_supplemental_files do
+      supplemental_files_provided { true }
       supplemental_files do
         [
           create(:supplemental_file, :first_supplement),
@@ -50,16 +51,16 @@ FactoryBot.define do
       with_dissertation_file
       with_supplemental_files
       with_permission_files
-      citation_verified { 'true' }
+      citation_verified { true }
       abstract { 'Sample abstract' }
-      format_reviewed { 'true' }
-      sulicense { 'true' }
+      format_reviewed { true }
+      sulicense { true }
       cclicense { '3' }
       embargo { '6 months' }
-      abstract_provided { 'true' }
-      rights_selected { 'true' }
-      dissertation_uploaded { 'true' }
-      permissions_provided { 'true' }
+      abstract_provided { true }
+      rights_selected { true }
+      dissertation_uploaded { true }
+      permissions_provided { true }
     end
 
     trait :submitted do

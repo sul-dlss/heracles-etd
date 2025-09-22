@@ -10,14 +10,14 @@ module Edit
 
     attr_reader :submission
 
-    delegate :supplemental_files, :supplemental_files_provided?, to: :submission
+    delegate :supplemental_files, :supplemental_files_provided, to: :submission
 
     def no_supplemental_files_action
       supplemental_files.any? ? 'click->submit#warn' : 'submit#submit'
     end
 
     def done_disabled?
-      return false unless supplemental_files_provided?
+      return false unless supplemental_files_provided
 
       supplemental_files.none?
     end

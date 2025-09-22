@@ -25,7 +25,7 @@ RSpec.describe Edit::StepComponent, type: :component do
   end
 
   context 'when not showing the step' do
-    let(:submission) { create(:submission, citation_verified: 'true') }
+    let(:submission) { create(:submission, citation_verified: true) }
 
     it 'renders the step item without the body' do
       render_inline(described_class.new(step: SubmissionPresenter::CITATION_STEP, title: 'Step 1',
