@@ -146,6 +146,9 @@ module Marc
     #   Note that 9950 was too big in the case of one abstract
     def add_abstract(marc)
       formatted_abstract = format_aacr2(etd.abstract)
+      # Dollar signs need to be escaped per Folio documentation or
+      # they are misinterpreted as subfield delimiters.
+      formatted_abstract.gsub!('$', '{dollar}')
       if formatted_abstract.length <= 9925
         marc.append(MARC::DataField.new('520', '3', ' ', ['a', formatted_abstract]))
       else

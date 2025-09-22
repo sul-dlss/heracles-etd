@@ -13,9 +13,24 @@ module Admin
     end
 
     def call
-      dissertation_id = format('%010d', Kernel.rand(1..9_999_999_999))
+      new_submission.tap do |submission|
+        submission.druid = RegisterService.register(submission:).externalIdentifier
+        submission.readers.build(
+          sunetid: sunetid,
+          position: 1,
+          name: 'Pretender, Advisor',
+          readerrole: 'Advisor'
+        )
+        submission.save!
+      end
+    end
 
-      submission = Submission.create!(
+    private
+
+    attr_reader :sunetid
+
+    def new_submission
+      Submission.new(
         dissertation_id:,
         title: "Test Submission for #{sunetid} (#{dissertation_id})",
         sunetid: sunetid,
@@ -25,29 +40,12 @@ module Admin
         department: 'Philosophy',
         major: 'Philosophy',
         degreeconfyr: '2029',
-        etd_type: 'Thesis',
-        druid:
+        etd_type: 'Thesis'
       )
-      submission.readers.create!(
-        sunetid: sunetid,
-        position: 1,
-        name: 'Pretender, Advisor',
-        readerrole: 'Advisor'
-      )
-      submission
     end
 
-    private
-
-    attr_reader :sunetid
-
-    def druid
-      letters = 'bcdfghjkmnpqrstvwxyz'.chars.freeze
-
-      idx = (Submission.maximum(:id) || 0) + 1
-      format_str = 'druid:%s%s%03d%s%s%04d'
-      format(format_str, letters.sample, letters.sample,
-             idx / 10_000, letters.sample, letters.sample, idx)
+    def dissertation_id
+      format('%010d', Kernel.rand(1..9_999_999_999))
     end
   end
 end
