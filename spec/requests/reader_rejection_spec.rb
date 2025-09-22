@@ -14,7 +14,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
         <degreeconfyr>2018</degreeconfyr>
         <readerapproval>#{rejection}</readerapproval>
         <readercomment>Try harder next time, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
+        <readeractiondttm>#{action_date_str}</readeractiondttm>
         <regapproval></regapproval>
         <regcomment></regcomment>
         <regactiondttm></regactiondttm>
@@ -49,7 +49,8 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Reader Rejected via PeopleSoft' }
   # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
+  let(:action_date) { Time.zone.now.change(usec: 0) }
+  let(:action_date_str) { action_date.in_time_zone(Rails.application.config.time_zone).strftime('%m/%d/%Y %T') }
   let(:rejection) { 'Rejected' }
 
   let!(:etd) do
@@ -67,15 +68,11 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
     context 'when passed in id is found' do
       before do
-        # allow(RetriableWorkflowUpdateJob).to receive(:perform_later)
         allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
       end
 
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
       let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-      let(:last_reader_action_at) do
-        DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
-      end
 
       context 'with a basic reader rejection' do
         it 'updates an existing Etd' do
@@ -90,7 +87,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
           expect(etd.readerapproval).to eq 'Rejected'
           expect(etd.readercomment).to eq 'Try harder next time, infrastructure team'
-          expect(etd.last_reader_action_at).to eq last_reader_action_at
+          expect(etd.last_reader_action_at).to eq action_date
           expect(etd.submitted_at).to be_nil
           expect(etd.submitted_to_registrar).to eq 'false'
         end
@@ -111,7 +108,7 @@ RSpec.describe 'Peoplesoft sends the reader rejection message' do
 
           expect(etd.readerapproval).to eq 'Reject with modification'
           expect(etd.readercomment).to eq 'Try harder next time, infrastructure team'
-          expect(etd.last_reader_action_at).to eq last_reader_action_at
+          expect(etd.last_reader_action_at).to eq action_date
           expect(etd.submitted_at).to be_nil
           expect(etd.submitted_to_registrar).to eq 'false'
         end

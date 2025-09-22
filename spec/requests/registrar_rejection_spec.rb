@@ -14,10 +14,10 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
         <degreeconfyr>2018</degreeconfyr>
         <readerapproval>Approved</readerapproval>
         <readercomment>Excellent job, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
+        <readeractiondttm>#{action_date_str}</readeractiondttm>
         <regapproval>Reject with modification</regapproval>
         <regcomment>So close, infrastructure team</regcomment>
-        <regactiondttm>#{action_date} 09:44:49</regactiondttm>
+        <regactiondttm>#{action_date_str}</regactiondttm>
         <reader type="int">
           <sunetid>kme</sunetid>
           <name>Eisenhardt, Kathleen</name>
@@ -49,7 +49,8 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Registrar rejected via PeopleSoft' }
   # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
+  let(:action_date) { Time.zone.now.change(usec: 0) }
+  let(:action_date_str) { action_date.in_time_zone(Rails.application.config.time_zone).strftime('%m/%d/%Y %T') }
 
   let!(:etd) do
     create(:submission,
@@ -66,7 +67,6 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
     context 'when passed in id is found' do
       before do
-        # allow(RetriableWorkflowUpdateJob).to receive(:perform_later)
         allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
       end
 
@@ -88,7 +88,7 @@ RSpec.describe 'Peoplesoft sends the registrar rejection message' do
 
         expect(etd.regapproval).to eq 'Reject with modification'
         expect(etd.regcomment).to eq 'So close, infrastructure team'
-        expect(etd.last_registrar_action_at).to eq last_registrar_action_at
+        expect(etd.last_registrar_action_at).to eq action_date
         expect(etd.submitted_at).to be_nil
         expect(etd.submitted_to_registrar).to eq 'false'
       end

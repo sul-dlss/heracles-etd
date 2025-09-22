@@ -83,6 +83,6 @@ class PeoplesoftService
   def parse_datetime(date_string)
     return if date_string.blank?
 
-    DateTime.strptime(date_string, '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
+    Time.zone.strptime(date_string, '%m/%d/%Y %T')
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
         <degreeconfyr>2018</degreeconfyr>
         <readerapproval>Approved</readerapproval>
         <readercomment>Excellent job, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date} 09:44:49</readeractiondttm>
+        <readeractiondttm>#{action_date_str}</readeractiondttm>
         <regapproval></regapproval>
         <regcomment></regcomment>
         <regactiondttm></regactiondttm>
@@ -49,16 +49,14 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Reader Approved via PeopleSoft' }
   # action_date has to be after submit date.
-  let(:action_date) { Time.zone.today.strftime('%m/%d/%Y') }
+  let(:action_date) { Time.zone.now.change(usec: 0) }
+  let(:action_date_str) { action_date.in_time_zone(Rails.application.config.time_zone).strftime('%m/%d/%Y %T') }
   let!(:etd) { create(:submission, dissertation_id:, druid:, submitted_at:, title:) }
   let(:dlss_admin_credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw)
   end
   let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
   let(:model_response) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-  let(:last_reader_action_at) do
-    DateTime.strptime("#{action_date} 09:44:49", '%m/%d/%Y %T').in_time_zone(Rails.application.config.time_zone)
-  end
 
   before do
     allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
@@ -76,7 +74,7 @@ RSpec.describe 'Peoplesoft sends the reader approval message' do
 
     expect(etd.readerapproval).to eq 'Approved'
     expect(etd.readercomment).to eq 'Excellent job, infrastructure team'
-    expect(etd.last_reader_action_at).to eq last_reader_action_at
+    expect(etd.last_reader_action_at).to eq action_date
     expect(etd.submitted_at).not_to be_nil
     expect(etd.submitted_to_registrar).to eq 'true'
   end
