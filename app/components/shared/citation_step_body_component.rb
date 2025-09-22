@@ -14,7 +14,7 @@ module Shared
              to: :submission
 
     def readers
-      tag.ul class: 'list-unstyled' do
+      tag.ul class: 'list-unstyled mb-0' do
         safe_join(
           submission.readers.order(:position).map do |reader|
             tag.li(reader)
