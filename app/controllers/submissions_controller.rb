@@ -129,8 +129,15 @@ class SubmissionsController < ApplicationController
     true
   end
 
+  # NOTE: The submissions controller allows users to supply either the
+  #       dissertation ID *or* the druid to find the correct submission. This is
+  #       used often by the service manager.
   def set_submission
-    @submission = Submission.find_by!(dissertation_id: params[:id])
+    @submission = if params[:id]&.start_with?('druid:')
+                    Submission.find_by!(druid: params[:id])
+                  else
+                    Submission.find_by!(dissertation_id: params[:id])
+                  end
   end
 
   def authorize_submission
