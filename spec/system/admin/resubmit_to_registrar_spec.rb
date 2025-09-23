@@ -22,6 +22,6 @@ RSpec.describe 'Re-post submission to Registrar' do
     end
     expect(page).to have_content('ETD successfully re-posted to Registrar')
     expect(page).to have_content(submission.title)
-    expect(page).to have_content('Submission Details') # not in #index view
+    expect(page).to have_content('Edit Submission') # not in #index view
   end
 end

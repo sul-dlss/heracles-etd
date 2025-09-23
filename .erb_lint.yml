@@ -24,6 +24,9 @@ linters:
         Enabled: false
   ErbSafety:
     enabled: true
+    exclude:
+      - app/views/active_admin/*
+      - app/views/active_admin/**/*
   PartialInstanceVariable:
     enabled: true
   DeprecatedClasses:
