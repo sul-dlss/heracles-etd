@@ -8,6 +8,8 @@ module ReaderReview
       super()
     end
 
+    delegate :supplemental_files, to: :submission
+
     attr_reader :submission
   end
 end
