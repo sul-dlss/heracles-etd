@@ -11,7 +11,7 @@ module Shared
     attr_reader :submission
 
     delegate :schoolname, :department, :degree, :major, :name, :degreeconfyr, :title, :orcid,
-             to: :submission
+             :submitted?, to: :submission
 
     def readers
       tag.ul class: 'list-unstyled mb-0' do

@@ -16,7 +16,6 @@ RSpec.describe 'Show Submission', :rack_test do
         visit submission_path(submission)
 
         expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
-        expect(page).to have_css('.alert.alert-warning').once # there is an ORCID warning
         expect(page).to have_no_content('Read-only administrative view')
 
         expect(page).to have_content("Welcome, #{submission.first_name}")
@@ -69,7 +68,7 @@ RSpec.describe 'Show Submission', :rack_test do
         visit submission_path(submission)
 
         expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
-        expect(page).to have_css('.alert.alert-warning').twice # there is an admin and ORCID warning
+        expect(page).to have_css('.alert.alert-warning').once # there is an admin
         expect(page).to have_content('Read-only administrative view')
         expect(page).to have_content("Welcome, #{submission.first_name}")
         expect(page).to have_css('.banner-header', text: 'Submission successful.')
