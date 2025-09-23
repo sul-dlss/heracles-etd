@@ -30,6 +30,7 @@ FactoryBot.define do
 
     trait :with_supplemental_files do
       supplemental_files_provided { true }
+      supplemental_files_uploaded { true }
       supplemental_files do
         [
           create(:supplemental_file, :first_supplement),
@@ -40,6 +41,7 @@ FactoryBot.define do
 
     trait :with_permission_files do
       permissions_provided { true }
+      permission_files_uploaded { true }
       permission_files do
         [
           create(:permission_file, :first_permission),
