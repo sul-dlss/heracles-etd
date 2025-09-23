@@ -6,7 +6,7 @@ module SubmissionAdminConcern
   extend ActiveSupport::Concern
 
   REQUIRED_ETD_WORKFLOW_STEPS = %i[citation_verified abstract_provided
-                                   dissertation_uploaded permissions_provided rights_selected].freeze
+                                   dissertation_uploaded rights_selected].freeze
 
   included do
     scope :has_submitted_at, -> { where.not(submitted_at: nil) }
