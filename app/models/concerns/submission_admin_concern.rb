@@ -5,9 +5,6 @@
 module SubmissionAdminConcern
   extend ActiveSupport::Concern
 
-  REQUIRED_ETD_WORKFLOW_STEPS = %i[citation_verified abstract_provided
-                                   dissertation_uploaded rights_selected].freeze
-
   included do
     scope :has_submitted_at, -> { where.not(submitted_at: nil) }
     scope :not_reader_approved, -> { where.not(readerapproval: 'Approved').or(where(readerapproval: nil)) }
@@ -66,9 +63,5 @@ module SubmissionAdminConcern
     return unless augmented_dissertation_file.attached?
 
     augmented_dissertation_file.filename.to_s
-  end
-
-  def all_required_steps_complete?
-    REQUIRED_ETD_WORKFLOW_STEPS.all? { |step| self[step] == true }
   end
 end

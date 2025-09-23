@@ -178,7 +178,7 @@ ActiveAdmin.register Submission do
   end
 
   action_item :resubmit_to_registrar, only: :show do
-    if submission.all_required_steps_complete? && Settings.peoplesoft.enabled
+    if Settings.peoplesoft.enabled && submission.submitted? && SubmissionPresenter.all_done?(submission:)
       link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(submission),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' }
