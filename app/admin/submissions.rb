@@ -23,7 +23,13 @@ ActiveAdmin.register Submission do
   # NOTE: These are the fields that are displayed as columns in the `index` view
   #       without any special behavior, e.g., linking & TZ labeling.
   index_columns = %i[
-    etd_type embargo degreeconfyr schoolname department readerapproval regapproval
+    title prefix name suffix etd_type embargo degreeconfyr schoolname department
+    readerapproval regapproval sulicense cclicense cclicensetype sub univid
+    sunetid major degree ps_career ps_subplan provost readercomment
+    readeractiondttm regcomment regactiondttm documentaccess citation_verified
+    abstract_provided format_reviewed dissertation_uploaded
+    supplemental_files_uploaded permissions_provided permission_files_uploaded
+    rights_selected submitted_to_registrar
   ]
 
   # Only allow admins to create dummy submissions in QA, stage, and local dev
@@ -58,9 +64,6 @@ ActiveAdmin.register Submission do
     column 'Dissertation ID (=> /submit)', sortable: :dissertation_id do |submission|
       link_to submission.dissertation_id, edit_submission_path(submission)
     end
-    %i[name title].each do |c|
-      column c.to_sym
-    end
     column 'Folio Instance HRID (=> SearchWorks)', sortable: :folio_instance_hrid do |submission|
       if submission.folio_instance_hrid
         link_to submission.folio_instance_hrid,
@@ -82,6 +85,9 @@ ActiveAdmin.register Submission do
            :ils_record_updated_at
     column helpers.t('activerecord.attributes.submission.accessioning_started_at', timezone_label:),
            :accessioning_started_at
+    column helpers.t('activerecord.attributes.submission.created_at', timezone_label:), :created_at
+    column helpers.t('activerecord.attributes.submission.updated_at', timezone_label:), :updated_at
+
     actions
   end
 
@@ -94,8 +100,10 @@ ActiveAdmin.register Submission do
 
   # filters: ordering / selecting
   filter :druid, filters: %i[end cont eq]
-  filter :dissertation_id, filters: [:end]
+  filter :dissertation_id, filters: [:eq]
   filter :name
+  filter :prefix
+  filter :suffix
   filter :title
   filter :folio_instance_hrid, filters: [:eq]
   filter :embargo, as: :select
@@ -111,6 +119,7 @@ ActiveAdmin.register Submission do
   filter :schoolname, as: :select
   filter :degree, as: :select # ["Ph.D.", "JSD", "DMA", "Engineering"]
   filter :sunetid
+  filter :abstract
   filter :sub # submit deadline
   filter :submitted_to_registrar, as: :select
   filter :last_reader_action_at,
@@ -135,23 +144,25 @@ ActiveAdmin.register Submission do
                        timezone_label:)
   filter :created_at, as: :date_range, label: I18n.t('activerecord.attributes.submission.created_at', timezone_label:)
   filter :updated_at, as: :date_range, label: I18n.t('activerecord.attributes.submission.updated_at', timezone_label:)
-  # IGNORING:
-  # prefix, suffix, abstract
-  # ps_career # ["Graduate", "Graduate School of Business", "Law"]
-  # sulicense  # ["true", nil]
-  # provost, :readercomment, :regcomment
-  # :documentaccess # yes / no?
-  # citation_verified, abstract_provided, format_reviewed, dissertation_uploaded, supplemental_files_uploaded
-  # permissions_provided, permission_files_uploaded, rights_selected, cclicense, cclicensetype
-
-  # NOTE: These are the fields that are displayed as columns in the `form` view
-  #       without any special behavior, e.g., TZ labeling.
-  form_columns = %i[
-    dissertation_id druid name prefix suffix major degree etd_type title
-    folio_instance_hrid abstract sub sunetid ps_career ps_subplan
-    provost degreeconfyr schoolname department readerapproval readercomment
-    regapproval regcomment documentaccess
-  ]
+  filter :sulicense
+  filter :cclicense
+  filter :cclicensetype
+  filter :univid
+  filter :ps_career
+  filter :provost
+  filter :readercomment
+  filter :readeractiondttm
+  filter :regcomment
+  filter :regactiondttm
+  filter :documentaccess
+  filter :citation_verified
+  filter :abstract_provided
+  filter :format_reviewed
+  filter :dissertation_uploaded
+  filter :supplemental_files_uploaded
+  filter :permissions_provided
+  filter :permission_files_uploaded
+  filter :rights_selected
 
   member_action :resubmit_to_registrar, method: :post do
     # Re-post submission to Registrar (via PeopleSoft)
@@ -174,29 +185,7 @@ ActiveAdmin.register Submission do
     end
   end
 
-  form do |f|
-    f.semantic_errors # shows errors on :base
-    f.inputs do
-      form_columns.each do |form_column|
-        input form_column
-      end
-      f.input :submitted_at, label: helpers.t('activerecord.attributes.submission.submitted_at', timezone_label:)
-      f.input :last_reader_action_at,
-              label: helpers.t('activerecord.attributes.submission.last_reader_action_at', timezone_label:)
-      f.input :last_registrar_action_at,
-              label: helpers.t('activerecord.attributes.submission.last_registrar_action_at', timezone_label:)
-      f.input :ils_record_created_at,
-              label: helpers.t('activerecord.attributes.submission.ils_record_created_at', timezone_label:)
-      f.input :ils_record_updated_at,
-              label: helpers.t('activerecord.attributes.submission.ils_record_updated_at', timezone_label:)
-      f.input :accessioning_started_at,
-              label: helpers.t('activerecord.attributes.submission.accessioning_started_at', timezone_label:)
-    end
-
-    f.actions # adds the 'Submit' and 'Cancel' buttons
-  end
-
-  show do
+  show title: :title do
     attributes_table do
       row 'Druid (=> Argo)' do |submission|
         link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
@@ -213,17 +202,14 @@ ActiveAdmin.register Submission do
       end
       rows(
         *active_admin_config.resource_columns.without(
-          :druid,
-          :dissertation_id,
-          :folio_instance_hrid,
+          :created_at,
+          :updated_at,
           :submitted_at,
           :last_reader_action_at,
           :last_registrar_action_at,
           :ils_record_created_at,
           :ils_record_updated_at,
-          :accessioning_started_at,
-          :created_at,
-          :updated_at
+          :accessioning_started_at
         )
       )
       row helpers.t('activerecord.attributes.submission.submitted_at', timezone_label:), &:submitted_at
@@ -237,6 +223,8 @@ ActiveAdmin.register Submission do
           &:ils_record_updated_at
       row helpers.t('activerecord.attributes.submission.accessioning_started_at', timezone_label:),
           &:accessioning_started_at
+      row helpers.t('activerecord.attributes.submission.created_at', timezone_label:), &:created_at
+      row helpers.t('activerecord.attributes.submission.updated_at', timezone_label:), &:updated_at
     end
 
     panel 'Readers' do
@@ -251,11 +239,35 @@ ActiveAdmin.register Submission do
     end
 
     panel 'Files' do
-      table_for [submission.dissertation_file] + submission.supplemental_files do
+      table_for [submission.dissertation_file, submission.augmented_dissertation_file].compact_blank +
+                submission.supplemental_files + submission.permission_files do
         column 'file_name', &:filename
         column 'type', &:content_type
         column 'size', &:byte_size
       end
     end
+  end
+
+  form do |f|
+    f.semantic_errors # shows errors on :base
+    f.inputs do
+      index_columns.each do |form_column|
+        input form_column
+      end
+      f.input :abstract
+      f.input :submitted_at, label: helpers.t('activerecord.attributes.submission.submitted_at', timezone_label:)
+      f.input :last_reader_action_at,
+              label: helpers.t('activerecord.attributes.submission.last_reader_action_at', timezone_label:)
+      f.input :last_registrar_action_at,
+              label: helpers.t('activerecord.attributes.submission.last_registrar_action_at', timezone_label:)
+      f.input :ils_record_created_at,
+              label: helpers.t('activerecord.attributes.submission.ils_record_created_at', timezone_label:)
+      f.input :ils_record_updated_at,
+              label: helpers.t('activerecord.attributes.submission.ils_record_updated_at', timezone_label:)
+      f.input :accessioning_started_at,
+              label: helpers.t('activerecord.attributes.submission.accessioning_started_at', timezone_label:)
+    end
+
+    f.actions # adds the 'Submit' and 'Cancel' buttons
   end
 end
