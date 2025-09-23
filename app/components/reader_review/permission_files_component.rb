@@ -8,6 +8,8 @@ module ReaderReview
       super()
     end
 
+    delegate :permission_files, to: :submission
+
     attr_reader :submission
   end
 end

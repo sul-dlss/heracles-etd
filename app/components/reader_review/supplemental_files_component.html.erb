@@ -1,7 +1,11 @@
 <%= render Shared::StepComponent.new(title: 'Supplemental files') do |component| %>
   <% component.with_body_content do %>
-    <p>To open a file below, click on the filename.</p>
+    <% if supplemental_files.any? %>
+      <p>To open a file below, click on the filename.</p>
 
-    <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:) %>
+      <%= render Shared::SupplementalFilesStepBodyTableComponent.new(submission:) %>
+    <% else %>
+      <p>No files provided.</p>
+    <% end %>
   <% end %>
 <% end %>
