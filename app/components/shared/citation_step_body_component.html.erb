@@ -19,28 +19,30 @@
   <%= render Elements::Tables::TableComponent.new(id: 'orcid-details-table', label: 'ORCID iD details', show_label: false) do |component| %>
     <% component.with_row(label: 'ORCID iD', values: [orcid || 'Not found']) %>
   <% end %>
-  <% if orcid.present? %>
-    <%= render Elements::StatusAlertComponent.new(title: 'Your ORCID iD') do %>
-      <p class="mb-0">You have an ORCID iD connected with your Stanford SUNet ID. Your ORCID iD will appear on your dissertation’s public Stanford Digital Repository page.</p>
-      <ul class="mb-0">
-        <li>In order for your dissertation to be automatically added to your ORCID profile, you must authorize Stanford to READ and UPDATE your profile.
-            To review or change your authorization settings, visit <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>.</li>
-        <li>If you don’t authorize Stanford to UPDATE, you can manually add your dissertation to your ORCID profile at a later date.</li>
-      </ul>
-    <% end %>
-  <% else %>
-    <%= render Elements::StatusAlertComponent.new(title: 'ORCID iD not found', variant: :warning) do %>
-      <p class="mb-0">
-        You do not have an ORCID iD connected with your Stanford SUNet ID. Having an ORCID iD is not required,
-        but it is recommended if you plan to continue to do research after you graduate.
-        Your connected ORCID iD will appear on your dissertation’s public Stanford Digital Repository page.
-      </p>
-      <ul class="mb-0">
-        <li>Create your ORCID iD and connect it to your Stanford SUNet ID at <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>,
-            choosing the recommended settings (READ and UPDATE). If you log out of this dissertation submission page and then log back in, you should now see your ORCID iD here.</li>
-        <li>If you have connected your ORCID iD and chosen the READ and UPDATE settings, your dissertation will be automatically added to your ORCID profile.
-            You can always manually add or change the work appearing in your ORCID profile at a later date.</li>
-      </ul>
+  <% if !submitted? %>
+    <% if orcid.present? %>
+      <%= render Elements::StatusAlertComponent.new(title: 'Your ORCID iD') do %>
+        <p class="mb-0">You have an ORCID iD connected with your Stanford SUNet ID. Your ORCID iD will appear on your dissertation’s public Stanford Digital Repository page.</p>
+        <ul class="mb-0">
+          <li>In order for your dissertation to be automatically added to your ORCID profile, you must authorize Stanford to READ and UPDATE your profile.
+              To review or change your authorization settings, visit <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>.</li>
+          <li>If you don’t authorize Stanford to UPDATE, you can manually add your dissertation to your ORCID profile at a later date.</li>
+        </ul>
+      <% end %>
+    <% else %>
+      <%= render Elements::StatusAlertComponent.new(title: 'ORCID iD not found', variant: :warning) do %>
+        <p class="mb-0">
+          You do not have an ORCID iD connected with your Stanford SUNet ID. Having an ORCID iD is not required,
+          but it is recommended if you plan to continue to do research after you graduate.
+          Your connected ORCID iD will appear on your dissertation’s public Stanford Digital Repository page.
+        </p>
+        <ul class="mb-0">
+          <li>Create your ORCID iD and connect it to your Stanford SUNet ID at <%= render Elements::ExternalLinkComponent.new(url: 'https://authorize.stanford.edu', classes: 'ms-1') %>,
+              choosing the recommended settings (READ and UPDATE). If you log out of this dissertation submission page and then log back in, you should now see your ORCID iD here.</li>
+          <li>If you have connected your ORCID iD and chosen the READ and UPDATE settings, your dissertation will be automatically added to your ORCID profile.
+              You can always manually add or change the work appearing in your ORCID profile at a later date.</li>
+        </ul>
+      <% end %>
     <% end %>
   <% end %>
 </section>
