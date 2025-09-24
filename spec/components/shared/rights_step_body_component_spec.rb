@@ -10,7 +10,7 @@ RSpec.describe Shared::RightsStepBodyComponent, type: :component do
     render_inline(described_class.new(submission:))
 
     rows = page.all('table#copyright-details-table tbody tr')
-    expect(rows.length).to eq(3)
+    expect(rows.length).to eq(4)
     expect(rows[0]).to have_css('th', text: 'Copyright Statement')
     expect(rows[0]).to have_css('td', text: "© #{Time.zone.now.year} by Jane Doe. All rights reserved.")
 
@@ -29,7 +29,7 @@ RSpec.describe Shared::RightsStepBodyComponent, type: :component do
       render_inline(described_class.new(submission:))
 
       rows = page.all('table#copyright-details-table tbody tr')
-      expect(rows.length).to eq(3)
+      expect(rows.length).to eq(4)
       expect(rows[1]).to have_css('th', text: 'Creative Commons')
       expect(rows[1]).to have_css('td', text: 'This work is not licensed under a Creative Commons license.')
     end

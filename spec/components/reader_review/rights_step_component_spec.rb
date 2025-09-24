@@ -12,7 +12,7 @@ RSpec.describe ReaderReview::RightsStepComponent, type: :component do
 
       expect(page).to have_css('h2', text: 'Copyright and license terms')
       rows = page.all('table#copyright-details-table tbody tr')
-      expect(rows.length).to eq(3)
+      expect(rows.length).to eq(4)
       expect(page).to have_content(release_date_display)
     end
   end
