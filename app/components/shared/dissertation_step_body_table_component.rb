@@ -3,19 +3,19 @@
 module Shared
   # Component for displaying the dissertation step body table.
   class DissertationStepBodyTableComponent < ApplicationComponent
-    def initialize(submission:, with_remove: false)
+    def initialize(submission:, with_remove: false, show_original: true, show_augmented: false)
       @submission = submission
       @with_remove = with_remove
+      @show_original = show_original
+      @show_augmented = show_augmented
       super()
     end
 
     private
 
-    attr_reader :submission, :with_remove
+    attr_reader :submission, :with_remove, :show_original, :show_augmented
 
-    delegate :dissertation_file, to: :submission
-
-    delegate :filename, :byte_size, :created_at, to: :dissertation_file
+    delegate :dissertation_file, :augmented_dissertation_file, to: :submission
 
     def file_size
       helpers.number_to_human_size(byte_size)
@@ -31,6 +31,10 @@ module Shared
 
     def dissertation_file?
       dissertation_file.attached?
+    end
+
+    def augmented_dissertation_file?
+      augmented_dissertation_file.attached?
     end
   end
 end
