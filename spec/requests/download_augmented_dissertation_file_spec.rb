@@ -26,7 +26,7 @@ RSpec.describe 'Download dissertation file' do
       get augmented_dissertation_file_submission_path(submission)
 
       expect(response).to have_http_status(:ok)
-      expect(response.header['Content-Disposition']).to include(submission.augmented_dissertation_file_name)
+      expect(response.header['Content-Disposition']).to include('attachment; filename="dissertation.pdf"')
     end
   end
 

@@ -92,29 +92,34 @@ class SubmissionsController < ApplicationController
 
     send_file ActiveStorageSupport.filepath_for_blob(@submission.dissertation_file),
               type: @submission.dissertation_file.content_type,
-              filename: @submission.dissertation_file.filename.to_s
+              filename: @submission.dissertation_file.filename.to_s,
+              disposition: 'attachment'
   end
 
+  # Use the original filename when downloading the augmented file
   def augmented_dissertation_file
     return head :not_found unless @submission.augmented_dissertation_file.attached?
 
     send_file ActiveStorageSupport.filepath_for_blob(@submission.augmented_dissertation_file),
               type: @submission.augmented_dissertation_file.content_type,
-              filename: @submission.augmented_dissertation_file_name
+              filename: @submission.dissertation_file.filename.to_s,
+              disposition: 'attachment'
   end
 
   def permission_file
     permission_file = @submission.permission_files.find(params[:file_id])
     send_file ActiveStorageSupport.filepath_for_blob(permission_file.file),
               type: permission_file.content_type,
-              filename: permission_file.filename.to_s
+              filename: permission_file.filename.to_s,
+              disposition: 'attachment'
   end
 
   def supplemental_file
     supplemental_file = @submission.supplemental_files.find(params[:file_id])
     send_file ActiveStorageSupport.filepath_for_blob(supplemental_file.file),
               type: supplemental_file.content_type,
-              filename: supplemental_file.filename.to_s
+              filename: supplemental_file.filename.to_s,
+              disposition: 'attachment'
   end
 
   private
