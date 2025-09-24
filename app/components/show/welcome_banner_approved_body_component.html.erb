@@ -11,7 +11,7 @@
     at the time of submission.
   </li>
 </ul>
-<%= render Elements::ButtonLinkComponent.new(link: augmented_dissertation_file_submission_path(submission), classes: 'mb-1') do %>
+<%= render Elements::ButtonLinkComponent.new(link: augmented_dissertation_file_submission_path(submission), classes: 'mb-1', download: true) do %>
   <i class="bi bi-download me-1"></i> Download your submitted file
 <% end %>
 <div class="d-flex justify-content-between">
