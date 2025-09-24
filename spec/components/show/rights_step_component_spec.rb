@@ -10,6 +10,6 @@ RSpec.describe Show::RightsStepComponent, type: :component do
 
     expect(page).to have_css('h2', text: 'Apply copyright and license terms')
     rows = page.all('table#copyright-details-table tbody tr')
-    expect(rows.length).to eq(3)
+    expect(rows.length).to eq(4)
   end
 end
