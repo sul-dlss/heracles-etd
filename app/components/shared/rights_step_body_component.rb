@@ -13,7 +13,8 @@ module Shared
     delegate :copyright_statement, to: :submission
 
     def embargo_date
-      Embargo.embargo_date(start_date: Time.zone.now, id: submission.embargo).to_date
+      start_date = submission.last_registrar_action_at || Time.zone.now
+      Embargo.embargo_date(start_date:, id: submission.embargo).to_date
     end
 
     def license
