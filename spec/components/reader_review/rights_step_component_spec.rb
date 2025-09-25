@@ -18,7 +18,7 @@ RSpec.describe ReaderReview::RightsStepComponent, type: :component do
       expect(rows.length).to eq(4)
       expect(page).to have_content(
         "This thesis will be publicly available on #{release_date_display} " \
-        '(includes 6 months delay requested by the author).'
+        '(includes 6-month delay requested by the author).'
       )
     end
   end

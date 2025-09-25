@@ -17,7 +17,7 @@ module Shared
       if last_registrar_action_at && /approved/i.match?(regapproval)
         if embargo.present? && embargo != 'immediately'
           "This #{etd_type_label} will be publicly available on <strong>#{formatted_release_date}" \
-            "</strong> (includes #{embargo} delay requested by the author)."
+            "</strong> (includes #{delay_duration_label} delay requested by the author)."
         else
           "This #{etd_type_label} will be publicly available on <strong>#{formatted_release_date}</strong>."
         end
@@ -43,6 +43,10 @@ module Shared
 
     def etd_type_label
       etd_type.downcase
+    end
+
+    def delay_duration_label
+      embargo.chomp('s').parameterize
     end
   end
 end
