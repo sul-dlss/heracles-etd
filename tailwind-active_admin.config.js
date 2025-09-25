@@ -1,5 +1,6 @@
 import { execSync } from 'child_process'
 import activeAdminPlugin from '@activeadmin/activeadmin/plugin'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 const activeAdminPath = execSync('bundle show activeadmin', { encoding: 'utf-8' }).trim()
 
@@ -17,5 +18,10 @@ export default {
   darkMode: 'selector',
   plugins: [
     activeAdminPlugin
-  ]
+  ],
+  theme: {
+    fontFamily: {
+      sans: ['Source\\ Sans\\ 3', ...defaultTheme.fontFamily.sans]
+    }
+  }
 }
