@@ -6,8 +6,7 @@ RSpec.describe Cocina::FileSetsGenerator do
   subject(:file_sets) { described_class.file_sets(submission:, dro_version: 1) }
 
   let(:submission) do
-    create(:submission, :submitted, :with_dissertation_file, :with_augmented_dissertation_file,
-           :with_supplemental_files, :with_permission_files, druid:)
+    create(:submission, :submitted, :ready_for_cataloging, druid:)
   end
 
   let(:druid) { 'druid:xx999xx0021' }

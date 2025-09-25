@@ -159,7 +159,7 @@ class Submission < ApplicationRecord
   end
 
   def embargo_release_date
-    Embargo.embargo_date(start_date: submitted_at, id: embargo)
+    Embargo.embargo_date(start_date: last_registrar_action_at, id: embargo)
   end
 
   def set_derivative_fields

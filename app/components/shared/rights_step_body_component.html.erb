@@ -11,7 +11,11 @@
       <% end %>
     <% end %>
   <% end %>
-  <% component.with_row(label: 'External Release', values: [l(embargo_date, format: :long)]) %>
+  <% component.with_row(label: 'External Release') do |row_component| %>
+    <% row_component.with_cell do %>
+      <div><%= external_release_date_message %></div>
+    <% end %>
+  <% end %>
   <% component.with_row(label: 'Preview') do |row_component| %>
     <% row_component.with_cell do %>
       <%= render Elements::ExternalLinkComponent.new(url: preview_submission_path(submission), label: 'Preview the Copyright and Signature pages') %>

@@ -6,8 +6,7 @@ RSpec.describe StartAccessionJob do
   subject(:job) { described_class.new }
 
   let(:submission) do
-    create(:submission, :submitted, :with_dissertation_file, :with_augmented_dissertation_file,
-           :with_supplemental_files, :with_permission_files)
+    create(:submission, :submitted, :ready_for_cataloging)
   end
 
   let(:druid) { submission.druid }

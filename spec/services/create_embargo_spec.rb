@@ -88,9 +88,9 @@ RSpec.describe CreateEmbargo do
     end
 
     context 'when the embargo date is today' do
-      let(:last_reader_action_at) { Time.zone.now.months_ago(5) }
+      let(:last_reader_action_at) { Time.zone.now.months_ago(6) }
       let(:last_registrar_action_at) { last_reader_action_at + 30 }
-      let(:submitted_at) { Time.zone.now.months_ago(6) }
+      let(:submitted_at) { Time.zone.now.months_ago(7) }
 
       it 'does not create embargoMetadata if the embargo date is today' do
         embargo_creator.call
