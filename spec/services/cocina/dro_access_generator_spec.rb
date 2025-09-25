@@ -6,8 +6,7 @@ RSpec.describe Cocina::DroAccessGenerator do
   describe '.create' do
     subject(:result_hash) { described_class.create(submission:) }
 
-    let(:druid) { 'druid:oo000oo0000' }
-    let(:submission) { build(:submission, :submitted, :reader_approved, druid:) }
+    let(:submission) { build(:submission, :submitted, :ready_for_cataloging) }
 
     # NOTE: stanford vs world access is based on the embargo date
 
@@ -53,7 +52,7 @@ RSpec.describe Cocina::DroAccessGenerator do
     context 'when embargo is not immediate' do
       before do
         submission.embargo = '6 months'
-        submission.submitted_at = Time.zone.now
+        submission.last_registrar_action_at = Time.zone.now
         submission.save
       end
 
