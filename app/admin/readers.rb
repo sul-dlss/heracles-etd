@@ -34,10 +34,8 @@ ActiveAdmin.register Reader do
     %i[name sunetid readerrole finalreader type position].each do |index_column|
       column index_column
     end
-    column t('created at'), :created_at
-    column t('last updated at'), :updated_at
     column 'Submission (Author)', sortable: :submission_id do |reader|
-      link_to Submission.find(reader.submission_id).name, admin_submission_path(reader.submission_id)
+      link_to reader.submission.dissertation_id, admin_submission_path(reader.submission)
     end
     actions
   end
@@ -45,8 +43,8 @@ ActiveAdmin.register Reader do
   show do
     attributes_table do
       %i[name prefix suffix sunetid readerrole finalreader type position].each { |r| row r }
-      row 'Submission (ETD database id)' do |reader|
-        link_to Submission.find(reader.submission_id).id, admin_submission_path(reader.submission_id)
+      row 'Submission (dissertation ID)' do |reader|
+        link_to reader.submission.dissertation_id, admin_submission_path(reader.submission)
       end
       row 'Created At', :created_at
       row 'Last Updated At', :updated_at

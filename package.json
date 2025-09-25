@@ -23,7 +23,7 @@
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.bootstrap.css --load-path=node_modules --quiet-deps",
     "build:css:prefix": "postcss ./app/assets/builds/*.css --use=autoprefixer --replace",
     "build:css": "yarn build:css:compile && yarn build:css:prefix && yarn build:css:activeadmin",
-    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss,css --exec \"yarn build:css\"",
     "lint": "standard",
     "stylelint": "stylelint \"app/assets/stylesheets/**/*.scss\""
   },

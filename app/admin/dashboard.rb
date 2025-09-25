@@ -4,15 +4,15 @@ ActiveAdmin.register_page 'Dashboard' do
   menu priority: 1, label: proc { I18n.t('active_admin.dashboard') }
 
   content title: proc { I18n.t('active_admin.dashboard') } do
-    div class: 'px-4 py-16 md:py-32 text-center m-auto max-w-3xl' do
+    div do
       h2 'Welcome to the ETD Admin Dashboard',
-         class: 'text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-500'
+         class: 'text-base text-center font-semibold leading-7 text-indigo-600 dark:text-indigo-300'
 
       panel 'ETD Progress' do
         table do
           thead do
             tr do
-              ['Last step processed', 'count'].each(&method(:th)) # rubocop:disable Performance/MethodObjectAsBlock
+              ['Last step processed', 'Count'].each(&method(:th)) # rubocop:disable Performance/MethodObjectAsBlock
             end
           end
 
