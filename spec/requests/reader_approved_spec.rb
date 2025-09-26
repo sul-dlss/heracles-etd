@@ -4,54 +4,16 @@ require 'rails_helper'
 
 RSpec.describe 'Peoplesoft sends the reader approval message' do
   let(:data) do
-    <<~XML
-      <DISSERTATION>
-        <dissertationid>#{dissertation_id}</dissertationid>
-        <title>#{title}</title>
-        <name>The Lorax</name>
-        <sunetid>lorax</sunetid>
-        <type>Dissertation</type>
-        <degreeconfyr>2018</degreeconfyr>
-        <readerapproval>Approved</readerapproval>
-        <readercomment>Excellent job, infrastructure team</readercomment>
-        <readeractiondttm>#{action_date_str}</readeractiondttm>
-        <regapproval></regapproval>
-        <regcomment></regcomment>
-        <regactiondttm></regactiondttm>
-        <reader type="int">
-          <sunetid>kme</sunetid>
-          <name>Eisenhardt, Kathleen</name>
-          <readerrole>Doct Dissert Advisor (AC)</readerrole>
-          <finalreader>Yes</finalreader>
-        </reader>
-        <reader type="int">
-          <sunetid>rkatila</sunetid>
-          <name>Katila, Riitta</name>
-          <readerrole>Doct Dissert Reader (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <reader type="int">
-          <sunetid>cee</sunetid>
-          <name>Eesley, Charles</name>
-          <readerrole>Doct Dissert Reader (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <schoolname>School of Engineering</schoolname>
-        <career code="GR">Graduate</career>
-        <program code="MGTSC">Mgmt Sci &amp; Engineering</program>
-        <plan code="MGTSC-PHD">Management Science and Engineering</plan>
-        <degree>PHD</degree>
-      </DISSERTATION>
-    XML
+    registrar_xml(dissertation_id:, title:, readerapproval: 'Approved',
+                  readercomment: 'Excellent job, infrastructure team', readeractiondttm: action_date_str)
   end
-  let(:druid) { 'druid:789' }
+  let(:druid) { etd.druid }
   let(:dissertation_id) { '000123' }
   let(:submitted_at) { 2.days.ago }
   let(:title) { 'Reader Approved via PeopleSoft' }
-  # action_date has to be after submit date.
-  let(:action_date) { Time.zone.now.change(usec: 0) }
+  let(:action_date) { Time.zone.now.change(usec: 0) } # action_date has to be after submit date.
   let(:action_date_str) { action_date.in_time_zone(Rails.application.config.time_zone).strftime('%m/%d/%Y %T') }
-  let!(:etd) { create(:submission, dissertation_id:, druid:, submitted_at:, title:) }
+  let(:etd) { create(:submission, dissertation_id:, submitted_at:, title:) }
   let(:dlss_admin_credentials) do
     ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw)
   end
