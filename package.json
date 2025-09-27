@@ -19,7 +19,7 @@
     "tailwindcss": "^3.4.17"
   },
   "scripts": {
-    "build:css:activeadmin": "tailwindcss -i ./app/assets/stylesheets/active_admin.css -o ./app/assets/builds/active_admin.css --minify -c tailwind-active_admin.config.js",
+    "build:css:activeadmin": "BROWSERSLIST_IGNORE_OLD_DATA=1 tailwindcss -i ./app/assets/stylesheets/active_admin.css -o ./app/assets/builds/active_admin.css --minify -c tailwind-active_admin.config.js",
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.bootstrap.css --load-path=node_modules --quiet-deps",
     "build:css:prefix": "postcss ./app/assets/builds/*.css --use=autoprefixer --replace",
     "build:css": "yarn build:css:compile && yarn build:css:prefix && yarn build:css:activeadmin",
