@@ -51,26 +51,24 @@ class EtdsController < ApplicationController
   end
 
   def etd_params
-    params.expect(DISSERTATION: [:dissertationid, :title, :type, :readerapproval, :readercomment, :regapproval,
-                                 :regcomment, :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
-                                 :readeractiondttm, :regactiondttm, :degree, :name, :vpname, :career, :program,
-                                 :plan,
-                                 { sub: [%i[deadline]] },
-                                 { subplan: [%i[code __content__]],
-                                   reader: [%i[sunetid name_prefix prefix name suffix type
-                                               univid readerrole finalreader]] }])
+    params.require(:DISSERTATION) # rubocop:disable Rails/StrongParametersExpect
+          .permit(:dissertationid, :title, :type, :readerapproval, :readercomment, :regapproval,
+                  :regcomment, :documentaccess, :schoolname, :degreeconfyr, :univid, :sunetid,
+                  :readeractiondttm, :regactiondttm, :degree, :name, :vpname, :career, :program, :plan,
+                  reader: %i[sunetid name_prefix prefix name suffix type univid readerrole finalreader],
+                  subplan: %i[code __content__])
   end
 
   def dissertation_id
-    etd_params.expect(:dissertationid)
+    etd_params.fetch(:dissertationid)
   end
 
   def title
-    etd_params.expect(:title).squish
+    etd_params.fetch(:title).squish
   end
 
   def readers
-    etd_params.expect(reader: [%i[sunetid name_prefix prefix name suffix type univid readerrole finalreader]])
+    Array(etd_params.fetch(:reader))
   end
 
   def degree
