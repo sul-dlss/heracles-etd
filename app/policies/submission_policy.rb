@@ -7,7 +7,7 @@ class SubmissionPolicy < ApplicationPolicy
   alias_rule :edit?, :submit?, :review?, :attach_supplemental_files?, :attach_permission_files?, to: :update?
 
   def show?
-    author? || admin?
+    author? || admin? || (reader? && record.submitted?)
   end
 
   # No one can edit when the submission has already been submitted.
@@ -21,13 +21,17 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def reader_review?
-    record.readers.exists?(sunetid: user.sunetid) || admin?
+    reader? || admin?
   end
 
   private
 
   def author?
     record.sunetid == user.sunetid
+  end
+
+  def reader?
+    record.readers.exists?(sunetid: user.sunetid)
   end
 
   def admin?

@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe SubmissionPolicy do
   let(:policy) { described_class.new(submission, user:) }
-  let(:submission) { build_stubbed(:submission) }
+  let(:submission) { create(:submission, :with_readers, *submission_args) }
+  let(:submission_args) { [] }
   let(:user) { User.new(remote_user: "#{submission.sunetid}@example.edu") }
 
   describe '#preview?' do
@@ -61,6 +62,19 @@ RSpec.describe SubmissionPolicy do
 
       it { is_expected.to be false }
     end
+
+    context 'when user is a reader for the paper and it has not been submitted' do
+      let(:user) { User.new(remote_user: "#{submission.readers.first.sunetid}@example.edu") }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when user is a reader for the paper and it has been submitted' do
+      let(:submission_args) { [:submitted] }
+      let(:user) { User.new(remote_user: "#{submission.readers.first.sunetid}@example.edu") }
+
+      it { is_expected.to be true }
+    end
   end
 
   describe '#update?' do
@@ -70,7 +84,7 @@ RSpec.describe SubmissionPolicy do
       it { is_expected.to be true }
 
       context 'with an already submitted submission' do
-        let(:submission) { build_stubbed(:submission, :submitted) }
+        let(:submission_args) { [:submitted] }
 
         it { is_expected.to be false }
       end
@@ -95,7 +109,7 @@ RSpec.describe SubmissionPolicy do
         it { is_expected.to be true }
 
         context 'with an already submitted submission' do
-          let(:submission) { build_stubbed(:submission, :submitted) }
+          let(:submission_args) { [:submitted] }
 
           it { is_expected.to be false }
         end
@@ -107,12 +121,23 @@ RSpec.describe SubmissionPolicy do
 
       it { is_expected.to be false }
     end
+
+    context 'when user is a reader for the paper and it has not been submitted' do
+      let(:user) { User.new(remote_user: "#{submission.readers.first.sunetid}@example.edu") }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when user is a reader for the paper and it has been submitted' do
+      let(:submission_args) { [:submitted] }
+      let(:user) { User.new(remote_user: "#{submission.readers.first.sunetid}@example.edu") }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#reader_review?' do
     subject { policy.apply(:reader_review?) }
-
-    let(:submission) { build_stubbed(:submission, :with_readers) }
 
     context 'when user is the author' do
       it { is_expected.to be false }
@@ -134,6 +159,12 @@ RSpec.describe SubmissionPolicy do
       let(:user) { User.new(remote_user: 'random@example.edu') }
 
       it { is_expected.to be false }
+    end
+
+    context 'when user is a reader for the paper' do
+      let(:user) { User.new(remote_user: "#{submission.readers.first.sunetid}@example.edu") }
+
+      it { is_expected.to be true }
     end
   end
 end
