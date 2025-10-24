@@ -35,7 +35,7 @@ class PeoplesoftService
   attr_reader :submission, :submission_params
 
   def readers
-    @readers ||= Reader.sorted_list(submission_params[:reader])
+    @readers ||= Reader.sorted_list(submission_params[:readers])
   end
 
   def update_reader_actions!

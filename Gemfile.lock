@@ -33,9 +33,6 @@ GEM
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
       useragent (~> 0.16)
-    actionpack-xml_parser (2.0.1)
-      actionpack (>= 5.0)
-      railties (>= 5.0)
     actiontext (8.0.3)
       actionpack (= 8.0.3)
       activerecord (= 8.0.3)
@@ -687,7 +684,6 @@ PLATFORMS
 
 DEPENDENCIES
   action_policy
-  actionpack-xml_parser
   activeadmin (~> 4.0.0.beta16)
   bootsnap
   capistrano-maintenance
@@ -703,6 +699,7 @@ DEPENDENCIES
   dlss-capistrano
   dor-services-client
   druid-tools
+  dry-struct
   erb_lint
   factory_bot_rails
   folio_client

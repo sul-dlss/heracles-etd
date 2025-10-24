@@ -3,36 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ETDs created from Peoplesoft upload' do
-  let(:data) do
-    <<~XML
-      <DISSERTATION>
-        <reader>
-          <sunetid>READ1</sunetid>
-          <prefix>Mr.</prefix>
-          <name>Reader,First</name>
-          <suffix>Jr.</suffix>
-          <type>int</type>
-          <univid>05358772</univid>
-          <readerrole>Doct Dissert Advisor (AC)</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <reader>
-          <sunetid> </sunetid>
-          <prefix>Dr</prefix>
-          <name>Reader,Second</name>
-          <suffix> </suffix>
-          <type>ext</type>
-          <univid> </univid>
-          <readerrole>External Reader</readerrole>
-          <finalreader>No</finalreader>
-        </reader>
-        <dissertationid>#{dissertation_id}</dissertationid>
-        <title>My etd</title>
-        <type>Dissertation</type>
-        <sunetid>student1</sunetid>
-      </DISSERTATION>
-    XML
-  end
+  let(:params) { registrar_xml }
   let(:druid) { 'druid:bc789df8765' }
   let(:dlss_admin_credentials) { ActionController::HttpAuthentication::Basic.encode_credentials(Settings.dlss_admin, Settings.dlss_admin_pw) }
   let(:objects_client) { instance_double(Dor::Services::Client::Objects, register: model_response) }
@@ -48,7 +19,7 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
 
   it 'creates a new Etd' do
     post '/etds',
-         params: data,
+         params:,
          headers: { Authorization: dlss_admin_credentials,
                     'Content-Type': 'application/xml' }
 
@@ -64,32 +35,53 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
   end
 
   context 'when only a single reader is provided' do
-    let(:data) do
+    let(:params) do
       <<~XML
         <DISSERTATION>
+          <dissertationid>000123</dissertationid>
+          <title>My etd</title>
+          <type>Dissertation</type>
+          <sunetid>student1</sunetid>
+          <vpname>Provost McProvostpants</vpname>
+          <degreeconfyr>2025</degreeconfyr>
+          <schoolname>Graduate School of Education</schoolname>
+          <readerapproval></readerapproval>
+          <readercomment></readercomment>
+          <readeractiondttm></readeractiondttm>
+          <regapproval></regapproval>
+          <regcomment></regcomment>
+          <regactiondttm></regactiondttm>
+          <documentaccess>No</documentaccess>
+          <univid>12345678</univid>
+          <prefix></prefix>
+          <name>Student, I. M.</name>
+          <suffix></suffix>
+          <career code="GR">Graduate</career>
+          <program code="EDUC">Education</program>
+          <plan code="ED-PHD">Education</plan>
+          <degree>PHD</degree>
+          <term>1258</term>
+          <sub deadline="2025-09-03"/>
+          <subplan code="EDCTEPHD5">Science, Engineering &amp; Tech Ed</subplan>
           <reader>
             <sunetid>READ1</sunetid>
             <prefix>Mr.</prefix>
             <name>Reader,First</name>
             <suffix>Jr.</suffix>
             <type>int</type>
-            <univid>05358772</univid>
+            <univid>987654321</univid>
             <readerrole>Doct Dissert Advisor (AC)</readerrole>
-            <finalreader>No</finalreader>
+            <finalreader>Yes</finalreader>
           </reader>
-          <dissertationid>000123</dissertationid>
-          <title>My etd</title>
-          <type>Dissertation</type>
-          <sunetid>student1</sunetid>
         </DISSERTATION>
       XML
     end
 
     it 'creates a new Etd' do
-      post '/etds',
-           params: data,
-           headers: { Authorization: dlss_admin_credentials,
-                      'Content-Type': 'application/xml' }
+      post '/etds', params:, headers: {
+        Authorization: dlss_admin_credentials,
+        'Content-Type': 'application/xml'
+      }
 
       expect(response).to have_http_status(:created)
       expect(response.body).to include('druid:bc789df8765 created')

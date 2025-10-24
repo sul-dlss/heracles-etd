@@ -39,13 +39,13 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem 'actionpack-xml_parser' # XML parameter parsing for Rails
 gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin', '~> 4.0.0.beta16'
 gem 'cocina-models', '~> 0.105'
 gem 'config'
 gem 'dor-services-client'
 gem 'druid-tools'
+gem 'dry-struct'
 gem 'folio_client'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
