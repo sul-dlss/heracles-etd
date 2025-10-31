@@ -106,7 +106,7 @@ class EtdsController < ApplicationController
   def set_submission
     return render status: :bad_request, plain: invalid_xml_message unless valid_xml?
 
-    @submission = Submission.find_or_initialize_by(dissertation_id:, title:)
+    @submission = Submission.find_by(dissertation_id:) || Submission.new(dissertation_id:, title:)
     @message = @submission.new_record? ? 'created' : 'updated'
   end
 
