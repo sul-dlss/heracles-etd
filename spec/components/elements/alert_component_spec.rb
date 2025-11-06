@@ -18,14 +18,6 @@ RSpec.describe Elements::AlertComponent, type: :component do
     end
   end
 
-  context 'with a value' do
-    it 'renders the alert with a value' do
-      render_inline(described_class.new(title: 'My title', value: 'My value'))
-
-      expect(page).to have_text('My value')
-    end
-  end
-
   context 'with a variant' do
     it 'renders the alert' do
       render_inline(described_class.new(title: 'My title', variant: :note))
@@ -41,7 +33,7 @@ RSpec.describe Elements::AlertComponent, type: :component do
     end
   end
 
-  context 'without title, value, or content' do
+  context 'without title or content' do
     it 'does not render' do
       render_inline(described_class.new(title: '').with_content(''))
 

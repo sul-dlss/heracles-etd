@@ -8,9 +8,13 @@
 
   <% component.with_body_content do %>
     <% if all_done? %>
-      <%= render Elements::StatusAlertComponent.new(value: "You have completed sections 1-#{step_range_end}. You can now review and submit to the Registrar.") %>
+      <%= render Elements::StatusAlertComponent.new do %>
+        You have completed sections 1-<%= step_range_end %>. You can now review and submit to the Registrar.
+      <% end %>
     <% else %>
-      <%= render Elements::StatusAlertComponent.new(value: "You must complete sections 1-#{step_range_end} before you can review and submit to the Registrar.", variant: :danger) %>
+      <%= render Elements::StatusAlertComponent.new(variant: :danger) do %>
+        You must complete sections 1-<%= step_range_end %> before you can review and submit to the Registrar.
+      <% end %>
     <% end %>
   <% end %>
 
