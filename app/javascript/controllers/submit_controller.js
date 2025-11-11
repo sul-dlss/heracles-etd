@@ -3,6 +3,8 @@ import { Controller } from '@hotwired/stimulus'
 export default class extends Controller {
   submit (event) {
     this.element.form.requestSubmit()
+    // Disable form elements to wait for submission to complete.
+    this.element.form.querySelectorAll('input, button, textarea, select').forEach(el => { el.disabled = true })
   }
 
   warn (event) {
