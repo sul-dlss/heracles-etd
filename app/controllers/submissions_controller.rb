@@ -43,7 +43,18 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission)
   end
 
-  def review; end
+  def review
+    # NOTE: This is, we hope, a temporary alert to check whether a recent patch
+    #       fixed a bug that cropped up in Oct. 2025 allowing users to submit
+    #       ETDs with blank abstracts.
+    if @submission.abstract.blank? # rubocop:disable Style/GuardClause
+      Honeybadger.notify('[WARNING] User may submit an ETD missing an abstract! (Check logs & alert service manager)',
+                         context: {
+                           submission: @submission,
+                           params: params
+                         })
+    end
+  end
 
   def submit
     # NOTE: If the following line proves too slow in UAT/prod, use this job-based approach:
