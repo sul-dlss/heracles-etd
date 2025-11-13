@@ -39,13 +39,20 @@ The "student" for the submission is the current user. There is also a reader cre
 
 ### Requirements
 
+* docker & docker compose
 * tmux ([installation instructions](https://github.com/tmux/tmux#installation))
 * overmind ([installed via bundler](https://github.com/DarthSim/overmind/tree/master/packaging/rubygems#installation-with-rails))
 
 ### Running locally
 
+Spin up the db container and then set up the application and solid-* databases:
+
 ```shell
-bin/dev
+docker compose up -d
+bin/setup
+```
+
+Then browse to http://localhost:3000/admin to see the running application.
 
 See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.
 
