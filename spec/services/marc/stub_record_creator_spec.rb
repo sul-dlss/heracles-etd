@@ -937,7 +937,7 @@ RSpec.describe Marc::StubRecordCreator do
       it 'combining the text of the multiple 520s is the same as the unsplit text' do
         combined = ''.dup
         marc_record.each_by_tag('520') do |field|
-          combined << ' ' if combined.present?
+          combined.presence&.<<(' ')
           combined << field['a']
         end
         expect(creator.send(:format_aacr2, combined)).to eq creator.send(:format_aacr2, long_abstract)
