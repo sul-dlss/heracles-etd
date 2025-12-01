@@ -176,15 +176,11 @@ class Submission < ApplicationRecord
   end
 
   def generate_and_attach_augmented_file!(raise_if_dissertation_missing: false)
+    augmented_pdf_path = SignaturePageService.call(submission: self)
     augmented_dissertation_file.attach(io: File.open(augmented_pdf_path), filename: File.basename(augmented_pdf_path))
+    File.delete(augmented_pdf_path)
   rescue TypeError => e
     # Student has not yet uploaded their dissertation file.
     raise e if raise_if_dissertation_missing
-  end
-
-  private
-
-  def augmented_pdf_path
-    @augmented_pdf_path ||= SignaturePageService.call(submission: self)
   end
 end

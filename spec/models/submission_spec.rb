@@ -92,12 +92,17 @@ RSpec.describe Submission do
     #       already be `nil`.
     subject(:submission) { build(:submission, :submittable, :reader_approved, :registrar_approved) }
 
-    let(:augmented_dissertation_path) { file_fixture('dissertation-augmented.pdf') }
+    let(:augmented_dissertation_path) { Tempfile.create.path }
     let(:now) { Time.zone.now }
 
     before do
       allow(Time.zone).to receive(:now).and_return(now)
+      FileUtils.cp(file_fixture('dissertation-augmented.pdf'), augmented_dissertation_path)
       allow(SignaturePageService).to receive(:call).and_return(augmented_dissertation_path)
+    end
+
+    after do
+      FileUtils.rm_f(augmented_dissertation_path)
     end
 
     it 'sets the submitted_at property' do
@@ -119,6 +124,7 @@ RSpec.describe Submission do
     it 'attaches the augmented dissertation file to the submission' do
       expect { submission.prepare_to_submit! }.to change { submission.augmented_dissertation_file.attached? }
                                               .from(false).to(true)
+      expect(File.exist?(augmented_dissertation_path)).to be false
     end
 
     context 'when the SignaturePageService raises an error' do
