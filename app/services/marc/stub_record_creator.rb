@@ -26,7 +26,7 @@ module Marc
       add_advisors_and_readers(marc)
       add_school_and_department(marc)
 
-      marc.append(MARC::DataField.new('856', '4', '0', ['u', "#{Settings.purl_uri}/#{bare_druid}"]))
+      marc.append(MARC::DataField.new('856', '4', '0', ['u', "#{Settings.purl.url}/#{bare_druid}"]))
       marc.append(MARC::DataField.new('910', ' ', ' ', ['a', "https://etd.stanford.edu/view/#{etd.dissertation_id.strip}"]))
 
       marc
