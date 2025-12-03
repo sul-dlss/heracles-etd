@@ -872,7 +872,7 @@ RSpec.describe Marc::StubRecordCreator do
 
       it 'has the purl as subfield u' do
         expect(field856.subfields.map(&:code)).to contain_exactly('u')
-        expect(field856['u']).to eq "#{Settings.purl_uri}/#{druid.split(':').last}"
+        expect(field856['u']).to eq "#{Settings.purl.url}/#{druid.split(':').last}"
       end
     end
 
