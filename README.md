@@ -58,6 +58,35 @@ Then browse to http://localhost:3000/admin to see the running application. (See 
 
 To create a test submission, see `Test submission` section above. Note that this will allow you to interact with the submission form all the way up until submission. The submission itself will not work since we have no Registrar system to interface with locally.
 
+### Impersonating users & roles
+
+You can provide groups in the `ROLES` environment variable when starting the server in development mode so you can impersonate an admin without having Shibboleth. (This is done by default.) You can similarly impersonate a specific user with the `REMOTE_USER` environment variable, and you can set your ORCID with the `ORCID` environment variable.
+
+Here's an example flow. First, start the server using the default admin role:
+
+```shell
+# Default admin role is sdr:etds-sul-staff, so no need to specify `ROLES` here
+bin/setup
+```
+
+Navigate to http://localhost:3000/admin and click `New Dummy Submission` to create a test submission. Note the dissertation ID in the URL (e.g., `123456` in `/submissions/123456/edit`). Now head back into the admin UI at `/admin/submissions/{DISSERTATION_ID}/edit` and edit the SUNet ID to a new, made-up value, e.g., `studentuser`. Click the `Update Submission` button. Shut down the running server.
+
+Start the server back up as the made-up user you specified before, and make sure to set `ROLES` to a bogus value to make sure you are not granted default roles (admin, registrar, etc.)
+
+```shell
+REMOTE_USER=studentuser ROLES=foo bin/setup
+```
+
+Navigate to the student edit view at `/submissions/{DISSERTATION_ID}/edit` and interact with the form. Shut down the running server.
+
+Start the server back up as a new, made-up user that will give you the Registrar experience:
+
+```shell
+REMOTE_USER=whoever ROLES=sdr:etds-registrar-staff bin/setup
+```
+
+Now you may navigate to the show view at `/submissions/{DISSERTATION_ID}` to view the student's progress, or to the reader review view at `/submissions/{DISSERTATION_ID}/reader_review` to see the experience offered to submission readers.
+
 ### Debugging locally
 
 1. Add a `debugger` statement in the code.

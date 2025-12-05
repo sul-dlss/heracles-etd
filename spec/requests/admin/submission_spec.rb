@@ -158,6 +158,18 @@ RSpec.describe 'Admin - Submissions' do
       end
     end
 
+    context 'with a user in the DLSS group in the dev environment' do
+      let(:groups) { [Settings.groups.dlss] }
+
+      before { allow(Rails.env).to receive(:development?).and_return(true) }
+
+      it 'returns unauthorized' do
+        get "/admin/submissions/#{submission.dissertation_id}/edit"
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     context 'with a user in the reports group' do
       let(:groups) { [Settings.groups.reports] }
 

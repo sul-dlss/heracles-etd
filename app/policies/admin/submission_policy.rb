@@ -22,8 +22,11 @@ module Admin
     end
 
     def manage?
-      # allow group dlss to edit Submissions after student has submitted them
-      record.submitted_at.present? && user.groups.dlss?
+      # allow group dlss to edit Submissions, but...
+      return false unless user.groups.dlss?
+
+      # ...only if it's the local dev environment, *OR* after the submission has been submitted
+      Rails.env.development? || record.submitted_at.present?
     end
   end
 end
