@@ -39,7 +39,7 @@ RSpec.describe CreateEmbargo do
               purl: "https://purl.stanford.edu/#{submission.druid.delete_prefix('druid:')}"
             },
             administrative: {
-              hasAdminPolicy: RegisterService::ETD_APO_DRUID
+              hasAdminPolicy: Settings.etd_apo
             },
             externalIdentifier: submission.druid,
             access: {},

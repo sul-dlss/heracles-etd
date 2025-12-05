@@ -2,8 +2,6 @@
 
 # Service for registering a new ETD in the system
 class RegisterService
-  ETD_APO_DRUID = 'druid:bx911tp9024' # the APO that governs all ETDs
-
   # @return [Cocina::Models::DRO] the newly registered DRO
   def self.register(submission:)
     request_model = Cocina::Models.build_request({
@@ -11,7 +9,7 @@ class RegisterService
                                                    'version' => 1,
                                                    'label' => submission.title,
                                                    'administrative' => {
-                                                     'hasAdminPolicy' => ETD_APO_DRUID
+                                                     'hasAdminPolicy' => Settings.etd_apo
                                                    },
                                                    'identification' => {
                                                      'sourceId' => "dissertation:#{submission.dissertation_id}"

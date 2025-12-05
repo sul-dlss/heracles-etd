@@ -45,16 +45,18 @@ The "student" for the submission is the current user. There is also a reader cre
 
 ### Running locally
 
-Spin up the db container and then set up the application and solid-* databases:
+Spin up the application service dependencies and then set up the application and its databases:
 
 ```shell
+# Spin up dependencies
 docker compose up -d
+# Run the app services specified in Procfile.dev using overmind after initiating setup
 bin/setup
 ```
 
-Then browse to http://localhost:3000/admin to see the running application.
+Then browse to http://localhost:3000/admin to see the running application. (See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.)
 
-See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.
+To create a test submission, see `Test submission` section above. Note that this will allow you to interact with the submission form all the way up until submission. The submission itself will not work since we have no Registrar system to interface with locally.
 
 ### Debugging locally
 
