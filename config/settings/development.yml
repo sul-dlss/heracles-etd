@@ -1,1 +1,2 @@
+etd_apo: 'druid:hv992ry2431' # Use the "UR" APO in dev since the container auto-creates it
 file_uploads_root: <%= Rails.root.join("storage") %>

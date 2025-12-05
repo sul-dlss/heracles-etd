@@ -40,7 +40,8 @@ module Admin
         department: 'Philosophy',
         major: 'Philosophy',
         degreeconfyr: '2029',
-        etd_type: 'Thesis'
+        etd_type: 'Thesis',
+        embargo: 'immediately'
       )
     end
 
