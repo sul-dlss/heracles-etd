@@ -61,8 +61,8 @@ ActiveAdmin.register Submission do
     column 'Druid (=> Argo)', sortable: :druid do |submission|
       link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
     end
-    column 'Dissertation ID (=> /submit)', sortable: :dissertation_id do |submission|
-      link_to submission.dissertation_id, edit_submission_path(submission)
+    column 'Dissertation ID (=> ETD)', sortable: :dissertation_id do |submission|
+      link_to submission.dissertation_id, submission_path(submission)
     end
     column 'Folio Instance HRID (=> SearchWorks)', sortable: :folio_instance_hrid do |submission|
       if submission.folio_instance_hrid
@@ -193,7 +193,7 @@ ActiveAdmin.register Submission do
       row 'Druid (=> Argo)' do |submission|
         link_to submission.druid, "#{Settings.argo_url}/view/#{submission.druid}"
       end
-      row 'Dissertation ID (=> /submit)' do |submission|
+      row 'Dissertation ID (=> ETD)' do |submission|
         link_to submission.dissertation_id, submission_path(submission)
       end
       row 'Folio Instance HRID (=> Searchworks)' do |submission|
