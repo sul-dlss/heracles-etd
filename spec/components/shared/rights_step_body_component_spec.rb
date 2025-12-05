@@ -29,6 +29,19 @@ RSpec.describe Shared::RightsStepBodyComponent, type: :component do
     )
   end
 
+  context 'when the submission is barebones (e.g., no license selected)' do
+    let(:submission) { create(:submission) }
+
+    it 'renders the component' do
+      render_inline(described_class.new(submission:))
+
+      rows = page.all('table#copyright-details-table tbody tr')
+      expect(rows.length).to eq(4)
+      expect(rows[1]).to have_css('th', text: 'Creative Commons')
+      expect(rows[1]).to have_css('td', text: 'This work has not yet been licensed.')
+    end
+  end
+
   context 'when the submission has no cc license' do
     let(:cclicense) { '0' }
 
