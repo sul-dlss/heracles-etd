@@ -12,7 +12,7 @@ Additional documentation is available in the [https://github.com/sul-dlss/heracl
 ## Data flow
 
 1. First the **Registrar** POSTs to the `EtdsController` to create the Submission record in this app and register the item in SDR.
-1. Next, the **student** visits `/submit/{DISSERTATION_ID_OR_DRUID}` to upload their files and enter metadata. This updates the Submission record, including attaching files for the dissertation, supplemental files, and permission files.
+1. Next, the **student** visits `/submissions/{DISSERTATION_ID_OR_DRUID}/edit` to upload their files and enter metadata. This updates the Submission record, including attaching files for the dissertation, supplemental files, and permission files.
 1. Once the **student** has completed all requirements from the prior step, the now ready submission is posted back to the Registrar system.
 1. Next the **Registrar** hits `EtdsController` (again) when all the readers have weighed in, and again when Registrar updates the ETD status. The Submission record is updated accordingly.
    1. Repeat previous 2 steps and this one until dissertation has both reader and Registrar approval, per Registrar.
