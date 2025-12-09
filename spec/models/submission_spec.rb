@@ -125,6 +125,7 @@ RSpec.describe Submission do
       expect { submission.prepare_to_submit! }.to change { submission.augmented_dissertation_file.attached? }
                                               .from(false).to(true)
       expect(File.exist?(augmented_dissertation_path)).to be false
+      expect(submission.augmented_dissertation_file.filename.to_s).to eq('dissertation-augmented.pdf')
     end
 
     context 'when the SignaturePageService raises an error' do
