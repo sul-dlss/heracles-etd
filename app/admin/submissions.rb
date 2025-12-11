@@ -73,6 +73,11 @@ ActiveAdmin.register Submission do
     end
     index_columns.each do |index_column|
       column index_column
+      next unless index_column == :embargo
+
+      column 'ORCID', sortable: :orcid do |submission|
+        submission.orcid.present?
+      end
     end
     column helpers.t('activerecord.attributes.submission.submitted_at', timezone_label:), :submitted_at
     column helpers.t('activerecord.attributes.submission.last_reader_action_at', timezone_label:),
@@ -107,6 +112,7 @@ ActiveAdmin.register Submission do
   filter :title
   filter :folio_instance_hrid, filters: [:eq]
   filter :embargo, as: :select
+  filter :orcid_present, as: :boolean, label: 'Has ORCID?'
   filter :readerapproval, as: :select
   filter :regapproval, as: :select
   filter :submitted_at, as: :date_range,
