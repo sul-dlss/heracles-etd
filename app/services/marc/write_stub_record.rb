@@ -25,9 +25,9 @@ module Marc
           max_checks: Settings.catalog.folio.import.max_checks
         )
         .tap do |result|
-        return data_importer.instance_hrids.value!.first if result.success?
+          return data_importer.instance_hrids.value!.first if result.success?
 
-        raise "Record import failed.  See the import log in Folio for #{data_importer.job_execution_id} for more information. #{druid}" # rubocop:disable Layout/LineLength
+          raise "Record import failed.  See the import log in Folio for #{data_importer.job_execution_id} for more information. #{druid}" # rubocop:disable Layout/LineLength
       end
     end
 
