@@ -10,8 +10,9 @@ module Edit
 
     attr_reader :submission
 
+    # Do not enable the Done button if the abstract is blank or exceeds max length of 5000 chars
     def done_disabled?
-      submission.abstract.blank?
+      submission.abstract.blank? || submission.abstract.length > 5000
     end
   end
 end
