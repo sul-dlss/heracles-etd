@@ -87,7 +87,7 @@ class Submission < ApplicationRecord
   validates :etd_type, presence: true, inclusion: { in: %w[Thesis Dissertation] }
   validates :sunetid, presence: true
   validates :title, presence: true
-  validates :embargo, inclusion: { in: [nil, '1 year', '2 years', 'immediately', '6 months'] }
+  validates :embargo, inclusion: { in: ['1 year', '2 years', 'immediately', '6 months'], allow_blank: true }
 
   # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
   # It is used to by a cron job to send reminder emails to the catalogers
@@ -159,6 +159,8 @@ class Submission < ApplicationRecord
   end
 
   def embargo_release_date
+    return if embargo.blank?
+
     Embargo.embargo_date(start_date: last_registrar_action_at, id: embargo)
   end
 
