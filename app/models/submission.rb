@@ -174,6 +174,11 @@ class Submission < ApplicationRecord
       update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
               readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
       generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
+
+      # If the submission to the Registrar fails, we want to roll back the changes
+      # above so the submission doesn't get in a state where it shows as having
+      # been submitted when it hasn't been submitted.
+      yield if block_given?
     end
   end
 

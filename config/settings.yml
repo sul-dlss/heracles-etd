@@ -20,13 +20,11 @@ sdr:
 
 peoplesoft:
   enabled: true
-  oauth_enabled: false
   client_id: ~
   client_secret: ~
   base_url: ~
   token_url: ~
 
-ps_reg_endpoint: 'http://registrar.example.edu'
 ps_servers:
   - 'server1.example.com'
 ps_ips:
