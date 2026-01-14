@@ -16,22 +16,22 @@ class SubmissionPoster
   # @raise [RuntimeError] if the PeopleSoft response is not successful, or if an exception is raised
   # @return [NilClass] return nil if request succeeds or if the service is disabled
   def call # rubocop:disable Metrics/AbcSize
-    submission.prepare_to_submit!
+    submission.prepare_to_submit! do
+      return unless Settings.peoplesoft.enabled
 
-    return unless Settings.peoplesoft.enabled
+      Honeybadger.context(submission:, xml:)
 
-    Honeybadger.context(submission:, xml:)
+      Rails.logger.info("Submitting ETD update to PeopleSoft: #{xml}")
 
-    Rails.logger.info("Submitting ETD update to PeopleSoft: #{xml}")
+      return if response.status == 200 && response.parsed.dig(:response, :status) == 'SUCCESS'
 
-    return if response.status == 200 && response.parsed.dig(:response, :status) == 'SUCCESS'
-
-    raise "Failed to post submission XML to PeopleSoft, received status '#{response.status}': #{response.parsed}"
-  rescue StandardError => e
-    Rails.logger.error(
-      "Unable to post submission XML to PeopleSoft for dissertation ID #{submission.dissertation_id}: #{e.message}"
-    )
-    raise e # This will cause a Honeybadger notification to go out
+      raise "Failed to post submission XML to PeopleSoft, received status '#{response.status}': #{response.parsed}"
+    rescue StandardError => e
+      Rails.logger.error(
+        "Unable to post submission XML to PeopleSoft for dissertation ID #{submission.dissertation_id}: #{e.message}"
+      )
+      raise e # This will cause a Honeybadger notification to go out
+    end
   end
 
   private
