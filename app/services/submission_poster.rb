@@ -2,17 +2,9 @@
 
 # Post an XML representation of a submission to the Registrar via PeopleSoft
 class SubmissionPoster
-  # TODO: Replace the code of this method with the following when legacy PS integration can be dropped:
-  #
-  # new(...).call
+  # @see #new and #call
   def self.call(...)
-    instance = if Settings.peoplesoft.oauth_enabled
-                 new(...)
-               else
-                 LegacySubmissionPoster.new(...)
-               end
-
-    instance.call
+    new(...).call
   end
 
   API_ENDPOINT = '/library/v1'
