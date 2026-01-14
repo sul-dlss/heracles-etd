@@ -13,7 +13,7 @@ RSpec.describe Admin::DummySubmissionService do
   it 'creates a dummy submission with a registered druid' do
     expect(submission).to be_a(Submission)
     expect(submission.sunetid).to eq('testuser')
-    expect(submission.embargo).to eq('immediately')
+    expect(submission.embargo).to be_nil
 
     expect(submission.readers.count).to eq(1)
     reader = submission.readers.first
