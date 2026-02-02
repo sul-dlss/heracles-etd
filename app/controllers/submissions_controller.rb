@@ -26,7 +26,7 @@ class SubmissionsController < ApplicationController
     @submission.update!(orcid: current_user.orcid) if needs_orcid_update?
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     # All validation happens client-side, so not validating here.
     if params.dig(:submission, :remove_dissertation_file)
       @submission.dissertation_file.purge
@@ -36,6 +36,18 @@ class SubmissionsController < ApplicationController
       @submission.permission_files.find(params[:submission][:remove_permission_file]).delete
     else
       @submission.update!(submission_params)
+      # NOTE: This is, we hope, a temporary alert to check whether a Feb. 2026 patch
+      #       fixed a bug that cropped up in Oct. 2025 allowing users to submit
+      #       ETDs with blank abstracts.
+      if @submission.abstract_provided && @submission.abstract.blank?
+        Honeybadger.notify(
+          '[WARNING] User has collapsed the abstract section with blank abstract! (Check logs & alert service manager)',
+          context: {
+            submission: @submission,
+            params: params
+          }
+        )
+      end
       if @submission.dissertation_file.attached?
         @submission.generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
       end
@@ -43,18 +55,7 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission)
   end
 
-  def review
-    # NOTE: This is, we hope, a temporary alert to check whether a recent patch
-    #       fixed a bug that cropped up in Oct. 2025 allowing users to submit
-    #       ETDs with blank abstracts.
-    if @submission.abstract.blank? # rubocop:disable Style/GuardClause
-      Honeybadger.notify('[WARNING] User may submit an ETD missing an abstract! (Check logs & alert service manager)',
-                         context: {
-                           submission: @submission,
-                           params: params
-                         })
-    end
-  end
+  def review; end
 
   def submit
     # NOTE: If the following line proves too slow in UAT/prod, use this job-based approach:
