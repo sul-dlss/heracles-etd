@@ -17,7 +17,7 @@
         <%= form.label :abstract, class: 'form-label' do %>
           <span class="fw-bold">Abstract</span> <%= helpers.required_field %>
         <% end %>
-        <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { controller: 'submit', action: 'blur->submit#submit keyup->abstract#warn keyup->abstract#toggleButton', abstract_target: 'input' } %>
+        <%= form.text_area :abstract, rows: 10, class: 'form-control', data: { controller: 'submit', action: 'blur->submit#submit abstract#warn abstract#toggleButton', abstract_target: 'input' } %>
         <div class="text-danger mt-1 d-none" role="alert" data-abstract-target="formatting">Warning: Please remove any Markdown or LaTeX formatting tags, as these will not be rendered correctly.</div>
         <div class="text-danger mt-1 d-none" role="alert" data-abstract-target="length">Warning: Abstract length is limited to a maximum of 5,000 characters. Please revise your abstract accordingly before attempting to complete this step.</div>
       </div>
