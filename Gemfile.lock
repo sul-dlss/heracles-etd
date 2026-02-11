@@ -140,7 +140,7 @@ GEM
       capybara (>= 3.0)
       ruby2_keywords
     cmdparse (3.0.7)
-    cocina-models (0.109.0)
+    cocina-models (0.110.1)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -148,9 +148,10 @@ GEM
       edtf
       equivalent-xml
       i18n
+      json_schemer (~> 2.0)
       jsonpath
+      marc (~> 1.3)
       nokogiri
-      openapi_parser (~> 1.0)
       super_diff
       thor
       zeitwerk (~> 2.1)
@@ -187,9 +188,9 @@ GEM
       ed25519
     docile (1.4.1)
     domain_name (0.6.20240107)
-    dor-services-client (15.26.0)
+    dor-services-client (15.27.1)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.109.0)
+      cocina-models (~> 0.110.1)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -279,6 +280,7 @@ GEM
     geom2d (0.4.1)
     globalid (1.3.0)
       activesupport (>= 6.1)
+    hana (1.3.7)
     has_scope (0.9.0)
       actionpack (>= 7.0)
       activesupport (>= 7.0)
@@ -324,6 +326,11 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.18.1)
+    json_schemer (2.5.0)
+      bigdecimal
+      hana (~> 1.3)
+      regexp_parser (~> 2.0)
+      simpleidn (~> 0.2)
     jsonpath (1.1.5)
       multi_json
     jwt (3.1.2)
@@ -422,7 +429,6 @@ GEM
       version_gem (~> 1.1, >= 1.1.9)
     okcomputer (1.19.1)
       benchmark
-    openapi_parser (1.0.0)
     openssl (4.0.0)
     optimist (3.2.1)
     ostruct (0.6.3)
@@ -596,6 +602,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
+    simpleidn (0.2.3)
     smart_properties (1.17.0)
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
