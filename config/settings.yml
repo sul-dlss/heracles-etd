@@ -39,7 +39,6 @@ catalog:
       url: "https://okapi-stage.example.com"
       username: "app_sdr"
       password: "supersecret"
-      legacy_auth: true
     tenant_id: "example_tenant"
     marc_job_profile_uuid: ae0a94d0-1f8e-4177-bcf9-c3a90e4c9429
     marc_job_name: 'ETDs New'
