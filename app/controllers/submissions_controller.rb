@@ -170,10 +170,10 @@ class SubmissionsController < ApplicationController
   end
 
   def permission_file_params
-    params.expect(submission: [permission_files: []])
+    params.expect(submission: [{ permission_files: [] }])
   end
 
   def supplemental_file_params
-    params.expect(submission: [supplemental_files: []])
+    params.expect(submission: [{ supplemental_files: [] }])
   end
 end
