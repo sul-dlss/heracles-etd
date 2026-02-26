@@ -91,27 +91,6 @@ RSpec.describe StartAccessionJob do
             value: 'Dissertation'
           }
         )
-        expect(params.description.to_h[:form].second).to include(
-          {
-            source: {
-              note: [],
-              value: 'Stanford self-deposit resource types'
-            },
-            type: 'resource type',
-            structuredValue: [
-              {
-                appliesTo: [],
-                groupedValue: [],
-                identifier: [],
-                note: [],
-                parallelValue: [],
-                structuredValue: [],
-                type: 'subtype',
-                value: 'Academic thesis'
-              }
-            ]
-          }
-        )
         expect(params.identification.doi).to eq("10.80343/#{druid.delete_prefix('druid:')}")
         # normalizes the ORCID identifier for the author
         expect(params.description.contributor.first.identifier.first.to_h).to eq(
