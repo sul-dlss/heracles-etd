@@ -88,13 +88,6 @@ class StartAccessionJob < ApplicationJob
             },
             type: 'resource type',
             value: 'Dissertation'
-          },
-          {
-            source: {
-              value: 'Stanford self-deposit resource types'
-            },
-            type: 'resource type',
-            structuredValue: [{ type: 'subtype', value: 'Academic thesis' }]
           }
         )
       )
