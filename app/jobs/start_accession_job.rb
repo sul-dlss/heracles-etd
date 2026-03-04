@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require 'fileutils'
-
 # Job to start accessioning
 # This was formerly the OtherMetadataJob
 class StartAccessionJob < ApplicationJob
@@ -53,7 +51,6 @@ class StartAccessionJob < ApplicationJob
       .then { |existing_dro| add_access_and_structural(existing_dro) }
       .then { |updated_dro| maybe_add_orcid_type_attribute(updated_dro) }
       .then { |updated_dro| add_doi_identifier(updated_dro) }
-      .then { |updated_dro| add_datacite_resource_types(updated_dro) }
   end
 
   def object_client
@@ -74,29 +71,6 @@ class StartAccessionJob < ApplicationJob
     dro.new(
       identification: dro.identification.new(
         doi: "#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')}"
-      )
-    )
-  end
-
-  def add_datacite_resource_types(dro)
-    dro.new(
-      description: dro.description.new(
-        form: dro.description.form.push(
-          {
-            source: {
-              value: 'DataCite resource types'
-            },
-            type: 'resource type',
-            value: 'Dissertation'
-          },
-          {
-            source: {
-              value: 'Stanford self-deposit resource types'
-            },
-            type: 'resource type',
-            structuredValue: [{ type: 'subtype', value: 'Academic thesis' }]
-          }
-        )
       )
     )
   end
