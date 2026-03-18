@@ -78,14 +78,13 @@ class StartAccessionJob < ApplicationJob
   def maybe_add_orcid_type_attribute(dro)
     item_hash = dro.to_h
 
-    first_contributor = item_hash.dig(:description, :contributor, 0)
-    first_contributor_identifier = first_contributor&.dig(:identifier, 0)
+    first_contributor_identifier = item_hash.dig(:description, :contributor, 0, :identifier, 0)
     full_orcid = first_contributor_identifier&.[](:value)
     return dro unless full_orcid&.match?('orcid.org')
 
-    first_contributor_identifier[:value] = full_orcid.split('/').last
+    first_contributor_identifier[:uri] = full_orcid
     first_contributor_identifier[:type] = 'ORCID'
-    first_contributor_identifier[:source] = { uri: 'https://orcid.org' }
+    first_contributor_identifier.delete(:value)
 
     dro.class.new(item_hash)
   end
