@@ -90,13 +90,9 @@ RSpec.describe StartAccessionJob do
             identifier: [],
             note: [],
             parallelValue: [],
-            source: {
-              note: [],
-              uri: 'https://orcid.org'
-            },
             structuredValue: [],
             type: 'ORCID',
-            value: '0000-0002-2100-6108'
+            uri: 'https://orcid.org/0000-0002-2100-6108'
           }
         )
       end
