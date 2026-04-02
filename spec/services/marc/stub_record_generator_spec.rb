@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Marc::StubRecordCreator do
-  subject(:creator) { described_class.new(druid:) }
+RSpec.describe Marc::StubRecordGenerator do
+  subject(:generator) { described_class.new(druid:) }
 
   let(:druid) { 'druid:cg532dg5405' }
   let(:orcid) { 'https://orcid.org/0000-0002-2100-6108' }
@@ -58,20 +58,20 @@ RSpec.describe Marc::StubRecordCreator do
     allow(Time.zone).to receive(:now).and_return(Time.new(2020, 4, 17, 10)) # rubocop:disable Rails/TimeZone
   end
 
-  describe '.create' do
+  describe '.generate' do
     before do
-      allow(described_class).to receive(:new).and_return(creator)
-      allow(creator).to receive(:create) # rubocop:disable RSpec/SubjectStub
+      allow(described_class).to receive(:new).and_return(generator)
+      allow(generator).to receive(:generate) # rubocop:disable RSpec/SubjectStub
     end
 
-    it 'calls #create on a new instance' do
-      described_class.create(druid:)
-      expect(creator).to have_received(:create).once # rubocop:disable RSpec/SubjectStub
+    it 'calls #generate on a new instance' do
+      described_class.generate(druid:)
+      expect(generator).to have_received(:generate).once # rubocop:disable RSpec/SubjectStub
     end
   end
 
-  describe '#create' do
-    let(:marc_record) { creator.create }
+  describe '#generate' do
+    let(:marc_record) { generator.generate }
     let(:submission) do
       Submission.create!(
         druid:,
@@ -107,8 +107,8 @@ RSpec.describe Marc::StubRecordCreator do
 
     describe '008' do
       let(:field008) { marc_record.fields('008').first }
-      let(:publication_year) { creator.send(:publication_year) }
-      let(:copyright_year) { creator.send(:copyright_year) }
+      let(:publication_year) { generator.send(:publication_year) }
+      let(:copyright_year) { generator.send(:copyright_year) }
       let(:today) { Time.zone.now.strftime('%y%m%d') }
 
       it 'has bytes set as expected' do
@@ -346,8 +346,8 @@ RSpec.describe Marc::StubRecordCreator do
 
       it 'subfield c contains author name formatted last name first' do
         expect(subfields_c.count).to eq(1)
-        expect(subfields_c.first.value).to eq(creator.send(:format_aacr2,
-                                                           creator.send(:format_full_name, submission.name)))
+        expect(subfields_c.first.value).to eq(generator.send(:format_aacr2,
+                                                             generator.send(:format_full_name, submission.name)))
       end
 
       context 'when author name has a suffix' do
@@ -371,8 +371,9 @@ RSpec.describe Marc::StubRecordCreator do
 
         it 'suffix goes after full name' do
           expect(subfields_c.count).to eq(1)
-          expected_full_name = creator.send(:format_aacr2,
-                                            "#{creator.send(:format_full_name, submission.name)}, #{submission.suffix}")
+          expected_full_name = generator.send(:format_aacr2,
+                                              "#{generator.send(:format_full_name,
+                                                                submission.name)}, #{submission.suffix}")
           expect(subfields_c.first.value).to eq(expected_full_name)
         end
       end
@@ -398,8 +399,9 @@ RSpec.describe Marc::StubRecordCreator do
 
         it 'prefix goes before full name' do
           expect(subfields_c.count).to eq(1)
-          expected_full_name = creator.send(:format_aacr2,
-                                            "#{submission.prefix} #{creator.send(:format_full_name, submission.name)}")
+          expected_full_name = generator.send(:format_aacr2,
+                                              "#{submission.prefix} #{generator.send(:format_full_name,
+                                                                                     submission.name)}")
           expect(subfields_c.first.value).to eq(expected_full_name)
         end
       end
@@ -426,8 +428,8 @@ RSpec.describe Marc::StubRecordCreator do
 
         it 'has prefix and suffix in correct places' do
           expect(subfields_c.count).to eq(1)
-          name = creator.send(:format_full_name, submission.name)
-          expected_full_name = creator.send(:format_aacr2, "#{submission.prefix} #{name}, #{submission.suffix}")
+          name = generator.send(:format_full_name, submission.name)
+          expected_full_name = generator.send(:format_aacr2, "#{submission.prefix} #{name}, #{submission.suffix}")
           expect(subfields_c.first.value).to eq(expected_full_name)
         end
       end
@@ -624,7 +626,7 @@ RSpec.describe Marc::StubRecordCreator do
 
       it 'subfield a contains "Submitted to the Department of (department)" (formatted for a CATALOG CARD)' do
         expect(field500.subfields.first.value)
-          .to eq("Submitted to the Department of #{creator.send(:format_aacr2, submission.department)}")
+          .to eq("Submitted to the Department of #{generator.send(:format_aacr2, submission.department)}")
       end
 
       context 'when department matches Business (or Education or Law)' do
@@ -648,7 +650,7 @@ RSpec.describe Marc::StubRecordCreator do
 
         it 'subfield a contains "Submitted to the School of (department)" (formatted for a CATALOG CARD)' do
           expect(field500.subfields.first.value)
-            .to eq("Submitted to the School of #{creator.send(:format_aacr2, submission.department)}")
+            .to eq("Submitted to the School of #{generator.send(:format_aacr2, submission.department)}")
         end
       end
 
@@ -893,7 +895,7 @@ RSpec.describe Marc::StubRecordCreator do
   end
 
   describe '#format_full_name' do
-    let(:full_name) { creator.send(:format_full_name, raw_name) }
+    let(:full_name) { generator.send(:format_full_name, raw_name) }
 
     context 'when first last' do
       let(:raw_name) { 'Ludwig Wittgenstein' }
@@ -928,7 +930,7 @@ RSpec.describe Marc::StubRecordCreator do
     end
 
     describe '#create' do
-      let(:marc_record) { creator.create }
+      let(:marc_record) { generator.generate }
 
       it 'has multiple 520 fields' do
         expect(marc_record.fields('520').count).to eq(2)
@@ -940,7 +942,7 @@ RSpec.describe Marc::StubRecordCreator do
           combined.presence&.<<(' ')
           combined << field['a']
         end
-        expect(creator.send(:format_aacr2, combined)).to eq creator.send(:format_aacr2, long_abstract)
+        expect(generator.send(:format_aacr2, combined)).to eq generator.send(:format_aacr2, long_abstract)
       end
     end
   end
