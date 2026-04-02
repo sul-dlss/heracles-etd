@@ -101,8 +101,14 @@ FactoryBot.define do
     end
 
     trait :ready_for_cataloging do
+      submitted
       reader_approved
       registrar_approved
+    end
+
+    trait :stub_record_in_ils do
+      ready_for_cataloging
+      catalog_record_job_id { SecureRandom.uuid }
     end
 
     trait :loaded_in_ils do
