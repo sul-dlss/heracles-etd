@@ -1,40 +1,39 @@
 # frozen_string_literal: true
 
 module Marc
-  # Service for creating a stub MARC record for an ETD
-  class StubRecordCreator # rubocop:disable Metrics/ClassLength
+  # Generate a stub MARC record for an ETD
+  class StubRecordGenerator # rubocop:disable Metrics/ClassLength
     include ActionView::Helpers::TextHelper # for word_wrap for long abstracts
 
-    def self.create(druid:)
-      new(druid:).create
+    def self.generate(druid:)
+      new(druid:).generate
     end
 
     def initialize(druid:)
       @bare_druid = druid.split('druid:').last
       @etd = Submission.find_by!(druid:)
+      @marc = MARC::Record.new
     end
 
-    def create # rubocop:disable Metrics/AbcSize
-      marc = initialize_marc
-
-      add_author_title_and_orcid(marc)
-      add_publication_and_copyright_years(marc)
-      add_3xx_fields(marc)
-      add_submitted_to(marc)
-      add_thesis_field(marc)
-      add_abstract(marc)
-      add_advisors_and_readers(marc)
-      add_school_and_department(marc)
-
-      marc.append(MARC::DataField.new('856', '4', '0', ['u', "#{Settings.purl.url}/#{bare_druid}"]))
-      marc.append(MARC::DataField.new('910', ' ', ' ', ['a', "https://etd.stanford.edu/view/#{etd.dissertation_id.strip}"]))
+    # @return [MARC::Record] a MARC record with the fields populated from the ETD
+    def generate
+      initialize_marc!
+      add_author_title_and_orcid!
+      add_publication_and_copyright_years!
+      add_3xx_fields!
+      add_submitted_to!
+      add_thesis_field!
+      add_abstract!
+      add_advisors_and_readers!
+      add_school_and_department!
+      add_electronic_access_and_local_data!
 
       marc
     end
 
     private
 
-    attr_reader :bare_druid, :etd
+    attr_reader :bare_druid, :etd, :marc
 
     School = Struct.new(:name, :uri)
     private_constant :School
@@ -52,9 +51,7 @@ module Marc
     private_constant :SCHOOL_MAP
 
     # Create skeleton MARC record - fixed fields and 040
-    def initialize_marc # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      marc = MARC::Record.new
-
+    def initialize_marc! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       # Populate the MARC leader
       marc.leader[5] = 'n'
       marc.leader[6] = 'a'
@@ -81,7 +78,7 @@ module Marc
     end
 
     # Add the 100 and 245 fields to the MARC record
-    def add_author_title_and_orcid(marc) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength
+    def add_author_title_and_orcid! # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength
       raw_name = etd.name
       name_suffix = etd.suffix.dup || '' # string munging is done to the duplicate value, not the value in the database
       name_prefix = etd.prefix.dup || ''
@@ -104,7 +101,7 @@ module Marc
                                       ['c', format_aacr2(full_name)]))
     end
 
-    def add_publication_and_copyright_years(marc)
+    def add_publication_and_copyright_years!
       marc.append(MARC::DataField.new('264', ' ', '1',
                                       ['a', '[Stanford, California] :'],
                                       ['b', '[Stanford University],'],
@@ -112,14 +109,14 @@ module Marc
       marc.append(MARC::DataField.new('264', ' ', '4', ['c', "©#{copyright_year}"]))
     end
 
-    def add_3xx_fields(marc)
+    def add_3xx_fields!
       marc.append(MARC::DataField.new('300', ' ', ' ', ['a', '1 online resource.']))
       marc.append(MARC::DataField.new('336', ' ', ' ', %w[a text], %w[b txt], %w[2 rdacontent]))
       marc.append(MARC::DataField.new('337', ' ', ' ', %w[a computer], %w[b c], %w[2 rdamedia]))
       marc.append(MARC::DataField.new('338', ' ', ' ', ['a', 'online resource'], %w[b cr], %w[2 rdacarrier]))
     end
 
-    def add_submitted_to(marc)
+    def add_submitted_to!
       department = etd.department
       return if department.nil?
 
@@ -132,7 +129,7 @@ module Marc
       end
     end
 
-    def add_thesis_field(marc)
+    def add_thesis_field!
       marc.append(MARC::DataField.new('502', ' ', ' ',
                                       %w[g Thesis],
                                       ['b', etd.degree.strip.to_s],
@@ -144,7 +141,7 @@ module Marc
     #   which is 9999 (4 bytes are allocated in MARC for the field length)
     #   With the field tags, indicators, subfield tags, etc we need to be a bit more conservative.
     #   Note that 9950 was too big in the case of one abstract
-    def add_abstract(marc)
+    def add_abstract!
       formatted_abstract = format_aacr2(etd.abstract)
       # Dollar signs need to be escaped per Folio documentation or
       # they are misinterpreted as subfield delimiters.
@@ -160,7 +157,7 @@ module Marc
       end
     end
 
-    def add_advisors_and_readers(marc) # rubocop:disable Metrics/AbcSize
+    def add_advisors_and_readers! # rubocop:disable Metrics/AbcSize
       # advisors first in alphabetical order
       etd.readers.advisors.pluck(:name).sort.each do |advisor|
         marc.append(MARC::DataField.new('700', '1', ' ', ['a', "#{advisor.strip},"], ['e', 'degree supervisor.'],
@@ -177,7 +174,7 @@ module Marc
     STANFORD_ROR_URI = 'https://ror.org/00f54p054'
     private_constant :STANFORD_ROR_URI
 
-    def add_school_and_department(marc) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def add_school_and_department! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       schoolname = etd.schoolname
       school = SCHOOL_MAP.fetch(schoolname)
       school_contributor = if ['Doerr School of Sustainability', 'School of Earth,Energy,EnvSci'].include?(schoolname)
@@ -196,6 +193,11 @@ module Marc
                                                    ['b', "Department of #{format_aacr2(department)}"])
       department_contributor.append(MARC::Subfield.new('1', STANFORD_ROR_URI))
       marc.append(department_contributor)
+    end
+
+    def add_electronic_access_and_local_data!
+      marc.append(MARC::DataField.new('856', '4', '0', ['u', "#{Settings.purl.url}/#{bare_druid}"]))
+      marc.append(MARC::DataField.new('910', ' ', ' ', ['a', "https://etd.stanford.edu/view/#{etd.dissertation_id.strip}"]))
     end
 
     def formatted_degreeconf_year
