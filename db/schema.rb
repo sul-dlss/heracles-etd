@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_23_164824) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_03_162134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -126,6 +126,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_23_164824) do
     t.boolean "sulicense", default: false, null: false
     t.boolean "permissions_provided", default: false, null: false
     t.boolean "supplemental_files_provided", default: false, null: false
+    t.string "catalog_record_job_id"
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end

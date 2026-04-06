@@ -65,6 +65,7 @@ class Submission < ApplicationRecord
   # - accessioning_started_at (set by StartAccessionJob)
 
   # Other
+  # - catalog_record_job_id (set by CreateStubMarcRecordJob)
   # - folio_instance_hrid (set by CreateStubMarcRecordJob)
   # - orcid (set by SubmissionsController)
 
@@ -148,6 +149,10 @@ class Submission < ApplicationRecord
 
   def submitted?
     submitted_at.present?
+  end
+
+  def stub_record_written?
+    catalog_record_job_id.present?
   end
 
   def ready_for_cataloging?
