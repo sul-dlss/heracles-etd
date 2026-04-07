@@ -46,7 +46,7 @@ gem 'cocina-models', '~> 0.105'
 gem 'config'
 gem 'dor-services-client'
 gem 'druid-tools'
-gem 'folio_client'
+gem 'folio_client', github: 'sul-dlss/folio_client', branch: 'cookie-based-auth-tweaks'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
 gem 'local_time'

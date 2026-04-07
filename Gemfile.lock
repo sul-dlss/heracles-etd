@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/sul-dlss/folio_client.git
+  revision: b2945d3e62bb3b9aa2dde0d808e67426a6b5b9ca
+  branch: cookie-based-auth-tweaks
+  specs:
+    folio_client (0.20.0)
+      activesupport (>= 4.2)
+      deprecation
+      dry-monads
+      faraday
+      faraday-cookie_jar
+      marc
+      ostruct
+      zeitwerk
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -263,14 +278,6 @@ GEM
     ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi (1.17.4-x86_64-linux-musl)
-    folio_client (0.20.0)
-      activesupport (>= 4.2)
-      dry-monads
-      faraday
-      faraday-cookie_jar
-      marc
-      ostruct
-      zeitwerk
     formtastic (6.0.0)
       actionpack (>= 7.2.0)
     formtastic_i18n (0.7.0)
@@ -303,7 +310,7 @@ GEM
     honeybadger (6.5.3)
       logger
       ostruct
-    http-cookie (1.1.0)
+    http-cookie (1.1.4)
       domain_name (~> 0.5)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
@@ -712,7 +719,7 @@ DEPENDENCIES
   druid-tools
   erb_lint
   factory_bot_rails
-  folio_client
+  folio_client!
   herb
   hexapdf
   honeybadger
