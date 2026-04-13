@@ -20,7 +20,7 @@ Additional documentation is available in the [https://github.com/sul-dlss/heracl
 1. Once a day, **catalogers** are sent an email listing the submissions that are ready for cataloging.
 1. A **cataloger** catalogs the submission in Folio.
 1. Every hour the `CatalogStatusJob` runs to query Folio to determine if uncataloged submissions have been cataloged. If so, it kicks off the `StartAccessionJob`.
-1. The `StartAccesionJob`**:
+1. The `StartAccessionJob`:
    1. Refreshes the metadata of the SDR item.
    2. Retrieves the SDR item and updates the cocina with access metadata (including embargo) and structural metadata (for the files).
    3. Copies files to the DOR workspace.
