@@ -263,7 +263,7 @@ GEM
     ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi (1.17.4-x86_64-linux-musl)
-    folio_client (0.21.0)
+    folio_client (1.0.0)
       activesupport (>= 4.2)
       deprecation
       dry-monads
