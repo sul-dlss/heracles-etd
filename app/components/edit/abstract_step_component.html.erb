@@ -1,7 +1,7 @@
 <%= render Edit::StepComponent.new(step: SubmissionPresenter::ABSTRACT_STEP,
                                    submission:,
                                    title: 'Enter your abstract',
-                                   data: { controller: 'abstract', action: 'turbo:morph@window->abstract#warn' },
+                                   data: { controller: 'abstract', action: 'turbo:morph@window->abstract#warn turbo:morph@window->abstract#toggleButton' },
                                    done_data: { abstract_target: 'doneButton' },
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
