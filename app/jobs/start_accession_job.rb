@@ -16,7 +16,7 @@ class StartAccessionJob < ApplicationJob
     Sdr::AdministrativeTagCreator.create(submission)
 
     # Closing the version initiates accessioning
-    object_client.version.close
+    object_client.version.close(lane_id: 'high')
 
     submission.update!(accessioning_started_at: Time.zone.now)
     # This is the latest point in the ETD's lifecycle within the application

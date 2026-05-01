@@ -99,7 +99,7 @@ RSpec.describe StartAccessionJob do
 
       expect(Sdr::AdministrativeTagCreator).to have_received(:create).with(submission)
       expect(submission.reload.accessioning_started_at).not_to be_nil
-      expect(version_client).to have_received(:close)
+      expect(version_client).to have_received(:close).with(lane_id: 'high')
 
       expect(Sdr::ReleaseTagger).to have_received(:tag).with(druid:).once
     end
