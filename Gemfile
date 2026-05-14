@@ -42,7 +42,7 @@ gem 'bootsnap', require: false
 gem 'actionpack-xml_parser' # XML parameter parsing for Rails
 gem 'action_policy' # Authorization framework for Rails
 gem 'activeadmin', '~> 4.0.0.beta16'
-gem 'cocina-models', '~> 0.105'
+gem 'cocina-models', github: 'sul-dlss/cocina-models', branch: 'validate-unexpected-properties#1027' # '~> 0.105'
 gem 'config'
 gem 'dor-services-client'
 gem 'druid-tools'
