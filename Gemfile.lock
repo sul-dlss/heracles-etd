@@ -141,7 +141,7 @@ GEM
       activesupport (>= 7.0)
       capybara (>= 3.0)
     cmdparse (3.0.7)
-    cocina-models (0.118.1)
+    cocina-models (0.119.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -188,9 +188,9 @@ GEM
       ed25519
     docile (1.4.1)
     domain_name (0.6.20240107)
-    dor-services-client (15.43.0)
+    dor-services-client (15.44.0)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.118.0)
+      cocina-models (~> 0.119.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -253,7 +253,7 @@ GEM
     faraday-cookie_jar (0.0.8)
       faraday (>= 0.8.0)
       http-cookie (>= 1.0.0)
-    faraday-net_http (3.4.3)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
@@ -329,7 +329,7 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.19.7)
+    json (2.19.8)
     json_schemer (2.5.0)
       bigdecimal
       hana (~> 1.3)
