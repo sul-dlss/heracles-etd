@@ -7,7 +7,7 @@
 
 This application is a successor to [Hydra ETD](https://github.com/sul-dlss-deprecated/hydra_etd), which was retired in September 2025.
 
-Additional documentation is available in the [https://github.com/sul-dlss/heracles-etd/wiki](wiki).
+Additional documentation is available in the [wiki](https://github.com/sul-dlss/heracles-etd/wiki).
 
 ## Data flow
 
