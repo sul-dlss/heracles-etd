@@ -110,6 +110,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.24.6)
       msgpack (~> 1.2)
+    brakeman (8.0.5)
+      racc
     builder (3.3.0)
     capistrano (3.20.1)
       airbrussh (>= 1.0.0)
@@ -709,6 +711,7 @@ DEPENDENCIES
   actionpack-xml_parser
   activeadmin (~> 4.0.0.beta16)
   bootsnap
+  brakeman
   capistrano-maintenance
   capistrano-passenger
   capistrano-rails
