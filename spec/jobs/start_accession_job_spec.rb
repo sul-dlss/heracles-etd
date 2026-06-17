@@ -61,6 +61,7 @@ RSpec.describe StartAccessionJob do
     allow(Dor::Services::Client).to receive(:object).and_return(object_client)
     allow(DruidTools::Druid).to receive(:new).and_return(druid_tools)
     allow(Sdr::ReleaseTagger).to receive(:tag)
+    allow(Honeybadger).to receive(:notify)
   end
 
   after do
@@ -68,6 +69,24 @@ RSpec.describe StartAccessionJob do
   end
 
   describe '#perform' do
+    context 'when accessioning has already started' do
+      let(:submission) { create(:submission, :accessioning_started) }
+
+      it 'guards against accessioning twice' do
+        job.perform(druid)
+
+        expect(object_client).not_to have_received(:update)
+        expect(Sdr::AdministrativeTagCreator).not_to have_received(:create)
+        expect(version_client).not_to have_received(:close)
+        expect(Sdr::ReleaseTagger).not_to have_received(:tag)
+
+        expect(Honeybadger).to have_received(:notify).once.with(
+          '[INFO] Attempted to accession the same submission more than once',
+          context: { submission: }
+        )
+      end
+    end
+
     it 'starts accessioning' do
       job.perform(druid)
 
@@ -102,6 +121,8 @@ RSpec.describe StartAccessionJob do
       expect(version_client).to have_received(:close).with(lane_id: 'high')
 
       expect(Sdr::ReleaseTagger).to have_received(:tag).with(druid:).once
+
+      expect(Honeybadger).not_to have_received(:notify)
     end
   end
 end
