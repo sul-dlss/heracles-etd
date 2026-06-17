@@ -1,0 +1,120 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "163f3273b94be211b3439e04bb49d487bb884fc69a13f74dbe4358b701fa6275",
+      "check_name": "SendFile",
+      "message": "Parameter value used in file name",
+      "file": "app/controllers/submissions_controller.rb",
+      "line": 131,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(ActiveStorageSupport.filepath_for_blob((Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).supplemental_files.find(params[:file_id]).file), :type => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).supplemental_files.find(params[:file_id]).content_type, :filename => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).supplemental_files.find(params[:file_id]).filename.to_s, :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SubmissionsController",
+        "method": "supplemental_file"
+      },
+      "user_input": "params[:file_id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "353d356100ebb53f079cde94920947174a9e37ab2e670b528d6e157f318fce40",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/submissions_controller.rb",
+      "line": 70,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(SignaturePagePreviewService.call(:submission => ((Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])))), :filename => \"preview.pdf\", :type => \"application/pdf\", :disposition => \"inline\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SubmissionsController",
+        "method": "preview"
+      },
+      "user_input": "Submission.find_by!(:dissertation_id => params[:id])",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "3fcd03cb74c078b3a7356ea0746a5a143e649e3269fe527db58d2b3e3bb4f56c",
+      "check_name": "SendFile",
+      "message": "Parameter value used in file name",
+      "file": "app/controllers/submissions_controller.rb",
+      "line": 123,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(ActiveStorageSupport.filepath_for_blob((Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).permission_files.find(params[:file_id]).file), :type => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).permission_files.find(params[:file_id]).content_type, :filename => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).permission_files.find(params[:file_id]).filename.to_s, :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SubmissionsController",
+        "method": "permission_file"
+      },
+      "user_input": "params[:file_id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "494e53d4669948aadb74fee8fd946315317a140b4958114ddc02ce2ba26cc851",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/submissions_controller.rb",
+      "line": 105,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(ActiveStorageSupport.filepath_for_blob((Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).dissertation_file), :type => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).dissertation_file.content_type, :filename => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).dissertation_file.filename.to_s, :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SubmissionsController",
+        "method": "dissertation_file"
+      },
+      "user_input": "Submission.find_by!(:dissertation_id => params[:id])",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "bfd713272392f045b116cb94293133e8548611c9068e22a1649df286aa5e680d",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/submissions_controller.rb",
+      "line": 115,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(ActiveStorageSupport.filepath_for_blob((Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).augmented_dissertation_file), :type => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).augmented_dissertation_file.content_type, :filename => (Submission.find_by!(:druid => params[:id]) or Submission.find_by!(:dissertation_id => params[:id])).dissertation_file.filename.to_s, :disposition => \"attachment\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SubmissionsController",
+        "method": "augmented_dissertation_file"
+      },
+      "user_input": "Submission.find_by!(:dissertation_id => params[:id])",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "8.0.5"
+}
