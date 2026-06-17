@@ -112,11 +112,18 @@ FactoryBot.define do
     end
 
     trait :loaded_in_ils do
+      stub_record_in_ils
       sequence(:folio_instance_hrid) { |n| format('a%05<number>d', number: n) }
     end
 
     trait :cataloged_in_ils do
+      loaded_in_ils
       ils_record_updated_at { DateTime.parse('2020-03-10T15:00:00Z') }
+    end
+
+    trait :accessioning_started do
+      cataloged_in_ils
+      accessioning_started_at { DateTime.parse('2020-03-21T10:00:00Z') }
     end
   end
 end

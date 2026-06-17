@@ -159,6 +159,10 @@ class Submission < ApplicationRecord
     /approved/i.match?(regapproval) && /approved/i.match?(readerapproval)
   end
 
+  def accessioning_started?
+    accessioning_started_at.present?
+  end
+
   def creative_commons_license
     CreativeCommonsLicense.find(cclicense)
   end

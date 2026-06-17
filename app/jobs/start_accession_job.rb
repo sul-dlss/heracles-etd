@@ -6,8 +6,16 @@ class StartAccessionJob < ApplicationJob
   queue_as :default
 
   # create metadata for the work item
-  def perform(druid)
+  def perform(druid) # rubocop:disable Metrics/AbcSize
     @druid = druid
+
+    if submission.accessioning_started?
+      Honeybadger.notify(
+        '[INFO] Attempted to accession the same submission more than once',
+        context: { submission: }
+      )
+      return
+    end
 
     copy_to_workspace
 

@@ -60,6 +60,24 @@ RSpec.describe Submission do
     end
   end
 
+  describe '#accessioning_started?' do
+    context 'when accessioning_started_at property is present' do
+      subject(:submission) { build(:submission, :accessioning_started, druid:) }
+
+      it 'returns true' do
+        expect(submission.accessioning_started?).to be true
+      end
+    end
+
+    context 'when accessioning_started_at property is blank' do
+      subject(:submission) { build(:submission, druid:) }
+
+      it 'returns false' do
+        expect(submission.accessioning_started?).to be false
+      end
+    end
+  end
+
   describe '#thesis?' do
     it 'returns true if the submission is a thesis' do
       expect(submission.thesis?).to be true
