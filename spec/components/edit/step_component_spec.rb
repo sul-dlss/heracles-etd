@@ -19,7 +19,7 @@ RSpec.describe Edit::StepComponent, type: :component do
     expect(header).to have_no_button('Edit this section')
 
     body = page.find('.card-step .card-step-body.collapse.show')
-    expect(body).to have_content('Click Done to complete this section.')
+    expect(body).to have_text('Click Done to complete this section.')
     expect(body).to have_field('submission[citation_verified]', type: 'hidden', with: 'true')
     expect(body).to have_button('Done', type: 'submit')
   end
@@ -52,7 +52,7 @@ RSpec.describe Edit::StepComponent, type: :component do
                                         done_disabled: true))
 
       body = page.find('.card-step .card-step-body')
-      expect(body).to have_content('Finish this section')
+      expect(body).to have_text('Finish this section')
       expect(body).to have_css('button[data-action="my-action#finish click->focus#saveFocus ' \
                                'click->collapse#collapseAndSubmit"]' \
                                '[data-focus-id-param="step-3-edit"][disabled]',
@@ -104,7 +104,7 @@ RSpec.describe Edit::StepComponent, type: :component do
 
       body = page.find('.card-step .card-step-body')
       expect(body).to have_css('p', text: 'Footer content goes here.')
-      expect(body).to have_no_content('Click Done to complete this section.')
+      expect(body).to have_no_text('Click Done to complete this section.')
       expect(body).to have_no_button('Done')
     end
   end

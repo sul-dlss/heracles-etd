@@ -24,14 +24,14 @@ RSpec.describe 'Show Submission', :rack_test do
       expect(page).to have_link('dissertation.pdf')
       expect(page).to have_css('h2', text: 'Supplemental files')
       expect(page).to have_link('supplémental_1.pdf')
-      expect(page).to have_content('Supplemental file supplémental_1.pdf')
+      expect(page).to have_text('Supplemental file supplémental_1.pdf')
       expect(page).to have_link('supplemental_2.pdf')
-      expect(page).to have_content('Supplemental file supplemental_2.pdf')
+      expect(page).to have_text('Supplemental file supplemental_2.pdf')
       expect(page).to have_css('h2', text: 'Permission files')
       expect(page).to have_link('permission_1.pdf')
-      expect(page).to have_content('Permission file permission_1.pdf')
+      expect(page).to have_text('Permission file permission_1.pdf')
       expect(page).to have_link('permission_2.pdf')
-      expect(page).to have_content('Permission file permission_2.pdf')
+      expect(page).to have_text('Permission file permission_2.pdf')
 
       expect(page).to have_css('.progress-card li', count: 3)
     end
@@ -48,9 +48,9 @@ RSpec.describe 'Show Submission', :rack_test do
       visit reader_review_submission_path(submission)
 
       expect(page).to have_css('h2', text: 'Supplemental files')
-      expect(page).to have_content('No files provided.')
+      expect(page).to have_text('No files provided.')
       expect(page).to have_css('h2', text: 'Permission files')
-      expect(page).to have_content('No files provided.')
+      expect(page).to have_text('No files provided.')
     end
   end
 end

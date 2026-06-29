@@ -90,8 +90,8 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     airbrussh (1.6.1)
       sshkit (>= 1.6.1, != 1.7.0)
-    anonymous_loader (0.1.1)
-      version_gem (~> 1.1, >= 1.1.12)
+    anonymous_loader (0.1.2)
+      version_gem (~> 1.1, >= 1.1.13)
     arbre (2.2.1)
       activesupport (>= 7.0)
     ast (2.4.3)
@@ -159,7 +159,7 @@ GEM
       super_diff
       thor
       zeitwerk (~> 2.1)
-    cocina_display (2.7.0)
+    cocina_display (2.8.0)
       activesupport (>= 7)
       edtf (~> 3.2)
       geo_coord (~> 0.2)
@@ -175,7 +175,7 @@ GEM
     crack (1.0.1)
       bigdecimal
       rexml
-    crass (1.0.6)
+    crass (1.0.7)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
@@ -238,7 +238,7 @@ GEM
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
     ed25519 (1.4.0)
-    edtf (3.2.0)
+    edtf (3.3.0)
       activesupport (>= 3.0, < 9.0)
     equivalent-xml (0.6.0)
       nokogiri (>= 1.4.3)
@@ -294,7 +294,7 @@ GEM
       raabro (~> 1.4)
     geo_coord (0.2.0)
     geom2d (0.4.1)
-    globalid (1.3.0)
+    globalid (1.4.0)
       activesupport (>= 6.1)
     has_scope (0.9.0)
       actionpack (>= 7.0)
@@ -343,21 +343,21 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.19.9)
-    jsonschema_rs (0.46.5)
+    json (2.20.0)
+    jsonschema_rs (0.46.6)
       bigdecimal (>= 3.1, < 5)
       rb_sys (~> 0.9.124)
-    jsonschema_rs (0.46.5-aarch64-linux)
+    jsonschema_rs (0.46.6-aarch64-linux)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.46.5-aarch64-linux-musl)
+    jsonschema_rs (0.46.6-aarch64-linux-musl)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.46.5-arm64-darwin)
+    jsonschema_rs (0.46.6-arm64-darwin)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.46.5-x86_64-darwin)
+    jsonschema_rs (0.46.6-x86_64-darwin)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.46.5-x86_64-linux)
+    jsonschema_rs (0.46.6-x86_64-linux)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.46.5-x86_64-linux-musl)
+    jsonschema_rs (0.46.6-x86_64-linux-musl)
       bigdecimal (>= 3.1, < 5)
     jwt (3.2.0)
       base64
@@ -427,7 +427,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.1)
       net-protocol
-    net-ssh (7.3.2)
+    net-ssh (7.3.3)
     nio4r (2.7.5)
     nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -491,9 +491,6 @@ GEM
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-    psych (5.4.0)
-      date
-      stringio
     public_suffix (7.0.5)
     puma (8.0.2)
       nio4r (~> 2.0)
@@ -549,9 +546,14 @@ GEM
       ffi (~> 1.0)
     rb_sys (0.9.128)
       rake-compiler-dock (= 1.12.0)
-    rdoc (7.2.0)
+    rbs (4.0.3)
+      logger
+      prism (>= 1.6.0)
+      tsort
+    rdoc (8.0.0)
       erb
-      psych (>= 4.0.0)
+      prism (>= 1.6.0)
+      rbs (>= 4.0.0)
       tsort
     regexp_parser (2.12.0)
     reline (0.6.3)
@@ -593,7 +595,7 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (2.23.0)
+    rubocop-capybara (3.0.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
     rubocop-factory_bot (2.28.0)
@@ -619,7 +621,7 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-next-core (1.2.0)
     ruby-progressbar (1.13.0)
-    rubyzip (3.4.0)
+    rubyzip (3.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.45.0)
       base64 (~> 0.2)
@@ -662,7 +664,6 @@ GEM
       ostruct
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stringio (3.2.0)
     strscan (3.1.8)
     super_diff (0.19.0)
       attr_extras (>= 6.2.4, < 8)
@@ -684,7 +685,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     useragent (0.16.11)
-    version_gem (1.1.12)
+    version_gem (1.1.13)
     view_component (4.12.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
@@ -701,7 +702,7 @@ GEM
     webrick-websocket (0.0.4)
       webrick (~> 1.3)
     websocket (1.2.11)
-    websocket-driver (0.8.1)
+    websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -782,4 +783,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-  4.0.14
+  4.0.15

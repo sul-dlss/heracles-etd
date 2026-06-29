@@ -10,7 +10,7 @@ RSpec.describe Show::PermissionFilesStepComponent, type: :component do
       render_inline(described_class.new(submission:))
 
       expect(page).to have_css('h2', text: 'Upload permissions')
-      expect(page).to have_content('My dissertation does not include permission files.')
+      expect(page).to have_text('My dissertation does not include permission files.')
     end
   end
 
@@ -26,10 +26,10 @@ RSpec.describe Show::PermissionFilesStepComponent, type: :component do
       expect(row[0]).to have_link('permission_1.pdf')
       expect(row[0]).to have_no_button('Remove')
       expect(row[0]).to have_css('td', text: 'pdf', exact_text: true)
-      expect(row[1]).to have_content('Permission file permission_1.pdf')
+      expect(row[1]).to have_text('Permission file permission_1.pdf')
       expect(row[2]).to have_link('permission_2.pdf')
       expect(row[2]).to have_no_button('Remove')
-      expect(row[3]).to have_content('Permission file permission_2.pdf')
+      expect(row[3]).to have_text('Permission file permission_2.pdf')
     end
   end
 end

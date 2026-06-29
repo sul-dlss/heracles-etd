@@ -11,8 +11,8 @@ RSpec.describe Edit::PermissionFilesStepComponent, type: :component do
       render_inline(described_class.new(submission:))
 
       expect(page).to have_css('h2', text: 'Upload permissions')
-      expect(page).to have_no_content('You must provide a permissions letter')
-      expect(page).to have_no_content('You can upload a maximum of 2 permission files.')
+      expect(page).to have_no_text('You must provide a permissions letter')
+      expect(page).to have_no_text('You can upload a maximum of 2 permission files.')
       expect(page).to have_no_field('Upload permission files', type: 'file')
     end
   end
@@ -24,8 +24,8 @@ RSpec.describe Edit::PermissionFilesStepComponent, type: :component do
       render_inline(described_class.new(submission:))
 
       expect(page).to have_css('h2', text: 'Upload permissions')
-      expect(page).to have_content('You must provide a permissions letter')
-      expect(page).to have_content('You can upload a maximum of 2 permission files.')
+      expect(page).to have_text('You must provide a permissions letter')
+      expect(page).to have_text('You can upload a maximum of 2 permission files.')
       expect(page).to have_field('Upload permission files', type: 'file')
     end
   end

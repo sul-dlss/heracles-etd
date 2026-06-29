@@ -36,12 +36,12 @@ RSpec.describe 'Manage reports on the admin dashboard' do
       select '23', from: 'report_end_date_4i'
       select '59', from: 'report_end_date_5i'
       click_link_or_button 'Create Report'
-      expect(page).to have_content('Winter 2024')
+      expect(page).to have_text('Winter 2024')
 
       visit '/admin/reports'
       click_link_or_button 'Winter 2024'
-      expect(page).to have_content(etd.bare_druid)
-      expect(page).to have_no_content(older_etd.bare_druid)
+      expect(page).to have_text(etd.bare_druid)
+      expect(page).to have_no_text(older_etd.bare_druid)
     end
   end
 end
