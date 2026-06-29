@@ -17,7 +17,7 @@ RSpec.describe 'Edit Submission' do
     visit edit_submission_path(submission)
 
     expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
-    expect(page).to have_content("Welcome, #{submission.first_name}")
+    expect(page).to have_text("Welcome, #{submission.first_name}")
 
     cards = page.all('.card-step')
     expect(cards.length).to eq(TOTAL_STEPS)
@@ -43,7 +43,7 @@ RSpec.describe 'Edit Submission' do
       expect(page).to have_css('.badge-in-progress', text: 'In Progress')
       expect(page).to have_no_css('.badge-completed')
       expect(page).to have_no_button('Undo confirmation')
-      expect(page).to have_content('By clicking Confirm, I verify ')
+      expect(page).to have_text('By clicking Confirm, I verify ')
       click_button 'Confirm'
       # Body is collapsed.
       expect(page).to have_no_button('Confirm')
@@ -238,13 +238,13 @@ RSpec.describe 'Edit Submission' do
 
       click_link_or_button 'View the Stanford University publication license'
       within('.modal#stanford-license-confirm') do
-        expect(page).to have_content('Stanford University thesis and dissertation publication license')
+        expect(page).to have_text('Stanford University thesis and dissertation publication license')
         click_button 'Close'
       end
 
       click_link_or_button 'More about selecting a Creative Commons license'
       within('.modal#cc-licenses') do
-        expect(page).to have_content('Creative Commons licenses')
+        expect(page).to have_text('Creative Commons licenses')
         click_button 'Close'
       end
 
@@ -272,7 +272,7 @@ RSpec.describe 'Edit Submission' do
     end
 
     expect(page).to have_current_path(review_submission_path(submission))
-    expect(page).to have_content('Review and submit')
+    expect(page).to have_text('Review and submit')
     expect(page).to have_css('h2', text: 'Citation details')
     expect(page).to have_css('h2', text: 'Abstract')
     expect(page).to have_css('p', text: 'This is a sample abstract for testing.')
@@ -286,7 +286,7 @@ RSpec.describe 'Edit Submission' do
     click_link_or_button 'Submit to Registrar'
 
     expect(page).to have_current_path(submission_path(submission))
-    expect(page).to have_content("Welcome, #{submission.first_name}")
+    expect(page).to have_text("Welcome, #{submission.first_name}")
 
     expect(submission.reload.citation_verified).to be true
     expect(submission.abstract).to eq('This is a sample abstract for testing.')

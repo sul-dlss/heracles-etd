@@ -11,13 +11,13 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
 
       expect(page).to have_css('table#dissertation-file-table tr', count: 2)
       headers = page.all('table#dissertation-file-table thead th')
-      expect(headers[0]).to have_content('Dissertation File')
-      expect(headers[4]).to have_no_content('Remove')
+      expect(headers[0]).to have_text('Dissertation File')
+      expect(headers[4]).to have_no_text('Remove')
 
       cells = page.all('table#dissertation-file-table tbody tr th')
       expect(cells[0]).to have_link('dissertation.pdf')
       cells = page.all('table#dissertation-file-table tbody tr td')
-      expect(cells[1]).to have_content('14.2 KB')
+      expect(cells[1]).to have_text('14.2 KB')
       expect(cells[2]).to have_css('time')
       expect(cells[3]).to have_no_button('Remove', type: 'submit')
     end
@@ -31,13 +31,13 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
 
       expect(page).to have_css('table#dissertation-file-table tr', count: 2)
       headers = page.all('table#dissertation-file-table thead th')
-      expect(headers[0]).to have_content('Dissertation File')
-      expect(headers[4]).to have_no_content('Remove')
+      expect(headers[0]).to have_text('Dissertation File')
+      expect(headers[4]).to have_no_text('Remove')
 
       cells = page.all('table#dissertation-file-table tbody tr th')
       expect(cells[0]).to have_link('dissertation.pdf')
       cells = page.all('table#dissertation-file-table tbody tr td')
-      expect(cells[1]).to have_content('14.2 KB')
+      expect(cells[1]).to have_text('14.2 KB')
       expect(cells[2]).to have_css('time')
       expect(cells[3]).to have_no_button('Remove', type: 'submit')
     end
@@ -48,7 +48,7 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
       render_inline(described_class.new(submission:, with_remove: true))
 
       headers = page.all('table#dissertation-file-table thead th')
-      expect(headers[4]).to have_content('Remove')
+      expect(headers[4]).to have_text('Remove')
 
       cells = page.all('table#dissertation-file-table tbody tr td')
       expect(cells[3]).to have_button('Remove', type: 'submit')
@@ -63,13 +63,13 @@ RSpec.describe Shared::DissertationStepBodyTableComponent, type: :component do
 
       expect(page).to have_css('table#dissertation-file-table tr', count: 2)
       headers = page.all('table#dissertation-file-table thead th')
-      expect(headers[0]).to have_content('Dissertation File')
+      expect(headers[0]).to have_text('Dissertation File')
 
       cells = page.all('table#dissertation-file-table tbody tr th')
-      expect(cells[0]).to have_content('Not uploaded')
+      expect(cells[0]).to have_text('Not uploaded')
       cells = page.all('table#dissertation-file-table tbody tr td')
-      expect(cells[1]).to have_content('', exact: true)
-      expect(cells[2]).to have_content('', exact: true)
+      expect(cells[1]).to have_text('', exact: true)
+      expect(cells[2]).to have_text('', exact: true)
     end
   end
 end

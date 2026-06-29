@@ -16,9 +16,9 @@ RSpec.describe 'Show Submission', :rack_test do
         visit submission_path(submission)
 
         expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
-        expect(page).to have_no_content('Read-only administrative view')
+        expect(page).to have_no_text('Read-only administrative view')
 
-        expect(page).to have_content("Welcome, #{submission.first_name}")
+        expect(page).to have_text("Welcome, #{submission.first_name}")
         expect(page).to have_css('.banner-header', text: 'Submission successful.')
 
         expect(page).to have_css('h2', text: 'Progress')
@@ -32,14 +32,14 @@ RSpec.describe 'Show Submission', :rack_test do
         expect(page).to have_no_button('Remove')
         expect(page).to have_css('h2', text: 'Upload supplemental files')
         expect(page).to have_link('supplémental_1.pdf')
-        expect(page).to have_content('Supplemental file supplémental_1.pdf')
+        expect(page).to have_text('Supplemental file supplémental_1.pdf')
         expect(page).to have_link('supplemental_2.pdf')
-        expect(page).to have_content('Supplemental file supplemental_2.pdf')
+        expect(page).to have_text('Supplemental file supplemental_2.pdf')
         expect(page).to have_css('h2', text: 'Upload permissions')
         expect(page).to have_link('permission_1.pdf')
-        expect(page).to have_content('Permission file permission_1.pdf')
+        expect(page).to have_text('Permission file permission_1.pdf')
         expect(page).to have_link('permission_2.pdf')
-        expect(page).to have_content('Permission file permission_2.pdf')
+        expect(page).to have_text('Permission file permission_2.pdf')
         expect(page).to have_css('h2', text: 'Review and submit to Registrar')
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe 'Show Submission', :rack_test do
         visit submission_path(submission)
 
         expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
-        expect(page).to have_content("Welcome, #{submission.first_name}")
+        expect(page).to have_text("Welcome, #{submission.first_name}")
         expect(page).to have_css('.banner-header', text: 'Submission approved.')
       end
     end
@@ -69,8 +69,8 @@ RSpec.describe 'Show Submission', :rack_test do
 
         expect(page).to have_css('header', text: 'Submit your dissertation or thesis')
         expect(page).to have_css('.alert.alert-warning').once # there is an admin
-        expect(page).to have_content('Read-only administrative view')
-        expect(page).to have_content("Welcome, #{submission.first_name}")
+        expect(page).to have_text('Read-only administrative view')
+        expect(page).to have_text("Welcome, #{submission.first_name}")
         expect(page).to have_css('.banner-header', text: 'Submission successful.')
       end
     end

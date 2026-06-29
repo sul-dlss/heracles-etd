@@ -16,7 +16,7 @@ RSpec.describe ReaderReview::RightsStepComponent, type: :component do
       expect(page).to have_css('h2', text: 'Copyright and license terms')
       rows = page.all('table#copyright-details-table tbody tr')
       expect(rows.length).to eq(4)
-      expect(page).to have_content(
+      expect(page).to have_text(
         "This thesis will be publicly available on #{release_date_display} " \
         '(includes 6-month delay requested by the author).'
       )
@@ -28,7 +28,7 @@ RSpec.describe ReaderReview::RightsStepComponent, type: :component do
 
     it 'renders the component' do
       render_inline(described_class.new(submission:))
-      expect(page).to have_content(
+      expect(page).to have_text(
         'The author has requested that this thesis be made publicly available ' \
         '6 months after final approval by the Registrar.'
       )

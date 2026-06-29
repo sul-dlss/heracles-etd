@@ -15,13 +15,13 @@ RSpec.describe 'Re-post submission to Registrar' do
 
   it 'allows the user to re-post the submission' do
     visit admin_submission_path(submission)
-    expect(page).to have_content(submission.title)
+    expect(page).to have_text(submission.title)
     expect(page).to have_link('Re-post to registrar')
     accept_alert do
       click_link('Re-post to registrar')
     end
-    expect(page).to have_content('ETD successfully re-posted to Registrar')
-    expect(page).to have_content(submission.title)
-    expect(page).to have_content('Edit Submission') # not in #index view
+    expect(page).to have_text('ETD successfully re-posted to Registrar')
+    expect(page).to have_text(submission.title)
+    expect(page).to have_text('Edit Submission') # not in #index view
   end
 end
