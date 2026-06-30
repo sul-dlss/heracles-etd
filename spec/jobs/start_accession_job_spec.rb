@@ -106,7 +106,6 @@ RSpec.describe StartAccessionJob do
           {
             appliesTo: [],
             groupedValue: [],
-            identifier: [],
             note: [],
             parallelValue: [],
             structuredValue: [],
