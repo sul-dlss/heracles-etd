@@ -7,9 +7,13 @@ class RegisterService
     request_model = Cocina::Models.build_request({
                                                    'type' => Cocina::Models::ObjectType.object,
                                                    'version' => 1,
-                                                   'label' => submission.title,
                                                    'administrative' => {
                                                      'hasAdminPolicy' => Settings.etd_apo
+                                                   },
+                                                   'description' => {
+                                                     'title' => [
+                                                       { value: submission.title }
+                                                     ]
                                                    },
                                                    'identification' => {
                                                      'sourceId' => "dissertation:#{submission.dissertation_id}"
