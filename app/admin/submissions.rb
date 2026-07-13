@@ -172,15 +172,14 @@ ActiveAdmin.register Submission do
 
   member_action :resubmit_to_registrar, method: :post do
     # Re-post submission to Registrar (via PeopleSoft)
-    submission = Submission.find_by(dissertation_id: params[:id])
     message = begin
-                SubmissionPoster.call(submission:)
+                SubmissionPoster.call(submission: resource)
               rescue StandardError => e # rubocop:disable Layout/RescueEnsureAlignment
                 "ETD did not re-post to Registrar: #{e.message}"
               else
                 'ETD successfully re-posted to Registrar'
               end # rubocop:disable Layout/BeginEndAlignment
-    redirect_to admin_submission_path(submission), notice: message
+    redirect_to admin_submission_path(resource), notice: message
   end
 
   member_action :create_stub_marc_record, method: :post do

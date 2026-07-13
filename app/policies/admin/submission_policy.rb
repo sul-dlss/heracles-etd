@@ -4,7 +4,7 @@ module Admin
   # Policy for managing submissions
   class SubmissionPolicy < ApplicationPolicy
     alias_rule :new?, to: :create?
-    alias_rule :create_stub_marc_record?, to: :manage?
+    alias_rule :create_stub_marc_record?, :resubmit_to_registrar?, to: :manage?
 
     def index?
       user.groups.dlss? || user.groups.reports?
