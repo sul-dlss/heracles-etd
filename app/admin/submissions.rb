@@ -183,6 +183,17 @@ ActiveAdmin.register Submission do
     redirect_to admin_submission_path(submission), notice: message
   end
 
+  member_action :create_stub_marc_record, method: :post do
+    if resource.ready_for_cataloging? && !resource.stub_record_written?
+      CreateStubMarcRecordJob.perform_later(resource.druid)
+      message = 'Stub MARC record job has been queued'
+    else
+      message = 'Stub MARC record job was not queued because this ETD is not eligible for cataloging'
+    end
+
+    redirect_to admin_submission_path(resource), notice: message
+  end
+
   action_item :resubmit_to_registrar, only: :show do
     # NOTE: `resource` here is the submission whose show page is being rendered.
     # This is ActiveAdmin-speak.
@@ -190,6 +201,15 @@ ActiveAdmin.register Submission do
       link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(resource),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' },
+              class: 'action-item-button'
+    end
+  end
+
+  action_item :create_stub_marc_record, only: :show do
+    if resource.ready_for_cataloging? && !resource.stub_record_written?
+      link_to 'Create stub MARC record', create_stub_marc_record_admin_submission_path(resource),
+              method: :post,
+              data: { confirm: 'Are you sure you want to create a stub MARC record?' },
               class: 'action-item-button'
     end
   end
