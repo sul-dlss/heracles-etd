@@ -40,7 +40,7 @@ RSpec.describe Cocina::FileSetsGenerator do
         administrative: { publish: false, shelve: false, sdrPreserve: true },
         size: 14_544,
         hasMimeType: 'application/pdf' }] } },
-       { type: Cocina::Models::FileSetType.file,
+       { type: Cocina::Models::FileSetType.document,
          label: 'Body of dissertation',
          externalIdentifier: 'xx999xx0021_2',
          version: 1,

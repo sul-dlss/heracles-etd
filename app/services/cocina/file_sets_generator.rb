@@ -34,7 +34,7 @@ module Cocina
 
     def augmented_dissertation_file_set
       {
-        type: Cocina::Models::FileSetType.file,
+        type: Cocina::Models::FileSetType.document,
         label: 'Body of dissertation',
         externalIdentifier: file_set_external_identifier,
         version: dro_version,
