@@ -6,7 +6,7 @@ class RegisterService
   def self.register(submission:)
     source_id = "dissertation:#{submission.dissertation_id}"
     request_model = Cocina::Models.build_request({
-                                                   'type' => Cocina::Models::ObjectType.object,
+                                                   'type' => Cocina::Models::ObjectType.document,
                                                    'version' => 1,
                                                    'administrative' => {
                                                      'hasAdminPolicy' => Settings.etd_apo
