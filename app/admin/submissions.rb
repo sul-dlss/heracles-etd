@@ -172,15 +172,25 @@ ActiveAdmin.register Submission do
 
   member_action :resubmit_to_registrar, method: :post do
     # Re-post submission to Registrar (via PeopleSoft)
-    submission = Submission.find_by(dissertation_id: params[:id])
     message = begin
-                SubmissionPoster.call(submission:)
+                SubmissionPoster.call(submission: resource)
               rescue StandardError => e # rubocop:disable Layout/RescueEnsureAlignment
                 "ETD did not re-post to Registrar: #{e.message}"
               else
                 'ETD successfully re-posted to Registrar'
               end # rubocop:disable Layout/BeginEndAlignment
-    redirect_to admin_submission_path(submission), notice: message
+    redirect_to admin_submission_path(resource), notice: message
+  end
+
+  member_action :create_stub_marc_record, method: :post do
+    if resource.ready_for_cataloging? && !resource.stub_record_written?
+      CreateStubMarcRecordJob.perform_later(resource.druid)
+      message = 'Stub MARC record job has been queued'
+    else
+      message = 'Stub MARC record job was not queued because this ETD is not eligible for cataloging'
+    end
+
+    redirect_to admin_submission_path(resource), notice: message
   end
 
   action_item :resubmit_to_registrar, only: :show do
@@ -190,6 +200,15 @@ ActiveAdmin.register Submission do
       link_to 'Re-post to registrar', resubmit_to_registrar_admin_submission_path(resource),
               method: :post,
               data: { confirm: 'Are you sure you want to re-post to the registrar?' },
+              class: 'action-item-button'
+    end
+  end
+
+  action_item :create_stub_marc_record, only: :show do
+    if resource.ready_for_cataloging? && !resource.stub_record_written?
+      link_to 'Create stub MARC record', create_stub_marc_record_admin_submission_path(resource),
+              method: :post,
+              data: { confirm: 'Are you sure you want to create a stub MARC record?' },
               class: 'action-item-button'
     end
   end
