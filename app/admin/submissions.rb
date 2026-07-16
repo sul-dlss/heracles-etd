@@ -277,8 +277,13 @@ ActiveAdmin.register Submission do
   end
 
   form do |f|
-    f.semantic_errors # shows errors on :base
+    f.semantic_errors(*f.object.errors.attribute_names)
     f.inputs do
+      f.input :dissertation_id
+      if f.object.new_record?
+        f.input :druid,
+                hint: 'Enter a temporary value. Replace it with the druid returned by the registration service.'
+      end
       index_columns.each do |form_column|
         input form_column
       end

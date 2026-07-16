@@ -64,6 +64,11 @@ RSpec.describe 'Admin - Submissions' do
         get '/admin/submissions/new'
 
         expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.at_css('#submission_dissertation_id')['name'])
+          .to eq('submission[dissertation_id]')
+        expect(response.parsed_body.at_css('#submission_druid')['name']).to eq('submission[druid]')
+        expect(response.parsed_body.at_css('#submission_druid_input .inline-hints').text)
+          .to include('Enter a temporary value')
       end
     end
 
@@ -84,6 +89,21 @@ RSpec.describe 'Admin - Submissions' do
         get '/admin/submissions/new'
 
         expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe 'POST /admin/submissions' do
+    context 'with a user in the DLSS group' do
+      let(:groups) { [Settings.groups.dlss] }
+
+      it 'shows validation errors when the submission is invalid' do
+        post '/admin/submissions', params: {
+          submission: attributes_for(:submission, title: '')
+        }
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body.css('ul.errors').text).to include("Title can't be blank")
       end
     end
   end
