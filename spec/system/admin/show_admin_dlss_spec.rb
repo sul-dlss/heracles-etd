@@ -27,6 +27,7 @@ RSpec.describe 'Show admin interface as DLSS user' do
     expect(page).to have_link('Delete Reader')
 
     click_link_or_button 'Submissions'
+    expect(page).to have_no_link('New Submission')
     within("#submission_#{submission.id}") do
       expect(page).to have_text(submission.title)
     end

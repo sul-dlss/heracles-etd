@@ -19,7 +19,7 @@ module Admin
     end
 
     def create?
-      user.groups.dlss?
+      false
     end
 
     def manage?

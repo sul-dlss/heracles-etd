@@ -60,10 +60,10 @@ RSpec.describe 'Admin - Submissions' do
     context 'with a user in the DLSS group' do
       let(:groups) { [Settings.groups.dlss] }
 
-      it 'renders' do
+      it 'returns unauthorized' do
         get '/admin/submissions/new'
 
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
 
@@ -82,6 +82,20 @@ RSpec.describe 'Admin - Submissions' do
 
       it 'returns unauthorized' do
         get '/admin/submissions/new'
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe 'POST /admin/submissions' do
+    context 'with a user in the DLSS group' do
+      let(:groups) { [Settings.groups.dlss] }
+
+      it 'returns unauthorized without creating a submission' do
+        expect do
+          post '/admin/submissions', params: { submission: attributes_for(:submission) }
+        end.not_to change(Submission, :count)
 
         expect(response).to have_http_status(:unauthorized)
       end
