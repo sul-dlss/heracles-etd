@@ -6,7 +6,7 @@ RSpec.describe 'Edit Submission' do
   let(:submission) { create(:submission) }
 
   before do
-    allow(SubmissionPoster).to receive(:call) do
+    allow(SubmissionPoster).to receive(:call) do |submission:|
       submission.prepare_to_submit!
     end
 

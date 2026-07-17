@@ -12,7 +12,7 @@ module Edit
 
     # Do not enable the Done button if the abstract is blank or exceeds max length of 5000 chars
     def done_disabled?
-      submission.abstract.blank? || submission.abstract.length > 5000
+      submission.abstract.blank? || submission.abstract.length > Submission::MAX_ABSTRACT_LENGTH
     end
   end
 end

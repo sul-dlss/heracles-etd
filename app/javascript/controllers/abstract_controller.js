@@ -16,6 +16,24 @@ export default class extends Controller {
     }
   }
 
+  // The textarea and Done button are in separate forms. Clicking Done blurs the
+  // textarea and starts its autosave, but Turbo may cancel that request when the
+  // Done form submits. Copy the current abstract into the Done form so the
+  // abstract and abstract_provided flag are saved atomically.
+  prepareCompletion (event) {
+    const form = event.currentTarget.form
+    let abstractInput = form.querySelector('input[name="submission[abstract]"]')
+
+    if (!abstractInput) {
+      abstractInput = document.createElement('input')
+      abstractInput.type = 'hidden'
+      abstractInput.name = 'submission[abstract]'
+      form.appendChild(abstractInput)
+    }
+
+    abstractInput.value = this.inputTarget.value
+  }
+
   warnFormatting () {
     const warn = this.abstract.match(/\$.+\$/) || // e.g., $\sim 100\gev$-$1\tev$
       this.abstract.match(/\\[a-zA-Z]+\{.+\}/) // e.g., \cite{p-Jungman:1995df}

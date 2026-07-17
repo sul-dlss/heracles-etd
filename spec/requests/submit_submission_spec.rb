@@ -34,5 +34,28 @@ RSpec.describe 'Submitting a submission' do
       follow_redirect!
       expect(response).to have_http_status(:ok)
     end
+
+    context 'when the abstract is blank despite being marked complete' do
+      before do
+        # Simulate a legacy inconsistent record that predates the validation.
+        submission.update_columns(abstract: nil, abstract_provided: true) # rubocop:disable Rails/SkipsModelValidations
+      end
+
+      it 'does not post the submission to the Registrar' do
+        post submit_submission_path(submission)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.body).to include('Complete all required sections before submitting to the Registrar.')
+        expect(SubmissionPoster).not_to have_received(:call)
+        expect(submission.reload).not_to be_submitted
+      end
+
+      it 'does not allow access to the review page' do
+        get review_submission_path(submission)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.body).to include('Complete all required sections before submitting to the Registrar.')
+      end
+    end
   end
 end

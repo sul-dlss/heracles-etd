@@ -58,6 +58,8 @@ RSpec.describe 'ETDs created from Peoplesoft upload' do
     submission = Submission.find_by(dissertation_id:)
     expect(submission).not_to be_nil
     expect(submission.druid).to eq druid
+    expect(submission.abstract).to be_nil
+    expect(submission.abstract_provided).to be false
     expect(submission.readers.count).to eq 2
     expect(object_client).to have_received(:workflow).with('registrationWF')
     expect(workflow_client).to have_received(:create).with(version: 1)

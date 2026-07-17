@@ -6,6 +6,7 @@ class Submission < ApplicationRecord
   include SubmissionAdminConcern
 
   DOI_SERVICE_ENABLED_DATE = Date.parse('2025-09-18').freeze
+  MAX_ABSTRACT_LENGTH = 5000
 
   # Fields transferred from PeopleSoft
   # - dissertation_id
@@ -89,6 +90,7 @@ class Submission < ApplicationRecord
   validates :sunetid, presence: true
   validates :title, presence: true
   validates :embargo, inclusion: { in: ['1 year', '2 years', 'immediately', '6 months'], allow_blank: true }
+  validates :abstract, presence: true, length: { maximum: MAX_ABSTRACT_LENGTH }, if: :abstract_validation_required?
 
   # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
   # It is used to by a cron job to send reminder emails to the catalogers
@@ -151,6 +153,10 @@ class Submission < ApplicationRecord
     submitted_at.present?
   end
 
+  def abstract_complete?
+    abstract_provided? && abstract.present? && abstract.length <= MAX_ABSTRACT_LENGTH
+  end
+
   def stub_record_written?
     catalog_record_job_id.present?
   end
@@ -180,8 +186,9 @@ class Submission < ApplicationRecord
 
   def prepare_to_submit!
     Submission.transaction do
-      update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
-              readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
+      assign_attributes(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
+                        readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
+      save!(context: :submission)
       generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
 
       # If the submission to the Registrar fails, we want to roll back the changes
@@ -208,5 +215,14 @@ class Submission < ApplicationRecord
       .filename
       .to_s
       .sub(/\.pdf$/, '-augmented.pdf')
+  end
+
+  private
+
+  def abstract_validation_required?
+    return true if validation_context == :submission
+    return false unless abstract_provided?
+
+    new_record? || will_save_change_to_abstract? || will_save_change_to_abstract_provided?
   end
 end
