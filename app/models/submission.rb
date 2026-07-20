@@ -90,7 +90,7 @@ class Submission < ApplicationRecord
   validates :sunetid, presence: true
   validates :title, presence: true
   validates :embargo, inclusion: { in: ['1 year', '2 years', 'immediately', '6 months'], allow_blank: true }
-  validates :abstract, presence: true, length: { maximum: MAX_ABSTRACT_LENGTH }, if: :abstract_validation_required?
+  validates :abstract, presence: true, length: { maximum: MAX_ABSTRACT_LENGTH }, on: :submission
 
   # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
   # It is used to by a cron job to send reminder emails to the catalogers
@@ -215,14 +215,5 @@ class Submission < ApplicationRecord
       .filename
       .to_s
       .sub(/\.pdf$/, '-augmented.pdf')
-  end
-
-  private
-
-  def abstract_validation_required?
-    return true if validation_context == :submission
-    return false unless abstract_provided?
-
-    new_record? || will_save_change_to_abstract? || will_save_change_to_abstract_provided?
   end
 end

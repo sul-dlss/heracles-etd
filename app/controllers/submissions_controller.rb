@@ -34,7 +34,7 @@ class SubmissionsController < ApplicationController
     elsif params.dig(:submission, :remove_permission_file)
       @submission.permission_files.find(params[:submission][:remove_permission_file]).delete
     else
-      return render(:edit, status: :unprocessable_content) unless @submission.update(submission_params)
+      @submission.update!(submission_params)
 
       if @submission.dissertation_file.attached?
         @submission.generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
@@ -43,12 +43,13 @@ class SubmissionsController < ApplicationController
     redirect_to edit_submission_path(@submission)
   end
 
-  def review
-    render_incomplete_submission unless SubmissionPresenter.all_done?(submission: @submission)
-  end
+  def review; end
 
   def submit
-    return render_incomplete_submission unless SubmissionPresenter.all_done?(submission: @submission)
+    unless SubmissionPresenter.all_done?(submission: @submission)
+      notify_incomplete_submission
+      return redirect_to edit_submission_path(@submission), status: :see_other
+    end
 
     # NOTE: If the following line proves too slow in UAT/prod, use this job-based approach:
     #       PostSubmissionJob.perform_later(submission: @submission)
@@ -153,9 +154,16 @@ class SubmissionsController < ApplicationController
     authorize! @submission
   end
 
-  def render_incomplete_submission
-    @submission.errors.add(:base, 'Complete all required sections before submitting to the Registrar.')
-    render :edit, status: :unprocessable_content
+  def notify_incomplete_submission
+    Honeybadger.notify(
+      '[WARNING] Blocked attempt to submit an incomplete ETD to the Registrar',
+      context: {
+        submission: @submission,
+        abstract_provided: @submission.abstract_provided?,
+        abstract_present: @submission.abstract.present?,
+        abstract_length: @submission.abstract&.length
+      }
+    )
   end
 
   def submission_params

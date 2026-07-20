@@ -41,14 +41,14 @@ RSpec.describe 'Editing a submission' do
       end
     end
 
-    it 'does not allow the abstract step to be completed with a blank abstract' do
+    it 'does not treat a blank abstract as complete even if the completion flag is set' do
       patch submission_path(submission), params: {
         submission: { abstract: ' ', abstract_provided: true }
       }
 
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to include('Abstract can&#39;t be blank')
-      expect(submission.reload.abstract_provided).to be false
+      expect(response).to redirect_to(edit_submission_path(submission))
+      expect(submission.reload.abstract_provided).to be true
+      expect(SubmissionPresenter.step_done?(step: SubmissionPresenter::ABSTRACT_STEP, submission:)).to be false
     end
 
     it 'allows a blank abstract to be saved while the abstract step is incomplete' do

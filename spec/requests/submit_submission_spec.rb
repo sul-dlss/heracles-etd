@@ -37,24 +37,26 @@ RSpec.describe 'Submitting a submission' do
 
     context 'when the abstract is blank despite being marked complete' do
       before do
-        # Simulate a legacy inconsistent record that predates the validation.
         submission.update_columns(abstract: nil, abstract_provided: true) # rubocop:disable Rails/SkipsModelValidations
+        allow(Honeybadger).to receive(:notify)
       end
 
-      it 'does not post the submission to the Registrar' do
+      it 'reports the attempt and redirects without posting to the Registrar' do
         post submit_submission_path(submission)
 
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include('Complete all required sections before submitting to the Registrar.')
+        expect(response).to redirect_to(edit_submission_path(submission))
+        expect(response).to have_http_status(:see_other)
         expect(SubmissionPoster).not_to have_received(:call)
         expect(submission.reload).not_to be_submitted
-      end
-
-      it 'does not allow access to the review page' do
-        get review_submission_path(submission)
-
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include('Complete all required sections before submitting to the Registrar.')
+        expect(Honeybadger).to have_received(:notify).with(
+          '[WARNING] Blocked attempt to submit an incomplete ETD to the Registrar',
+          context: {
+            submission:,
+            abstract_provided: true,
+            abstract_present: false,
+            abstract_length: nil
+          }
+        )
       end
     end
   end
