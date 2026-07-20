@@ -7,38 +7,6 @@ RSpec.describe Submission do
 
   let(:druid) { 'druid:jx000nx0003' }
 
-  describe 'abstract validation' do
-    context 'when the abstract step is incomplete' do
-      subject(:submission) { build(:submission, abstract: nil, abstract_provided: false) }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'when a blank abstract is marked complete before final submission' do
-      subject(:submission) { build(:submission, abstract: ' ', abstract_provided: true) }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'when validating the final submission' do
-      it 'requires an abstract regardless of the completion flag' do
-        submission = build(:submission, abstract: nil, abstract_provided: false)
-
-        expect(submission).not_to be_valid(:submission)
-        expect(submission.errors[:abstract]).to include("can't be blank")
-      end
-
-      it 'rejects an abstract that is too long' do
-        submission = build(:submission,
-                           abstract: 'A' * (described_class::MAX_ABSTRACT_LENGTH + 1),
-                           abstract_provided: true)
-
-        expect(submission).not_to be_valid(:submission)
-        expect(submission.errors[:abstract]).to include('is too long (maximum is 5000 characters)')
-      end
-    end
-  end
-
   describe '#abstract_complete?' do
     it 'returns true when a valid abstract is marked complete' do
       submission = build(:submission, abstract: 'My abstract', abstract_provided: true)

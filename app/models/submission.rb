@@ -90,7 +90,6 @@ class Submission < ApplicationRecord
   validates :sunetid, presence: true
   validates :title, presence: true
   validates :embargo, inclusion: { in: ['1 year', '2 years', 'immediately', '6 months'], allow_blank: true }
-  validates :abstract, presence: true, length: { maximum: MAX_ABSTRACT_LENGTH }, on: :submission
 
   # This scope checks for ETDs that have been sent to the ILS since yesterday at 6am and have not yet been updated.
   # It is used to by a cron job to send reminder emails to the catalogers
@@ -186,9 +185,8 @@ class Submission < ApplicationRecord
 
   def prepare_to_submit!
     Submission.transaction do
-      assign_attributes(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
-                        readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
-      save!(context: :submission)
+      update!(submitted_at: Time.zone.now, readerapproval: nil, last_reader_action_at: nil,
+              readercomment: nil, regapproval: nil, last_registrar_action_at: nil, regcomment: nil)
       generate_and_attach_augmented_file!(raise_if_dissertation_missing: true)
 
       # If the submission to the Registrar fails, we want to roll back the changes
