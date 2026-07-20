@@ -7,6 +7,20 @@ RSpec.describe Submission do
 
   let(:druid) { 'druid:jx000nx0003' }
 
+  describe '#abstract_complete?' do
+    it 'returns true when a valid abstract is marked complete' do
+      submission = build(:submission, abstract: 'My abstract', abstract_provided: true)
+
+      expect(submission.abstract_complete?).to be true
+    end
+
+    it 'returns false when a blank abstract is marked complete' do
+      submission = build(:submission, abstract: nil, abstract_provided: true)
+
+      expect(submission.abstract_complete?).to be false
+    end
+  end
+
   describe '#first_name' do
     it 'returns the first name from the name field' do
       expect(submission.first_name).to eq('Jane')

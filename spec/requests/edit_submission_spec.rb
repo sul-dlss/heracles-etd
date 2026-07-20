@@ -40,6 +40,37 @@ RSpec.describe 'Editing a submission' do
         expect(submission.reload.orcid).to eq('0000-0002-1825-0097')
       end
     end
+
+    it 'does not treat a blank abstract as complete even if the completion flag is set' do
+      patch submission_path(submission), params: {
+        submission: { abstract: ' ', abstract_provided: true }
+      }
+
+      expect(response).to redirect_to(edit_submission_path(submission))
+      expect(submission.reload.abstract_provided).to be true
+      expect(SubmissionPresenter.step_done?(step: SubmissionPresenter::ABSTRACT_STEP, submission:)).to be false
+    end
+
+    it 'allows a blank abstract to be saved while the abstract step is incomplete' do
+      patch submission_path(submission), params: {
+        submission: { abstract: '', abstract_provided: false }
+      }
+
+      expect(response).to redirect_to(edit_submission_path(submission))
+      expect(submission.reload).to have_attributes(abstract: '', abstract_provided: false)
+    end
+
+    it 'saves the abstract and completion flag in the same request' do
+      patch submission_path(submission), params: {
+        submission: { abstract: 'My completed abstract', abstract_provided: true }
+      }
+
+      expect(response).to redirect_to(edit_submission_path(submission))
+      expect(submission.reload).to have_attributes(
+        abstract: 'My completed abstract',
+        abstract_provided: true
+      )
+    end
   end
 
   context 'when the student tries to edit a submitted submission' do

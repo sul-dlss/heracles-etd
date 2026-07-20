@@ -50,6 +50,8 @@ class SubmissionPresenter
   end
 
   def self.step_done?(step:, submission:)
+    return submission.abstract_complete? if step == ABSTRACT_STEP
+
     ['true', 'Approved', true].include? submission.public_send(step_field(step:))
   end
 

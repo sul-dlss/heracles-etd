@@ -2,7 +2,7 @@
                                    submission:,
                                    title: 'Enter your abstract',
                                    data: { controller: 'abstract', action: 'turbo:morph@window->abstract#warn' },
-                                   done_data: { abstract_target: 'doneButton' },
+                                   done_data: { abstract_target: 'doneButton', action: 'click->abstract#prepareCompletion' },
                                    done_disabled: done_disabled?) do |component| %>
   <% component.with_help_content do %>
     <%= t('steps.abstract.help_html') %>

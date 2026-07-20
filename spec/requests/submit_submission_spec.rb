@@ -34,5 +34,30 @@ RSpec.describe 'Submitting a submission' do
       follow_redirect!
       expect(response).to have_http_status(:ok)
     end
+
+    context 'when the abstract is blank despite being marked complete' do
+      before do
+        submission.update_columns(abstract: nil, abstract_provided: true) # rubocop:disable Rails/SkipsModelValidations
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'reports the attempt and redirects without posting to the Registrar' do
+        post submit_submission_path(submission)
+
+        expect(response).to redirect_to(edit_submission_path(submission))
+        expect(response).to have_http_status(:see_other)
+        expect(SubmissionPoster).not_to have_received(:call)
+        expect(submission.reload).not_to be_submitted
+        expect(Honeybadger).to have_received(:notify).with(
+          '[WARNING] Blocked attempt to submit an incomplete ETD to the Registrar',
+          context: {
+            submission:,
+            abstract_provided: true,
+            abstract_present: false,
+            abstract_length: nil
+          }
+        )
+      end
+    end
   end
 end

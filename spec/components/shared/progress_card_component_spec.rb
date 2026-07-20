@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Shared::ProgressCardComponent, type: :component do
   let(:submission) do
     build(:submission, citation_verified: true, abstract_provided: true, submitted_to_registrar: 'true',
+                       abstract: 'My abstract',
                        submitted_at: DateTime.new(2023, 1, 1, 12, 0, 0))
   end
 
@@ -19,6 +20,18 @@ RSpec.describe Shared::ProgressCardComponent, type: :component do
       expect(page).to have_css('li:first-of-type[aria-label="Step 1, Citation details verified, Completed"]',
                                text: 'Citation details verified')
       expect(page).to have_css('li .text-muted', text: 'January  1, 2023 12:00pm')
+    end
+
+    context 'when the abstract is missing despite being marked complete' do
+      before do
+        submission.abstract = nil
+      end
+
+      it 'renders the abstract step as in progress' do
+        render_inline(described_class.new(submission:))
+
+        expect(page).to have_css('li[aria-label="Step 2, Abstract provided, In progress"]')
+      end
     end
   end
 

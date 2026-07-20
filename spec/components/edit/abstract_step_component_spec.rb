@@ -9,5 +9,6 @@ RSpec.describe Edit::AbstractStepComponent, type: :component do
     render_inline(described_class.new(submission:))
     expect(page).to have_css('h2', text: 'Enter your abstract')
     expect(page).to have_css('textarea[name="submission[abstract]"]')
+    expect(page).to have_css('button[data-action*="click->abstract#prepareCompletion"]', text: 'Done')
   end
 end

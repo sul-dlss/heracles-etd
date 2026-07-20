@@ -6,6 +6,7 @@ class Submission < ApplicationRecord
   include SubmissionAdminConcern
 
   DOI_SERVICE_ENABLED_DATE = Date.parse('2025-09-18').freeze
+  MAX_ABSTRACT_LENGTH = 5000
 
   # Fields transferred from PeopleSoft
   # - dissertation_id
@@ -149,6 +150,10 @@ class Submission < ApplicationRecord
 
   def submitted?
     submitted_at.present?
+  end
+
+  def abstract_complete?
+    abstract_provided? && abstract.present? && abstract.length <= MAX_ABSTRACT_LENGTH
   end
 
   def stub_record_written?
