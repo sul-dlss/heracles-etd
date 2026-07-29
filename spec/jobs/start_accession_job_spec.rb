@@ -15,9 +15,8 @@ RSpec.describe StartAccessionJob do
       externalIdentifier: druid,
       version: 1,
       type: Cocina::Models::ObjectType.object,
-      label: 'dro label',
       description: {
-        title: [{ value: 'dro label' }],
+        title: [{ value: 'dro title' }],
         purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}",
         contributor: [
           {

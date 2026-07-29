@@ -31,7 +31,6 @@ RSpec.describe CreateEmbargo do
       Cocina::Models.with_metadata(
         Cocina::Models.build(
           {
-            label: 'My ETD',
             version: 1,
             type: Cocina::Models::ObjectType.object,
             description: {
