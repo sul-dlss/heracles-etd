@@ -24,7 +24,6 @@ RSpec.describe Marc::StubRecordPipeline do
   describe '#run' do
     let(:cocina_object) do
       Cocina::Models.build({
-                             'label' => 'My ETD',
                              'version' => 1,
                              'type' => Cocina::Models::ObjectType.object,
                              'externalIdentifier' => submission.druid,
@@ -95,7 +94,6 @@ RSpec.describe Marc::StubRecordPipeline do
               ],
               sourceId: 'sul:1234'
             },
-            label: 'My ETD',
             type: Cocina::Models::ObjectType.object,
             version: 1,
             description: {
