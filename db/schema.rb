@@ -10,29 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_03_162134) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_151650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.bigint "record_id", null: false
+    t.string "record_type", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
+    t.string "content_type"
     t.datetime "created_at", null: false
+    t.string "filename", null: false
+    t.string "key", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -43,98 +43,98 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_03_162134) do
   end
 
   create_table "permission_files", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.text "description"
     t.bigint "submission_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["submission_id"], name: "index_permission_files_on_submission_id"
   end
 
   create_table "readers", force: :cascade do |t|
+    t.datetime "created_at", precision: nil, null: false
+    t.string "finalreader"
     t.string "name", null: false
+    t.integer "position", null: false
     t.string "prefix"
     t.string "readerrole"
-    t.string "type"
+    t.bigint "submission_id"
     t.string "suffix"
     t.string "sunetid"
+    t.string "type"
     t.string "univid"
-    t.bigint "submission_id"
-    t.integer "position", null: false
-    t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "finalreader"
     t.index ["submission_id"], name: "index_readers_on_submission_id"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.string "label", null: false
-    t.string "description"
-    t.datetime "start_date", precision: nil, null: false
-    t.datetime "end_date", precision: nil, null: false
     t.datetime "created_at", null: false
+    t.string "description"
+    t.datetime "end_date", precision: nil, null: false
+    t.string "label", null: false
+    t.datetime "start_date", precision: nil, null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.string "druid", null: false
-    t.string "name"
-    t.string "prefix"
-    t.string "suffix"
-    t.string "major"
-    t.string "degree"
-    t.string "etd_type", null: false
-    t.string "title"
     t.text "abstract"
+    t.boolean "abstract_provided", default: false, null: false
+    t.datetime "accessioning_started_at", precision: nil
+    t.string "catalog_record_job_id"
     t.string "cclicense"
     t.string "cclicensetype"
+    t.boolean "citation_verified", default: false, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.string "degree"
+    t.string "degreeconfyr"
+    t.string "department"
+    t.string "dissertation_id", null: false
+    t.boolean "dissertation_uploaded", default: false, null: false
+    t.string "documentaccess"
+    t.string "druid", null: false
     t.string "embargo"
-    t.string "sub"
-    t.string "univid"
-    t.string "sunetid", null: false
+    t.string "etd_type", null: false
+    t.string "folio_instance_hrid"
+    t.boolean "format_reviewed", default: false, null: false
+    t.datetime "ils_record_created_at"
+    t.datetime "ils_record_updated_at", precision: nil
+    t.datetime "last_reader_action_at", precision: nil
+    t.datetime "last_registrar_action_at", precision: nil
+    t.string "major"
+    t.string "name"
+    t.string "orcid"
+    t.boolean "permission_files_uploaded", default: false, null: false
+    t.boolean "permissions_provided", default: false, null: false
+    t.string "prefix"
+    t.string "provost"
     t.string "ps_career"
     t.string "ps_subplan"
-    t.string "dissertation_id", null: false
-    t.string "provost"
-    t.string "degreeconfyr"
-    t.string "schoolname"
-    t.string "department"
+    t.string "readeractiondttm"
     t.string "readerapproval"
     t.string "readercomment"
-    t.string "readeractiondttm"
+    t.string "regactiondttm"
     t.string "regapproval"
     t.string "regcomment"
-    t.string "regactiondttm"
-    t.string "documentaccess"
-    t.string "submitted_to_registrar"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "submitted_at", precision: nil
-    t.datetime "last_registrar_action_at", precision: nil
-    t.datetime "last_reader_action_at", precision: nil
-    t.datetime "ils_record_updated_at", precision: nil
-    t.datetime "accessioning_started_at", precision: nil
-    t.string "folio_instance_hrid"
-    t.datetime "ils_record_created_at"
-    t.string "orcid"
-    t.boolean "citation_verified", default: false, null: false
-    t.boolean "abstract_provided", default: false, null: false
-    t.boolean "dissertation_uploaded", default: false, null: false
-    t.boolean "supplemental_files_uploaded", default: false, null: false
-    t.boolean "permission_files_uploaded", default: false, null: false
     t.boolean "rights_selected", default: false, null: false
-    t.boolean "format_reviewed", default: false, null: false
+    t.string "schoolname"
+    t.string "sub"
+    t.datetime "submitted_at", precision: nil
+    t.string "submitted_to_registrar"
+    t.string "suffix"
     t.boolean "sulicense", default: false, null: false
-    t.boolean "permissions_provided", default: false, null: false
+    t.string "sunetid", null: false
     t.boolean "supplemental_files_provided", default: false, null: false
-    t.string "catalog_record_job_id"
+    t.boolean "supplemental_files_uploaded", default: false, null: false
+    t.string "title"
+    t.string "univid"
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["dissertation_id"], name: "index_submissions_on_dissertation_id", unique: true
     t.index ["druid"], name: "index_submissions_on_druid", unique: true
   end
 
   create_table "supplemental_files", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.text "description"
     t.bigint "submission_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["submission_id"], name: "index_supplemental_files_on_submission_id"
   end
