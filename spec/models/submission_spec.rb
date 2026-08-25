@@ -172,6 +172,35 @@ RSpec.describe Submission do
     end
   end
 
+  describe '#alert_if_sunetid_changed' do
+    subject(:submission) { create(:submission, sunetid: 'original') }
+
+    before do
+      allow(Honeybadger).to receive(:notify)
+    end
+
+    it 'notifies Honeybadger when sunetid changes on update' do
+      submission.update!(sunetid: 'unexpected')
+
+      expect(Honeybadger).to have_received(:notify).with(
+        '[WARNING] Registrar changed submission to an unexpected SUNet ID',
+        context: hash_including(
+          dissertation_id: submission.dissertation_id,
+          druid: submission.druid,
+          original_sunetid: 'original',
+          unexpected_sunetid: 'unexpected',
+          all_changes: hash_including('sunetid' => %w[original unexpected])
+        )
+      )
+    end
+
+    it 'does not notify Honeybadger when sunetid does not change on update' do
+      submission.update!(title: 'Updated title')
+
+      expect(Honeybadger).not_to have_received(:notify)
+    end
+  end
+
   describe 'derivative fields' do
     context 'when primary fields are not set' do
       subject(:submission) { create(:submission) }
