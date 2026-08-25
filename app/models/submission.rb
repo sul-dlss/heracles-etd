@@ -71,6 +71,7 @@ class Submission < ApplicationRecord
   # - orcid (set by SubmissionsController)
 
   before_save :set_derivative_fields
+  before_update :alert_if_sunetid_changed, :alert_if_accessioning_started
 
   has_many :readers, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :submission
 
@@ -213,5 +214,33 @@ class Submission < ApplicationRecord
       .filename
       .to_s
       .sub(/\.pdf$/, '-augmented.pdf')
+  end
+
+  private
+
+  def alert_if_sunetid_changed
+    return unless sunetid_changed?
+
+    Honeybadger.notify(
+      '[WARNING] Registrar changed submission to an unexpected SUNet ID',
+      context: {
+        dissertation_id:,
+        druid:,
+        original_sunetid: sunetid_was,
+        unexpected_sunetid: sunetid,
+        all_changes: changes
+      }
+    )
+  end
+
+  def alert_if_accessioning_started
+    # This attribute should be changed from nil to its initial value, and any
+    # subsequent attempts to change the value will alert.
+    return if accessioning_started_at_was.blank?
+
+    Honeybadger.notify(
+      '[WARNING] Registrar changed submission after accessioning started',
+      context: to_honeybadger_context.merge(changes:)
+    )
   end
 end
