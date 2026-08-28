@@ -3,7 +3,7 @@
 # SolidQueue does not auto-retry jobs so we use ActiveJob to accomplish the same thing.
 class RetriableJob < ApplicationJob
   # This includes the first run plus all retries
-  MAX_ATTEMPTS = 10
+  MAX_ATTEMPTS = 15
 
   # Retriable jobs should retry when any exception is raised. Retry
   # `MAX_ATTEMPTS` times, and use exponential backoff so that the attempts are
