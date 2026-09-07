@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    action_policy (0.7.6)
+    action_policy (0.7.7)
       ruby-next-core (>= 1.0)
     action_text-trix (2.1.19)
       railties
@@ -113,7 +113,7 @@ GEM
       smart_properties
     bigdecimal (3.3.1)
     bindex (0.8.1)
-    bootsnap (1.25.0)
+    bootsnap (1.26.0)
       msgpack (~> 1.5)
     brakeman (8.0.6)
       racc
@@ -201,7 +201,7 @@ GEM
       capistrano-one_time_key (>= 0.2.0)
       capistrano-shared_configs
       ed25519
-    domain_name (0.6.20260829)
+    domain_name (0.6.20260902)
     dor-services-client (15.67.0)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.133.0)
@@ -253,7 +253,7 @@ GEM
       rubocop (>= 1)
       smart_properties
     erubi (1.13.1)
-    et-orbi (1.4.1)
+    et-orbi (1.4.2)
       tzinfo
     factory_bot (6.6.0)
       activesupport (>= 6.1.0)
@@ -345,21 +345,21 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.21.2)
-    jsonschema_rs (0.52.1)
+    json (3.0.0)
+    jsonschema_rs (0.55.0)
       bigdecimal (>= 3.1, < 5)
       rb_sys (~> 0.9.130)
-    jsonschema_rs (0.52.1-aarch64-linux)
+    jsonschema_rs (0.55.0-aarch64-linux)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.52.1-aarch64-linux-musl)
+    jsonschema_rs (0.55.0-aarch64-linux-musl)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.52.1-arm64-darwin)
+    jsonschema_rs (0.55.0-arm64-darwin)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.52.1-x86_64-darwin)
+    jsonschema_rs (0.55.0-x86_64-darwin)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.52.1-x86_64-linux)
+    jsonschema_rs (0.55.0-x86_64-linux)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.52.1-x86_64-linux-musl)
+    jsonschema_rs (0.55.0-x86_64-linux-musl)
       bigdecimal (>= 3.1, < 5)
     jwt (3.2.0)
       base64
@@ -467,7 +467,7 @@ GEM
     overmind (2.5.1-arm-linux)
     overmind (2.5.1-arm64-darwin)
     overmind (2.5.1-x86_64-darwin)
-    parallel (2.1.0)
+    parallel (2.2.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
@@ -623,7 +623,7 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-next-core (1.2.1)
     ruby-progressbar (1.13.0)
-    rubyzip (3.5.0)
+    rubyzip (3.6.0)
     securerandom (0.4.1)
     selenium-webdriver (4.48.0)
       base64 (~> 0.2)
@@ -631,7 +631,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    simplecov (1.1.1)
+    simplecov (1.2.0)
     smart_properties (1.17.0)
     snaky_hash (2.0.7)
       hashie (>= 0.1.0, < 6)
@@ -780,4 +780,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-  4.0.19
+  4.0.20
