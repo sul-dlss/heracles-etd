@@ -49,6 +49,7 @@ gem 'druid-tools'
 gem 'folio_client'
 gem 'hexapdf' # Validates and inserts copyright and signature pages into submitted PDFs
 gem 'honeybadger'
+gem 'json', '~> 2.0' # Pinned until Rails 8.1.4 is released https://github.com/rails/rails/issues/58685
 gem 'local_time'
 gem 'marc' # Builds the stub MARC record
 gem 'oauth2' # Authorizes and posts to PeopleSoft
