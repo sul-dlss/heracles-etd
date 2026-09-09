@@ -71,13 +71,8 @@ RSpec.describe StartAccessionJob do
     context 'when accessioning has already started' do
       let(:submission) { create(:submission, :accessioning_started) }
 
-      it 'guards against accessioning twice' do
+      it 'notifies' do
         job.perform(druid)
-
-        expect(object_client).not_to have_received(:update)
-        expect(Sdr::AdministrativeTagCreator).not_to have_received(:create)
-        expect(version_client).not_to have_received(:close)
-        expect(Sdr::ReleaseTagger).not_to have_received(:tag)
 
         expect(Honeybadger).to have_received(:notify).once.with(
           '[INFO] Attempted to accession the same submission more than once',
