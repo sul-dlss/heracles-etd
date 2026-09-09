@@ -10,11 +10,14 @@ class StartAccessionJob < ApplicationJob
     @druid = druid
 
     if submission.accessioning_started?
+      # Re-accessioning is unusual and typically initiated manually in the
+      # event of the PDF needing to be remediated or a license being changed.
+      # See https://github.com/sul-dlss/heracles-etd/commit/fad86deab2badcbc48345f722dd1ca80f3d93f6f
+      # for context. We're no longer returning in this event, just notifying.
       Honeybadger.notify(
         '[INFO] Attempted to accession the same submission more than once',
         context: { submission: }
       )
-      return
     end
 
     copy_to_workspace
