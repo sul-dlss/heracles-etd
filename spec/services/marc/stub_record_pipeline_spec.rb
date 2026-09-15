@@ -7,7 +7,7 @@ RSpec.describe Marc::StubRecordPipeline do
 
   let(:submission) { create(:submission) }
 
-  # rubocop:disable RSpec/SubjectStub
+  # rubocop:disable-next RSpec/SubjectStub
   describe '.run' do
     before do
       allow(described_class).to receive(:new).and_return(pipeline)
@@ -19,7 +19,6 @@ RSpec.describe Marc::StubRecordPipeline do
       expect(pipeline).to have_received(:run).once
     end
   end
-  # rubocop:enable RSpec/SubjectStub
 
   describe '#run' do
     let(:cocina_object) do

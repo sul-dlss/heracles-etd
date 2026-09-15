@@ -30,10 +30,10 @@ RSpec.describe SubmissionMailer do
 
     it 'lists the correct ETDs' do
       mail = described_class.ready_for_cataloging
-      expect(mail.encoded).not_to match(/in1111/)
-      expect(mail.encoded).to match(/in2222/)
-      expect(mail.encoded).to match(/in3333/)
-      expect(mail.encoded).not_to match(/in4444/)
+      expect(mail.encoded).not_to include('in1111')
+      expect(mail.encoded).to include('in2222')
+      expect(mail.encoded).to include('in3333')
+      expect(mail.encoded).not_to include('in4444')
       expect(mail.encoded).to include("<a href=\"#{etd_url}\">#{etd_title}")
       expect(mail.subject).to eq('[TEST] ETDs ready to be cataloged')
       expect(mail.to).to eq(['etd-catload-reports@lists.stanford.edu'])
