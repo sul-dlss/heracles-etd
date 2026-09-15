@@ -10,7 +10,7 @@ RSpec.describe Marc::CatalogIdentifierImporter do
 
   let(:submission) { create(:submission, catalog_record_job_id: 'some_job_id') }
 
-  # rubocop:disable RSpec/SubjectStub
+  # rubocop:disable-next RSpec/SubjectStub
   describe '.import' do
     before do
       allow(described_class).to receive(:new).and_return(importer)
@@ -22,7 +22,6 @@ RSpec.describe Marc::CatalogIdentifierImporter do
       expect(importer).to have_received(:import).once
     end
   end
-  # rubocop:enable RSpec/SubjectStub
 
   describe '#import' do
     let(:instance_hrids) { Success(['in12345']) }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'dry-monads'
 
-# rubocop:disable RSpec/SubjectStub
+# rubocop:disable-next RSpec/SubjectStub
 RSpec.describe Marc::StubRecordWriter do
   include Dry::Monads[:result]
 
@@ -79,4 +79,3 @@ RSpec.describe Marc::StubRecordWriter do
     end
   end
 end
-# rubocop:enable RSpec/SubjectStub
