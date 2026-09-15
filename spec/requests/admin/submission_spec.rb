@@ -121,6 +121,24 @@ RSpec.describe 'Admin - Submissions' do
       end
     end
 
+    context 'with a user in the DLSS group and a submission with files' do
+      let(:groups) { [Settings.groups.dlss] }
+      let!(:submission) { create(:submission, :submitted) }
+
+      it 'renders download links for each attached file' do
+        get "/admin/submissions/#{submission.dissertation_id}"
+
+        expect(response.body).to include(dissertation_file_submission_path(submission))
+        expect(response.body).to include(augmented_dissertation_file_submission_path(submission))
+        submission.supplemental_files.each do |file|
+          expect(response.body).to include(supplemental_file_submission_path(submission, file_id: file.id))
+        end
+        submission.permission_files.each do |file|
+          expect(response.body).to include(permission_file_submission_path(submission, file_id: file.id))
+        end
+      end
+    end
+
     context 'with a user in the reports group' do
       let(:groups) { [Settings.groups.reports] }
 
