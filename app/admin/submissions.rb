@@ -267,9 +267,24 @@ ActiveAdmin.register Submission do
     end
 
     panel 'Files' do
-      table_for [submission.dissertation_file, submission.augmented_dissertation_file].compact_blank +
+      dissertation_file = submission.dissertation_file
+      augmented_dissertation_file = submission.augmented_dissertation_file
+
+      table_for [dissertation_file, augmented_dissertation_file].compact_blank +
                 submission.supplemental_files + submission.permission_files do
-        column 'file_name', &:filename
+        column 'file_name' do |file|
+          path = case file
+                 when dissertation_file
+                   dissertation_file_submission_path(submission)
+                 when augmented_dissertation_file
+                   augmented_dissertation_file_submission_path(submission)
+                 when PermissionFile
+                   permission_file_submission_path(submission, file_id: file.id)
+                 when SupplementalFile
+                   supplemental_file_submission_path(submission, file_id: file.id)
+                 end
+          path ? link_to(file.filename, path) : file.filename
+        end
         column 'type', &:content_type
         column 'size', &:byte_size
       end
