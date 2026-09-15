@@ -80,7 +80,7 @@ RSpec.describe Cocina::DroAccessGenerator do
         end
 
         it 'is the url for the selected license' do
-          expect(result_hash[:license]).to eq('https://creativecommons.org/licenses/by-nd/3.0/legalcode')
+          expect(result_hash[:license]).to eq('https://creativecommons.org/licenses/by-nd/4.0/legalcode')
         end
       end
 
