@@ -11,9 +11,9 @@ RSpec.describe CreativeCommonsLicense do
       license = licenses.last
       expect(license.id).to eq('6')
       expect(license.name).to eq('CC Attribution Non-Commercial No Derivatives license')
-      expect(license.url).to eq('https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode')
+      expect(license.url).to eq('https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode')
       expect(license.code).to eq('by-nc-nd')
-      expect(license.signature_text).to eq('Noncommercial-No Derivative Works 3.0 United States License')
+      expect(license.signature_text).to eq('Noncommercial-No Derivative Works 4.0 International License')
     end
   end
 

@@ -19,7 +19,7 @@ RSpec.describe Shared::RightsStepBodyComponent, type: :component do
 
     expect(rows[1]).to have_css('th', text: 'Creative Commons')
     expect(rows[1]).to have_css('td', text: 'This work is licensed under a CC Attribution license.')
-    expect(rows[1]).to have_link('https://creativecommons.org/licenses/by/3.0/legalcode')
+    expect(rows[1]).to have_link('https://creativecommons.org/licenses/by/4.0/legalcode')
 
     expect(rows[2]).to have_css('th', text: 'External Release')
     expect(rows[2]).to have_css(

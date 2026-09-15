@@ -21,23 +21,23 @@ class CreativeCommonsLicense
   def self.all
     [
       new(id: '0', name: 'no Creative Commons license', url: nil),
-      new(id: '1', name: 'CC Attribution license', url: 'https://creativecommons.org/licenses/by/3.0/legalcode',
-          code: 'by', signature_text: '3.0 United States License'),
+      new(id: '1', name: 'CC Attribution license', url: 'https://creativecommons.org/licenses/by/4.0/legalcode',
+          code: 'by', signature_text: '4.0 International License'),
       new(id: '2', name: 'CC Attribution Share Alike license',
-          signature_text: 'Share Alike 3.0 United States License',
-          url: 'https://creativecommons.org/licenses/by-sa/3.0/legalcode', code: 'by-sa'),
+          signature_text: 'Share Alike 4.0 International License',
+          url: 'https://creativecommons.org/licenses/by-sa/4.0/legalcode', code: 'by-sa'),
       new(id: '3', name: 'CC Attribution No Derivatives license',
-          signature_text: 'No Derivative Works 3.0 United States License',
-          url: 'https://creativecommons.org/licenses/by-nd/3.0/legalcode', code: 'by-nd'),
+          signature_text: 'No Derivative Works 4.0 International License',
+          url: 'https://creativecommons.org/licenses/by-nd/4.0/legalcode', code: 'by-nd'),
       new(id: '4', name: 'CC Attribution Non-Commercial license',
-          signature_text: 'Noncommercial 3.0 United States License',
-          url: 'https://creativecommons.org/licenses/by-nc/3.0/legalcode', code: 'by-nc'),
+          signature_text: 'Noncommercial 4.0 International License',
+          url: 'https://creativecommons.org/licenses/by-nc/4.0/legalcode', code: 'by-nc'),
       new(id: '5', name: 'CC Attribution Non-Commercial Share Alike license',
-          url: 'https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode', code: 'by-nc-sa',
-          signature_text: 'Noncommercial-Share Alike 3.0 United States License'),
+          url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode', code: 'by-nc-sa',
+          signature_text: 'Noncommercial-Share Alike 4.0 International License'),
       new(id: '6', name: 'CC Attribution Non-Commercial No Derivatives license',
-          url: 'https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode', code: 'by-nc-nd',
-          signature_text: 'Noncommercial-No Derivative Works 3.0 United States License')
+          url: 'https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode', code: 'by-nc-nd',
+          signature_text: 'Noncommercial-No Derivative Works 4.0 International License')
     ]
   end
 
