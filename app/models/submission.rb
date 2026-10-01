@@ -126,7 +126,11 @@ class Submission < ApplicationRecord
   end
 
   def copyright_statement
-    "© #{submitted_at&.year || Time.zone.today.year} by #{first_last_name}."
+    "© #{copyright_year} by #{first_last_name}."
+  end
+
+  def copyright_year
+    (submitted_at&.year || degreeconfyr || Time.zone.today.year).to_s
   end
 
   def doi

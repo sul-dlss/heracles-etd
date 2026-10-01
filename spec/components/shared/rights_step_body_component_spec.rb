@@ -15,7 +15,7 @@ RSpec.describe Shared::RightsStepBodyComponent, type: :component do
     rows = page.all('table#copyright-details-table tbody tr')
     expect(rows.length).to eq(4)
     expect(rows[0]).to have_css('th', text: 'Copyright Statement')
-    expect(rows[0]).to have_css('td', text: "© #{Time.zone.now.year} by Jane Doe.")
+    expect(rows[0]).to have_css('td', text: '© 2023 by Jane Doe.')
 
     expect(rows[1]).to have_css('th', text: 'Creative Commons')
     expect(rows[1]).to have_css('td', text: 'This work is licensed under a CC Attribution license.')

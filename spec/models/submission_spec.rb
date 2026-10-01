@@ -235,6 +235,33 @@ RSpec.describe Submission do
     end
   end
 
+  describe 'copyright fields' do
+    # NOTE: default factory for submission has no submitted date
+    it 'sets the copyright year from the degree conferral date when no submitted date' do
+      expect(submission.copyright_year).to eq '2023'
+    end
+
+    it 'sets the copyright statement' do
+      expect(submission.copyright_statement).to eq '© 2023 by Jane Doe.'
+    end
+
+    context 'when there is a submitted date that is different than the degree conferral year' do
+      before { submission.submitted_at = DateTime.parse('2022-10-01T00:00:00Z') }
+
+      it 'sets the copyright year from the submitted date' do
+        expect(submission.copyright_year).to eq '2022'
+      end
+    end
+
+    context 'when there is neither a submitted date nor a degree conferral date' do
+      before { submission.degreeconfyr = nil }
+
+      it 'sets the copyright year to the current year' do
+        expect(submission.copyright_year).to eq Time.zone.today.year.to_s
+      end
+    end
+  end
+
   describe 'derivative fields' do
     context 'when primary fields are not set' do
       subject(:submission) { create(:submission) }
