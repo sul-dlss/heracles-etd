@@ -132,7 +132,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
     # Generate the copyright page first
     document.pad_bottom(25) do
-      document.text("\u00A9 #{copyright_year} by #{submission.first_last_name}. All Rights Reserved.", align: :center,
+      document.text("\u00A9 #{copyright_year} by #{submission.first_last_name}.", align: :center,
                                                                                                        leading: 7)
       document.text('Re-distributed by Stanford University under license with the author.', align: :center,
                                                                                             leading: 7)
