@@ -21,8 +21,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
   attr_reader :submission
 
   delegate :dissertation_file, :id, :druid, :readers, :purl, :supplemental_files, :thesis?, :provost,
-           :creative_commons_license, :submitted_at, :degreeconfyr,
-           :degree, to: :submission
+           :creative_commons_license, :submitted_at, :copyright_statement, :degree, to: :submission
 
   # @return [String, nil] the path to the augmented PDF, nil if no dissertation file uploaded yet
   # @raise RuntimeError if any exceptions are raised
@@ -132,8 +131,7 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
     # Generate the copyright page first
     document.pad_bottom(25) do
-      document.text("\u00A9 #{copyright_year} by #{submission.first_last_name}.", align: :center,
-                                                                                  leading: 7)
+      document.text(copyright_statement, align: :center, leading: 7)
       document.text('Re-distributed by Stanford University under license with the author.', align: :center,
                                                                                             leading: 7)
     end
@@ -301,9 +299,5 @@ class SignaturePageService # rubocop:disable Metrics/ClassLength
 
     # Draw the page number as a Roman numeral in the footer
     document.draw_text('iii', at: [190, -40], size: 8)
-  end
-
-  def copyright_year
-    submitted_at&.year&.to_s || degreeconfyr
   end
 end

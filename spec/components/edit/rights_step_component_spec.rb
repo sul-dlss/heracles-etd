@@ -10,7 +10,7 @@ RSpec.describe Edit::RightsStepComponent, type: :component do
     expect(page).to have_css('h2', text: 'Apply copyright and license terms')
     rows = page.all('table#copyright-details-table tr')
     expect(rows[0]).to have_css('th', text: 'Copyright Statement')
-    expect(rows[0]).to have_css('td', text: "© #{Time.zone.now.year} by Jane Doe.")
+    expect(rows[0]).to have_css('td', text: '© 2023 by Jane Doe.')
 
     expect(rows[1]).to have_css('th', text: 'Stanford License')
     expect(rows[1]).to have_link('View the Stanford University publication license', href: '#stanford-license-confirm')

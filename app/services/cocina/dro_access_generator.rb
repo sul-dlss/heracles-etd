@@ -45,8 +45,7 @@ module Cocina
     end
 
     def copyright_statement
-      copyright_year = submission.submitted_at&.year&.to_s
-      "(c) Copyright #{copyright_year} by #{submission.first_last_name}"
+      submission.copyright_statement.gsub('©', '(c) Copyright')
     end
 
     def license_url

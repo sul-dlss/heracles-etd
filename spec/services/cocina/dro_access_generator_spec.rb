@@ -104,7 +104,7 @@ RSpec.describe Cocina::DroAccessGenerator do
       end
 
       it 'has correct year and name' do
-        expect(result_hash[:copyright]).to eq('(c) Copyright 2020 by Omicron Covid Nineteen')
+        expect(result_hash[:copyright]).to eq('(c) Copyright 2020 by Omicron Covid Nineteen.')
       end
     end
   end
