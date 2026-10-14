@@ -37,6 +37,8 @@ The "student" for the submission is the current user. There is also a reader cre
 
 ## Development
 
+Use Ruby 4.0.7 for development and testing.
+
 ### Requirements
 
 * docker & docker compose
