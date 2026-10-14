@@ -7,9 +7,9 @@ gem 'rails', '~> 8.1.0'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
+gem 'pg'
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '>= 5.0'
+gem 'puma'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -41,8 +41,8 @@ gem 'bootsnap', require: false
 
 gem 'actionpack-xml_parser' # XML parameter parsing for Rails
 gem 'action_policy' # Authorization framework for Rails
-gem 'activeadmin', '~> 4.0.0.beta16'
-gem 'cocina-models', '~> 0.105'
+gem 'activeadmin'
+gem 'cocina-models'
 gem 'config'
 gem 'dor-services-client'
 gem 'druid-tools'

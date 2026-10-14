@@ -201,8 +201,8 @@ GEM
       capistrano-one_time_key (>= 0.2.0)
       capistrano-shared_configs
       ed25519
-    domain_name (0.6.20260921)
-    dor-services-client (15.67.0)
+    domain_name (0.7.20261007)
+    dor-services-client (15.69.0)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.133.0)
       deprecation
@@ -345,7 +345,7 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (3.0.2)
+    json (3.1.0)
     jsonschema_rs (0.58.6)
       bigdecimal (>= 3.1, < 5)
       rb_sys (~> 0.9.130)
@@ -417,7 +417,7 @@ GEM
     net-http (0.10.0)
       net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
-    net-imap (0.6.7)
+    net-imap (0.6.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -691,7 +691,7 @@ GEM
       actionview (>= 8.0.0)
       bindex (>= 0.4.0)
       railties (>= 8.0.0)
-    webmock (3.29.0)
+    webmock (3.34.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -722,7 +722,7 @@ PLATFORMS
 DEPENDENCIES
   action_policy
   actionpack-xml_parser
-  activeadmin (~> 4.0.0.beta16)
+  activeadmin
   bootsnap
   brakeman
   capistrano-maintenance
@@ -730,7 +730,7 @@ DEPENDENCIES
   capistrano-rails
   capybara
   capybara-lockstep
-  cocina-models (~> 0.105)
+  cocina-models
   config
   cssbundling-rails
   cyperful
@@ -752,10 +752,10 @@ DEPENDENCIES
   oauth2
   okcomputer
   overmind
-  pg (~> 1.1)
+  pg
   prawn
   propshaft
-  puma (>= 5.0)
+  puma
   rails (~> 8.1.0)
   rspec-rails
   rspec_junit_formatter
